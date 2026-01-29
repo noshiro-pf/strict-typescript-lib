@@ -1,0 +1,19 @@
+{
+  "name": "@tier4/strict-typescript-lib-es2024-arraybuffer",
+  "version": "5.7.2-strict-lib-v9",
+  "private": false,
+  "description": "Strict TypeScript lib",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tier4/webauto-typescript-shared.git"
+  },
+  "license": "ISC",
+  "author": "noshiro-pf <noshiro.pf@gmail.com>",
+  "sideEffects": false,
+  "type": "module",
+  "types": "./index.d.ts",
+  "peerDependencies": {
+    "ts-type-forge": "^2.3.0",
+    "typescript": ">=4.5.2"
+  }
+}
