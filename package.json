@@ -102,7 +102,7 @@
     "semantic-release": "25.0.2",
     "ts-data-forge": "6.2.2",
     "ts-repo-utils": "8.0.3",
-    "ts-type-forge": "2.3.0",
+    "ts-type-forge": "2.3.1",
     "tslib": "2.8.1",
     "tsx": "4.21.0",
     "typedoc": "0.28.16",
