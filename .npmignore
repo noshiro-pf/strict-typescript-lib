@@ -4,7 +4,6 @@ agents
 scripts
 test
 
-typedoc.json
 tsconfig.json
 .cspell.json
 .prettierrc

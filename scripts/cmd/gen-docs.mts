@@ -1,22 +1,12 @@
 import { unknownToString } from 'ts-data-forge';
-import { assertPathExists } from 'ts-repo-utils';
-import { projectRootPath } from '../project-root-path.mjs';
 import { embedExamplesInJsDoc } from './embed-examples-in-jsdoc.mjs';
 import { embedExamples } from './embed-examples.mjs';
 
-const TYPEDOC_CONFIG = path.resolve(
-  projectRootPath,
-  './configs/typedoc.config.mjs',
-);
-
 /**
- * Generates documentation using TypeDoc and formats the output.
+ * Generates documentation and formats the output.
  */
 export const genDocs = async (): Promise<void> => {
   echo('Starting documentation generation...\n');
-
-  // Verify TypeDoc config exists
-  await assertPathExists(TYPEDOC_CONFIG, 'TypeDoc config');
 
   await logStep({
     startMessage: 'Embedding sample code into README',
@@ -29,16 +19,6 @@ export const genDocs = async (): Promise<void> => {
     action: () =>
       runStep(embedExamplesInJsDoc(), 'Sample embedding into JSDoc failed'),
     successMessage: 'Sample code embedded into JSDoc',
-  });
-
-  await logStep({
-    startMessage: 'Generating documentation with TypeDoc',
-    action: () =>
-      runCmdStep(
-        `typedoc --options "${TYPEDOC_CONFIG}"`,
-        'TypeDoc generation failed',
-      ),
-    successMessage: 'TypeDoc generation completed',
   });
 
   await logStep({
@@ -56,7 +36,7 @@ export const genDocs = async (): Promise<void> => {
   echo('✅ Documentation generation completed successfully!\n');
 };
 
-const step = { current: 1 };
+const mut_step = { current: 1 };
 
 const logStep = async ({
   startMessage,
@@ -67,13 +47,13 @@ const logStep = async ({
   action: () => Promise<void>;
   successMessage: string;
 }>): Promise<void> => {
-  echo(`${step.current}. ${startMessage}...`);
+  echo(`${mut_step.current}. ${startMessage}...`);
 
   await action();
 
   echo(`✓ ${successMessage}.\n`);
 
-  step.current += 1;
+  mut_step.current += 1;
 };
 
 const runCmdStep = async (cmd: string, errorMsg: string): Promise<void> => {
