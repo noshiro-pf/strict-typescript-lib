@@ -11,7 +11,7 @@ const config = () =>
       coverage: coverageSettings(),
 
       alias: {
-        'typescript-template': path.resolve(
+        'strict-typescript-lib': path.resolve(
           projectRootPath,
           './src/entry-point.mts',
         ),
