@@ -1,4 +1,5 @@
 import { unknownToString } from 'ts-data-forge';
+import { $, isDirectlyExecuted, Result } from 'ts-repo-utils';
 import { embedExamplesInJsDoc } from './embed-examples-in-jsdoc.mjs';
 import { embedExamples } from './embed-examples.mjs';
 
@@ -6,7 +7,7 @@ import { embedExamples } from './embed-examples.mjs';
  * Generates documentation and formats the output.
  */
 export const genDocs = async (): Promise<void> => {
-  echo('Starting documentation generation...\n');
+  console.log('Starting documentation generation...\n');
 
   await logStep({
     startMessage: 'Embedding sample code into README',
@@ -33,7 +34,7 @@ export const genDocs = async (): Promise<void> => {
     successMessage: 'Formatting completed',
   });
 
-  echo('✅ Documentation generation completed successfully!\n');
+  console.log('✅ Documentation generation completed successfully!\n');
 };
 
 const mut_step = { current: 1 };
@@ -47,11 +48,11 @@ const logStep = async ({
   action: () => Promise<void>;
   successMessage: string;
 }>): Promise<void> => {
-  echo(`${mut_step.current}. ${startMessage}...`);
+  console.log(`${mut_step.current}. ${startMessage}...`);
 
   await action();
 
-  echo(`✓ ${successMessage}.\n`);
+  console.log(`✓ ${successMessage}.\n`);
 
   mut_step.current += 1;
 };
