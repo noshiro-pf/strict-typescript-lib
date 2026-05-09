@@ -102,8 +102,8 @@ importers:
         specifier: 25.0.3
         version: 25.0.3(typescript@5.9.3)
       ts-codemod-lib:
-        specifier: ^2.1.3
-        version: 2.1.3(cmd-ts@0.15.0)(dedent@1.7.2)(ts-repo-utils@10.0.0(prettier@3.8.3)(typescript@5.9.3))(typescript@5.9.3)
+        specifier: ^2.1.4
+        version: 2.1.4(cmd-ts@0.15.0)(dedent@1.7.2)(ts-repo-utils@10.0.0(prettier@3.8.3)(typescript@5.9.3))(typescript@5.9.3)
       ts-data-forge:
         specifier: 6.9.2
         version: 6.9.2(typescript@5.9.3)
@@ -1132,10 +1132,6 @@ packages:
     resolution: {integrity: sha512-t09vSN3MdfsyCHoFcTRCH/iUtG7OJ0CsjzB8cjAmKc/va/kIgeDI/TxsigdncE/4be734m0cvIYwNaV4i2XqAw==}
     engines: {node: '>=10'}
 
-  '@sindresorhus/is@7.2.0':
-    resolution: {integrity: sha512-P1Cz1dWaFfR4IR+U13mqqiGsLFf1KbayybWwdd2vfctdV6hDpUkgCY0nKOLLTMSoRd/jJNjtbqzf13K8DCCXQw==}
-    engines: {node: '>=18'}
-
   '@sindresorhus/is@8.0.0':
     resolution: {integrity: sha512-YvOsokBE5NsyHuXMnwEVB7lgFk6lX8F4OXCruYVgFII0hUHof0RGUvhMoabVt9hRqbg+qVzayzEG24RCcxcYeA==}
     engines: {node: '>=22'}
@@ -1192,8 +1188,8 @@ packages:
   '@types/ms@2.1.0':
     resolution: {integrity: sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==}
 
-  '@types/node@20.19.39':
-    resolution: {integrity: sha512-orrrD74MBUyK8jOAD/r0+lfa1I2MO6I+vAkmAWzMYbCcgrN4lCrmK52gRFQq/JRxfYPfonkr4b0jcY7Olqdqbw==}
+  '@types/node@20.19.40':
+    resolution: {integrity: sha512-xxx6M2IpSTnnKcR0cMvIiohkiCx20/oRPtWGbenFygKCGl3zqUzdNjQ/1V4solq1LU+dgv0nQzeGOuqkqZGg0Q==}
 
   '@types/node@25.6.0':
     resolution: {integrity: sha512-+qIYRKdNYJwY3vRCZMdJbPLJAtGjQBudzZzdzwQYkEPQd+PJGixUL5QfvCLDaULoLv+RhT3LDkwEfKaAkgSmNQ==}
@@ -4082,9 +4078,9 @@ packages:
     peerDependencies:
       typescript: '>=4.8.4'
 
-  ts-codemod-lib@2.1.3:
-    resolution: {integrity: sha512-mEOjlEtdzTyBe8ef9EeesB9iCH8vKrSSOCZXSnuReeETXj26oQPNZv8dVAOYFrVkmngdvlYfypijWCSO0iYRwQ==}
-    engines: {node: '>=22.12.0', pnpm: '>=9.0.0'}
+  ts-codemod-lib@2.1.4:
+    resolution: {integrity: sha512-6ruJQUu4+fpM572nGsO9Qt8RzCKnS/1MGP+LLXxtQgu9SUR/ezgaMUrWwR/QVR2WY6pJFdbg/IwfvmX36f2TYA==}
+    engines: {node: '>=22.18.0', pnpm: '>=9.0.0'}
     hasBin: true
     peerDependencies:
       cmd-ts: 0.14.3
@@ -4097,12 +4093,6 @@ packages:
         optional: true
       ts-repo-utils:
         optional: true
-
-  ts-data-forge@6.9.0:
-    resolution: {integrity: sha512-/J13CeSsWetXroAGsesvQRJxjS11NEe3Qje4bxCb7MTzVMYZfrN4GeQe6jvz/PpD+XmZasG393i6virl4B4cCw==}
-    engines: {node: '>=20.11.0', pnpm: '>=8.0.0'}
-    peerDependencies:
-      typescript: '>=4.8'
 
   ts-data-forge@6.9.2:
     resolution: {integrity: sha512-mA26aJYgGUoCcjn079d2ZJO7FO8HhSEE0dDbJcv/Xz3vtBoF2WGOGpWzahNO4k6FnmwUAVBRvniCIiqt6cdf/A==}
@@ -5398,8 +5388,6 @@ snapshots:
 
   '@sindresorhus/is@4.6.0': {}
 
-  '@sindresorhus/is@7.2.0': {}
-
   '@sindresorhus/is@8.0.0': {}
 
   '@sindresorhus/merge-streams@4.0.0': {}
@@ -5460,7 +5448,7 @@ snapshots:
 
   '@types/ms@2.1.0': {}
 
-  '@types/node@20.19.39':
+  '@types/node@20.19.40':
     dependencies:
       undici-types: 6.21.0
     optional: true
@@ -7130,7 +7118,7 @@ snapshots:
 
   happy-dom@20.0.11:
     dependencies:
-      '@types/node': 20.19.39
+      '@types/node': 20.19.40
       '@types/whatwg-mimetype': 3.0.2
       whatwg-mimetype: 3.0.0
     optional: true
@@ -8743,9 +8731,9 @@ snapshots:
     dependencies:
       typescript: 5.9.3
 
-  ts-codemod-lib@2.1.3(cmd-ts@0.15.0)(dedent@1.7.2)(ts-repo-utils@10.0.0(prettier@3.8.3)(typescript@5.9.3))(typescript@5.9.3):
+  ts-codemod-lib@2.1.4(cmd-ts@0.15.0)(dedent@1.7.2)(ts-repo-utils@10.0.0(prettier@3.8.3)(typescript@5.9.3))(typescript@5.9.3):
     dependencies:
-      ts-data-forge: 6.9.0(typescript@5.9.3)
+      ts-data-forge: 6.9.2(typescript@5.9.3)
       ts-morph: 28.0.0
     optionalDependencies:
       cmd-ts: 0.15.0
@@ -8753,12 +8741,6 @@ snapshots:
       ts-repo-utils: 10.0.0(prettier@3.8.3)(typescript@5.9.3)
     transitivePeerDependencies:
       - typescript
-
-  ts-data-forge@6.9.0(typescript@5.9.3):
-    dependencies:
-      '@sindresorhus/is': 7.2.0
-      ts-type-forge: 2.4.1
-      typescript: 5.9.3
 
   ts-data-forge@6.9.2(typescript@5.9.3):
     dependencies:
