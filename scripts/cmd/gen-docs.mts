@@ -1,4 +1,4 @@
-import { unknownToString } from 'ts-data-forge';
+import { unknownToString, type UnknownResult } from 'ts-data-forge';
 import { $, isDirectlyExecuted, Result } from 'ts-repo-utils';
 import { embedExamplesInJsDoc } from './embed-examples-in-jsdoc.mjs';
 import { embedExamples } from './embed-examples.mjs';
