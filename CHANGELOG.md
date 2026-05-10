@@ -1,3 +1,9 @@
+## [1.0.2](https://github.com/noshiro-pf/strict-typescript-lib/compare/v1.0.1...v1.0.2) (2026-05-10)
+
+### Bug Fixes
+
+- update dependencies and import ts-type-forge explicitly ([#41](https://github.com/noshiro-pf/strict-typescript-lib/issues/41)) ([bd081c0](https://github.com/noshiro-pf/strict-typescript-lib/commit/bd081c0470d65ce278764143d21d869fffdc6eab))
+
 ## [1.0.1](https://github.com/noshiro-pf/strict-typescript-lib/compare/v1.0.0...v1.0.1) (2026-04-30)
 
 ### Bug Fixes
