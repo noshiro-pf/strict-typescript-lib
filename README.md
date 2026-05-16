@@ -7,7 +7,6 @@
 [![codecov](https://codecov.io/gh/noshiro-pf/strict-typescript-lib/branch/main/graph/badge.svg?token=********)](https://codecov.io/gh/noshiro-pf/strict-typescript-lib)
  -->
 
-
 ## License
 
 This project is licensed under the [Apache License 2.0](./LICENSE).

@@ -11,5 +11,5 @@ ignorePaths:
   - pnpm-lock.yaml
   - pnpm-workspace.yaml
   - dist/**
+  - docs/**
   - agents/common/**
-  - packages/docs/public

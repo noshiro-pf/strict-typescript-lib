@@ -5,7 +5,7 @@ const config = {
     '!**/dist/**/*',
     '!**/docs/**/*',
     '!agents/**/*',
-    '!CHANGELOG.md',
+    '!**/CHANGELOG.md',
   ],
   prettier: true,
   fix: true,
