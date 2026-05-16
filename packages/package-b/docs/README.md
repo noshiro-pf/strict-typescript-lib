@@ -10,7 +10,7 @@
 
 > **expectType**\<`A`, `B`\>(`_relation`): `void`
 
-Defined in: [expect-type.mts:49](https://github.com/noshiro-pf/typescript-monorepo-template/blob/main/packages/package-b/src/expect-type.mts#L49)
+Defined in: [expect-type.mts:49](https://github.com/noshiro-pf/strict-typescript-lib/blob/main/packages/package-b/src/expect-type.mts#L49)
 
 Compile-time type assertion utility.
 Checks the relationship between type `A` and type `B` based on the `_relation` parameter.
