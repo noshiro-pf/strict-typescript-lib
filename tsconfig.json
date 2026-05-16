@@ -3,20 +3,13 @@
     "./configs/tsconfig/tsconfig.type-check.json",
     "./configs/tsconfig/tsconfig.vite.json"
   ],
-  "compilerOptions": {
-    "paths": {
-      "strict-typescript-lib": ["./src/entry-point.mts"]
-    }
-  },
   "include": [
-    "./src",
-    "./test",
-    "./samples",
-    "./scripts",
-    "./configs",
-    "./.eslintrc.cjs",
-    "./eslint.config.mts",
-    "./release.config.js",
+    "./scripts/**/*",
+    "./configs/**/*",
+    "./**/eslint.config.mts",
+    "./**/configs/**/*.mts",
+    "./**/configs/**/*.ts",
+    "./**/vite.config.mts",
     "./.markdownlint-cli2.mjs"
   ]
 }
