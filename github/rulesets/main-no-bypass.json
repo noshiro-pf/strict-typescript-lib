@@ -1,5 +1,5 @@
 {
-  "id": 13393640,
+  "id": 13393641,
   "name": "main-no-bypass",
   "target": "branch",
   "enforcement": "active",
@@ -15,13 +15,13 @@
       "type": "deletion"
     },
     {
+      "type": "non_fast_forward"
+    },
+    {
       "type": "required_linear_history"
     },
     {
       "type": "creation"
-    },
-    {
-      "type": "non_fast_forward"
     }
   ]
 }
