@@ -1,0 +1,7 @@
+{
+  "libName": "strict-ts-lib-v5.9",
+  "repo": "https://github.com/noshiro-pf/strict-typescript-lib.git",
+  "license": "Apache-2.0",
+  "typescriptVersion": "5.9.3",
+  "typescriptVersionRange": ">=5.9.0 <6.0.0"
+}

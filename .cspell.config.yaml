@@ -7,9 +7,39 @@ words:
   - noshiro
   - testw
   - tscw
+  - branded
+  - codecov
+  - corepack
+  - cspell
+  - dedent
+  - esbuild
+  - esnext
+  - fmtw
+  - jiti
+  - libname
+  - merchantablity
+  - mtsx
+  - napi
+  - tsbuildinfo
+  - tsconfigs
+  - tslib
+  - tsup
+  - tsx
+  - typedoc
+  - unrs
+  - vitest
+  - webauto
+  - wireit
 ignorePaths:
   - pnpm-lock.yaml
   - pnpm-workspace.yaml
   - dist/**
   - docs/**
   - agents/common/**
+  - packages/v*/source/temp/**
+  - packages/v*/output/lib-files/**
+  - packages/v*/output/packages/**
+  - packages/v*/output/diff/**
+  - packages/v*/output-branded/lib-files/**
+  - packages/v*/output-branded/packages/**
+  - packages/v*/output-branded/diff/**
