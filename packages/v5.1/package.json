@@ -1,0 +1,40 @@
+{
+  "name": "strict-ts-lib-v5.1-source",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Generator harness for TypeScript 5.1 strict lib packages",
+  "type": "module",
+  "scripts": {
+    "gen": "tsx ./scripts/gen.mts",
+    "gen:full": "tsx ./scripts/gen-full.mts",
+    "gen:lib-files": "tsx ./scripts/gen-lib-files.mts",
+    "gen:packages": "tsx ./scripts/gen-packages.mts",
+    "gen:with-codemod-fixed": "tsx ./scripts/gen-with-codemod-fixed.mts",
+    "type-check": "tsc -p tsconfig.lib-check.json && tsc -p tsconfig.lib-check.webworker.json"
+  },
+  "dependencies": {
+    "strict-ts-lib-scripts-common": "workspace:*"
+  },
+  "devDependencies": {
+    "@typescript/lib-decorators": "file:output/packages/decorators",
+    "@typescript/lib-dom": "file:output/packages/dom",
+    "@typescript/lib-es2015": "file:output/packages/es2015",
+    "@typescript/lib-es2016": "file:output/packages/es2016",
+    "@typescript/lib-es2017": "file:output/packages/es2017",
+    "@typescript/lib-es2018": "file:output/packages/es2018",
+    "@typescript/lib-es2019": "file:output/packages/es2019",
+    "@typescript/lib-es2020": "file:output/packages/es2020",
+    "@typescript/lib-es2021": "file:output/packages/es2021",
+    "@typescript/lib-es2022": "file:output/packages/es2022",
+    "@typescript/lib-es2023": "file:output/packages/es2023",
+    "@typescript/lib-es5": "file:output/packages/es5",
+    "@typescript/lib-es6": "file:output/packages/es6",
+    "@typescript/lib-esnext": "file:output/packages/esnext",
+    "@typescript/lib-scripthost": "file:output/packages/scripthost",
+    "@typescript/lib-webworker": "file:output/packages/webworker",
+    "ts-data-forge": "12.0.0",
+    "ts-repo-utils": "10.1.3",
+    "ts-type-forge": "7.2.1",
+    "typescript": "5.1.6"
+  }
+}

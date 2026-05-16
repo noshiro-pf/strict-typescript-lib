@@ -1,22 +1,14 @@
 {
-  "extends": [
-    "./configs/tsconfig/tsconfig.type-check.json",
-    "./configs/tsconfig/tsconfig.vite.json"
-  ],
+  "extends": "./configs/tsconfig/tsconfig.type-check.json",
   "compilerOptions": {
-    "paths": {
-      "strict-typescript-lib": ["./src/entry-point.mts"]
-    }
+    "types": ["node"],
+    /* Using strict-typescript-lib */
+    "libReplacement": true
   },
   "include": [
-    "./src",
-    "./test",
-    "./samples",
-    "./scripts",
-    "./configs",
-    "./.eslintrc.cjs",
+    "./scripts/**/*",
+    "./configs/**/*",
     "./eslint.config.mts",
-    "./release.config.js",
     "./.markdownlint-cli2.mjs"
   ]
 }

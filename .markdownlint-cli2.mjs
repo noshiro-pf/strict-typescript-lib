@@ -1,16 +1,16 @@
 const config = {
   globs: [
     '**/*.md',
-    '!node_modules',
-    '!dist/**/*',
-    '!docs/**/*',
+    '!**/node_modules',
+    '!**/dist/**/*',
+    '!**/docs/**/*',
     '!agents/**/*',
-    '!CHANGELOG.md',
+    '!**/CHANGELOG.md',
   ],
   prettier: true,
   fix: true,
 
-  /** @type {import("markdownlint").Configuration} */
+  /** @type {import('markdownlint').Configuration} */
   config: {
     default: true,
     'line-length': false, // prefer Prettier's setting
@@ -24,6 +24,7 @@ const config = {
     'ol-indent': false, // prefer Prettier's setting
     'list-marker-space': false, // prefer Prettier's setting
     'no-duplicate-heading': { siblings_only: true },
+    'no-inline-html': false,
   },
 };
 
