@@ -1,0 +1,7 @@
+{
+  "extends": "../../../configs/tsconfig/tsconfig.type-check.json",
+  "compilerOptions": {
+    "types": ["node"]
+  },
+  "include": ["./scripts/**/*.mts", "./configs/**/*.mts", "./eslint.config.mts"]
+}

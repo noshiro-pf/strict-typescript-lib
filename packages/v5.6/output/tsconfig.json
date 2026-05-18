@@ -1,0 +1,11 @@
+{
+  "extends": "../../../configs/tsconfig/tsconfig.type-check.json",
+  "compilerOptions": {
+    "lib": null,
+    "noLib": true,
+    "skipLibCheck": false,
+    "types": []
+  },
+  "include": ["./lib-files"],
+  "exclude": ["./lib-files/lib.webworker.d.ts"]
+}
