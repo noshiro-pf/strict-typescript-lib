@@ -1,0 +1,14 @@
+/// <reference no-default-lib="true"/>
+/// <reference types="ts-type-forge/global" />
+
+/// <reference path="./lib.es2024.d.ts" />
+/// <reference path="./lib.esnext.intl.d.ts" />
+/// <reference path="./lib.esnext.decorators.d.ts" />
+/// <reference path="./lib.esnext.disposable.d.ts" />
+/// <reference path="./lib.esnext.collection.d.ts" />
+/// <reference path="./lib.esnext.array.d.ts" />
+/// <reference path="./lib.esnext.iterator.d.ts" />
+/// <reference path="./lib.esnext.promise.d.ts" />
+/// <reference path="./lib.esnext.float16.d.ts" />
+/// <reference path="./lib.esnext.error.d.ts" />
+/// <reference path="./lib.esnext.sharedmemory.d.ts" />
