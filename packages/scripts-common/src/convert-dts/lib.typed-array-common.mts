@@ -12,7 +12,8 @@ export const convertTypedArrayCommon =
     pipe(src).map(
       composeMonoTypeFns(
         replaceWithNoMatchCheck(
-          'copyWithin(target: number, start: number, end?: number): this;',
+          // TS 5.5+ requires `start: number`; TS 5.4 and earlier have `start?: number`.
+          /copyWithin\(target: number, start\??: number, end\?: number\): this;/gu,
           `copyWithin(target: ${brandedNumber.TypedArraySizeArg}, start: ${brandedNumber.TypedArraySizeArg}, end?: ${brandedNumber.TypedArraySizeArg}): this;`,
         ),
         replaceWithNoMatchCheck(

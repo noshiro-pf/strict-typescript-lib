@@ -44,12 +44,16 @@ export const convertLibEs2015Core =
             ),
             replaceWithNoMatchCheck(
               //
+              // TS 5.5+ requires `start: number` on copyWithin; TS 5.4 and
+              // earlier have `start?: number`.
               `start: number`,
               `start: ${brandedNumber.ArraySizeArg}`,
+              { onNotFound: 'off' },
             ),
             replaceWithNoMatchCheck(
               'target: number',
               `target: ${brandedNumber.ArraySizeArg}`,
+              { onNotFound: 'off' },
             ),
           ),
         }),

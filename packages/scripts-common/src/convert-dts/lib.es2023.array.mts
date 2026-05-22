@@ -64,16 +64,20 @@ export const convertLibEs2023Array =
                 `findLastIndex(predicate: (value: T, index: ${brandedNumber.ArraySize}, array: readonly T[]) => boolean, thisArg?: unknown): ${brandedNumber.ArraySearchResult};`,
               ),
               replaceWithNoMatchCheck(
+                // `toSpliced` / `with` were added in TS 5.2.
                 'toSpliced(start: number, deleteCount: number, ...items: readonly T[]): readonly T[];',
                 `toSpliced(start: ${brandedNumber.ArraySizeArg}, deleteCount: ${brandedNumber.ArraySizeArg}, ...items: readonly T[]): readonly T[];`,
+                { onNotFound: 'off' },
               ),
               replaceWithNoMatchCheck(
                 'toSpliced(start: number, deleteCount?: number): readonly T[];',
                 `toSpliced(start: ${brandedNumber.ArraySizeArg}, deleteCount?: ${brandedNumber.ArraySizeArg}): readonly T[];`,
+                { onNotFound: 'off' },
               ),
               replaceWithNoMatchCheck(
                 `with(index: number, value: T): readonly T[];`,
                 `with(index: ${brandedNumber.ArraySizeArg}, value: T): readonly T[];`,
+                { onNotFound: 'off' },
               ),
             ),
           }),
@@ -83,14 +87,15 @@ export const convertLibEs2023Array =
           endRegexp: closeBraceRegexp,
           mapFn: composeMonoTypeFns(
             replaceWithNoMatchCheck(
-              // TODO: remove if fixed
+              // TS 5.2+ docs (`toSpliced` jsdoc)
               'Copies an array and removes elements and, if necessary, inserts new elements in their place. Returns the copied array.',
               'Copies an array and removes elements while, if necessary, inserting new elements in their place, returning the remaining elements.',
+              { onNotFound: 'off' },
             ),
             replaceWithNoMatchCheck(
-              // TODO: remove if fixed
               '@returns The copied array.',
               '@returns A copy of the original array with the remaining elements.',
+              { onNotFound: 'off' },
             ),
           ),
         }),
@@ -100,19 +105,20 @@ export const convertLibEs2023Array =
           endRegexp: closeBraceRegexp,
           mapFn: composeMonoTypeFns(
             replaceWithNoMatchCheck(
-              // TODO: remove if fixed
+              // TS 5.2+ docs (`toReversed` jsdoc)
               'Copies the array and returns the copied array with all of its elements reversed',
               'Returns a copy of an array with its elements reversed',
+              { onNotFound: 'off' },
             ),
             replaceWithNoMatchCheck(
-              // TODO: remove if fixed
               '@param value The value to insert into the copied array.',
               '@param value The value to write into the copied array.',
+              { onNotFound: 'off' },
             ),
             replaceWithNoMatchCheck(
-              // TODO: remove if fixed
               '@returns A copy of the original array with the inserted value.',
               '@returns The copied array with the updated value.',
+              { onNotFound: 'off' },
             ),
           ),
         }),
@@ -123,28 +129,29 @@ export const convertLibEs2023Array =
             endRegexp: closeBraceRegexp,
             mapFn: composeMonoTypeFns(
               replaceWithNoMatchCheck(
-                // TODO: remove if fixed
+                // typed-array `toSpliced` / `toReversed` jsdoc (TS 5.2+).
                 `   * Copies the array and inserts the given ${typedArrayTypeToElemBaseType(elemType)} at the provided index.`,
                 [
                   '   * Copies an array, then overwrites the value at the provided index with the',
                   '   * given value. If the index is negative, then it replaces from the end',
                   '   * of the array.',
                 ].join('\n'),
+                { onNotFound: 'off' },
               ),
               replaceWithNoMatchCheck(
-                // TODO: remove if fixed
                 'Copies the array and returns the copy with the elements in reverse order.',
                 'Returns a copy of an array with its elements reversed.',
+                { onNotFound: 'off' },
               ),
               replaceWithNoMatchCheck(
-                // TODO: remove if fixed
                 '@param value The value to insert into the copied array.',
                 '@param value The value to write into the copied array.',
+                { onNotFound: 'off' },
               ),
               replaceWithNoMatchCheck(
-                // TODO: remove if fixed
                 '@returns A copy of the original array with the inserted value.',
                 '@returns The copied array with the updated value.',
+                { onNotFound: 'off' },
               ),
               replaceWithNoMatchCheck(
                 new RegExp(
@@ -170,19 +177,22 @@ export const convertLibEs2023Array =
               replaceWithNoMatchCheck(
                 `toSorted(compareFn?: (a: ${typedArrayTypeToElemBaseType(elemType)}, b: ${typedArrayTypeToElemBaseType(elemType)}) => number)`,
                 `toSorted(compareFn?: (a: ${typedArrayTypeToElemType(elemType, useBrandedNumber)}, b: ${typedArrayTypeToElemType(elemType, useBrandedNumber)}) => number)`,
+                { onNotFound: 'off' },
               ),
               replaceWithNoMatchCheck(
                 `with(index: number, value: ${typedArrayTypeToElemBaseType(elemType)})`,
                 `with(index: ${brandedNumber.TypedArraySizeArg}, value: ${typedArrayTypeToElemType(elemType, useBrandedNumber)})`,
+                { onNotFound: 'off' },
               ),
             ),
           }),
         ),
 
         replaceWithNoMatchCheck(
-          // TODO: remove if fixed
+          // TS 5.2+ docs
           'Copies and sorts the array.',
-          'Returns a copy of an array with its elements sorted.', // use the same description with Array
+          'Returns a copy of an array with its elements sorted.',
+          { onNotFound: 'off' },
         ),
       ),
     ).value;
