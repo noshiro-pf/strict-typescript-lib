@@ -78,6 +78,43 @@ importers:
         specifier: 3.0.1
         version: 3.0.1
 
+  packages/v5.4/output:
+    dependencies:
+      ts-type-forge:
+        specifier: 3.0.1
+        version: 3.0.1
+      typescript:
+        specifier: 5.4.5
+        version: 5.4.5
+
+  packages/v5.4/output-branded:
+    dependencies:
+      ts-type-forge:
+        specifier: 3.0.1
+        version: 3.0.1
+      typescript:
+        specifier: 5.4.5
+        version: 5.4.5
+
+  packages/v5.4/source:
+    dependencies:
+      strict-ts-lib-scripts-common:
+        specifier: workspace:*
+        version: link:../../scripts-common
+    devDependencies:
+      ts-data-forge:
+        specifier: 6.9.6
+        version: 6.9.6(typescript@5.4.5)
+      ts-repo-utils:
+        specifier: 10.1.0
+        version: 10.1.0(prettier@3.8.3)(typescript@5.4.5)
+      ts-type-forge:
+        specifier: 3.0.1
+        version: 3.0.1
+      typescript:
+        specifier: 5.4.5
+        version: 5.4.5
+
   packages/v5.5/output:
     dependencies:
       ts-type-forge:
@@ -3354,6 +3391,11 @@ packages:
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0 || ^10.0.0
       typescript: '>=4.8.4 <6.1.0'
+
+  typescript@5.4.5:
+    resolution: {integrity: sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==}
+    engines: {node: '>=14.17'}
+    hasBin: true
 
   typescript@5.5.4:
     resolution: {integrity: sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==}
@@ -7019,6 +7061,12 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
+  ts-data-forge@6.9.6(typescript@5.4.5):
+    dependencies:
+      '@sindresorhus/is': 8.0.0
+      ts-type-forge: 3.0.1
+      typescript: 5.4.5
+
   ts-data-forge@6.9.6(typescript@5.5.4):
     dependencies:
       '@sindresorhus/is': 8.0.0
@@ -7066,6 +7114,22 @@ snapshots:
     dependencies:
       '@ts-morph/common': 0.29.0
       code-block-writer: 13.0.3
+
+  ts-repo-utils@10.1.0(prettier@3.8.3)(typescript@5.4.5):
+    dependencies:
+      '@nodelib/fs.walk': 3.0.1
+      '@sindresorhus/is': 8.0.0
+      '@types/micromatch': 4.0.10
+      cmd-ts: 0.15.0
+      fast-glob: 3.3.3
+      micromatch: 4.0.8
+      prettier: 3.8.3
+      ts-data-forge: 6.9.6(typescript@5.4.5)
+      ts-type-forge: 3.0.1
+      tsx: 4.21.0
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
 
   ts-repo-utils@10.1.0(prettier@3.8.3)(typescript@5.5.4):
     dependencies:
@@ -7229,6 +7293,8 @@ snapshots:
       typescript: 5.9.3
     transitivePeerDependencies:
       - supports-color
+
+  typescript@5.4.5: {}
 
   typescript@5.5.4: {}
 
