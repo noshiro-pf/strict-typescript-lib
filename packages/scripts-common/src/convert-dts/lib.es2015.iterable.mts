@@ -154,13 +154,14 @@ export const convertLibEs2015Iterable =
             endRegexp: closeBraceRegexp,
             mapFn: composeMonoTypeFns(
               replaceWithNoMatchCheck(
-                //
-                'from(',
-                'from<T extends number>(',
-              ),
-              replaceWithNoMatchCheck(
-                'arrayLike: Iterable<number>',
-                'arrayLike: Iterable<T>',
+                // Add `<T extends number>` to the bare `from(...)` overload.
+                // TS 5.6 and earlier put everything in one signature ending
+                // with `, mapfn?: ..., thisArg?: ...)`; TS 5.7+ split into a
+                // dedicated single-arg overload; TS 5.8 also renamed the
+                // parameter from `arrayLike` to `elements`. Match the common
+                // prefix only.
+                /from\((?:arrayLike|elements): Iterable<number>/gu,
+                'from<T extends number>(arrayLike: Iterable<T>',
               ),
               replaceWithNoMatchCheck(
                 // TS >= 5.7 uses `(v: T, ...)`; earlier versions use

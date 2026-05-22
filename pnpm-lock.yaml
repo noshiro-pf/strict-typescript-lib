@@ -140,6 +140,37 @@ importers:
         specifier: 5.7.2
         version: 5.7.2
 
+  packages/v5.8/output:
+    dependencies:
+      ts-type-forge:
+        specifier: 3.0.1
+        version: 3.0.1
+
+  packages/v5.8/output-branded:
+    dependencies:
+      ts-type-forge:
+        specifier: 3.0.1
+        version: 3.0.1
+
+  packages/v5.8/source:
+    dependencies:
+      strict-ts-lib-scripts-common:
+        specifier: workspace:*
+        version: link:../../scripts-common
+    devDependencies:
+      ts-data-forge:
+        specifier: 6.9.6
+        version: 6.9.6(typescript@5.8.3)
+      ts-repo-utils:
+        specifier: 10.1.0
+        version: 10.1.0(prettier@3.8.3)(typescript@5.8.3)
+      ts-type-forge:
+        specifier: 3.0.1
+        version: 3.0.1
+      typescript:
+        specifier: 5.8.3
+        version: 5.8.3
+
 packages:
 
   '@babel/code-frame@7.29.7':
@@ -3263,6 +3294,11 @@ packages:
 
   typescript@5.7.2:
     resolution: {integrity: sha512-i5t66RHxDvVN40HfDd1PsEThGNnlMCMT3jMUuoh9/0TaqWevNontacunWyN02LA9/fIbEWlcHZcgTKb9QoaLfg==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+  typescript@5.8.3:
+    resolution: {integrity: sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -6922,6 +6958,12 @@ snapshots:
       ts-type-forge: 3.1.0
       typescript: 5.7.2
 
+  ts-data-forge@6.9.6(typescript@5.8.3):
+    dependencies:
+      '@sindresorhus/is': 8.0.0
+      ts-type-forge: 3.0.1
+      typescript: 5.8.3
+
   ts-data-forge@6.9.6(typescript@5.9.3):
     dependencies:
       '@sindresorhus/is': 8.1.0
@@ -6974,6 +7016,22 @@ snapshots:
       ts-data-forge: 6.9.6(typescript@5.7.2)
       ts-type-forge: 3.0.1
       tsx: 4.22.3
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+
+  ts-repo-utils@10.1.0(prettier@3.8.3)(typescript@5.8.3):
+    dependencies:
+      '@nodelib/fs.walk': 3.0.1
+      '@sindresorhus/is': 8.0.0
+      '@types/micromatch': 4.0.10
+      cmd-ts: 0.15.0
+      fast-glob: 3.3.3
+      micromatch: 4.0.8
+      prettier: 3.8.3
+      ts-data-forge: 6.9.6(typescript@5.8.3)
+      ts-type-forge: 3.0.1
+      tsx: 4.21.0
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -7080,6 +7138,8 @@ snapshots:
   typescript@5.6.3: {}
 
   typescript@5.7.2: {}
+
+  typescript@5.8.3: {}
 
   typescript@5.9.3: {}
 
