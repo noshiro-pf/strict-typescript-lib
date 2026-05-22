@@ -6,6 +6,7 @@ import {
   replaceWithNoMatchCheckBetweenRegexp,
 } from '../functions/utils/node-utils.mjs';
 import {
+  arrayIteratorName,
   closeBraceRegexp,
   enumType,
   idFn,
@@ -13,13 +14,20 @@ import {
   type ConverterOptions,
 } from './common.mjs';
 
-export const convertLibEs2015Iterable =
-  ({
-    brandedNumber,
-    readonlyModifier,
-    config: { returnType },
-  }: ConverterOptions): MonoTypeFunction<string> =>
-  (src) =>
+// TS 5.6 renamed several iterator interfaces (`IterableIterator` →
+// `ArrayIterator` / `MapIterator` / `SetIterator`). Patterns that target the
+// new names need to accept the old `IterableIterator` form too.
+const arrayIteratorAlt = String.raw`(?:Array|Iterable)Iterator`;
+
+export const convertLibEs2015Iterable = ({
+  brandedNumber,
+  readonlyModifier,
+  config: { returnType },
+  tsLibShape,
+}: ConverterOptions): MonoTypeFunction<string> => {
+  const ai = arrayIteratorName(tsLibShape);
+
+  return (src) =>
     pipe(src).map(
       composeMonoTypeFns(
         // Array
@@ -28,12 +36,15 @@ export const convertLibEs2015Iterable =
           endRegexp: closeBraceRegexp,
           mapFn: composeMonoTypeFns(
             replaceWithNoMatchCheck(
-              `ArrayIterator<readonly [number, T]>`,
-              `ArrayIterator<readonly [${brandedNumber.ArraySize}, T]>`,
+              new RegExp(
+                String.raw`${arrayIteratorAlt}<readonly \[number, T\]>`,
+                'gu',
+              ),
+              `${ai}<readonly [${brandedNumber.ArraySize}, T]>`,
             ),
             replaceWithNoMatchCheck(
-              `ArrayIterator<number>`,
-              `ArrayIterator<${brandedNumber.ArraySize}>`,
+              new RegExp(String.raw`${arrayIteratorAlt}<number>`, 'gu'),
+              `${ai}<${brandedNumber.ArraySize}>`,
             ),
           ),
         }),
@@ -62,12 +73,15 @@ export const convertLibEs2015Iterable =
           endRegexp: closeBraceRegexp,
           mapFn: composeMonoTypeFns(
             replaceWithNoMatchCheck(
-              `ArrayIterator<readonly [number, T]>`,
-              `ArrayIterator<readonly [${brandedNumber.ArraySize}, T]>`,
+              new RegExp(
+                String.raw`${arrayIteratorAlt}<readonly \[number, T\]>`,
+                'gu',
+              ),
+              `${ai}<readonly [${brandedNumber.ArraySize}, T]>`,
             ),
             replaceWithNoMatchCheck(
-              `ArrayIterator<number>`,
-              `ArrayIterator<${brandedNumber.ArraySize}>`,
+              new RegExp(String.raw`${arrayIteratorAlt}<number>`, 'gu'),
+              `${ai}<${brandedNumber.ArraySize}>`,
             ),
           ),
         }),
@@ -99,21 +113,6 @@ export const convertLibEs2015Iterable =
           ].join('\n'),
         ),
 
-        // ...(
-        //   [
-        //     '[Symbol.iterator](): IterableIterator<T>;',
-        //     'entries(): IterableIterator<readonly [number, number]>;',
-        //     'entries(): IterableIterator<readonly [T, T]>;',
-        //     'keys(): IterableIterator<number>;',
-        //   ] as const
-        // ).flatMap(
-        //   // normalize newlines
-        //   (line) => [
-        //     replaceWithNoMatchCheck(`${line}\n`, `${line}\n\n`),
-        //     replaceWithNoMatchCheck(`${line}\n\n\n`, `${line}\n\n`),
-        //   ],
-        // ),
-
         ...(
           [
             ['Int8Array', enumType.Int8],
@@ -132,20 +131,32 @@ export const convertLibEs2015Iterable =
             endRegexp: closeBraceRegexp,
             mapFn: composeMonoTypeFns(
               replaceWithNoMatchCheck(
-                `[Symbol.iterator](): ArrayIterator<number>;`,
-                `[Symbol.iterator](): ArrayIterator<${elementType}>;`,
+                new RegExp(
+                  String.raw`\[Symbol\.iterator\]\(\): ${arrayIteratorAlt}<number>;`,
+                  'gu',
+                ),
+                `[Symbol.iterator](): ${ai}<${elementType}>;`,
               ),
               replaceWithNoMatchCheck(
-                `entries(): ArrayIterator<readonly [number, number]>;`,
-                `entries(): ArrayIterator<readonly [${brandedNumber.TypedArraySize}, ${elementType}]>;`,
+                new RegExp(
+                  String.raw`entries\(\): ${arrayIteratorAlt}<readonly \[number, number\]>;`,
+                  'gu',
+                ),
+                `entries(): ${ai}<readonly [${brandedNumber.TypedArraySize}, ${elementType}]>;`,
               ),
               replaceWithNoMatchCheck(
-                `keys(): ArrayIterator<number>;`,
-                `keys(): ArrayIterator<${brandedNumber.TypedArraySize}>;`,
+                new RegExp(
+                  String.raw`keys\(\): ${arrayIteratorAlt}<number>;`,
+                  'gu',
+                ),
+                `keys(): ${ai}<${brandedNumber.TypedArraySize}>;`,
               ),
               replaceWithNoMatchCheck(
-                `values(): ArrayIterator<number>`,
-                `values(): ArrayIterator<${elementType}>`,
+                new RegExp(
+                  String.raw`values\(\): ${arrayIteratorAlt}<number>`,
+                  'gu',
+                ),
+                `values(): ${ai}<${elementType}>`,
               ),
             ),
           }),
@@ -176,7 +187,8 @@ export const convertLibEs2015Iterable =
           startRegexp: 'interface Iterator<',
           endRegexp: closeBraceRegexp,
           mapFn: replaceWithNoMatchCheck(
-            `next(...[value]: readonly [] | readonly [TNext]): IteratorResult<T, TReturn>;`,
+            // TS 5.5 uses `...args:`; TS 5.7+ destructures as `...[value]:`.
+            /next\(\.\.\.(?:args|\[value\]): readonly \[\] \| readonly \[TNext\]\): IteratorResult<T, TReturn>;/gu,
             `next(...[value]: [] | [TNext]): IteratorResult<T, TReturn>;`,
           ),
         }),
@@ -192,3 +204,4 @@ export const convertLibEs2015Iterable =
             }),
       ),
     ).value;
+};

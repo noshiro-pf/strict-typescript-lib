@@ -1,0 +1,763 @@
+@@ -1,19 +1,5 @@
+-/*! *****************************************************************************
+-Copyright (c) Microsoft Corporation. All rights reserved.
+-Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+-this file except in compliance with the License. You may obtain a copy of the
+-License at http://www.apache.org/licenses/LICENSE-2.0
+-
+-THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+-KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+-WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+-MERCHANTABLITY OR NON-INFRINGEMENT.
+-
+-See the Apache Version 2.0 License for specific language governing permissions
+-and limitations under the License.
+-***************************************************************************** */
+-
+ /// <reference no-default-lib="true"/>
++/// <reference types="ts-type-forge/global" />
+ 
+ interface Array<T> {
+   /**
+@@ -25,8 +11,14 @@ interface Array<T> {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findLast<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): S | undefined;
+-  findLast(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): T | undefined;
++  findLast<S extends T>(
++    predicate: (value: T, index: number, array: readonly T[]) => value is S,
++    thisArg?: unknown,
++  ): S | undefined;
++  findLast(
++    predicate: (value: T, index: number, array: readonly T[]) => boolean,
++    thisArg?: unknown,
++  ): T | undefined;
+ 
+   /**
+    * Returns the index of the last element in the array where predicate is true, and -1
+@@ -37,7 +29,10 @@ interface Array<T> {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findLastIndex(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): number;
++  findLastIndex(
++    predicate: (value: T, index: number, array: readonly T[]) => boolean,
++    thisArg?: unknown,
++  ): number;
+ 
+   /**
+    * Returns a copy of an array with its elements reversed.
+@@ -56,13 +51,13 @@ interface Array<T> {
+   toSorted(compareFn?: (a: T, b: T) => number): T[];
+ 
+   /**
+-   * Copies an array and removes elements and, if necessary, inserts new elements in their place. Returns the copied array.
++   * Copies an array and removes elements while, if necessary, inserting new elements in their place, returning the remaining elements.
+    * @param start The zero-based location in the array from which to start removing elements.
+    * @param deleteCount The number of elements to remove.
+    * @param items Elements to insert into the copied array in place of the deleted elements.
+-   * @returns The copied array.
++   * @returns A copy of the original array with the remaining elements.
+    */
+-  toSpliced(start: number, deleteCount: number, ...items: T[]): T[];
++  toSpliced(start: number, deleteCount: number, ...items: readonly T[]): T[];
+ 
+   /**
+    * Copies an array and removes elements while returning the remaining elements.
+@@ -94,8 +89,14 @@ interface ReadonlyArray<T> {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findLast<S extends T>(predicate: (value: T, index: number, array: readonly T[]) => value is S, thisArg?: any): S | undefined;
+-  findLast(predicate: (value: T, index: number, array: readonly T[]) => unknown, thisArg?: any): T | undefined;
++  findLast<S extends T>(
++    predicate: (value: T, index: number, array: readonly T[]) => value is S,
++    thisArg?: unknown,
++  ): S | undefined;
++  findLast(
++    predicate: (value: T, index: number, array: readonly T[]) => boolean,
++    thisArg?: unknown,
++  ): T | undefined;
+ 
+   /**
+    * Returns the index of the last element in the array where predicate is true, and -1
+@@ -106,15 +107,18 @@ interface ReadonlyArray<T> {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findLastIndex(predicate: (value: T, index: number, array: readonly T[]) => unknown, thisArg?: any): number;
++  findLastIndex(
++    predicate: (value: T, index: number, array: readonly T[]) => boolean,
++    thisArg?: unknown,
++  ): number;
+ 
+   /**
+-   * Copies the array and returns the copied array with all of its elements reversed.
++   * Returns a copy of an array with its elements reversed.
+    */
+   toReversed(): T[];
+ 
+   /**
+-   * Copies and sorts the array.
++   * Returns a copy of an array with its elements sorted.
+    * @param compareFn Function used to determine the order of the elements. It is expected to return
+    * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
+    * value otherwise. If omitted, the elements are sorted in ascending, ASCII character order.
+@@ -131,7 +135,7 @@ interface ReadonlyArray<T> {
+    * @param items Elements to insert into the copied array in place of the deleted elements.
+    * @returns A copy of the original array with the remaining elements.
+    */
+-  toSpliced(start: number, deleteCount: number, ...items: T[]): T[];
++  toSpliced(start: number, deleteCount: number, ...items: readonly T[]): T[];
+ 
+   /**
+    * Copies an array and removes elements while returning the remaining elements.
+@@ -147,8 +151,8 @@ interface ReadonlyArray<T> {
+    * of the array
+    * @param index The index of the value to overwrite. If the index is
+    * negative, then it replaces from the end of the array.
+-   * @param value The value to insert into the copied array.
+-   * @returns A copy of the original array with the inserted value.
++   * @param value The value to write into the copied array.
++   * @returns The copied array with the updated value.
+    */
+   with(index: number, value: T): T[];
+ }
+@@ -163,8 +167,14 @@ interface Int8Array {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findLast<S extends number>(predicate: (value: number, index: number, array: Int8Array) => value is S, thisArg?: any): S | undefined;
+-  findLast(predicate: (value: number, index: number, array: Int8Array) => unknown, thisArg?: any): number | undefined;
++  findLast<S extends Int8>(
++    predicate: (value: Int8, index: number, array: this) => value is S,
++    thisArg?: unknown,
++  ): S | undefined;
++  findLast(
++    predicate: (value: Int8, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): Int8 | undefined;
+ 
+   /**
+    * Returns the index of the last element in the array where predicate is true, and -1
+@@ -175,15 +185,18 @@ interface Int8Array {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findLastIndex(predicate: (value: number, index: number, array: Int8Array) => unknown, thisArg?: any): number;
++  findLastIndex(
++    predicate: (value: Int8, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): number;
+ 
+   /**
+-   * Copies the array and returns the copy with the elements in reverse order.
++   * Returns a copy of an array with its elements reversed.
+    */
+   toReversed(): Int8Array;
+ 
+   /**
+-   * Copies and sorts the array.
++   * Returns a copy of an array with its elements sorted.
+    * @param compareFn Function used to determine the order of the elements. It is expected to return
+    * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
+    * value otherwise. If omitted, the elements are sorted in ascending order.
+@@ -192,16 +205,18 @@ interface Int8Array {
+    * myNums.toSorted((a, b) => a - b) // Int8Array(4) [1, 2, 11, 22]
+    * ```
+    */
+-  toSorted(compareFn?: (a: number, b: number) => number): Int8Array;
++  toSorted(compareFn?: (a: Int8, b: Int8) => number): Int8Array;
+ 
+   /**
+-   * Copies the array and inserts the given number at the provided index.
++   * Copies an array, then overwrites the value at the provided index with the
++   * given value. If the index is negative, then it replaces from the end
++   * of the array.
+    * @param index The index of the value to overwrite. If the index is
+    * negative, then it replaces from the end of the array.
+-   * @param value The value to insert into the copied array.
+-   * @returns A copy of the original array with the inserted value.
++   * @param value The value to write into the copied array.
++   * @returns The copied array with the updated value.
+    */
+-  with(index: number, value: number): Int8Array;
++  with(index: number, value: Int8): Int8Array;
+ }
+ 
+ interface Uint8Array {
+@@ -214,8 +229,14 @@ interface Uint8Array {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findLast<S extends number>(predicate: (value: number, index: number, array: Uint8Array) => value is S, thisArg?: any): S | undefined;
+-  findLast(predicate: (value: number, index: number, array: Uint8Array) => unknown, thisArg?: any): number | undefined;
++  findLast<S extends Uint8>(
++    predicate: (value: Uint8, index: number, array: this) => value is S,
++    thisArg?: unknown,
++  ): S | undefined;
++  findLast(
++    predicate: (value: Uint8, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): Uint8 | undefined;
+ 
+   /**
+    * Returns the index of the last element in the array where predicate is true, and -1
+@@ -226,15 +247,18 @@ interface Uint8Array {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findLastIndex(predicate: (value: number, index: number, array: Uint8Array) => unknown, thisArg?: any): number;
++  findLastIndex(
++    predicate: (value: Uint8, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): number;
+ 
+   /**
+-   * Copies the array and returns the copy with the elements in reverse order.
++   * Returns a copy of an array with its elements reversed.
+    */
+   toReversed(): Uint8Array;
+ 
+   /**
+-   * Copies and sorts the array.
++   * Returns a copy of an array with its elements sorted.
+    * @param compareFn Function used to determine the order of the elements. It is expected to return
+    * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
+    * value otherwise. If omitted, the elements are sorted in ascending order.
+@@ -243,16 +267,18 @@ interface Uint8Array {
+    * myNums.toSorted((a, b) => a - b) // Uint8Array(4) [1, 2, 11, 22]
+    * ```
+    */
+-  toSorted(compareFn?: (a: number, b: number) => number): Uint8Array;
++  toSorted(compareFn?: (a: Uint8, b: Uint8) => number): Uint8Array;
+ 
+   /**
+-   * Copies the array and inserts the given number at the provided index.
++   * Copies an array, then overwrites the value at the provided index with the
++   * given value. If the index is negative, then it replaces from the end
++   * of the array.
+    * @param index The index of the value to overwrite. If the index is
+    * negative, then it replaces from the end of the array.
+-   * @param value The value to insert into the copied array.
+-   * @returns A copy of the original array with the inserted value.
++   * @param value The value to write into the copied array.
++   * @returns The copied array with the updated value.
+    */
+-  with(index: number, value: number): Uint8Array;
++  with(index: number, value: Uint8): Uint8Array;
+ }
+ 
+ interface Uint8ClampedArray {
+@@ -265,8 +291,14 @@ interface Uint8ClampedArray {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findLast<S extends number>(predicate: (value: number, index: number, array: Uint8ClampedArray) => value is S, thisArg?: any): S | undefined;
+-  findLast(predicate: (value: number, index: number, array: Uint8ClampedArray) => unknown, thisArg?: any): number | undefined;
++  findLast<S extends Uint8>(
++    predicate: (value: Uint8, index: number, array: this) => value is S,
++    thisArg?: unknown,
++  ): S | undefined;
++  findLast(
++    predicate: (value: Uint8, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): Uint8 | undefined;
+ 
+   /**
+    * Returns the index of the last element in the array where predicate is true, and -1
+@@ -277,15 +309,18 @@ interface Uint8ClampedArray {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findLastIndex(predicate: (value: number, index: number, array: Uint8ClampedArray) => unknown, thisArg?: any): number;
++  findLastIndex(
++    predicate: (value: Uint8, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): number;
+ 
+   /**
+-   * Copies the array and returns the copy with the elements in reverse order.
++   * Returns a copy of an array with its elements reversed.
+    */
+   toReversed(): Uint8ClampedArray;
+ 
+   /**
+-   * Copies and sorts the array.
++   * Returns a copy of an array with its elements sorted.
+    * @param compareFn Function used to determine the order of the elements. It is expected to return
+    * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
+    * value otherwise. If omitted, the elements are sorted in ascending order.
+@@ -294,16 +329,18 @@ interface Uint8ClampedArray {
+    * myNums.toSorted((a, b) => a - b) // Uint8ClampedArray(4) [1, 2, 11, 22]
+    * ```
+    */
+-  toSorted(compareFn?: (a: number, b: number) => number): Uint8ClampedArray;
++  toSorted(compareFn?: (a: Uint8, b: Uint8) => number): Uint8ClampedArray;
+ 
+   /**
+-   * Copies the array and inserts the given number at the provided index.
++   * Copies an array, then overwrites the value at the provided index with the
++   * given value. If the index is negative, then it replaces from the end
++   * of the array.
+    * @param index The index of the value to overwrite. If the index is
+    * negative, then it replaces from the end of the array.
+-   * @param value The value to insert into the copied array.
+-   * @returns A copy of the original array with the inserted value.
++   * @param value The value to write into the copied array.
++   * @returns The copied array with the updated value.
+    */
+-  with(index: number, value: number): Uint8ClampedArray;
++  with(index: number, value: Uint8): Uint8ClampedArray;
+ }
+ 
+ interface Int16Array {
+@@ -316,8 +353,14 @@ interface Int16Array {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findLast<S extends number>(predicate: (value: number, index: number, array: Int16Array) => value is S, thisArg?: any): S | undefined;
+-  findLast(predicate: (value: number, index: number, array: Int16Array) => unknown, thisArg?: any): number | undefined;
++  findLast<S extends number>(
++    predicate: (value: number, index: number, array: this) => value is S,
++    thisArg?: unknown,
++  ): S | undefined;
++  findLast(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): number | undefined;
+ 
+   /**
+    * Returns the index of the last element in the array where predicate is true, and -1
+@@ -328,15 +371,18 @@ interface Int16Array {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findLastIndex(predicate: (value: number, index: number, array: Int16Array) => unknown, thisArg?: any): number;
++  findLastIndex(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): number;
+ 
+   /**
+-   * Copies the array and returns the copy with the elements in reverse order.
++   * Returns a copy of an array with its elements reversed.
+    */
+   toReversed(): Int16Array;
+ 
+   /**
+-   * Copies and sorts the array.
++   * Returns a copy of an array with its elements sorted.
+    * @param compareFn Function used to determine the order of the elements. It is expected to return
+    * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
+    * value otherwise. If omitted, the elements are sorted in ascending order.
+@@ -348,11 +394,13 @@ interface Int16Array {
+   toSorted(compareFn?: (a: number, b: number) => number): Int16Array;
+ 
+   /**
+-   * Copies the array and inserts the given number at the provided index.
++   * Copies an array, then overwrites the value at the provided index with the
++   * given value. If the index is negative, then it replaces from the end
++   * of the array.
+    * @param index The index of the value to overwrite. If the index is
+    * negative, then it replaces from the end of the array.
+-   * @param value The value to insert into the copied array.
+-   * @returns A copy of the original array with the inserted value.
++   * @param value The value to write into the copied array.
++   * @returns The copied array with the updated value.
+    */
+   with(index: number, value: number): Int16Array;
+ }
+@@ -367,8 +415,14 @@ interface Uint16Array {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findLast<S extends number>(predicate: (value: number, index: number, array: Uint16Array) => value is S, thisArg?: any): S | undefined;
+-  findLast(predicate: (value: number, index: number, array: Uint16Array) => unknown, thisArg?: any): number | undefined;
++  findLast<S extends number>(
++    predicate: (value: number, index: number, array: this) => value is S,
++    thisArg?: unknown,
++  ): S | undefined;
++  findLast(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): number | undefined;
+ 
+   /**
+    * Returns the index of the last element in the array where predicate is true, and -1
+@@ -379,15 +433,18 @@ interface Uint16Array {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findLastIndex(predicate: (value: number, index: number, array: Uint16Array) => unknown, thisArg?: any): number;
++  findLastIndex(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): number;
+ 
+   /**
+-   * Copies the array and returns the copy with the elements in reverse order.
++   * Returns a copy of an array with its elements reversed.
+    */
+   toReversed(): Uint16Array;
+ 
+   /**
+-   * Copies and sorts the array.
++   * Returns a copy of an array with its elements sorted.
+    * @param compareFn Function used to determine the order of the elements. It is expected to return
+    * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
+    * value otherwise. If omitted, the elements are sorted in ascending order.
+@@ -399,11 +456,13 @@ interface Uint16Array {
+   toSorted(compareFn?: (a: number, b: number) => number): Uint16Array;
+ 
+   /**
+-   * Copies the array and inserts the given number at the provided index.
++   * Copies an array, then overwrites the value at the provided index with the
++   * given value. If the index is negative, then it replaces from the end
++   * of the array.
+    * @param index The index of the value to overwrite. If the index is
+    * negative, then it replaces from the end of the array.
+-   * @param value The value to insert into the copied array.
+-   * @returns A copy of the original array with the inserted value.
++   * @param value The value to write into the copied array.
++   * @returns The copied array with the updated value.
+    */
+   with(index: number, value: number): Uint16Array;
+ }
+@@ -418,8 +477,14 @@ interface Int32Array {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findLast<S extends number>(predicate: (value: number, index: number, array: Int32Array) => value is S, thisArg?: any): S | undefined;
+-  findLast(predicate: (value: number, index: number, array: Int32Array) => unknown, thisArg?: any): number | undefined;
++  findLast<S extends number>(
++    predicate: (value: number, index: number, array: this) => value is S,
++    thisArg?: unknown,
++  ): S | undefined;
++  findLast(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): number | undefined;
+ 
+   /**
+    * Returns the index of the last element in the array where predicate is true, and -1
+@@ -430,15 +495,18 @@ interface Int32Array {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findLastIndex(predicate: (value: number, index: number, array: Int32Array) => unknown, thisArg?: any): number;
++  findLastIndex(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): number;
+ 
+   /**
+-   * Copies the array and returns the copy with the elements in reverse order.
++   * Returns a copy of an array with its elements reversed.
+    */
+   toReversed(): Int32Array;
+ 
+   /**
+-   * Copies and sorts the array.
++   * Returns a copy of an array with its elements sorted.
+    * @param compareFn Function used to determine the order of the elements. It is expected to return
+    * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
+    * value otherwise. If omitted, the elements are sorted in ascending order.
+@@ -450,11 +518,13 @@ interface Int32Array {
+   toSorted(compareFn?: (a: number, b: number) => number): Int32Array;
+ 
+   /**
+-   * Copies the array and inserts the given number at the provided index.
++   * Copies an array, then overwrites the value at the provided index with the
++   * given value. If the index is negative, then it replaces from the end
++   * of the array.
+    * @param index The index of the value to overwrite. If the index is
+    * negative, then it replaces from the end of the array.
+-   * @param value The value to insert into the copied array.
+-   * @returns A copy of the original array with the inserted value.
++   * @param value The value to write into the copied array.
++   * @returns The copied array with the updated value.
+    */
+   with(index: number, value: number): Int32Array;
+ }
+@@ -469,8 +539,14 @@ interface Uint32Array {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findLast<S extends number>(predicate: (value: number, index: number, array: Uint32Array) => value is S, thisArg?: any): S | undefined;
+-  findLast(predicate: (value: number, index: number, array: Uint32Array) => unknown, thisArg?: any): number | undefined;
++  findLast<S extends number>(
++    predicate: (value: number, index: number, array: this) => value is S,
++    thisArg?: unknown,
++  ): S | undefined;
++  findLast(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): number | undefined;
+ 
+   /**
+    * Returns the index of the last element in the array where predicate is true, and -1
+@@ -481,15 +557,18 @@ interface Uint32Array {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findLastIndex(predicate: (value: number, index: number, array: Uint32Array) => unknown, thisArg?: any): number;
++  findLastIndex(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): number;
+ 
+   /**
+-   * Copies the array and returns the copy with the elements in reverse order.
++   * Returns a copy of an array with its elements reversed.
+    */
+   toReversed(): Uint32Array;
+ 
+   /**
+-   * Copies and sorts the array.
++   * Returns a copy of an array with its elements sorted.
+    * @param compareFn Function used to determine the order of the elements. It is expected to return
+    * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
+    * value otherwise. If omitted, the elements are sorted in ascending order.
+@@ -501,11 +580,13 @@ interface Uint32Array {
+   toSorted(compareFn?: (a: number, b: number) => number): Uint32Array;
+ 
+   /**
+-   * Copies the array and inserts the given number at the provided index.
++   * Copies an array, then overwrites the value at the provided index with the
++   * given value. If the index is negative, then it replaces from the end
++   * of the array.
+    * @param index The index of the value to overwrite. If the index is
+    * negative, then it replaces from the end of the array.
+-   * @param value The value to insert into the copied array.
+-   * @returns A copy of the original array with the inserted value.
++   * @param value The value to write into the copied array.
++   * @returns The copied array with the updated value.
+    */
+   with(index: number, value: number): Uint32Array;
+ }
+@@ -520,8 +601,14 @@ interface Float32Array {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findLast<S extends number>(predicate: (value: number, index: number, array: Float32Array) => value is S, thisArg?: any): S | undefined;
+-  findLast(predicate: (value: number, index: number, array: Float32Array) => unknown, thisArg?: any): number | undefined;
++  findLast<S extends number>(
++    predicate: (value: number, index: number, array: this) => value is S,
++    thisArg?: unknown,
++  ): S | undefined;
++  findLast(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): number | undefined;
+ 
+   /**
+    * Returns the index of the last element in the array where predicate is true, and -1
+@@ -532,15 +619,18 @@ interface Float32Array {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findLastIndex(predicate: (value: number, index: number, array: Float32Array) => unknown, thisArg?: any): number;
++  findLastIndex(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): number;
+ 
+   /**
+-   * Copies the array and returns the copy with the elements in reverse order.
++   * Returns a copy of an array with its elements reversed.
+    */
+   toReversed(): Float32Array;
+ 
+   /**
+-   * Copies and sorts the array.
++   * Returns a copy of an array with its elements sorted.
+    * @param compareFn Function used to determine the order of the elements. It is expected to return
+    * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
+    * value otherwise. If omitted, the elements are sorted in ascending order.
+@@ -552,11 +642,13 @@ interface Float32Array {
+   toSorted(compareFn?: (a: number, b: number) => number): Float32Array;
+ 
+   /**
+-   * Copies the array and inserts the given number at the provided index.
++   * Copies an array, then overwrites the value at the provided index with the
++   * given value. If the index is negative, then it replaces from the end
++   * of the array.
+    * @param index The index of the value to overwrite. If the index is
+    * negative, then it replaces from the end of the array.
+-   * @param value The value to insert into the copied array.
+-   * @returns A copy of the original array with the inserted value.
++   * @param value The value to write into the copied array.
++   * @returns The copied array with the updated value.
+    */
+   with(index: number, value: number): Float32Array;
+ }
+@@ -571,8 +663,14 @@ interface Float64Array {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findLast<S extends number>(predicate: (value: number, index: number, array: Float64Array) => value is S, thisArg?: any): S | undefined;
+-  findLast(predicate: (value: number, index: number, array: Float64Array) => unknown, thisArg?: any): number | undefined;
++  findLast<S extends number>(
++    predicate: (value: number, index: number, array: this) => value is S,
++    thisArg?: unknown,
++  ): S | undefined;
++  findLast(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): number | undefined;
+ 
+   /**
+    * Returns the index of the last element in the array where predicate is true, and -1
+@@ -583,15 +681,18 @@ interface Float64Array {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findLastIndex(predicate: (value: number, index: number, array: Float64Array) => unknown, thisArg?: any): number;
++  findLastIndex(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): number;
+ 
+   /**
+-   * Copies the array and returns the copy with the elements in reverse order.
++   * Returns a copy of an array with its elements reversed.
+    */
+   toReversed(): Float64Array;
+ 
+   /**
+-   * Copies and sorts the array.
++   * Returns a copy of an array with its elements sorted.
+    * @param compareFn Function used to determine the order of the elements. It is expected to return
+    * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
+    * value otherwise. If omitted, the elements are sorted in ascending order.
+@@ -603,11 +704,13 @@ interface Float64Array {
+   toSorted(compareFn?: (a: number, b: number) => number): Float64Array;
+ 
+   /**
+-   * Copies the array and inserts the given number at the provided index.
++   * Copies an array, then overwrites the value at the provided index with the
++   * given value. If the index is negative, then it replaces from the end
++   * of the array.
+    * @param index The index of the value to overwrite. If the index is
+    * negative, then it replaces from the end of the array.
+-   * @param value The value to insert into the copied array.
+-   * @returns A copy of the original array with the inserted value.
++   * @param value The value to write into the copied array.
++   * @returns The copied array with the updated value.
+    */
+   with(index: number, value: number): Float64Array;
+ }
+@@ -622,8 +725,14 @@ interface BigInt64Array {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findLast<S extends bigint>(predicate: (value: bigint, index: number, array: BigInt64Array) => value is S, thisArg?: any): S | undefined;
+-  findLast(predicate: (value: bigint, index: number, array: BigInt64Array) => unknown, thisArg?: any): bigint | undefined;
++  findLast<S extends bigint>(
++    predicate: (value: bigint, index: number, array: this) => value is S,
++    thisArg?: unknown,
++  ): S | undefined;
++  findLast(
++    predicate: (value: bigint, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): bigint | undefined;
+ 
+   /**
+    * Returns the index of the last element in the array where predicate is true, and -1
+@@ -634,15 +743,18 @@ interface BigInt64Array {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findLastIndex(predicate: (value: bigint, index: number, array: BigInt64Array) => unknown, thisArg?: any): number;
++  findLastIndex(
++    predicate: (value: bigint, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): number;
+ 
+   /**
+-   * Copies the array and returns the copy with the elements in reverse order.
++   * Returns a copy of an array with its elements reversed.
+    */
+   toReversed(): BigInt64Array;
+ 
+   /**
+-   * Copies and sorts the array.
++   * Returns a copy of an array with its elements sorted.
+    * @param compareFn Function used to determine the order of the elements. It is expected to return
+    * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
+    * value otherwise. If omitted, the elements are sorted in ascending order.
+@@ -654,11 +766,13 @@ interface BigInt64Array {
+   toSorted(compareFn?: (a: bigint, b: bigint) => number): BigInt64Array;
+ 
+   /**
+-   * Copies the array and inserts the given bigint at the provided index.
++   * Copies an array, then overwrites the value at the provided index with the
++   * given value. If the index is negative, then it replaces from the end
++   * of the array.
+    * @param index The index of the value to overwrite. If the index is
+    * negative, then it replaces from the end of the array.
+-   * @param value The value to insert into the copied array.
+-   * @returns A copy of the original array with the inserted value.
++   * @param value The value to write into the copied array.
++   * @returns The copied array with the updated value.
+    */
+   with(index: number, value: bigint): BigInt64Array;
+ }
+@@ -673,8 +787,14 @@ interface BigUint64Array {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findLast<S extends bigint>(predicate: (value: bigint, index: number, array: BigUint64Array) => value is S, thisArg?: any): S | undefined;
+-  findLast(predicate: (value: bigint, index: number, array: BigUint64Array) => unknown, thisArg?: any): bigint | undefined;
++  findLast<S extends bigint>(
++    predicate: (value: bigint, index: number, array: this) => value is S,
++    thisArg?: unknown,
++  ): S | undefined;
++  findLast(
++    predicate: (value: bigint, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): bigint | undefined;
+ 
+   /**
+    * Returns the index of the last element in the array where predicate is true, and -1
+@@ -685,15 +805,18 @@ interface BigUint64Array {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findLastIndex(predicate: (value: bigint, index: number, array: BigUint64Array) => unknown, thisArg?: any): number;
++  findLastIndex(
++    predicate: (value: bigint, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): number;
+ 
+   /**
+-   * Copies the array and returns the copy with the elements in reverse order.
++   * Returns a copy of an array with its elements reversed.
+    */
+   toReversed(): BigUint64Array;
+ 
+   /**
+-   * Copies and sorts the array.
++   * Returns a copy of an array with its elements sorted.
+    * @param compareFn Function used to determine the order of the elements. It is expected to return
+    * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
+    * value otherwise. If omitted, the elements are sorted in ascending order.
+@@ -705,11 +828,13 @@ interface BigUint64Array {
+   toSorted(compareFn?: (a: bigint, b: bigint) => number): BigUint64Array;
+ 
+   /**
+-   * Copies the array and inserts the given bigint at the provided index.
++   * Copies an array, then overwrites the value at the provided index with the
++   * given value. If the index is negative, then it replaces from the end
++   * of the array.
+    * @param index The index of the value to overwrite. If the index is
+    * negative, then it replaces from the end of the array.
+-   * @param value The value to insert into the copied array.
+-   * @returns A copy of the original array with the inserted value.
++   * @param value The value to write into the copied array.
++   * @returns The copied array with the updated value.
+    */
+   with(index: number, value: bigint): BigUint64Array;
+ }

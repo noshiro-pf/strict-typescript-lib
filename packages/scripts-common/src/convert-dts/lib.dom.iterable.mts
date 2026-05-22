@@ -4,20 +4,25 @@ import {
   composeMonoTypeFns,
   replaceWithNoMatchCheck,
 } from '../functions/utils/node-utils.mjs';
-import { type ConverterOptions } from './common.mjs';
+import { arrayIteratorName, type ConverterOptions } from './common.mjs';
 
 export const convertLibDomIterable =
-  ({ brandedNumber }: ConverterOptions): MonoTypeFunction<string> =>
-  (src) =>
-    pipe(src).map(
+  ({ brandedNumber, tsLibShape }: ConverterOptions): MonoTypeFunction<string> =>
+  (src) => {
+    const ai = arrayIteratorName(tsLibShape);
+
+    return pipe(src).map(
       composeMonoTypeFns(
         replaceWithNoMatchCheck(
-          'entries(): ArrayIterator<readonly [number,',
-          `entries(): ArrayIterator<readonly [${brandedNumber.ArraySize},`,
+          // TS 5.6+ uses `ArrayIterator`; earlier versions used
+          // `IterableIterator`.
+          /entries\(\): (?:Array|Iterable)Iterator<readonly \[number,/gu,
+          `entries(): ${ai}<readonly [${brandedNumber.ArraySize},`,
         ),
         replaceWithNoMatchCheck(
-          'keys(): ArrayIterator<number>;',
-          `keys(): ArrayIterator<${brandedNumber.ArraySize}>;`,
+          /keys\(\): (?:Array|Iterable)Iterator<number>;/gu,
+          `keys(): ${ai}<${brandedNumber.ArraySize}>;`,
         ),
       ),
     ).value;
+  };

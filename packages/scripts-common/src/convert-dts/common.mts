@@ -19,6 +19,13 @@ export type TsLibShape = Readonly<{
    * `Int8Array`.
    */
   hasTypedArrayGeneric: boolean;
+
+  /**
+   * TS 5.6 introduced the `ArrayIterator` / `MapIterator` / `SetIterator`
+   * built-in interfaces. Earlier versions used `IterableIterator` for the
+   * same return types. Emit the appropriate name in the replacement string.
+   */
+  hasArrayIterator: boolean;
 }>;
 
 export type ConverterOptions = Readonly<{
@@ -44,8 +51,17 @@ export const tsLibShapeFor = (tsVersion: string): TsLibShape => {
 
   return {
     hasTypedArrayGeneric: atLeast(5, 7),
+    hasArrayIterator: atLeast(5, 6),
   };
 };
+
+/**
+ * Name of the array-iterator return type for the target TS lib shape:
+ *   - TS >= 5.6: `ArrayIterator`
+ *   - TS  < 5.6: `IterableIterator`
+ */
+export const arrayIteratorName = (tsLibShape: TsLibShape): string =>
+  tsLibShape.hasArrayIterator ? 'ArrayIterator' : 'IterableIterator';
 
 /**
  * Render a typed-array reference appropriate to the target TS lib shape:

@@ -6,6 +6,7 @@ import {
   replaceWithNoMatchCheckBetweenRegexp,
 } from '../functions/utils/node-utils.mjs';
 import {
+  arrayIteratorName,
   closeBraceRegexp,
   idFn,
   typedArrayInterfaceStartRegexp,
@@ -90,8 +91,9 @@ export const convertLibEs2020Bigint =
           `): ${config.brandedNumber.TypedArraySearchResult};`,
         ),
         replaceWithNoMatchCheck(
-          'keys(): ArrayIterator<number>;',
-          `keys(): ArrayIterator<${config.brandedNumber.TypedArraySize}>;`,
+          // TS 5.6+ uses `ArrayIterator`; earlier versions used `IterableIterator`.
+          /keys\(\): (?:Array|Iterable)Iterator<number>;/gu,
+          `keys(): ${arrayIteratorName(config.tsLibShape)}<${config.brandedNumber.TypedArraySize}>;`,
         ),
         replaceWithNoMatchCheck(
           'fill(value: bigint, start?: number, end?: number): this;',
