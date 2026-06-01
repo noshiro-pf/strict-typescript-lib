@@ -1,6 +1,6 @@
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
-import { Result } from 'ts-data-forge';
+import { Arr, Result } from 'ts-data-forge';
 import { formatFiles, isDirectlyExecuted } from 'ts-repo-utils';
 import { projectRootPath } from '../project-root-path.mjs';
 import { sourceFileMappings } from './embed-examples-in-jsdoc-map.mjs';
@@ -26,6 +26,14 @@ export const embedExamplesInJsDoc = async (): Promise<
 
       // eslint-disable-next-line security/detect-non-literal-fs-filename
       const sourceContent = await fs.readFile(sourceFilePath, 'utf8');
+
+      const codeBlockCount = sourceContent.split(codeBlockStart).length - 1;
+
+      if (codeBlockCount !== sampleFiles.length) {
+        return Result.err(
+          `❌ Code block count mismatch in ${sourcePath}: found ${codeBlockCount} \`\`\`ts blocks but expected ${sampleFiles.length} sample files`,
+        );
+      }
 
       const mut_results: string[] = [];
 
@@ -94,7 +102,7 @@ export const embedExamplesInJsDoc = async (): Promise<
       mut_modifiedFiles.push(sourceFilePath);
     }
 
-    if (mut_modifiedFiles.length > 0) {
+    if (Arr.isNonEmpty(mut_modifiedFiles)) {
       console.log(`\nFormatting ${mut_modifiedFiles.length} modified files...`);
 
       await formatFiles(mut_modifiedFiles);
