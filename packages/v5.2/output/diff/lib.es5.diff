@@ -1602,7 +1602,7 @@
     */
 -  every(predicate: (value: number, index: number, array: Int8Array) => unknown, thisArg?: any): boolean;
 +  every(
-+    predicate: (value: Int8, index: number, array: this) => boolean,
++    predicate: (value: Int8, index: number, array: Int8Array) => boolean,
 +    thisArg?: unknown,
 +  ): boolean;
  
@@ -1623,7 +1623,7 @@
     */
 -  filter(predicate: (value: number, index: number, array: Int8Array) => any, thisArg?: any): Int8Array;
 +  filter(
-+    predicate: (value: Int8, index: number, array: this) => boolean,
++    predicate: (value: Int8, index: number, array: Int8Array) => boolean,
 +    thisArg?: unknown,
 +  ): Int8Array;
  
@@ -1635,7 +1635,7 @@
     */
 -  find(predicate: (value: number, index: number, obj: Int8Array) => boolean, thisArg?: any): number | undefined;
 +  find(
-+    predicate: (value: Int8, index: number, obj: this) => boolean,
++    predicate: (value: Int8, index: number, obj: Int8Array) => boolean,
 +    thisArg?: unknown,
 +  ): Int8 | undefined;
  
@@ -1647,7 +1647,7 @@
     */
 -  findIndex(predicate: (value: number, index: number, obj: Int8Array) => boolean, thisArg?: any): number;
 +  findIndex(
-+    predicate: (value: Int8, index: number, obj: this) => boolean,
++    predicate: (value: Int8, index: number, obj: Int8Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  
@@ -1659,7 +1659,7 @@
     */
 -  forEach(callbackfn: (value: number, index: number, array: Int8Array) => void, thisArg?: any): void;
 +  forEach(
-+    callbackfn: (value: Int8, index: number, array: this) => void,
++    callbackfn: (value: Int8, index: number, array: Int8Array) => void,
 +    thisArg?: unknown,
 +  ): void;
  
@@ -1689,7 +1689,7 @@
     */
 -  map(callbackfn: (value: number, index: number, array: Int8Array) => number, thisArg?: any): Int8Array;
 +  map(
-+    callbackfn: (value: Int8, index: number, array: this) => Int8,
++    callbackfn: (value: Int8, index: number, array: Int8Array) => Int8,
 +    thisArg?: unknown,
 +  ): Int8Array;
  
@@ -1706,7 +1706,7 @@
 +      previousValue: Int8,
 +      currentValue: Int8,
 +      currentIndex: number,
-+      array: this,
++      array: Int8Array,
 +    ) => Int8,
 +  ): Int8;
 +  reduce(
@@ -1714,7 +1714,7 @@
 +      previousValue: Int8,
 +      currentValue: Int8,
 +      currentIndex: number,
-+      array: this,
++      array: Int8Array,
 +    ) => Int8,
 +    initialValue: Int8,
 +  ): Int8;
@@ -1749,7 +1749,7 @@
 +      previousValue: Int8,
 +      currentValue: Int8,
 +      currentIndex: number,
-+      array: this,
++      array: Int8Array,
 +    ) => Int8,
 +  ): Int8;
 +  reduceRight(
@@ -1757,7 +1757,7 @@
 +      previousValue: Int8,
 +      currentValue: Int8,
 +      currentIndex: number,
-+      array: this,
++      array: Int8Array,
 +    ) => Int8,
 +    initialValue: Int8,
 +  ): Int8;
@@ -1796,7 +1796,7 @@
     */
 -  some(predicate: (value: number, index: number, array: Int8Array) => unknown, thisArg?: any): boolean;
 +  some(
-+    predicate: (value: Int8, index: number, array: this) => boolean,
++    predicate: (value: Int8, index: number, array: Int8Array) => boolean,
 +    thisArg?: unknown,
 +  ): boolean;
  
@@ -1887,7 +1887,7 @@
     */
 -  every(predicate: (value: number, index: number, array: Uint8Array) => unknown, thisArg?: any): boolean;
 +  every(
-+    predicate: (value: Uint8, index: number, array: this) => boolean,
++    predicate: (value: Uint8, index: number, array: Uint8Array) => boolean,
 +    thisArg?: unknown,
 +  ): boolean;
  
@@ -1908,7 +1908,7 @@
     */
 -  filter(predicate: (value: number, index: number, array: Uint8Array) => any, thisArg?: any): Uint8Array;
 +  filter(
-+    predicate: (value: Uint8, index: number, array: this) => boolean,
++    predicate: (value: Uint8, index: number, array: Uint8Array) => boolean,
 +    thisArg?: unknown,
 +  ): Uint8Array;
  
@@ -1920,7 +1920,7 @@
     */
 -  find(predicate: (value: number, index: number, obj: Uint8Array) => boolean, thisArg?: any): number | undefined;
 +  find(
-+    predicate: (value: Uint8, index: number, obj: this) => boolean,
++    predicate: (value: Uint8, index: number, obj: Uint8Array) => boolean,
 +    thisArg?: unknown,
 +  ): Uint8 | undefined;
  
@@ -1932,7 +1932,7 @@
     */
 -  findIndex(predicate: (value: number, index: number, obj: Uint8Array) => boolean, thisArg?: any): number;
 +  findIndex(
-+    predicate: (value: Uint8, index: number, obj: this) => boolean,
++    predicate: (value: Uint8, index: number, obj: Uint8Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  
@@ -1944,7 +1944,7 @@
     */
 -  forEach(callbackfn: (value: number, index: number, array: Uint8Array) => void, thisArg?: any): void;
 +  forEach(
-+    callbackfn: (value: Uint8, index: number, array: this) => void,
++    callbackfn: (value: Uint8, index: number, array: Uint8Array) => void,
 +    thisArg?: unknown,
 +  ): void;
  
@@ -1974,7 +1974,7 @@
     */
 -  map(callbackfn: (value: number, index: number, array: Uint8Array) => number, thisArg?: any): Uint8Array;
 +  map(
-+    callbackfn: (value: Uint8, index: number, array: this) => Uint8,
++    callbackfn: (value: Uint8, index: number, array: Uint8Array) => Uint8,
 +    thisArg?: unknown,
 +  ): Uint8Array;
  
@@ -1991,7 +1991,7 @@
 +      previousValue: Uint8,
 +      currentValue: Uint8,
 +      currentIndex: number,
-+      array: this,
++      array: Uint8Array,
 +    ) => Uint8,
 +  ): Uint8;
 +  reduce(
@@ -1999,7 +1999,7 @@
 +      previousValue: Uint8,
 +      currentValue: Uint8,
 +      currentIndex: number,
-+      array: this,
++      array: Uint8Array,
 +    ) => Uint8,
 +    initialValue: Uint8,
 +  ): Uint8;
@@ -2034,7 +2034,7 @@
 +      previousValue: Uint8,
 +      currentValue: Uint8,
 +      currentIndex: number,
-+      array: this,
++      array: Uint8Array,
 +    ) => Uint8,
 +  ): Uint8;
 +  reduceRight(
@@ -2042,7 +2042,7 @@
 +      previousValue: Uint8,
 +      currentValue: Uint8,
 +      currentIndex: number,
-+      array: this,
++      array: Uint8Array,
 +    ) => Uint8,
 +    initialValue: Uint8,
 +  ): Uint8;
@@ -2081,7 +2081,7 @@
     */
 -  some(predicate: (value: number, index: number, array: Uint8Array) => unknown, thisArg?: any): boolean;
 +  some(
-+    predicate: (value: Uint8, index: number, array: this) => boolean,
++    predicate: (value: Uint8, index: number, array: Uint8Array) => boolean,
 +    thisArg?: unknown,
 +  ): boolean;
  
@@ -2167,19 +2167,23 @@
  
    /**
     * The ArrayBuffer instance referenced by the array.
-@@ -2454,7 +2884,10 @@ interface Uint8ClampedArray {
+@@ -2454,7 +2884,14 @@ interface Uint8ClampedArray {
     * @param thisArg An object to which the this keyword can refer in the predicate function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  every(predicate: (value: number, index: number, array: Uint8ClampedArray) => unknown, thisArg?: any): boolean;
 +  every(
-+    predicate: (value: Uint8, index: number, array: this) => boolean,
++    predicate: (
++      value: Uint8,
++      index: number,
++      array: Uint8ClampedArray,
++    ) => boolean,
 +    thisArg?: unknown,
 +  ): boolean;
  
    /**
     * Changes all array elements from `start` to `end` index to a static `value` and returns the modified array
-@@ -2464,7 +2897,7 @@ interface Uint8ClampedArray {
+@@ -2464,7 +2901,7 @@ interface Uint8ClampedArray {
     * @param end index to stop filling the array at. If end is negative, it is treated as
     * length+end.
     */
@@ -2188,55 +2192,59 @@
  
    /**
     * Returns the elements of an array that meet the condition specified in a callback function.
-@@ -2473,7 +2906,10 @@ interface Uint8ClampedArray {
+@@ -2473,7 +2910,14 @@ interface Uint8ClampedArray {
     * @param thisArg An object to which the this keyword can refer in the predicate function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  filter(predicate: (value: number, index: number, array: Uint8ClampedArray) => any, thisArg?: any): Uint8ClampedArray;
 +  filter(
-+    predicate: (value: Uint8, index: number, array: this) => boolean,
++    predicate: (
++      value: Uint8,
++      index: number,
++      array: Uint8ClampedArray,
++    ) => boolean,
 +    thisArg?: unknown,
 +  ): Uint8ClampedArray;
  
    /**
     * Returns the value of the first element in the array where predicate is true, and undefined
-@@ -2484,7 +2920,10 @@ interface Uint8ClampedArray {
+@@ -2484,7 +2928,10 @@ interface Uint8ClampedArray {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  find(predicate: (value: number, index: number, obj: Uint8ClampedArray) => boolean, thisArg?: any): number | undefined;
 +  find(
-+    predicate: (value: Uint8, index: number, obj: this) => boolean,
++    predicate: (value: Uint8, index: number, obj: Uint8ClampedArray) => boolean,
 +    thisArg?: unknown,
 +  ): Uint8 | undefined;
  
    /**
     * Returns the index of the first element in the array where predicate is true, and -1
-@@ -2495,7 +2934,10 @@ interface Uint8ClampedArray {
+@@ -2495,7 +2942,10 @@ interface Uint8ClampedArray {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findIndex(predicate: (value: number, index: number, obj: Uint8ClampedArray) => boolean, thisArg?: any): number;
 +  findIndex(
-+    predicate: (value: Uint8, index: number, obj: this) => boolean,
++    predicate: (value: Uint8, index: number, obj: Uint8ClampedArray) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  
    /**
     * Performs the specified action for each element in an array.
-@@ -2504,7 +2946,10 @@ interface Uint8ClampedArray {
+@@ -2504,7 +2954,10 @@ interface Uint8ClampedArray {
     * @param thisArg  An object to which the this keyword can refer in the callbackfn function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  forEach(callbackfn: (value: number, index: number, array: Uint8ClampedArray) => void, thisArg?: any): void;
 +  forEach(
-+    callbackfn: (value: Uint8, index: number, array: this) => void,
++    callbackfn: (value: Uint8, index: number, array: Uint8ClampedArray) => void,
 +    thisArg?: unknown,
 +  ): void;
  
    /**
     * Returns the index of the first occurrence of a value in an array.
-@@ -2512,7 +2957,7 @@ interface Uint8ClampedArray {
+@@ -2512,7 +2965,7 @@ interface Uint8ClampedArray {
     * @param fromIndex The array index at which to begin the search. If fromIndex is omitted, the
     *  search starts at index 0.
     */
@@ -2245,7 +2253,7 @@
  
    /**
     * Adds all the elements of an array separated by the specified separator string.
-@@ -2527,7 +2972,7 @@ interface Uint8ClampedArray {
+@@ -2527,7 +2980,7 @@ interface Uint8ClampedArray {
     * @param fromIndex The array index at which to begin the search. If fromIndex is omitted, the
     * search starts at index 0.
     */
@@ -2254,19 +2262,23 @@
  
    /**
     * The length of the array.
-@@ -2542,7 +2987,10 @@ interface Uint8ClampedArray {
+@@ -2542,7 +2995,14 @@ interface Uint8ClampedArray {
     * @param thisArg An object to which the this keyword can refer in the callbackfn function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  map(callbackfn: (value: number, index: number, array: Uint8ClampedArray) => number, thisArg?: any): Uint8ClampedArray;
 +  map(
-+    callbackfn: (value: Uint8, index: number, array: this) => Uint8,
++    callbackfn: (
++      value: Uint8,
++      index: number,
++      array: Uint8ClampedArray,
++    ) => Uint8,
 +    thisArg?: unknown,
 +  ): Uint8ClampedArray;
  
    /**
     * Calls the specified callback function for all the elements in an array. The return value of
-@@ -2554,8 +3002,23 @@ interface Uint8ClampedArray {
+@@ -2554,8 +3014,23 @@ interface Uint8ClampedArray {
     * the accumulation. The first call to the callbackfn function provides this value as an argument
     * instead of an array value.
     */
@@ -2277,7 +2289,7 @@
 +      previousValue: Uint8,
 +      currentValue: Uint8,
 +      currentIndex: number,
-+      array: this,
++      array: Uint8ClampedArray,
 +    ) => Uint8,
 +  ): Uint8;
 +  reduce(
@@ -2285,14 +2297,14 @@
 +      previousValue: Uint8,
 +      currentValue: Uint8,
 +      currentIndex: number,
-+      array: this,
++      array: Uint8ClampedArray,
 +    ) => Uint8,
 +    initialValue: Uint8,
 +  ): Uint8;
  
    /**
     * Calls the specified callback function for all the elements in an array. The return value of
-@@ -2567,7 +3030,15 @@ interface Uint8ClampedArray {
+@@ -2567,7 +3042,15 @@ interface Uint8ClampedArray {
     * the accumulation. The first call to the callbackfn function provides this value as an argument
     * instead of an array value.
     */
@@ -2309,7 +2321,7 @@
  
    /**
     * Calls the specified callback function for all the elements in an array, in descending order.
-@@ -2579,8 +3050,23 @@ interface Uint8ClampedArray {
+@@ -2579,8 +3062,23 @@ interface Uint8ClampedArray {
     * the accumulation. The first call to the callbackfn function provides this value as an
     * argument instead of an array value.
     */
@@ -2320,7 +2332,7 @@
 +      previousValue: Uint8,
 +      currentValue: Uint8,
 +      currentIndex: number,
-+      array: this,
++      array: Uint8ClampedArray,
 +    ) => Uint8,
 +  ): Uint8;
 +  reduceRight(
@@ -2328,14 +2340,14 @@
 +      previousValue: Uint8,
 +      currentValue: Uint8,
 +      currentIndex: number,
-+      array: this,
++      array: Uint8ClampedArray,
 +    ) => Uint8,
 +    initialValue: Uint8,
 +  ): Uint8;
  
    /**
     * Calls the specified callback function for all the elements in an array, in descending order.
-@@ -2592,7 +3078,15 @@ interface Uint8ClampedArray {
+@@ -2592,7 +3090,15 @@ interface Uint8ClampedArray {
     * the accumulation. The first call to the callbackfn function provides this value as an argument
     * instead of an array value.
     */
@@ -2352,7 +2364,7 @@
  
    /**
     * Reverses the elements in an Array.
-@@ -2604,7 +3098,7 @@ interface Uint8ClampedArray {
+@@ -2604,7 +3110,7 @@ interface Uint8ClampedArray {
     * @param array A typed or untyped array of values to set.
     * @param offset The index in the current array at which the values are to be written.
     */
@@ -2361,13 +2373,17 @@
  
    /**
     * Returns a section of an array.
-@@ -2621,18 +3115,21 @@ interface Uint8ClampedArray {
+@@ -2621,18 +3127,25 @@ interface Uint8ClampedArray {
     * @param thisArg An object to which the this keyword can refer in the predicate function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  some(predicate: (value: number, index: number, array: Uint8ClampedArray) => unknown, thisArg?: any): boolean;
 +  some(
-+    predicate: (value: Uint8, index: number, array: this) => boolean,
++    predicate: (
++      value: Uint8,
++      index: number,
++      array: Uint8ClampedArray,
++    ) => boolean,
 +    thisArg?: unknown,
 +  ): boolean;
  
@@ -2386,7 +2402,7 @@
  
    /**
     * Gets a new Uint8ClampedArray view of the ArrayBuffer store for this array, referencing the elements
-@@ -2655,31 +3152,35 @@ interface Uint8ClampedArray {
+@@ -2655,31 +3168,35 @@ interface Uint8ClampedArray {
    /** Returns the primitive value of the specified object. */
    valueOf(): Uint8ClampedArray;
  
@@ -2428,7 +2444,7 @@
  
    /**
     * Creates an array from an array-like or iterable object.
-@@ -2687,9 +3188,13 @@ interface Uint8ClampedArrayConstructor {
+@@ -2687,9 +3204,13 @@ interface Uint8ClampedArrayConstructor {
     * @param mapfn A mapping function to call on every element of the array.
     * @param thisArg Value of 'this' used to invoke the mapfn.
     */
@@ -2444,7 +2460,7 @@
  
  /**
   * A typed array of 16-bit signed integer values. The contents are initialized to 0. If the
-@@ -2699,7 +3204,7 @@ interface Int16Array {
+@@ -2699,7 +3220,7 @@ interface Int16Array {
    /**
     * The size in bytes of each element in the array.
     */
@@ -2453,80 +2469,80 @@
  
    /**
     * The ArrayBuffer instance referenced by the array.
-@@ -2735,7 +3240,10 @@ interface Int16Array {
+@@ -2735,7 +3256,10 @@ interface Int16Array {
     * @param thisArg An object to which the this keyword can refer in the predicate function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  every(predicate: (value: number, index: number, array: Int16Array) => unknown, thisArg?: any): boolean;
 +  every(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Int16Array) => boolean,
 +    thisArg?: unknown,
 +  ): boolean;
  
    /**
     * Changes all array elements from `start` to `end` index to a static `value` and returns the modified array
-@@ -2754,7 +3262,10 @@ interface Int16Array {
+@@ -2754,7 +3278,10 @@ interface Int16Array {
     * @param thisArg An object to which the this keyword can refer in the predicate function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  filter(predicate: (value: number, index: number, array: Int16Array) => any, thisArg?: any): Int16Array;
 +  filter(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Int16Array) => boolean,
 +    thisArg?: unknown,
 +  ): Int16Array;
  
    /**
     * Returns the value of the first element in the array where predicate is true, and undefined
-@@ -2765,7 +3276,10 @@ interface Int16Array {
+@@ -2765,7 +3292,10 @@ interface Int16Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  find(predicate: (value: number, index: number, obj: Int16Array) => boolean, thisArg?: any): number | undefined;
 +  find(
-+    predicate: (value: number, index: number, obj: this) => boolean,
++    predicate: (value: number, index: number, obj: Int16Array) => boolean,
 +    thisArg?: unknown,
 +  ): number | undefined;
  
    /**
     * Returns the index of the first element in the array where predicate is true, and -1
-@@ -2776,7 +3290,10 @@ interface Int16Array {
+@@ -2776,7 +3306,10 @@ interface Int16Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findIndex(predicate: (value: number, index: number, obj: Int16Array) => boolean, thisArg?: any): number;
 +  findIndex(
-+    predicate: (value: number, index: number, obj: this) => boolean,
++    predicate: (value: number, index: number, obj: Int16Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  
    /**
     * Performs the specified action for each element in an array.
-@@ -2785,7 +3302,11 @@ interface Int16Array {
+@@ -2785,7 +3318,11 @@ interface Int16Array {
     * @param thisArg  An object to which the this keyword can refer in the callbackfn function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  forEach(callbackfn: (value: number, index: number, array: Int16Array) => void, thisArg?: any): void;
 +  forEach(
-+    callbackfn: (value: number, index: number, array: this) => void,
++    callbackfn: (value: number, index: number, array: Int16Array) => void,
 +    thisArg?: unknown,
 +  ): void;
 +
    /**
     * Returns the index of the first occurrence of a value in an array.
     * @param searchElement The value to locate in the array.
-@@ -2822,7 +3343,10 @@ interface Int16Array {
+@@ -2822,7 +3359,10 @@ interface Int16Array {
     * @param thisArg An object to which the this keyword can refer in the callbackfn function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  map(callbackfn: (value: number, index: number, array: Int16Array) => number, thisArg?: any): Int16Array;
 +  map(
-+    callbackfn: (value: number, index: number, array: this) => number,
++    callbackfn: (value: number, index: number, array: Int16Array) => number,
 +    thisArg?: unknown,
 +  ): Int16Array;
  
    /**
     * Calls the specified callback function for all the elements in an array. The return value of
-@@ -2834,8 +3358,23 @@ interface Int16Array {
+@@ -2834,8 +3374,23 @@ interface Int16Array {
     * the accumulation. The first call to the callbackfn function provides this value as an argument
     * instead of an array value.
     */
@@ -2537,7 +2553,7 @@
 +      previousValue: number,
 +      currentValue: number,
 +      currentIndex: number,
-+      array: this,
++      array: Int16Array,
 +    ) => number,
 +  ): number;
 +  reduce(
@@ -2545,14 +2561,14 @@
 +      previousValue: number,
 +      currentValue: number,
 +      currentIndex: number,
-+      array: this,
++      array: Int16Array,
 +    ) => number,
 +    initialValue: number,
 +  ): number;
  
    /**
     * Calls the specified callback function for all the elements in an array. The return value of
-@@ -2847,7 +3386,15 @@ interface Int16Array {
+@@ -2847,7 +3402,15 @@ interface Int16Array {
     * the accumulation. The first call to the callbackfn function provides this value as an argument
     * instead of an array value.
     */
@@ -2569,7 +2585,7 @@
  
    /**
     * Calls the specified callback function for all the elements in an array, in descending order.
-@@ -2859,8 +3406,23 @@ interface Int16Array {
+@@ -2859,8 +3422,23 @@ interface Int16Array {
     * the accumulation. The first call to the callbackfn function provides this value as an
     * argument instead of an array value.
     */
@@ -2580,7 +2596,7 @@
 +      previousValue: number,
 +      currentValue: number,
 +      currentIndex: number,
-+      array: this,
++      array: Int16Array,
 +    ) => number,
 +  ): number;
 +  reduceRight(
@@ -2588,14 +2604,14 @@
 +      previousValue: number,
 +      currentValue: number,
 +      currentIndex: number,
-+      array: this,
++      array: Int16Array,
 +    ) => number,
 +    initialValue: number,
 +  ): number;
  
    /**
     * Calls the specified callback function for all the elements in an array, in descending order.
-@@ -2872,7 +3434,15 @@ interface Int16Array {
+@@ -2872,7 +3450,15 @@ interface Int16Array {
     * the accumulation. The first call to the callbackfn function provides this value as an argument
     * instead of an array value.
     */
@@ -2612,13 +2628,13 @@
  
    /**
     * Reverses the elements in an Array.
-@@ -2901,12 +3471,15 @@ interface Int16Array {
+@@ -2901,12 +3487,15 @@ interface Int16Array {
     * @param thisArg An object to which the this keyword can refer in the predicate function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  some(predicate: (value: number, index: number, array: Int16Array) => unknown, thisArg?: any): boolean;
 +  some(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Int16Array) => boolean,
 +    thisArg?: unknown,
 +  ): boolean;
  
@@ -2630,7 +2646,7 @@
     * value otherwise. If omitted, the elements are sorted in ascending order.
     * ```ts
     * [11,2,22,1].sort((a, b) => a - b)
-@@ -2942,18 +3515,22 @@ interface Int16ArrayConstructor {
+@@ -2942,18 +3531,22 @@ interface Int16ArrayConstructor {
    readonly prototype: Int16Array;
    new (length: number): Int16Array;
    new (array: ArrayLike<number> | ArrayBufferLike): Int16Array;
@@ -2656,7 +2672,7 @@
  
    /**
     * Creates an array from an array-like or iterable object.
-@@ -2967,9 +3544,13 @@ interface Int16ArrayConstructor {
+@@ -2967,9 +3560,13 @@ interface Int16ArrayConstructor {
     * @param mapfn A mapping function to call on every element of the array.
     * @param thisArg Value of 'this' used to invoke the mapfn.
     */
@@ -2672,7 +2688,7 @@
  
  /**
   * A typed array of 16-bit unsigned integer values. The contents are initialized to 0. If the
-@@ -2979,7 +3560,7 @@ interface Uint16Array {
+@@ -2979,7 +3576,7 @@ interface Uint16Array {
    /**
     * The size in bytes of each element in the array.
     */
@@ -2681,79 +2697,79 @@
  
    /**
     * The ArrayBuffer instance referenced by the array.
-@@ -3015,7 +3596,10 @@ interface Uint16Array {
+@@ -3015,7 +3612,10 @@ interface Uint16Array {
     * @param thisArg An object to which the this keyword can refer in the predicate function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  every(predicate: (value: number, index: number, array: Uint16Array) => unknown, thisArg?: any): boolean;
 +  every(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Uint16Array) => boolean,
 +    thisArg?: unknown,
 +  ): boolean;
  
    /**
     * Changes all array elements from `start` to `end` index to a static `value` and returns the modified array
-@@ -3034,7 +3618,10 @@ interface Uint16Array {
+@@ -3034,7 +3634,10 @@ interface Uint16Array {
     * @param thisArg An object to which the this keyword can refer in the predicate function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  filter(predicate: (value: number, index: number, array: Uint16Array) => any, thisArg?: any): Uint16Array;
 +  filter(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Uint16Array) => boolean,
 +    thisArg?: unknown,
 +  ): Uint16Array;
  
    /**
     * Returns the value of the first element in the array where predicate is true, and undefined
-@@ -3045,7 +3632,10 @@ interface Uint16Array {
+@@ -3045,7 +3648,10 @@ interface Uint16Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  find(predicate: (value: number, index: number, obj: Uint16Array) => boolean, thisArg?: any): number | undefined;
 +  find(
-+    predicate: (value: number, index: number, obj: this) => boolean,
++    predicate: (value: number, index: number, obj: Uint16Array) => boolean,
 +    thisArg?: unknown,
 +  ): number | undefined;
  
    /**
     * Returns the index of the first element in the array where predicate is true, and -1
-@@ -3056,7 +3646,10 @@ interface Uint16Array {
+@@ -3056,7 +3662,10 @@ interface Uint16Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findIndex(predicate: (value: number, index: number, obj: Uint16Array) => boolean, thisArg?: any): number;
 +  findIndex(
-+    predicate: (value: number, index: number, obj: this) => boolean,
++    predicate: (value: number, index: number, obj: Uint16Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  
    /**
     * Performs the specified action for each element in an array.
-@@ -3065,7 +3658,10 @@ interface Uint16Array {
+@@ -3065,7 +3674,10 @@ interface Uint16Array {
     * @param thisArg  An object to which the this keyword can refer in the callbackfn function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  forEach(callbackfn: (value: number, index: number, array: Uint16Array) => void, thisArg?: any): void;
 +  forEach(
-+    callbackfn: (value: number, index: number, array: this) => void,
++    callbackfn: (value: number, index: number, array: Uint16Array) => void,
 +    thisArg?: unknown,
 +  ): void;
  
    /**
     * Returns the index of the first occurrence of a value in an array.
-@@ -3103,7 +3699,10 @@ interface Uint16Array {
+@@ -3103,7 +3715,10 @@ interface Uint16Array {
     * @param thisArg An object to which the this keyword can refer in the callbackfn function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  map(callbackfn: (value: number, index: number, array: Uint16Array) => number, thisArg?: any): Uint16Array;
 +  map(
-+    callbackfn: (value: number, index: number, array: this) => number,
++    callbackfn: (value: number, index: number, array: Uint16Array) => number,
 +    thisArg?: unknown,
 +  ): Uint16Array;
  
    /**
     * Calls the specified callback function for all the elements in an array. The return value of
-@@ -3115,8 +3714,23 @@ interface Uint16Array {
+@@ -3115,8 +3730,23 @@ interface Uint16Array {
     * the accumulation. The first call to the callbackfn function provides this value as an argument
     * instead of an array value.
     */
@@ -2764,7 +2780,7 @@
 +      previousValue: number,
 +      currentValue: number,
 +      currentIndex: number,
-+      array: this,
++      array: Uint16Array,
 +    ) => number,
 +  ): number;
 +  reduce(
@@ -2772,14 +2788,14 @@
 +      previousValue: number,
 +      currentValue: number,
 +      currentIndex: number,
-+      array: this,
++      array: Uint16Array,
 +    ) => number,
 +    initialValue: number,
 +  ): number;
  
    /**
     * Calls the specified callback function for all the elements in an array. The return value of
-@@ -3128,7 +3742,15 @@ interface Uint16Array {
+@@ -3128,7 +3758,15 @@ interface Uint16Array {
     * the accumulation. The first call to the callbackfn function provides this value as an argument
     * instead of an array value.
     */
@@ -2796,7 +2812,7 @@
  
    /**
     * Calls the specified callback function for all the elements in an array, in descending order.
-@@ -3140,8 +3762,23 @@ interface Uint16Array {
+@@ -3140,8 +3778,23 @@ interface Uint16Array {
     * the accumulation. The first call to the callbackfn function provides this value as an
     * argument instead of an array value.
     */
@@ -2807,7 +2823,7 @@
 +      previousValue: number,
 +      currentValue: number,
 +      currentIndex: number,
-+      array: this,
++      array: Uint16Array,
 +    ) => number,
 +  ): number;
 +  reduceRight(
@@ -2815,14 +2831,14 @@
 +      previousValue: number,
 +      currentValue: number,
 +      currentIndex: number,
-+      array: this,
++      array: Uint16Array,
 +    ) => number,
 +    initialValue: number,
 +  ): number;
  
    /**
     * Calls the specified callback function for all the elements in an array, in descending order.
-@@ -3153,7 +3790,15 @@ interface Uint16Array {
+@@ -3153,7 +3806,15 @@ interface Uint16Array {
     * the accumulation. The first call to the callbackfn function provides this value as an argument
     * instead of an array value.
     */
@@ -2839,13 +2855,13 @@
  
    /**
     * Reverses the elements in an Array.
-@@ -3182,12 +3827,15 @@ interface Uint16Array {
+@@ -3182,12 +3843,15 @@ interface Uint16Array {
     * @param thisArg An object to which the this keyword can refer in the predicate function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  some(predicate: (value: number, index: number, array: Uint16Array) => unknown, thisArg?: any): boolean;
 +  some(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Uint16Array) => boolean,
 +    thisArg?: unknown,
 +  ): boolean;
  
@@ -2857,7 +2873,7 @@
     * value otherwise. If omitted, the elements are sorted in ascending order.
     * ```ts
     * [11,2,22,1].sort((a, b) => a - b)
-@@ -3223,18 +3871,22 @@ interface Uint16ArrayConstructor {
+@@ -3223,18 +3887,22 @@ interface Uint16ArrayConstructor {
    readonly prototype: Uint16Array;
    new (length: number): Uint16Array;
    new (array: ArrayLike<number> | ArrayBufferLike): Uint16Array;
@@ -2883,7 +2899,7 @@
  
    /**
     * Creates an array from an array-like or iterable object.
-@@ -3248,9 +3900,13 @@ interface Uint16ArrayConstructor {
+@@ -3248,9 +3916,13 @@ interface Uint16ArrayConstructor {
     * @param mapfn A mapping function to call on every element of the array.
     * @param thisArg Value of 'this' used to invoke the mapfn.
     */
@@ -2899,7 +2915,7 @@
  /**
   * A typed array of 32-bit signed integer values. The contents are initialized to 0. If the
   * requested number of bytes could not be allocated an exception is raised.
-@@ -3259,7 +3915,7 @@ interface Int32Array {
+@@ -3259,7 +3931,7 @@ interface Int32Array {
    /**
     * The size in bytes of each element in the array.
     */
@@ -2908,79 +2924,79 @@
  
    /**
     * The ArrayBuffer instance referenced by the array.
-@@ -3295,7 +3951,10 @@ interface Int32Array {
+@@ -3295,7 +3967,10 @@ interface Int32Array {
     * @param thisArg An object to which the this keyword can refer in the predicate function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  every(predicate: (value: number, index: number, array: Int32Array) => unknown, thisArg?: any): boolean;
 +  every(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Int32Array) => boolean,
 +    thisArg?: unknown,
 +  ): boolean;
  
    /**
     * Changes all array elements from `start` to `end` index to a static `value` and returns the modified array
-@@ -3314,7 +3973,10 @@ interface Int32Array {
+@@ -3314,7 +3989,10 @@ interface Int32Array {
     * @param thisArg An object to which the this keyword can refer in the predicate function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  filter(predicate: (value: number, index: number, array: Int32Array) => any, thisArg?: any): Int32Array;
 +  filter(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Int32Array) => boolean,
 +    thisArg?: unknown,
 +  ): Int32Array;
  
    /**
     * Returns the value of the first element in the array where predicate is true, and undefined
-@@ -3325,7 +3987,10 @@ interface Int32Array {
+@@ -3325,7 +4003,10 @@ interface Int32Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  find(predicate: (value: number, index: number, obj: Int32Array) => boolean, thisArg?: any): number | undefined;
 +  find(
-+    predicate: (value: number, index: number, obj: this) => boolean,
++    predicate: (value: number, index: number, obj: Int32Array) => boolean,
 +    thisArg?: unknown,
 +  ): number | undefined;
  
    /**
     * Returns the index of the first element in the array where predicate is true, and -1
-@@ -3336,7 +4001,10 @@ interface Int32Array {
+@@ -3336,7 +4017,10 @@ interface Int32Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findIndex(predicate: (value: number, index: number, obj: Int32Array) => boolean, thisArg?: any): number;
 +  findIndex(
-+    predicate: (value: number, index: number, obj: this) => boolean,
++    predicate: (value: number, index: number, obj: Int32Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  
    /**
     * Performs the specified action for each element in an array.
-@@ -3345,7 +4013,10 @@ interface Int32Array {
+@@ -3345,7 +4029,10 @@ interface Int32Array {
     * @param thisArg  An object to which the this keyword can refer in the callbackfn function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  forEach(callbackfn: (value: number, index: number, array: Int32Array) => void, thisArg?: any): void;
 +  forEach(
-+    callbackfn: (value: number, index: number, array: this) => void,
++    callbackfn: (value: number, index: number, array: Int32Array) => void,
 +    thisArg?: unknown,
 +  ): void;
  
    /**
     * Returns the index of the first occurrence of a value in an array.
-@@ -3383,7 +4054,10 @@ interface Int32Array {
+@@ -3383,7 +4070,10 @@ interface Int32Array {
     * @param thisArg An object to which the this keyword can refer in the callbackfn function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  map(callbackfn: (value: number, index: number, array: Int32Array) => number, thisArg?: any): Int32Array;
 +  map(
-+    callbackfn: (value: number, index: number, array: this) => number,
++    callbackfn: (value: number, index: number, array: Int32Array) => number,
 +    thisArg?: unknown,
 +  ): Int32Array;
  
    /**
     * Calls the specified callback function for all the elements in an array. The return value of
-@@ -3395,8 +4069,23 @@ interface Int32Array {
+@@ -3395,8 +4085,23 @@ interface Int32Array {
     * the accumulation. The first call to the callbackfn function provides this value as an argument
     * instead of an array value.
     */
@@ -2991,7 +3007,7 @@
 +      previousValue: number,
 +      currentValue: number,
 +      currentIndex: number,
-+      array: this,
++      array: Int32Array,
 +    ) => number,
 +  ): number;
 +  reduce(
@@ -2999,14 +3015,14 @@
 +      previousValue: number,
 +      currentValue: number,
 +      currentIndex: number,
-+      array: this,
++      array: Int32Array,
 +    ) => number,
 +    initialValue: number,
 +  ): number;
  
    /**
     * Calls the specified callback function for all the elements in an array. The return value of
-@@ -3408,7 +4097,15 @@ interface Int32Array {
+@@ -3408,7 +4113,15 @@ interface Int32Array {
     * the accumulation. The first call to the callbackfn function provides this value as an argument
     * instead of an array value.
     */
@@ -3023,7 +3039,7 @@
  
    /**
     * Calls the specified callback function for all the elements in an array, in descending order.
-@@ -3420,8 +4117,23 @@ interface Int32Array {
+@@ -3420,8 +4133,23 @@ interface Int32Array {
     * the accumulation. The first call to the callbackfn function provides this value as an
     * argument instead of an array value.
     */
@@ -3034,7 +3050,7 @@
 +      previousValue: number,
 +      currentValue: number,
 +      currentIndex: number,
-+      array: this,
++      array: Int32Array,
 +    ) => number,
 +  ): number;
 +  reduceRight(
@@ -3042,14 +3058,14 @@
 +      previousValue: number,
 +      currentValue: number,
 +      currentIndex: number,
-+      array: this,
++      array: Int32Array,
 +    ) => number,
 +    initialValue: number,
 +  ): number;
  
    /**
     * Calls the specified callback function for all the elements in an array, in descending order.
-@@ -3433,7 +4145,15 @@ interface Int32Array {
+@@ -3433,7 +4161,15 @@ interface Int32Array {
     * the accumulation. The first call to the callbackfn function provides this value as an argument
     * instead of an array value.
     */
@@ -3066,13 +3082,13 @@
  
    /**
     * Reverses the elements in an Array.
-@@ -3462,12 +4182,15 @@ interface Int32Array {
+@@ -3462,12 +4198,15 @@ interface Int32Array {
     * @param thisArg An object to which the this keyword can refer in the predicate function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  some(predicate: (value: number, index: number, array: Int32Array) => unknown, thisArg?: any): boolean;
 +  some(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Int32Array) => boolean,
 +    thisArg?: unknown,
 +  ): boolean;
  
@@ -3084,7 +3100,7 @@
     * value otherwise. If omitted, the elements are sorted in ascending order.
     * ```ts
     * [11,2,22,1].sort((a, b) => a - b)
-@@ -3503,18 +4226,22 @@ interface Int32ArrayConstructor {
+@@ -3503,18 +4242,22 @@ interface Int32ArrayConstructor {
    readonly prototype: Int32Array;
    new (length: number): Int32Array;
    new (array: ArrayLike<number> | ArrayBufferLike): Int32Array;
@@ -3110,7 +3126,7 @@
  
    /**
     * Creates an array from an array-like or iterable object.
-@@ -3528,9 +4255,13 @@ interface Int32ArrayConstructor {
+@@ -3528,9 +4271,13 @@ interface Int32ArrayConstructor {
     * @param mapfn A mapping function to call on every element of the array.
     * @param thisArg Value of 'this' used to invoke the mapfn.
     */
@@ -3126,7 +3142,7 @@
  
  /**
   * A typed array of 32-bit unsigned integer values. The contents are initialized to 0. If the
-@@ -3540,7 +4271,7 @@ interface Uint32Array {
+@@ -3540,7 +4287,7 @@ interface Uint32Array {
    /**
     * The size in bytes of each element in the array.
     */
@@ -3135,80 +3151,80 @@
  
    /**
     * The ArrayBuffer instance referenced by the array.
-@@ -3576,7 +4307,10 @@ interface Uint32Array {
+@@ -3576,7 +4323,10 @@ interface Uint32Array {
     * @param thisArg An object to which the this keyword can refer in the predicate function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  every(predicate: (value: number, index: number, array: Uint32Array) => unknown, thisArg?: any): boolean;
 +  every(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Uint32Array) => boolean,
 +    thisArg?: unknown,
 +  ): boolean;
  
    /**
     * Changes all array elements from `start` to `end` index to a static `value` and returns the modified array
-@@ -3595,7 +4329,10 @@ interface Uint32Array {
+@@ -3595,7 +4345,10 @@ interface Uint32Array {
     * @param thisArg An object to which the this keyword can refer in the predicate function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  filter(predicate: (value: number, index: number, array: Uint32Array) => any, thisArg?: any): Uint32Array;
 +  filter(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Uint32Array) => boolean,
 +    thisArg?: unknown,
 +  ): Uint32Array;
  
    /**
     * Returns the value of the first element in the array where predicate is true, and undefined
-@@ -3606,7 +4343,10 @@ interface Uint32Array {
+@@ -3606,7 +4359,10 @@ interface Uint32Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  find(predicate: (value: number, index: number, obj: Uint32Array) => boolean, thisArg?: any): number | undefined;
 +  find(
-+    predicate: (value: number, index: number, obj: this) => boolean,
++    predicate: (value: number, index: number, obj: Uint32Array) => boolean,
 +    thisArg?: unknown,
 +  ): number | undefined;
  
    /**
     * Returns the index of the first element in the array where predicate is true, and -1
-@@ -3617,7 +4357,10 @@ interface Uint32Array {
+@@ -3617,7 +4373,10 @@ interface Uint32Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findIndex(predicate: (value: number, index: number, obj: Uint32Array) => boolean, thisArg?: any): number;
 +  findIndex(
-+    predicate: (value: number, index: number, obj: this) => boolean,
++    predicate: (value: number, index: number, obj: Uint32Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  
    /**
     * Performs the specified action for each element in an array.
-@@ -3626,7 +4369,11 @@ interface Uint32Array {
+@@ -3626,7 +4385,11 @@ interface Uint32Array {
     * @param thisArg  An object to which the this keyword can refer in the callbackfn function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  forEach(callbackfn: (value: number, index: number, array: Uint32Array) => void, thisArg?: any): void;
 +  forEach(
-+    callbackfn: (value: number, index: number, array: this) => void,
++    callbackfn: (value: number, index: number, array: Uint32Array) => void,
 +    thisArg?: unknown,
 +  ): void;
 +
    /**
     * Returns the index of the first occurrence of a value in an array.
     * @param searchElement The value to locate in the array.
-@@ -3663,7 +4410,10 @@ interface Uint32Array {
+@@ -3663,7 +4426,10 @@ interface Uint32Array {
     * @param thisArg An object to which the this keyword can refer in the callbackfn function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  map(callbackfn: (value: number, index: number, array: Uint32Array) => number, thisArg?: any): Uint32Array;
 +  map(
-+    callbackfn: (value: number, index: number, array: this) => number,
++    callbackfn: (value: number, index: number, array: Uint32Array) => number,
 +    thisArg?: unknown,
 +  ): Uint32Array;
  
    /**
     * Calls the specified callback function for all the elements in an array. The return value of
-@@ -3675,8 +4425,23 @@ interface Uint32Array {
+@@ -3675,8 +4441,23 @@ interface Uint32Array {
     * the accumulation. The first call to the callbackfn function provides this value as an argument
     * instead of an array value.
     */
@@ -3219,7 +3235,7 @@
 +      previousValue: number,
 +      currentValue: number,
 +      currentIndex: number,
-+      array: this,
++      array: Uint32Array,
 +    ) => number,
 +  ): number;
 +  reduce(
@@ -3227,14 +3243,14 @@
 +      previousValue: number,
 +      currentValue: number,
 +      currentIndex: number,
-+      array: this,
++      array: Uint32Array,
 +    ) => number,
 +    initialValue: number,
 +  ): number;
  
    /**
     * Calls the specified callback function for all the elements in an array. The return value of
-@@ -3688,7 +4453,15 @@ interface Uint32Array {
+@@ -3688,7 +4469,15 @@ interface Uint32Array {
     * the accumulation. The first call to the callbackfn function provides this value as an argument
     * instead of an array value.
     */
@@ -3251,7 +3267,7 @@
  
    /**
     * Calls the specified callback function for all the elements in an array, in descending order.
-@@ -3700,8 +4473,23 @@ interface Uint32Array {
+@@ -3700,8 +4489,23 @@ interface Uint32Array {
     * the accumulation. The first call to the callbackfn function provides this value as an
     * argument instead of an array value.
     */
@@ -3262,7 +3278,7 @@
 +      previousValue: number,
 +      currentValue: number,
 +      currentIndex: number,
-+      array: this,
++      array: Uint32Array,
 +    ) => number,
 +  ): number;
 +  reduceRight(
@@ -3270,14 +3286,14 @@
 +      previousValue: number,
 +      currentValue: number,
 +      currentIndex: number,
-+      array: this,
++      array: Uint32Array,
 +    ) => number,
 +    initialValue: number,
 +  ): number;
  
    /**
     * Calls the specified callback function for all the elements in an array, in descending order.
-@@ -3713,7 +4501,15 @@ interface Uint32Array {
+@@ -3713,7 +4517,15 @@ interface Uint32Array {
     * the accumulation. The first call to the callbackfn function provides this value as an argument
     * instead of an array value.
     */
@@ -3294,13 +3310,13 @@
  
    /**
     * Reverses the elements in an Array.
-@@ -3742,12 +4538,15 @@ interface Uint32Array {
+@@ -3742,12 +4554,15 @@ interface Uint32Array {
     * @param thisArg An object to which the this keyword can refer in the predicate function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  some(predicate: (value: number, index: number, array: Uint32Array) => unknown, thisArg?: any): boolean;
 +  some(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Uint32Array) => boolean,
 +    thisArg?: unknown,
 +  ): boolean;
  
@@ -3312,7 +3328,7 @@
     * value otherwise. If omitted, the elements are sorted in ascending order.
     * ```ts
     * [11,2,22,1].sort((a, b) => a - b)
-@@ -3783,18 +4582,22 @@ interface Uint32ArrayConstructor {
+@@ -3783,18 +4598,22 @@ interface Uint32ArrayConstructor {
    readonly prototype: Uint32Array;
    new (length: number): Uint32Array;
    new (array: ArrayLike<number> | ArrayBufferLike): Uint32Array;
@@ -3338,7 +3354,7 @@
  
    /**
     * Creates an array from an array-like or iterable object.
-@@ -3808,9 +4611,13 @@ interface Uint32ArrayConstructor {
+@@ -3808,9 +4627,13 @@ interface Uint32ArrayConstructor {
     * @param mapfn A mapping function to call on every element of the array.
     * @param thisArg Value of 'this' used to invoke the mapfn.
     */
@@ -3354,7 +3370,7 @@
  
  /**
   * A typed array of 32-bit float values. The contents are initialized to 0. If the requested number
-@@ -3820,7 +4627,7 @@ interface Float32Array {
+@@ -3820,7 +4643,7 @@ interface Float32Array {
    /**
     * The size in bytes of each element in the array.
     */
@@ -3363,79 +3379,79 @@
  
    /**
     * The ArrayBuffer instance referenced by the array.
-@@ -3856,7 +4663,10 @@ interface Float32Array {
+@@ -3856,7 +4679,10 @@ interface Float32Array {
     * @param thisArg An object to which the this keyword can refer in the predicate function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  every(predicate: (value: number, index: number, array: Float32Array) => unknown, thisArg?: any): boolean;
 +  every(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Float32Array) => boolean,
 +    thisArg?: unknown,
 +  ): boolean;
  
    /**
     * Changes all array elements from `start` to `end` index to a static `value` and returns the modified array
-@@ -3875,7 +4685,10 @@ interface Float32Array {
+@@ -3875,7 +4701,10 @@ interface Float32Array {
     * @param thisArg An object to which the this keyword can refer in the predicate function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  filter(predicate: (value: number, index: number, array: Float32Array) => any, thisArg?: any): Float32Array;
 +  filter(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Float32Array) => boolean,
 +    thisArg?: unknown,
 +  ): Float32Array;
  
    /**
     * Returns the value of the first element in the array where predicate is true, and undefined
-@@ -3886,7 +4699,10 @@ interface Float32Array {
+@@ -3886,7 +4715,10 @@ interface Float32Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  find(predicate: (value: number, index: number, obj: Float32Array) => boolean, thisArg?: any): number | undefined;
 +  find(
-+    predicate: (value: number, index: number, obj: this) => boolean,
++    predicate: (value: number, index: number, obj: Float32Array) => boolean,
 +    thisArg?: unknown,
 +  ): number | undefined;
  
    /**
     * Returns the index of the first element in the array where predicate is true, and -1
-@@ -3897,7 +4713,10 @@ interface Float32Array {
+@@ -3897,7 +4729,10 @@ interface Float32Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findIndex(predicate: (value: number, index: number, obj: Float32Array) => boolean, thisArg?: any): number;
 +  findIndex(
-+    predicate: (value: number, index: number, obj: this) => boolean,
++    predicate: (value: number, index: number, obj: Float32Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  
    /**
     * Performs the specified action for each element in an array.
-@@ -3906,7 +4725,10 @@ interface Float32Array {
+@@ -3906,7 +4741,10 @@ interface Float32Array {
     * @param thisArg  An object to which the this keyword can refer in the callbackfn function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  forEach(callbackfn: (value: number, index: number, array: Float32Array) => void, thisArg?: any): void;
 +  forEach(
-+    callbackfn: (value: number, index: number, array: this) => void,
++    callbackfn: (value: number, index: number, array: Float32Array) => void,
 +    thisArg?: unknown,
 +  ): void;
  
    /**
     * Returns the index of the first occurrence of a value in an array.
-@@ -3944,7 +4766,10 @@ interface Float32Array {
+@@ -3944,7 +4782,10 @@ interface Float32Array {
     * @param thisArg An object to which the this keyword can refer in the callbackfn function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  map(callbackfn: (value: number, index: number, array: Float32Array) => number, thisArg?: any): Float32Array;
 +  map(
-+    callbackfn: (value: number, index: number, array: this) => number,
++    callbackfn: (value: number, index: number, array: Float32Array) => number,
 +    thisArg?: unknown,
 +  ): Float32Array;
  
    /**
     * Calls the specified callback function for all the elements in an array. The return value of
-@@ -3956,8 +4781,23 @@ interface Float32Array {
+@@ -3956,8 +4797,23 @@ interface Float32Array {
     * the accumulation. The first call to the callbackfn function provides this value as an argument
     * instead of an array value.
     */
@@ -3446,7 +3462,7 @@
 +      previousValue: number,
 +      currentValue: number,
 +      currentIndex: number,
-+      array: this,
++      array: Float32Array,
 +    ) => number,
 +  ): number;
 +  reduce(
@@ -3454,14 +3470,14 @@
 +      previousValue: number,
 +      currentValue: number,
 +      currentIndex: number,
-+      array: this,
++      array: Float32Array,
 +    ) => number,
 +    initialValue: number,
 +  ): number;
  
    /**
     * Calls the specified callback function for all the elements in an array. The return value of
-@@ -3969,7 +4809,15 @@ interface Float32Array {
+@@ -3969,7 +4825,15 @@ interface Float32Array {
     * the accumulation. The first call to the callbackfn function provides this value as an argument
     * instead of an array value.
     */
@@ -3478,7 +3494,7 @@
  
    /**
     * Calls the specified callback function for all the elements in an array, in descending order.
-@@ -3981,8 +4829,23 @@ interface Float32Array {
+@@ -3981,8 +4845,23 @@ interface Float32Array {
     * the accumulation. The first call to the callbackfn function provides this value as an
     * argument instead of an array value.
     */
@@ -3489,7 +3505,7 @@
 +      previousValue: number,
 +      currentValue: number,
 +      currentIndex: number,
-+      array: this,
++      array: Float32Array,
 +    ) => number,
 +  ): number;
 +  reduceRight(
@@ -3497,14 +3513,14 @@
 +      previousValue: number,
 +      currentValue: number,
 +      currentIndex: number,
-+      array: this,
++      array: Float32Array,
 +    ) => number,
 +    initialValue: number,
 +  ): number;
  
    /**
     * Calls the specified callback function for all the elements in an array, in descending order.
-@@ -3994,7 +4857,15 @@ interface Float32Array {
+@@ -3994,7 +4873,15 @@ interface Float32Array {
     * the accumulation. The first call to the callbackfn function provides this value as an argument
     * instead of an array value.
     */
@@ -3521,13 +3537,13 @@
  
    /**
     * Reverses the elements in an Array.
-@@ -4023,12 +4894,15 @@ interface Float32Array {
+@@ -4023,12 +4910,15 @@ interface Float32Array {
     * @param thisArg An object to which the this keyword can refer in the predicate function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  some(predicate: (value: number, index: number, array: Float32Array) => unknown, thisArg?: any): boolean;
 +  some(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Float32Array) => boolean,
 +    thisArg?: unknown,
 +  ): boolean;
  
@@ -3539,7 +3555,7 @@
     * value otherwise. If omitted, the elements are sorted in ascending order.
     * ```ts
     * [11,2,22,1].sort((a, b) => a - b)
-@@ -4064,18 +4938,22 @@ interface Float32ArrayConstructor {
+@@ -4064,18 +4954,22 @@ interface Float32ArrayConstructor {
    readonly prototype: Float32Array;
    new (length: number): Float32Array;
    new (array: ArrayLike<number> | ArrayBufferLike): Float32Array;
@@ -3565,7 +3581,7 @@
  
    /**
     * Creates an array from an array-like or iterable object.
-@@ -4089,9 +4967,13 @@ interface Float32ArrayConstructor {
+@@ -4089,9 +4983,13 @@ interface Float32ArrayConstructor {
     * @param mapfn A mapping function to call on every element of the array.
     * @param thisArg Value of 'this' used to invoke the mapfn.
     */
@@ -3581,7 +3597,7 @@
  
  /**
   * A typed array of 64-bit float values. The contents are initialized to 0. If the requested
-@@ -4101,7 +4983,7 @@ interface Float64Array {
+@@ -4101,7 +4999,7 @@ interface Float64Array {
    /**
     * The size in bytes of each element in the array.
     */
@@ -3590,79 +3606,79 @@
  
    /**
     * The ArrayBuffer instance referenced by the array.
-@@ -4137,7 +5019,10 @@ interface Float64Array {
+@@ -4137,7 +5035,10 @@ interface Float64Array {
     * @param thisArg An object to which the this keyword can refer in the predicate function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  every(predicate: (value: number, index: number, array: Float64Array) => unknown, thisArg?: any): boolean;
 +  every(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Float64Array) => boolean,
 +    thisArg?: unknown,
 +  ): boolean;
  
    /**
     * Changes all array elements from `start` to `end` index to a static `value` and returns the modified array
-@@ -4156,7 +5041,10 @@ interface Float64Array {
+@@ -4156,7 +5057,10 @@ interface Float64Array {
     * @param thisArg An object to which the this keyword can refer in the predicate function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  filter(predicate: (value: number, index: number, array: Float64Array) => any, thisArg?: any): Float64Array;
 +  filter(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Float64Array) => boolean,
 +    thisArg?: unknown,
 +  ): Float64Array;
  
    /**
     * Returns the value of the first element in the array where predicate is true, and undefined
-@@ -4167,7 +5055,10 @@ interface Float64Array {
+@@ -4167,7 +5071,10 @@ interface Float64Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  find(predicate: (value: number, index: number, obj: Float64Array) => boolean, thisArg?: any): number | undefined;
 +  find(
-+    predicate: (value: number, index: number, obj: this) => boolean,
++    predicate: (value: number, index: number, obj: Float64Array) => boolean,
 +    thisArg?: unknown,
 +  ): number | undefined;
  
    /**
     * Returns the index of the first element in the array where predicate is true, and -1
-@@ -4178,7 +5069,10 @@ interface Float64Array {
+@@ -4178,7 +5085,10 @@ interface Float64Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findIndex(predicate: (value: number, index: number, obj: Float64Array) => boolean, thisArg?: any): number;
 +  findIndex(
-+    predicate: (value: number, index: number, obj: this) => boolean,
++    predicate: (value: number, index: number, obj: Float64Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  
    /**
     * Performs the specified action for each element in an array.
-@@ -4187,7 +5081,10 @@ interface Float64Array {
+@@ -4187,7 +5097,10 @@ interface Float64Array {
     * @param thisArg  An object to which the this keyword can refer in the callbackfn function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  forEach(callbackfn: (value: number, index: number, array: Float64Array) => void, thisArg?: any): void;
 +  forEach(
-+    callbackfn: (value: number, index: number, array: this) => void,
++    callbackfn: (value: number, index: number, array: Float64Array) => void,
 +    thisArg?: unknown,
 +  ): void;
  
    /**
     * Returns the index of the first occurrence of a value in an array.
-@@ -4225,7 +5122,10 @@ interface Float64Array {
+@@ -4225,7 +5138,10 @@ interface Float64Array {
     * @param thisArg An object to which the this keyword can refer in the callbackfn function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  map(callbackfn: (value: number, index: number, array: Float64Array) => number, thisArg?: any): Float64Array;
 +  map(
-+    callbackfn: (value: number, index: number, array: this) => number,
++    callbackfn: (value: number, index: number, array: Float64Array) => number,
 +    thisArg?: unknown,
 +  ): Float64Array;
  
    /**
     * Calls the specified callback function for all the elements in an array. The return value of
-@@ -4237,8 +5137,23 @@ interface Float64Array {
+@@ -4237,8 +5153,23 @@ interface Float64Array {
     * the accumulation. The first call to the callbackfn function provides this value as an argument
     * instead of an array value.
     */
@@ -3673,7 +3689,7 @@
 +      previousValue: number,
 +      currentValue: number,
 +      currentIndex: number,
-+      array: this,
++      array: Float64Array,
 +    ) => number,
 +  ): number;
 +  reduce(
@@ -3681,14 +3697,14 @@
 +      previousValue: number,
 +      currentValue: number,
 +      currentIndex: number,
-+      array: this,
++      array: Float64Array,
 +    ) => number,
 +    initialValue: number,
 +  ): number;
  
    /**
     * Calls the specified callback function for all the elements in an array. The return value of
-@@ -4250,7 +5165,15 @@ interface Float64Array {
+@@ -4250,7 +5181,15 @@ interface Float64Array {
     * the accumulation. The first call to the callbackfn function provides this value as an argument
     * instead of an array value.
     */
@@ -3705,7 +3721,7 @@
  
    /**
     * Calls the specified callback function for all the elements in an array, in descending order.
-@@ -4262,8 +5185,23 @@ interface Float64Array {
+@@ -4262,8 +5201,23 @@ interface Float64Array {
     * the accumulation. The first call to the callbackfn function provides this value as an
     * argument instead of an array value.
     */
@@ -3716,7 +3732,7 @@
 +      previousValue: number,
 +      currentValue: number,
 +      currentIndex: number,
-+      array: this,
++      array: Float64Array,
 +    ) => number,
 +  ): number;
 +  reduceRight(
@@ -3724,14 +3740,14 @@
 +      previousValue: number,
 +      currentValue: number,
 +      currentIndex: number,
-+      array: this,
++      array: Float64Array,
 +    ) => number,
 +    initialValue: number,
 +  ): number;
  
    /**
     * Calls the specified callback function for all the elements in an array, in descending order.
-@@ -4275,7 +5213,15 @@ interface Float64Array {
+@@ -4275,7 +5229,15 @@ interface Float64Array {
     * the accumulation. The first call to the callbackfn function provides this value as an argument
     * instead of an array value.
     */
@@ -3748,13 +3764,13 @@
  
    /**
     * Reverses the elements in an Array.
-@@ -4304,12 +5250,15 @@ interface Float64Array {
+@@ -4304,12 +5266,15 @@ interface Float64Array {
     * @param thisArg An object to which the this keyword can refer in the predicate function.
     * If thisArg is omitted, undefined is used as the this value.
     */
 -  some(predicate: (value: number, index: number, array: Float64Array) => unknown, thisArg?: any): boolean;
 +  some(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Float64Array) => boolean,
 +    thisArg?: unknown,
 +  ): boolean;
  
@@ -3766,7 +3782,7 @@
     * value otherwise. If omitted, the elements are sorted in ascending order.
     * ```ts
     * [11,2,22,1].sort((a, b) => a - b)
-@@ -4345,18 +5294,22 @@ interface Float64ArrayConstructor {
+@@ -4345,18 +5310,22 @@ interface Float64ArrayConstructor {
    readonly prototype: Float64Array;
    new (length: number): Float64Array;
    new (array: ArrayLike<number> | ArrayBufferLike): Float64Array;
@@ -3792,7 +3808,7 @@
  
    /**
     * Creates an array from an array-like or iterable object.
-@@ -4370,9 +5323,13 @@ interface Float64ArrayConstructor {
+@@ -4370,9 +5339,13 @@ interface Float64ArrayConstructor {
     * @param mapfn A mapping function to call on every element of the array.
     * @param thisArg Value of 'this' used to invoke the mapfn.
     */
@@ -3808,7 +3824,7 @@
  
  /////////////////////////////
  /// ECMAScript Internationalization API
-@@ -4380,113 +5337,168 @@ declare var Float64Array: Float64ArrayConstructor;
+@@ -4380,113 +5353,168 @@ declare var Float64Array: Float64ArrayConstructor;
  
  declare namespace Intl {
    interface CollatorOptions {
@@ -4050,7 +4066,7 @@
      readonly prototype: DateTimeFormat;
    };
  }
-@@ -4498,7 +5510,11 @@ interface String {
+@@ -4498,7 +5526,11 @@ interface String {
     * @param locales A locale string or array of locale strings that contain one or more language or locale tags. If you include more than one locale string, list them in descending order of priority so that the first entry is the preferred locale. If you omit this parameter, the default locale of the JavaScript runtime is used. This parameter must conform to BCP 47 standards; see the Intl.Collator object for details.
     * @param options An object that contains one or more properties that specify comparison options. see the Intl.Collator object for details.
     */
@@ -4063,7 +4079,7 @@
  }
  
  interface Number {
-@@ -4507,7 +5523,10 @@ interface Number {
+@@ -4507,7 +5539,10 @@ interface Number {
     * @param locales A locale string or array of locale strings that contain one or more language or locale tags. If you include more than one locale string, list them in descending order of priority so that the first entry is the preferred locale. If you omit this parameter, the default locale of the JavaScript runtime is used.
     * @param options An object that contains one or more properties that specify comparison options.
     */
@@ -4075,7 +4091,7 @@
  }
  
  interface Date {
-@@ -4516,18 +5535,33 @@ interface Date {
+@@ -4516,18 +5551,33 @@ interface Date {
     * @param locales A locale string or array of locale strings that contain one or more language or locale tags. If you include more than one locale string, list them in descending order of priority so that the first entry is the preferred locale. If you omit this parameter, the default locale of the JavaScript runtime is used.
     * @param options An object that contains one or more properties that specify comparison options.
     */

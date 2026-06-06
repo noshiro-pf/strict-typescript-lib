@@ -2335,7 +2335,7 @@ interface Int8Array {
     predicate: (
       value: Int8,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Int8Array,
     ) => boolean,
     thisArg?: unknown,
   ): boolean;
@@ -2365,7 +2365,7 @@ interface Int8Array {
     predicate: (
       value: Int8,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Int8Array,
     ) => boolean,
     thisArg?: unknown,
   ): Int8Array;
@@ -2383,7 +2383,7 @@ interface Int8Array {
     predicate: (
       value: Int8,
       index: NumberType.TypedArraySize,
-      obj: this,
+      obj: Int8Array,
     ) => boolean,
     thisArg?: unknown,
   ): Int8 | undefined;
@@ -2401,7 +2401,7 @@ interface Int8Array {
     predicate: (
       value: Int8,
       index: NumberType.TypedArraySize,
-      obj: this,
+      obj: Int8Array,
     ) => boolean,
     thisArg?: unknown,
   ): NumberType.TypedArraySearchResult;
@@ -2417,7 +2417,7 @@ interface Int8Array {
     callbackfn: (
       value: Int8,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Int8Array,
     ) => void,
     thisArg?: unknown,
   ): void;
@@ -2468,7 +2468,7 @@ interface Int8Array {
     callbackfn: (
       value: Int8,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Int8Array,
     ) => Int8,
     thisArg?: unknown,
   ): Int8Array;
@@ -2488,7 +2488,7 @@ interface Int8Array {
       previousValue: Int8,
       currentValue: Int8,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Int8Array,
     ) => Int8,
   ): Int8;
   reduce(
@@ -2496,7 +2496,7 @@ interface Int8Array {
       previousValue: Int8,
       currentValue: Int8,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Int8Array,
     ) => Int8,
     initialValue: Int8,
   ): Int8;
@@ -2536,7 +2536,7 @@ interface Int8Array {
       previousValue: Int8,
       currentValue: Int8,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Int8Array,
     ) => Int8,
   ): Int8;
   reduceRight(
@@ -2544,7 +2544,7 @@ interface Int8Array {
       previousValue: Int8,
       currentValue: Int8,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Int8Array,
     ) => Int8,
     initialValue: Int8,
   ): Int8;
@@ -2606,7 +2606,7 @@ interface Int8Array {
     predicate: (
       value: Int8,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Int8Array,
     ) => boolean,
     thisArg?: unknown,
   ): boolean;
@@ -2741,7 +2741,7 @@ interface Uint8Array {
     predicate: (
       value: Uint8,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint8Array,
     ) => boolean,
     thisArg?: unknown,
   ): boolean;
@@ -2771,7 +2771,7 @@ interface Uint8Array {
     predicate: (
       value: Uint8,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint8Array,
     ) => boolean,
     thisArg?: unknown,
   ): Uint8Array;
@@ -2789,7 +2789,7 @@ interface Uint8Array {
     predicate: (
       value: Uint8,
       index: NumberType.TypedArraySize,
-      obj: this,
+      obj: Uint8Array,
     ) => boolean,
     thisArg?: unknown,
   ): Uint8 | undefined;
@@ -2807,7 +2807,7 @@ interface Uint8Array {
     predicate: (
       value: Uint8,
       index: NumberType.TypedArraySize,
-      obj: this,
+      obj: Uint8Array,
     ) => boolean,
     thisArg?: unknown,
   ): NumberType.TypedArraySearchResult;
@@ -2823,7 +2823,7 @@ interface Uint8Array {
     callbackfn: (
       value: Uint8,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint8Array,
     ) => void,
     thisArg?: unknown,
   ): void;
@@ -2874,7 +2874,7 @@ interface Uint8Array {
     callbackfn: (
       value: Uint8,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint8Array,
     ) => Uint8,
     thisArg?: unknown,
   ): Uint8Array;
@@ -2894,7 +2894,7 @@ interface Uint8Array {
       previousValue: Uint8,
       currentValue: Uint8,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Uint8Array,
     ) => Uint8,
   ): Uint8;
   reduce(
@@ -2902,7 +2902,7 @@ interface Uint8Array {
       previousValue: Uint8,
       currentValue: Uint8,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Uint8Array,
     ) => Uint8,
     initialValue: Uint8,
   ): Uint8;
@@ -2942,7 +2942,7 @@ interface Uint8Array {
       previousValue: Uint8,
       currentValue: Uint8,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Uint8Array,
     ) => Uint8,
   ): Uint8;
   reduceRight(
@@ -2950,7 +2950,7 @@ interface Uint8Array {
       previousValue: Uint8,
       currentValue: Uint8,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Uint8Array,
     ) => Uint8,
     initialValue: Uint8,
   ): Uint8;
@@ -3012,7 +3012,7 @@ interface Uint8Array {
     predicate: (
       value: Uint8,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint8Array,
     ) => boolean,
     thisArg?: unknown,
   ): boolean;
@@ -3148,7 +3148,7 @@ interface Uint8ClampedArray {
     predicate: (
       value: Uint8,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint8ClampedArray,
     ) => boolean,
     thisArg?: unknown,
   ): boolean;
@@ -3178,7 +3178,7 @@ interface Uint8ClampedArray {
     predicate: (
       value: Uint8,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint8ClampedArray,
     ) => boolean,
     thisArg?: unknown,
   ): Uint8ClampedArray;
@@ -3196,7 +3196,7 @@ interface Uint8ClampedArray {
     predicate: (
       value: Uint8,
       index: NumberType.TypedArraySize,
-      obj: this,
+      obj: Uint8ClampedArray,
     ) => boolean,
     thisArg?: unknown,
   ): Uint8 | undefined;
@@ -3214,7 +3214,7 @@ interface Uint8ClampedArray {
     predicate: (
       value: Uint8,
       index: NumberType.TypedArraySize,
-      obj: this,
+      obj: Uint8ClampedArray,
     ) => boolean,
     thisArg?: unknown,
   ): NumberType.TypedArraySearchResult;
@@ -3230,7 +3230,7 @@ interface Uint8ClampedArray {
     callbackfn: (
       value: Uint8,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint8ClampedArray,
     ) => void,
     thisArg?: unknown,
   ): void;
@@ -3281,7 +3281,7 @@ interface Uint8ClampedArray {
     callbackfn: (
       value: Uint8,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint8ClampedArray,
     ) => Uint8,
     thisArg?: unknown,
   ): Uint8ClampedArray;
@@ -3301,7 +3301,7 @@ interface Uint8ClampedArray {
       previousValue: Uint8,
       currentValue: Uint8,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Uint8ClampedArray,
     ) => Uint8,
   ): Uint8;
   reduce(
@@ -3309,7 +3309,7 @@ interface Uint8ClampedArray {
       previousValue: Uint8,
       currentValue: Uint8,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Uint8ClampedArray,
     ) => Uint8,
     initialValue: Uint8,
   ): Uint8;
@@ -3349,7 +3349,7 @@ interface Uint8ClampedArray {
       previousValue: Uint8,
       currentValue: Uint8,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Uint8ClampedArray,
     ) => Uint8,
   ): Uint8;
   reduceRight(
@@ -3357,7 +3357,7 @@ interface Uint8ClampedArray {
       previousValue: Uint8,
       currentValue: Uint8,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Uint8ClampedArray,
     ) => Uint8,
     initialValue: Uint8,
   ): Uint8;
@@ -3419,7 +3419,7 @@ interface Uint8ClampedArray {
     predicate: (
       value: Uint8,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint8ClampedArray,
     ) => boolean,
     thisArg?: unknown,
   ): boolean;
@@ -3555,7 +3555,7 @@ interface Int16Array {
     predicate: (
       value: Int16,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Int16Array,
     ) => boolean,
     thisArg?: unknown,
   ): boolean;
@@ -3585,7 +3585,7 @@ interface Int16Array {
     predicate: (
       value: Int16,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Int16Array,
     ) => boolean,
     thisArg?: unknown,
   ): Int16Array;
@@ -3603,7 +3603,7 @@ interface Int16Array {
     predicate: (
       value: Int16,
       index: NumberType.TypedArraySize,
-      obj: this,
+      obj: Int16Array,
     ) => boolean,
     thisArg?: unknown,
   ): Int16 | undefined;
@@ -3621,7 +3621,7 @@ interface Int16Array {
     predicate: (
       value: Int16,
       index: NumberType.TypedArraySize,
-      obj: this,
+      obj: Int16Array,
     ) => boolean,
     thisArg?: unknown,
   ): NumberType.TypedArraySearchResult;
@@ -3637,7 +3637,7 @@ interface Int16Array {
     callbackfn: (
       value: Int16,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Int16Array,
     ) => void,
     thisArg?: unknown,
   ): void;
@@ -3688,7 +3688,7 @@ interface Int16Array {
     callbackfn: (
       value: Int16,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Int16Array,
     ) => Int16,
     thisArg?: unknown,
   ): Int16Array;
@@ -3708,7 +3708,7 @@ interface Int16Array {
       previousValue: Int16,
       currentValue: Int16,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Int16Array,
     ) => Int16,
   ): Int16;
   reduce(
@@ -3716,7 +3716,7 @@ interface Int16Array {
       previousValue: Int16,
       currentValue: Int16,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Int16Array,
     ) => Int16,
     initialValue: Int16,
   ): Int16;
@@ -3756,7 +3756,7 @@ interface Int16Array {
       previousValue: Int16,
       currentValue: Int16,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Int16Array,
     ) => Int16,
   ): Int16;
   reduceRight(
@@ -3764,7 +3764,7 @@ interface Int16Array {
       previousValue: Int16,
       currentValue: Int16,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Int16Array,
     ) => Int16,
     initialValue: Int16,
   ): Int16;
@@ -3826,7 +3826,7 @@ interface Int16Array {
     predicate: (
       value: Int16,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Int16Array,
     ) => boolean,
     thisArg?: unknown,
   ): boolean;
@@ -3962,7 +3962,7 @@ interface Uint16Array {
     predicate: (
       value: Uint16,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint16Array,
     ) => boolean,
     thisArg?: unknown,
   ): boolean;
@@ -3992,7 +3992,7 @@ interface Uint16Array {
     predicate: (
       value: Uint16,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint16Array,
     ) => boolean,
     thisArg?: unknown,
   ): Uint16Array;
@@ -4010,7 +4010,7 @@ interface Uint16Array {
     predicate: (
       value: Uint16,
       index: NumberType.TypedArraySize,
-      obj: this,
+      obj: Uint16Array,
     ) => boolean,
     thisArg?: unknown,
   ): Uint16 | undefined;
@@ -4028,7 +4028,7 @@ interface Uint16Array {
     predicate: (
       value: Uint16,
       index: NumberType.TypedArraySize,
-      obj: this,
+      obj: Uint16Array,
     ) => boolean,
     thisArg?: unknown,
   ): NumberType.TypedArraySearchResult;
@@ -4044,7 +4044,7 @@ interface Uint16Array {
     callbackfn: (
       value: Uint16,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint16Array,
     ) => void,
     thisArg?: unknown,
   ): void;
@@ -4095,7 +4095,7 @@ interface Uint16Array {
     callbackfn: (
       value: Uint16,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint16Array,
     ) => Uint16,
     thisArg?: unknown,
   ): Uint16Array;
@@ -4115,7 +4115,7 @@ interface Uint16Array {
       previousValue: Uint16,
       currentValue: Uint16,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Uint16Array,
     ) => Uint16,
   ): Uint16;
   reduce(
@@ -4123,7 +4123,7 @@ interface Uint16Array {
       previousValue: Uint16,
       currentValue: Uint16,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Uint16Array,
     ) => Uint16,
     initialValue: Uint16,
   ): Uint16;
@@ -4163,7 +4163,7 @@ interface Uint16Array {
       previousValue: Uint16,
       currentValue: Uint16,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Uint16Array,
     ) => Uint16,
   ): Uint16;
   reduceRight(
@@ -4171,7 +4171,7 @@ interface Uint16Array {
       previousValue: Uint16,
       currentValue: Uint16,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Uint16Array,
     ) => Uint16,
     initialValue: Uint16,
   ): Uint16;
@@ -4233,7 +4233,7 @@ interface Uint16Array {
     predicate: (
       value: Uint16,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint16Array,
     ) => boolean,
     thisArg?: unknown,
   ): boolean;
@@ -4368,7 +4368,7 @@ interface Int32Array {
     predicate: (
       value: Int32,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Int32Array,
     ) => boolean,
     thisArg?: unknown,
   ): boolean;
@@ -4398,7 +4398,7 @@ interface Int32Array {
     predicate: (
       value: Int32,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Int32Array,
     ) => boolean,
     thisArg?: unknown,
   ): Int32Array;
@@ -4416,7 +4416,7 @@ interface Int32Array {
     predicate: (
       value: Int32,
       index: NumberType.TypedArraySize,
-      obj: this,
+      obj: Int32Array,
     ) => boolean,
     thisArg?: unknown,
   ): Int32 | undefined;
@@ -4434,7 +4434,7 @@ interface Int32Array {
     predicate: (
       value: Int32,
       index: NumberType.TypedArraySize,
-      obj: this,
+      obj: Int32Array,
     ) => boolean,
     thisArg?: unknown,
   ): NumberType.TypedArraySearchResult;
@@ -4450,7 +4450,7 @@ interface Int32Array {
     callbackfn: (
       value: Int32,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Int32Array,
     ) => void,
     thisArg?: unknown,
   ): void;
@@ -4501,7 +4501,7 @@ interface Int32Array {
     callbackfn: (
       value: Int32,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Int32Array,
     ) => Int32,
     thisArg?: unknown,
   ): Int32Array;
@@ -4521,7 +4521,7 @@ interface Int32Array {
       previousValue: Int32,
       currentValue: Int32,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Int32Array,
     ) => Int32,
   ): Int32;
   reduce(
@@ -4529,7 +4529,7 @@ interface Int32Array {
       previousValue: Int32,
       currentValue: Int32,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Int32Array,
     ) => Int32,
     initialValue: Int32,
   ): Int32;
@@ -4569,7 +4569,7 @@ interface Int32Array {
       previousValue: Int32,
       currentValue: Int32,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Int32Array,
     ) => Int32,
   ): Int32;
   reduceRight(
@@ -4577,7 +4577,7 @@ interface Int32Array {
       previousValue: Int32,
       currentValue: Int32,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Int32Array,
     ) => Int32,
     initialValue: Int32,
   ): Int32;
@@ -4639,7 +4639,7 @@ interface Int32Array {
     predicate: (
       value: Int32,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Int32Array,
     ) => boolean,
     thisArg?: unknown,
   ): boolean;
@@ -4775,7 +4775,7 @@ interface Uint32Array {
     predicate: (
       value: Uint32,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint32Array,
     ) => boolean,
     thisArg?: unknown,
   ): boolean;
@@ -4805,7 +4805,7 @@ interface Uint32Array {
     predicate: (
       value: Uint32,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint32Array,
     ) => boolean,
     thisArg?: unknown,
   ): Uint32Array;
@@ -4823,7 +4823,7 @@ interface Uint32Array {
     predicate: (
       value: Uint32,
       index: NumberType.TypedArraySize,
-      obj: this,
+      obj: Uint32Array,
     ) => boolean,
     thisArg?: unknown,
   ): Uint32 | undefined;
@@ -4841,7 +4841,7 @@ interface Uint32Array {
     predicate: (
       value: Uint32,
       index: NumberType.TypedArraySize,
-      obj: this,
+      obj: Uint32Array,
     ) => boolean,
     thisArg?: unknown,
   ): NumberType.TypedArraySearchResult;
@@ -4857,7 +4857,7 @@ interface Uint32Array {
     callbackfn: (
       value: Uint32,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint32Array,
     ) => void,
     thisArg?: unknown,
   ): void;
@@ -4908,7 +4908,7 @@ interface Uint32Array {
     callbackfn: (
       value: Uint32,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint32Array,
     ) => Uint32,
     thisArg?: unknown,
   ): Uint32Array;
@@ -4928,7 +4928,7 @@ interface Uint32Array {
       previousValue: Uint32,
       currentValue: Uint32,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Uint32Array,
     ) => Uint32,
   ): Uint32;
   reduce(
@@ -4936,7 +4936,7 @@ interface Uint32Array {
       previousValue: Uint32,
       currentValue: Uint32,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Uint32Array,
     ) => Uint32,
     initialValue: Uint32,
   ): Uint32;
@@ -4976,7 +4976,7 @@ interface Uint32Array {
       previousValue: Uint32,
       currentValue: Uint32,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Uint32Array,
     ) => Uint32,
   ): Uint32;
   reduceRight(
@@ -4984,7 +4984,7 @@ interface Uint32Array {
       previousValue: Uint32,
       currentValue: Uint32,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Uint32Array,
     ) => Uint32,
     initialValue: Uint32,
   ): Uint32;
@@ -5046,7 +5046,7 @@ interface Uint32Array {
     predicate: (
       value: Uint32,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint32Array,
     ) => boolean,
     thisArg?: unknown,
   ): boolean;
@@ -5182,7 +5182,7 @@ interface Float32Array {
     predicate: (
       value: Float32,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Float32Array,
     ) => boolean,
     thisArg?: unknown,
   ): boolean;
@@ -5212,7 +5212,7 @@ interface Float32Array {
     predicate: (
       value: Float32,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Float32Array,
     ) => boolean,
     thisArg?: unknown,
   ): Float32Array;
@@ -5230,7 +5230,7 @@ interface Float32Array {
     predicate: (
       value: Float32,
       index: NumberType.TypedArraySize,
-      obj: this,
+      obj: Float32Array,
     ) => boolean,
     thisArg?: unknown,
   ): Float32 | undefined;
@@ -5248,7 +5248,7 @@ interface Float32Array {
     predicate: (
       value: Float32,
       index: NumberType.TypedArraySize,
-      obj: this,
+      obj: Float32Array,
     ) => boolean,
     thisArg?: unknown,
   ): NumberType.TypedArraySearchResult;
@@ -5264,7 +5264,7 @@ interface Float32Array {
     callbackfn: (
       value: Float32,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Float32Array,
     ) => void,
     thisArg?: unknown,
   ): void;
@@ -5315,7 +5315,7 @@ interface Float32Array {
     callbackfn: (
       value: Float32,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Float32Array,
     ) => Float32,
     thisArg?: unknown,
   ): Float32Array;
@@ -5335,7 +5335,7 @@ interface Float32Array {
       previousValue: Float32,
       currentValue: Float32,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Float32Array,
     ) => Float32,
   ): Float32;
   reduce(
@@ -5343,7 +5343,7 @@ interface Float32Array {
       previousValue: Float32,
       currentValue: Float32,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Float32Array,
     ) => Float32,
     initialValue: Float32,
   ): Float32;
@@ -5383,7 +5383,7 @@ interface Float32Array {
       previousValue: Float32,
       currentValue: Float32,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Float32Array,
     ) => Float32,
   ): Float32;
   reduceRight(
@@ -5391,7 +5391,7 @@ interface Float32Array {
       previousValue: Float32,
       currentValue: Float32,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Float32Array,
     ) => Float32,
     initialValue: Float32,
   ): Float32;
@@ -5453,7 +5453,7 @@ interface Float32Array {
     predicate: (
       value: Float32,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Float32Array,
     ) => boolean,
     thisArg?: unknown,
   ): boolean;
@@ -5589,7 +5589,7 @@ interface Float64Array {
     predicate: (
       value: Float64,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Float64Array,
     ) => boolean,
     thisArg?: unknown,
   ): boolean;
@@ -5619,7 +5619,7 @@ interface Float64Array {
     predicate: (
       value: Float64,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Float64Array,
     ) => boolean,
     thisArg?: unknown,
   ): Float64Array;
@@ -5637,7 +5637,7 @@ interface Float64Array {
     predicate: (
       value: Float64,
       index: NumberType.TypedArraySize,
-      obj: this,
+      obj: Float64Array,
     ) => boolean,
     thisArg?: unknown,
   ): Float64 | undefined;
@@ -5655,7 +5655,7 @@ interface Float64Array {
     predicate: (
       value: Float64,
       index: NumberType.TypedArraySize,
-      obj: this,
+      obj: Float64Array,
     ) => boolean,
     thisArg?: unknown,
   ): NumberType.TypedArraySearchResult;
@@ -5671,7 +5671,7 @@ interface Float64Array {
     callbackfn: (
       value: Float64,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Float64Array,
     ) => void,
     thisArg?: unknown,
   ): void;
@@ -5722,7 +5722,7 @@ interface Float64Array {
     callbackfn: (
       value: Float64,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Float64Array,
     ) => Float64,
     thisArg?: unknown,
   ): Float64Array;
@@ -5742,7 +5742,7 @@ interface Float64Array {
       previousValue: Float64,
       currentValue: Float64,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Float64Array,
     ) => Float64,
   ): Float64;
   reduce(
@@ -5750,7 +5750,7 @@ interface Float64Array {
       previousValue: Float64,
       currentValue: Float64,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Float64Array,
     ) => Float64,
     initialValue: Float64,
   ): Float64;
@@ -5790,7 +5790,7 @@ interface Float64Array {
       previousValue: Float64,
       currentValue: Float64,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Float64Array,
     ) => Float64,
   ): Float64;
   reduceRight(
@@ -5798,7 +5798,7 @@ interface Float64Array {
       previousValue: Float64,
       currentValue: Float64,
       currentIndex: NumberType.TypedArraySize,
-      array: this,
+      array: Float64Array,
     ) => Float64,
     initialValue: Float64,
   ): Float64;
@@ -5860,7 +5860,7 @@ interface Float64Array {
     predicate: (
       value: Float64,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Float64Array,
     ) => boolean,
     thisArg?: unknown,
   ): boolean;

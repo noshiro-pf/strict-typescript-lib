@@ -19,6 +19,7 @@ words:
   - libname
   - merchantablity
   - destructures
+  - strictify
   - mtsx
   - napi
   - tsbuildinfo

@@ -131,11 +131,11 @@
 -  findLast<S extends number>(predicate: (value: number, index: number, array: Int8Array) => value is S, thisArg?: any): S | undefined;
 -  findLast(predicate: (value: number, index: number, array: Int8Array) => unknown, thisArg?: any): number | undefined;
 +  findLast<S extends Int8>(
-+    predicate: (value: Int8, index: number, array: this) => value is S,
++    predicate: (value: Int8, index: number, array: Int8Array) => value is S,
 +    thisArg?: unknown,
 +  ): S | undefined;
 +  findLast(
-+    predicate: (value: Int8, index: number, array: this) => boolean,
++    predicate: (value: Int8, index: number, array: Int8Array) => boolean,
 +    thisArg?: unknown,
 +  ): Int8 | undefined;
  
@@ -147,7 +147,7 @@
     */
 -  findLastIndex(predicate: (value: number, index: number, array: Int8Array) => unknown, thisArg?: any): number;
 +  findLastIndex(
-+    predicate: (value: Int8, index: number, array: this) => boolean,
++    predicate: (value: Int8, index: number, array: Int8Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  
@@ -194,11 +194,11 @@
 -  findLast<S extends number>(predicate: (value: number, index: number, array: Uint8Array) => value is S, thisArg?: any): S | undefined;
 -  findLast(predicate: (value: number, index: number, array: Uint8Array) => unknown, thisArg?: any): number | undefined;
 +  findLast<S extends Uint8>(
-+    predicate: (value: Uint8, index: number, array: this) => value is S,
++    predicate: (value: Uint8, index: number, array: Uint8Array) => value is S,
 +    thisArg?: unknown,
 +  ): S | undefined;
 +  findLast(
-+    predicate: (value: Uint8, index: number, array: this) => boolean,
++    predicate: (value: Uint8, index: number, array: Uint8Array) => boolean,
 +    thisArg?: unknown,
 +  ): Uint8 | undefined;
  
@@ -210,7 +210,7 @@
     */
 -  findLastIndex(predicate: (value: number, index: number, array: Uint8Array) => unknown, thisArg?: any): number;
 +  findLastIndex(
-+    predicate: (value: Uint8, index: number, array: this) => boolean,
++    predicate: (value: Uint8, index: number, array: Uint8Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  
@@ -250,30 +250,42 @@
  }
  
  interface Uint8ClampedArray {
-@@ -265,8 +291,14 @@ interface Uint8ClampedArray {
+@@ -265,8 +291,22 @@ interface Uint8ClampedArray {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLast<S extends number>(predicate: (value: number, index: number, array: Uint8ClampedArray) => value is S, thisArg?: any): S | undefined;
 -  findLast(predicate: (value: number, index: number, array: Uint8ClampedArray) => unknown, thisArg?: any): number | undefined;
 +  findLast<S extends Uint8>(
-+    predicate: (value: Uint8, index: number, array: this) => value is S,
++    predicate: (
++      value: Uint8,
++      index: number,
++      array: Uint8ClampedArray,
++    ) => value is S,
 +    thisArg?: unknown,
 +  ): S | undefined;
 +  findLast(
-+    predicate: (value: Uint8, index: number, array: this) => boolean,
++    predicate: (
++      value: Uint8,
++      index: number,
++      array: Uint8ClampedArray,
++    ) => boolean,
 +    thisArg?: unknown,
 +  ): Uint8 | undefined;
  
    /**
     * Returns the index of the last element in the array where predicate is true, and -1
-@@ -277,15 +309,18 @@ interface Uint8ClampedArray {
+@@ -277,15 +317,22 @@ interface Uint8ClampedArray {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLastIndex(predicate: (value: number, index: number, array: Uint8ClampedArray) => unknown, thisArg?: any): number;
 +  findLastIndex(
-+    predicate: (value: Uint8, index: number, array: this) => boolean,
++    predicate: (
++      value: Uint8,
++      index: number,
++      array: Uint8ClampedArray,
++    ) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  
@@ -289,7 +301,7 @@
     * @param compareFn Function used to determine the order of the elements. It is expected to return
     * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
     * value otherwise. If omitted, the elements are sorted in ascending order.
-@@ -294,16 +329,18 @@ interface Uint8ClampedArray {
+@@ -294,16 +341,18 @@ interface Uint8ClampedArray {
     * myNums.toSorted((a, b) => a - b) // Uint8ClampedArray(4) [1, 2, 11, 22]
     * ```
     */
@@ -313,30 +325,30 @@
  }
  
  interface Int16Array {
-@@ -316,8 +353,14 @@ interface Int16Array {
+@@ -316,8 +365,14 @@ interface Int16Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLast<S extends number>(predicate: (value: number, index: number, array: Int16Array) => value is S, thisArg?: any): S | undefined;
 -  findLast(predicate: (value: number, index: number, array: Int16Array) => unknown, thisArg?: any): number | undefined;
 +  findLast<S extends number>(
-+    predicate: (value: number, index: number, array: this) => value is S,
++    predicate: (value: number, index: number, array: Int16Array) => value is S,
 +    thisArg?: unknown,
 +  ): S | undefined;
 +  findLast(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Int16Array) => boolean,
 +    thisArg?: unknown,
 +  ): number | undefined;
  
    /**
     * Returns the index of the last element in the array where predicate is true, and -1
-@@ -328,15 +371,18 @@ interface Int16Array {
+@@ -328,15 +383,18 @@ interface Int16Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLastIndex(predicate: (value: number, index: number, array: Int16Array) => unknown, thisArg?: any): number;
 +  findLastIndex(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Int16Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  
@@ -352,7 +364,7 @@
     * @param compareFn Function used to determine the order of the elements. It is expected to return
     * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
     * value otherwise. If omitted, the elements are sorted in ascending order.
-@@ -348,11 +394,13 @@ interface Int16Array {
+@@ -348,11 +406,13 @@ interface Int16Array {
    toSorted(compareFn?: (a: number, b: number) => number): Int16Array;
  
    /**
@@ -369,30 +381,30 @@
     */
    with(index: number, value: number): Int16Array;
  }
-@@ -367,8 +415,14 @@ interface Uint16Array {
+@@ -367,8 +427,14 @@ interface Uint16Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLast<S extends number>(predicate: (value: number, index: number, array: Uint16Array) => value is S, thisArg?: any): S | undefined;
 -  findLast(predicate: (value: number, index: number, array: Uint16Array) => unknown, thisArg?: any): number | undefined;
 +  findLast<S extends number>(
-+    predicate: (value: number, index: number, array: this) => value is S,
++    predicate: (value: number, index: number, array: Uint16Array) => value is S,
 +    thisArg?: unknown,
 +  ): S | undefined;
 +  findLast(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Uint16Array) => boolean,
 +    thisArg?: unknown,
 +  ): number | undefined;
  
    /**
     * Returns the index of the last element in the array where predicate is true, and -1
-@@ -379,15 +433,18 @@ interface Uint16Array {
+@@ -379,15 +445,18 @@ interface Uint16Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLastIndex(predicate: (value: number, index: number, array: Uint16Array) => unknown, thisArg?: any): number;
 +  findLastIndex(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Uint16Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  
@@ -408,7 +420,7 @@
     * @param compareFn Function used to determine the order of the elements. It is expected to return
     * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
     * value otherwise. If omitted, the elements are sorted in ascending order.
-@@ -399,11 +456,13 @@ interface Uint16Array {
+@@ -399,11 +468,13 @@ interface Uint16Array {
    toSorted(compareFn?: (a: number, b: number) => number): Uint16Array;
  
    /**
@@ -425,30 +437,30 @@
     */
    with(index: number, value: number): Uint16Array;
  }
-@@ -418,8 +477,14 @@ interface Int32Array {
+@@ -418,8 +489,14 @@ interface Int32Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLast<S extends number>(predicate: (value: number, index: number, array: Int32Array) => value is S, thisArg?: any): S | undefined;
 -  findLast(predicate: (value: number, index: number, array: Int32Array) => unknown, thisArg?: any): number | undefined;
 +  findLast<S extends number>(
-+    predicate: (value: number, index: number, array: this) => value is S,
++    predicate: (value: number, index: number, array: Int32Array) => value is S,
 +    thisArg?: unknown,
 +  ): S | undefined;
 +  findLast(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Int32Array) => boolean,
 +    thisArg?: unknown,
 +  ): number | undefined;
  
    /**
     * Returns the index of the last element in the array where predicate is true, and -1
-@@ -430,15 +495,18 @@ interface Int32Array {
+@@ -430,15 +507,18 @@ interface Int32Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLastIndex(predicate: (value: number, index: number, array: Int32Array) => unknown, thisArg?: any): number;
 +  findLastIndex(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Int32Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  
@@ -464,7 +476,7 @@
     * @param compareFn Function used to determine the order of the elements. It is expected to return
     * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
     * value otherwise. If omitted, the elements are sorted in ascending order.
-@@ -450,11 +518,13 @@ interface Int32Array {
+@@ -450,11 +530,13 @@ interface Int32Array {
    toSorted(compareFn?: (a: number, b: number) => number): Int32Array;
  
    /**
@@ -481,30 +493,30 @@
     */
    with(index: number, value: number): Int32Array;
  }
-@@ -469,8 +539,14 @@ interface Uint32Array {
+@@ -469,8 +551,14 @@ interface Uint32Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLast<S extends number>(predicate: (value: number, index: number, array: Uint32Array) => value is S, thisArg?: any): S | undefined;
 -  findLast(predicate: (value: number, index: number, array: Uint32Array) => unknown, thisArg?: any): number | undefined;
 +  findLast<S extends number>(
-+    predicate: (value: number, index: number, array: this) => value is S,
++    predicate: (value: number, index: number, array: Uint32Array) => value is S,
 +    thisArg?: unknown,
 +  ): S | undefined;
 +  findLast(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Uint32Array) => boolean,
 +    thisArg?: unknown,
 +  ): number | undefined;
  
    /**
     * Returns the index of the last element in the array where predicate is true, and -1
-@@ -481,15 +557,18 @@ interface Uint32Array {
+@@ -481,15 +569,18 @@ interface Uint32Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLastIndex(predicate: (value: number, index: number, array: Uint32Array) => unknown, thisArg?: any): number;
 +  findLastIndex(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Uint32Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  
@@ -520,7 +532,7 @@
     * @param compareFn Function used to determine the order of the elements. It is expected to return
     * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
     * value otherwise. If omitted, the elements are sorted in ascending order.
-@@ -501,11 +580,13 @@ interface Uint32Array {
+@@ -501,11 +592,13 @@ interface Uint32Array {
    toSorted(compareFn?: (a: number, b: number) => number): Uint32Array;
  
    /**
@@ -537,30 +549,34 @@
     */
    with(index: number, value: number): Uint32Array;
  }
-@@ -520,8 +601,14 @@ interface Float32Array {
+@@ -520,8 +613,18 @@ interface Float32Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLast<S extends number>(predicate: (value: number, index: number, array: Float32Array) => value is S, thisArg?: any): S | undefined;
 -  findLast(predicate: (value: number, index: number, array: Float32Array) => unknown, thisArg?: any): number | undefined;
 +  findLast<S extends number>(
-+    predicate: (value: number, index: number, array: this) => value is S,
++    predicate: (
++      value: number,
++      index: number,
++      array: Float32Array,
++    ) => value is S,
 +    thisArg?: unknown,
 +  ): S | undefined;
 +  findLast(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Float32Array) => boolean,
 +    thisArg?: unknown,
 +  ): number | undefined;
  
    /**
     * Returns the index of the last element in the array where predicate is true, and -1
-@@ -532,15 +619,18 @@ interface Float32Array {
+@@ -532,15 +635,18 @@ interface Float32Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLastIndex(predicate: (value: number, index: number, array: Float32Array) => unknown, thisArg?: any): number;
 +  findLastIndex(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Float32Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  
@@ -576,7 +592,7 @@
     * @param compareFn Function used to determine the order of the elements. It is expected to return
     * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
     * value otherwise. If omitted, the elements are sorted in ascending order.
-@@ -552,11 +642,13 @@ interface Float32Array {
+@@ -552,11 +658,13 @@ interface Float32Array {
    toSorted(compareFn?: (a: number, b: number) => number): Float32Array;
  
    /**
@@ -593,30 +609,34 @@
     */
    with(index: number, value: number): Float32Array;
  }
-@@ -571,8 +663,14 @@ interface Float64Array {
+@@ -571,8 +679,18 @@ interface Float64Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLast<S extends number>(predicate: (value: number, index: number, array: Float64Array) => value is S, thisArg?: any): S | undefined;
 -  findLast(predicate: (value: number, index: number, array: Float64Array) => unknown, thisArg?: any): number | undefined;
 +  findLast<S extends number>(
-+    predicate: (value: number, index: number, array: this) => value is S,
++    predicate: (
++      value: number,
++      index: number,
++      array: Float64Array,
++    ) => value is S,
 +    thisArg?: unknown,
 +  ): S | undefined;
 +  findLast(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Float64Array) => boolean,
 +    thisArg?: unknown,
 +  ): number | undefined;
  
    /**
     * Returns the index of the last element in the array where predicate is true, and -1
-@@ -583,15 +681,18 @@ interface Float64Array {
+@@ -583,15 +701,18 @@ interface Float64Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLastIndex(predicate: (value: number, index: number, array: Float64Array) => unknown, thisArg?: any): number;
 +  findLastIndex(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Float64Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  
@@ -632,7 +652,7 @@
     * @param compareFn Function used to determine the order of the elements. It is expected to return
     * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
     * value otherwise. If omitted, the elements are sorted in ascending order.
-@@ -603,11 +704,13 @@ interface Float64Array {
+@@ -603,11 +724,13 @@ interface Float64Array {
    toSorted(compareFn?: (a: number, b: number) => number): Float64Array;
  
    /**
@@ -649,30 +669,34 @@
     */
    with(index: number, value: number): Float64Array;
  }
-@@ -622,8 +725,14 @@ interface BigInt64Array {
+@@ -622,8 +745,18 @@ interface BigInt64Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLast<S extends bigint>(predicate: (value: bigint, index: number, array: BigInt64Array) => value is S, thisArg?: any): S | undefined;
 -  findLast(predicate: (value: bigint, index: number, array: BigInt64Array) => unknown, thisArg?: any): bigint | undefined;
 +  findLast<S extends bigint>(
-+    predicate: (value: bigint, index: number, array: this) => value is S,
++    predicate: (
++      value: bigint,
++      index: number,
++      array: BigInt64Array,
++    ) => value is S,
 +    thisArg?: unknown,
 +  ): S | undefined;
 +  findLast(
-+    predicate: (value: bigint, index: number, array: this) => boolean,
++    predicate: (value: bigint, index: number, array: BigInt64Array) => boolean,
 +    thisArg?: unknown,
 +  ): bigint | undefined;
  
    /**
     * Returns the index of the last element in the array where predicate is true, and -1
-@@ -634,15 +743,18 @@ interface BigInt64Array {
+@@ -634,15 +767,18 @@ interface BigInt64Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLastIndex(predicate: (value: bigint, index: number, array: BigInt64Array) => unknown, thisArg?: any): number;
 +  findLastIndex(
-+    predicate: (value: bigint, index: number, array: this) => boolean,
++    predicate: (value: bigint, index: number, array: BigInt64Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  
@@ -688,7 +712,7 @@
     * @param compareFn Function used to determine the order of the elements. It is expected to return
     * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
     * value otherwise. If omitted, the elements are sorted in ascending order.
-@@ -654,11 +766,13 @@ interface BigInt64Array {
+@@ -654,11 +790,13 @@ interface BigInt64Array {
    toSorted(compareFn?: (a: bigint, b: bigint) => number): BigInt64Array;
  
    /**
@@ -705,30 +729,34 @@
     */
    with(index: number, value: bigint): BigInt64Array;
  }
-@@ -673,8 +787,14 @@ interface BigUint64Array {
+@@ -673,8 +811,18 @@ interface BigUint64Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLast<S extends bigint>(predicate: (value: bigint, index: number, array: BigUint64Array) => value is S, thisArg?: any): S | undefined;
 -  findLast(predicate: (value: bigint, index: number, array: BigUint64Array) => unknown, thisArg?: any): bigint | undefined;
 +  findLast<S extends bigint>(
-+    predicate: (value: bigint, index: number, array: this) => value is S,
++    predicate: (
++      value: bigint,
++      index: number,
++      array: BigUint64Array,
++    ) => value is S,
 +    thisArg?: unknown,
 +  ): S | undefined;
 +  findLast(
-+    predicate: (value: bigint, index: number, array: this) => boolean,
++    predicate: (value: bigint, index: number, array: BigUint64Array) => boolean,
 +    thisArg?: unknown,
 +  ): bigint | undefined;
  
    /**
     * Returns the index of the last element in the array where predicate is true, and -1
-@@ -685,15 +805,18 @@ interface BigUint64Array {
+@@ -685,15 +833,18 @@ interface BigUint64Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLastIndex(predicate: (value: bigint, index: number, array: BigUint64Array) => unknown, thisArg?: any): number;
 +  findLastIndex(
-+    predicate: (value: bigint, index: number, array: this) => boolean,
++    predicate: (value: bigint, index: number, array: BigUint64Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  
@@ -744,7 +772,7 @@
     * @param compareFn Function used to determine the order of the elements. It is expected to return
     * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
     * value otherwise. If omitted, the elements are sorted in ascending order.
-@@ -705,11 +828,13 @@ interface BigUint64Array {
+@@ -705,11 +856,13 @@ interface BigUint64Array {
    toSorted(compareFn?: (a: bigint, b: bigint) => number): BigUint64Array;
  
    /**

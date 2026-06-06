@@ -187,9 +187,13 @@ export const convertLibEs2015Iterable = ({
           startRegexp: 'interface Iterator<',
           endRegexp: closeBraceRegexp,
           mapFn: replaceWithNoMatchCheck(
-            // TS 5.5 uses `...args:`; TS 5.7+ destructures as `...[value]:`.
-            /next\(\.\.\.(?:args|\[value\]): readonly \[\] \| readonly \[TNext\]\): IteratorResult<T, TReturn>;/gu,
+            // TS 5.6+ uses `next(...[value]:)`; earlier versions use
+            // `next(...args:)`. Only strictify the newer form to match what
+            // webauto's strict-ts-lib-for-typescript@<5.6 branches do (they
+            // leave the older `args` form untouched).
+            'next(...[value]: readonly [] | readonly [TNext]): IteratorResult<T, TReturn>;',
             `next(...[value]: [] | [TNext]): IteratorResult<T, TReturn>;`,
+            { onNotFound: 'off' },
           ),
         }),
         returnType === 'readonly'

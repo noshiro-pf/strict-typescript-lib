@@ -9,7 +9,7 @@ import {
   closeBraceRegexp,
   enumType,
   typedArrayInterfaceStartRegexp,
-  typedArrayThisRegexSource,
+  typedArrayThisCaptureRegexSource,
   type ConverterOptions,
 } from './common.mjs';
 import {
@@ -35,11 +35,11 @@ const convertInterfaceTypedArray = (
   );
 
   // TS 5.7+ writes `array: this` / `obj: this`; pre-5.7 writes
-  // `array: ${typeName}Array` / `obj: ${typeName}Array`. The two forms are
-  // semantically equivalent here; we always normalize the output to `this`.
+  // `array: ${typeName}Array` / `obj: ${typeName}Array`. Capture the original
+  // token so each version's output keeps the form it had upstream.
   const tName = `${elementTypeArg}Array`;
 
-  const thisRe = typedArrayThisRegexSource(tName);
+  const thisCap = typedArrayThisCaptureRegexSource(tName);
 
   return composeMonoTypeFns(
     convertTypedArrayCommon(options),
@@ -57,53 +57,53 @@ const convertInterfaceTypedArray = (
     ),
     replaceWithNoMatchCheck(
       new RegExp(
-        String.raw`callbackfn: \(value: number, index: number, array: ${thisRe}\) => number`,
+        String.raw`callbackfn: \(value: number, index: number, array: ${thisCap}\) => number`,
         'gu',
       ),
-      `callbackfn: (value: ${elementType}, index: ${brandedNumber.TypedArraySize}, array: this) => ${elementType}`,
+      `callbackfn: (value: ${elementType}, index: ${brandedNumber.TypedArraySize}, array: $1) => ${elementType}`,
     ),
     replaceWithNoMatchCheck(
       new RegExp(
-        String.raw`find\(predicate: \(value: number, index: number, obj: ${thisRe}\) => boolean, thisArg\?: unknown\): number \| undefined;`,
+        String.raw`find\(predicate: \(value: number, index: number, obj: ${thisCap}\) => boolean, thisArg\?: unknown\): number \| undefined;`,
         'gu',
       ),
-      `find(predicate: (value: ${elementType}, index: ${brandedNumber.TypedArraySize}, obj: this) => boolean, thisArg?: unknown): ${elementType} | undefined;`,
+      `find(predicate: (value: ${elementType}, index: ${brandedNumber.TypedArraySize}, obj: $1) => boolean, thisArg?: unknown): ${elementType} | undefined;`,
     ),
     replaceWithNoMatchCheck(
       new RegExp(
-        String.raw`findIndex\(predicate: \(value: number, index: number, obj: ${thisRe}\) => boolean, thisArg\?: unknown\): number;`,
+        String.raw`findIndex\(predicate: \(value: number, index: number, obj: ${thisCap}\) => boolean, thisArg\?: unknown\): number;`,
         'gu',
       ),
-      `findIndex(predicate: (value: ${elementType}, index: ${brandedNumber.TypedArraySize}, obj: this) => boolean, thisArg?: unknown): ${brandedNumber.TypedArraySearchResult};`,
+      `findIndex(predicate: (value: ${elementType}, index: ${brandedNumber.TypedArraySize}, obj: $1) => boolean, thisArg?: unknown): ${brandedNumber.TypedArraySearchResult};`,
     ),
     replaceWithNoMatchCheck(
       new RegExp(
-        String.raw`predicate: \(value: number, index: number, array: ${thisRe}\) => unknown`,
+        String.raw`predicate: \(value: number, index: number, array: ${thisCap}\) => unknown`,
         'gu',
       ),
-      `predicate: (value: ${elementType}, index: ${brandedNumber.TypedArraySize}, array: this) => boolean`,
+      `predicate: (value: ${elementType}, index: ${brandedNumber.TypedArraySize}, array: $1) => boolean`,
     ),
     replaceWithNoMatchCheck(
       new RegExp(
-        String.raw`callbackfn: \(value: number, index: number, array: ${thisRe}\) => void`,
+        String.raw`callbackfn: \(value: number, index: number, array: ${thisCap}\) => void`,
         'gu',
       ),
-      `callbackfn: (value: ${elementType}, index: ${brandedNumber.TypedArraySize}, array: this) => void`,
+      `callbackfn: (value: ${elementType}, index: ${brandedNumber.TypedArraySize}, array: $1) => void`,
     ),
     replaceWithNoMatchCheck(
       // reduce / reduceRight
       new RegExp(
-        String.raw`\(callbackfn: \(previousValue: number, currentValue: number, currentIndex: ${brandedNumber.TypedArraySize}, array: ${thisRe}\) => number\): number`,
+        String.raw`\(callbackfn: \(previousValue: number, currentValue: number, currentIndex: ${brandedNumber.TypedArraySize}, array: ${thisCap}\) => number\): number`,
         'gu',
       ),
-      `(callbackfn: (previousValue: ${elementType}, currentValue: ${elementType}, currentIndex: ${brandedNumber.TypedArraySize}, array: this) => ${elementType}): ${elementType}`,
+      `(callbackfn: (previousValue: ${elementType}, currentValue: ${elementType}, currentIndex: ${brandedNumber.TypedArraySize}, array: $1) => ${elementType}): ${elementType}`,
     ),
     replaceWithNoMatchCheck(
       new RegExp(
-        String.raw`callbackfn: \(previousValue: number, currentValue: number, currentIndex: ${brandedNumber.TypedArraySize}, array: ${thisRe}\) => number, initialValue: number\): number;`,
+        String.raw`callbackfn: \(previousValue: number, currentValue: number, currentIndex: ${brandedNumber.TypedArraySize}, array: ${thisCap}\) => number, initialValue: number\): number;`,
         'gu',
       ),
-      `callbackfn: (previousValue: ${elementType}, currentValue: ${elementType}, currentIndex: ${brandedNumber.TypedArraySize}, array: this) => ${elementType}, initialValue: ${elementType}): ${elementType};`,
+      `callbackfn: (previousValue: ${elementType}, currentValue: ${elementType}, currentIndex: ${brandedNumber.TypedArraySize}, array: $1) => ${elementType}, initialValue: ${elementType}): ${elementType};`,
     ),
     replaceWithNoMatchCheck(
       'currentValue: number',

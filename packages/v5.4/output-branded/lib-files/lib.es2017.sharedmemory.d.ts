@@ -14,7 +14,7 @@ interface SharedArrayBuffer {
    * Returns a section of an SharedArrayBuffer.
    */
   slice(
-    begin?: NumberType.TypedArraySizeArg,
+    begin: NumberType.TypedArraySizeArg,
     end?: NumberType.TypedArraySizeArg,
   ): SharedArrayBuffer;
   readonly [Symbol.species]: SharedArrayBuffer;
@@ -23,7 +23,7 @@ interface SharedArrayBuffer {
 
 interface SharedArrayBufferConstructor {
   readonly prototype: SharedArrayBuffer;
-  new (byteLength?: NumberType.TypedArraySizeArgNonNegative): SharedArrayBuffer;
+  new (byteLength: NumberType.TypedArraySizeArgNonNegative): SharedArrayBuffer;
 }
 declare const SharedArrayBuffer: SharedArrayBufferConstructor;
 

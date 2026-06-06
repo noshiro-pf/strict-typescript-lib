@@ -83,6 +83,14 @@ export const typedArrayRef = (
 export const typedArrayThisRegexSource = (typeName: string): string =>
   `(?:this|${typeName})`;
 
+/**
+ * Capturing variant of `typedArrayThisRegexSource`. Use `$1` in the
+ * replacement string to keep whichever form (`this` or `${typeName}`) the
+ * source lib actually used.
+ */
+export const typedArrayThisCaptureRegexSource = (typeName: string): string =>
+  `(this|${typeName})`;
+
 export const closeBraceRegexp = /\n\}\n/gu;
 
 /**

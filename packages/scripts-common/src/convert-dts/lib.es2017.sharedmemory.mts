@@ -35,14 +35,15 @@ export const convertLibEs2017Sharedmemory =
           `readonly byteLength: ${brandedNumber.TypedArraySize}`,
         ),
         replaceWithNoMatchCheck(
-          // TS 5.7 made `byteLength` optional; earlier versions had it required.
-          /new \(byteLength\??: number\):/gu,
-          `new (byteLength?: ${brandedNumber.TypedArraySizeArgNonNegative}):`,
+          // TS 5.7 made `byteLength` optional; earlier versions had it
+          // required. Preserve the original `?` via capture group.
+          /new \((byteLength\??): number\):/gu,
+          `new ($1: ${brandedNumber.TypedArraySizeArgNonNegative}):`,
         ),
         replaceWithNoMatchCheck(
           // TS 5.7 made `begin` optional; earlier versions had it required.
-          /slice\(begin\??: number, end\?: number\)/gu,
-          `slice(begin?: ${brandedNumber.TypedArraySizeArg}, end?: ${brandedNumber.TypedArraySizeArg})`,
+          /slice\((begin\??): number, end\?: number\)/gu,
+          `slice($1: ${brandedNumber.TypedArraySizeArg}, end?: ${brandedNumber.TypedArraySizeArg})`,
         ),
 
         ...[

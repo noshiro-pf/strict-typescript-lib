@@ -209,7 +209,7 @@ interface Int8Array {
     predicate: (
       value: Int8,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Int8Array,
     ) => value is S,
     thisArg?: unknown,
   ): S | undefined;
@@ -217,7 +217,7 @@ interface Int8Array {
     predicate: (
       value: Int8,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Int8Array,
     ) => boolean,
     thisArg?: unknown,
   ): Int8 | undefined;
@@ -235,7 +235,7 @@ interface Int8Array {
     predicate: (
       value: Int8,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Int8Array,
     ) => boolean,
     thisArg?: unknown,
   ): NumberType.TypedArraySearchResult;
@@ -283,7 +283,7 @@ interface Uint8Array {
     predicate: (
       value: Uint8,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint8Array,
     ) => value is S,
     thisArg?: unknown,
   ): S | undefined;
@@ -291,7 +291,7 @@ interface Uint8Array {
     predicate: (
       value: Uint8,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint8Array,
     ) => boolean,
     thisArg?: unknown,
   ): Uint8 | undefined;
@@ -309,7 +309,7 @@ interface Uint8Array {
     predicate: (
       value: Uint8,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint8Array,
     ) => boolean,
     thisArg?: unknown,
   ): NumberType.TypedArraySearchResult;
@@ -357,7 +357,7 @@ interface Uint8ClampedArray {
     predicate: (
       value: Uint8,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint8ClampedArray,
     ) => value is S,
     thisArg?: unknown,
   ): S | undefined;
@@ -365,7 +365,7 @@ interface Uint8ClampedArray {
     predicate: (
       value: Uint8,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint8ClampedArray,
     ) => boolean,
     thisArg?: unknown,
   ): Uint8 | undefined;
@@ -383,7 +383,7 @@ interface Uint8ClampedArray {
     predicate: (
       value: Uint8,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint8ClampedArray,
     ) => boolean,
     thisArg?: unknown,
   ): NumberType.TypedArraySearchResult;
@@ -431,7 +431,7 @@ interface Int16Array {
     predicate: (
       value: Int16,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Int16Array,
     ) => value is S,
     thisArg?: unknown,
   ): S | undefined;
@@ -439,7 +439,7 @@ interface Int16Array {
     predicate: (
       value: Int16,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Int16Array,
     ) => boolean,
     thisArg?: unknown,
   ): Int16 | undefined;
@@ -457,7 +457,7 @@ interface Int16Array {
     predicate: (
       value: Int16,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Int16Array,
     ) => boolean,
     thisArg?: unknown,
   ): NumberType.TypedArraySearchResult;
@@ -505,7 +505,7 @@ interface Uint16Array {
     predicate: (
       value: Uint16,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint16Array,
     ) => value is S,
     thisArg?: unknown,
   ): S | undefined;
@@ -513,7 +513,7 @@ interface Uint16Array {
     predicate: (
       value: Uint16,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint16Array,
     ) => boolean,
     thisArg?: unknown,
   ): Uint16 | undefined;
@@ -531,7 +531,7 @@ interface Uint16Array {
     predicate: (
       value: Uint16,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint16Array,
     ) => boolean,
     thisArg?: unknown,
   ): NumberType.TypedArraySearchResult;
@@ -579,7 +579,7 @@ interface Int32Array {
     predicate: (
       value: Int32,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Int32Array,
     ) => value is S,
     thisArg?: unknown,
   ): S | undefined;
@@ -587,7 +587,7 @@ interface Int32Array {
     predicate: (
       value: Int32,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Int32Array,
     ) => boolean,
     thisArg?: unknown,
   ): Int32 | undefined;
@@ -605,7 +605,7 @@ interface Int32Array {
     predicate: (
       value: Int32,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Int32Array,
     ) => boolean,
     thisArg?: unknown,
   ): NumberType.TypedArraySearchResult;
@@ -653,7 +653,7 @@ interface Uint32Array {
     predicate: (
       value: Uint32,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint32Array,
     ) => value is S,
     thisArg?: unknown,
   ): S | undefined;
@@ -661,7 +661,7 @@ interface Uint32Array {
     predicate: (
       value: Uint32,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint32Array,
     ) => boolean,
     thisArg?: unknown,
   ): Uint32 | undefined;
@@ -679,7 +679,7 @@ interface Uint32Array {
     predicate: (
       value: Uint32,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Uint32Array,
     ) => boolean,
     thisArg?: unknown,
   ): NumberType.TypedArraySearchResult;
@@ -727,7 +727,7 @@ interface Float32Array {
     predicate: (
       value: Float32,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Float32Array,
     ) => value is S,
     thisArg?: unknown,
   ): S | undefined;
@@ -735,7 +735,7 @@ interface Float32Array {
     predicate: (
       value: Float32,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Float32Array,
     ) => boolean,
     thisArg?: unknown,
   ): Float32 | undefined;
@@ -753,7 +753,7 @@ interface Float32Array {
     predicate: (
       value: Float32,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Float32Array,
     ) => boolean,
     thisArg?: unknown,
   ): NumberType.TypedArraySearchResult;
@@ -801,7 +801,7 @@ interface Float64Array {
     predicate: (
       value: Float64,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Float64Array,
     ) => value is S,
     thisArg?: unknown,
   ): S | undefined;
@@ -809,7 +809,7 @@ interface Float64Array {
     predicate: (
       value: Float64,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Float64Array,
     ) => boolean,
     thisArg?: unknown,
   ): Float64 | undefined;
@@ -827,7 +827,7 @@ interface Float64Array {
     predicate: (
       value: Float64,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: Float64Array,
     ) => boolean,
     thisArg?: unknown,
   ): NumberType.TypedArraySearchResult;
@@ -875,7 +875,7 @@ interface BigInt64Array {
     predicate: (
       value: BigInt64,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: BigInt64Array,
     ) => value is S,
     thisArg?: unknown,
   ): S | undefined;
@@ -883,7 +883,7 @@ interface BigInt64Array {
     predicate: (
       value: BigInt64,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: BigInt64Array,
     ) => boolean,
     thisArg?: unknown,
   ): BigInt64 | undefined;
@@ -901,7 +901,7 @@ interface BigInt64Array {
     predicate: (
       value: BigInt64,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: BigInt64Array,
     ) => boolean,
     thisArg?: unknown,
   ): NumberType.TypedArraySearchResult;
@@ -949,7 +949,7 @@ interface BigUint64Array {
     predicate: (
       value: BigUint64,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: BigUint64Array,
     ) => value is S,
     thisArg?: unknown,
   ): S | undefined;
@@ -957,7 +957,7 @@ interface BigUint64Array {
     predicate: (
       value: BigUint64,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: BigUint64Array,
     ) => boolean,
     thisArg?: unknown,
   ): BigUint64 | undefined;
@@ -975,7 +975,7 @@ interface BigUint64Array {
     predicate: (
       value: BigUint64,
       index: NumberType.TypedArraySize,
-      array: this,
+      array: BigUint64Array,
     ) => boolean,
     thisArg?: unknown,
   ): NumberType.TypedArraySearchResult;

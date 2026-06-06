@@ -2165,7 +2165,7 @@ interface Int8Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   every(
-    predicate: (value: Int8, index: number, array: this) => boolean,
+    predicate: (value: Int8, index: number, array: Int8Array) => boolean,
     thisArg?: unknown,
   ): boolean;
 
@@ -2187,7 +2187,7 @@ interface Int8Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   filter(
-    predicate: (value: Int8, index: number, array: this) => boolean,
+    predicate: (value: Int8, index: number, array: Int8Array) => boolean,
     thisArg?: unknown,
   ): Int8Array;
 
@@ -2201,7 +2201,7 @@ interface Int8Array {
    * predicate. If it is not provided, undefined is used instead.
    */
   find(
-    predicate: (value: Int8, index: number, obj: this) => boolean,
+    predicate: (value: Int8, index: number, obj: Int8Array) => boolean,
     thisArg?: unknown,
   ): Int8 | undefined;
 
@@ -2215,7 +2215,7 @@ interface Int8Array {
    * predicate. If it is not provided, undefined is used instead.
    */
   findIndex(
-    predicate: (value: Int8, index: number, obj: this) => boolean,
+    predicate: (value: Int8, index: number, obj: Int8Array) => boolean,
     thisArg?: unknown,
   ): number;
 
@@ -2227,7 +2227,7 @@ interface Int8Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   forEach(
-    callbackfn: (value: Int8, index: number, array: this) => void,
+    callbackfn: (value: Int8, index: number, array: Int8Array) => void,
     thisArg?: unknown,
   ): void;
 
@@ -2268,7 +2268,7 @@ interface Int8Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   map(
-    callbackfn: (value: Int8, index: number, array: this) => Int8,
+    callbackfn: (value: Int8, index: number, array: Int8Array) => Int8,
     thisArg?: unknown,
   ): Int8Array;
 
@@ -2287,7 +2287,7 @@ interface Int8Array {
       previousValue: Int8,
       currentValue: Int8,
       currentIndex: number,
-      array: this,
+      array: Int8Array,
     ) => Int8,
   ): Int8;
   reduce(
@@ -2295,7 +2295,7 @@ interface Int8Array {
       previousValue: Int8,
       currentValue: Int8,
       currentIndex: number,
-      array: this,
+      array: Int8Array,
     ) => Int8,
     initialValue: Int8,
   ): Int8;
@@ -2335,7 +2335,7 @@ interface Int8Array {
       previousValue: Int8,
       currentValue: Int8,
       currentIndex: number,
-      array: this,
+      array: Int8Array,
     ) => Int8,
   ): Int8;
   reduceRight(
@@ -2343,7 +2343,7 @@ interface Int8Array {
       previousValue: Int8,
       currentValue: Int8,
       currentIndex: number,
-      array: this,
+      array: Int8Array,
     ) => Int8,
     initialValue: Int8,
   ): Int8;
@@ -2396,7 +2396,7 @@ interface Int8Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   some(
-    predicate: (value: Int8, index: number, array: this) => boolean,
+    predicate: (value: Int8, index: number, array: Int8Array) => boolean,
     thisArg?: unknown,
   ): boolean;
 
@@ -2520,7 +2520,7 @@ interface Uint8Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   every(
-    predicate: (value: Uint8, index: number, array: this) => boolean,
+    predicate: (value: Uint8, index: number, array: Uint8Array) => boolean,
     thisArg?: unknown,
   ): boolean;
 
@@ -2542,7 +2542,7 @@ interface Uint8Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   filter(
-    predicate: (value: Uint8, index: number, array: this) => boolean,
+    predicate: (value: Uint8, index: number, array: Uint8Array) => boolean,
     thisArg?: unknown,
   ): Uint8Array;
 
@@ -2556,7 +2556,7 @@ interface Uint8Array {
    * predicate. If it is not provided, undefined is used instead.
    */
   find(
-    predicate: (value: Uint8, index: number, obj: this) => boolean,
+    predicate: (value: Uint8, index: number, obj: Uint8Array) => boolean,
     thisArg?: unknown,
   ): Uint8 | undefined;
 
@@ -2570,7 +2570,7 @@ interface Uint8Array {
    * predicate. If it is not provided, undefined is used instead.
    */
   findIndex(
-    predicate: (value: Uint8, index: number, obj: this) => boolean,
+    predicate: (value: Uint8, index: number, obj: Uint8Array) => boolean,
     thisArg?: unknown,
   ): number;
 
@@ -2582,7 +2582,7 @@ interface Uint8Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   forEach(
-    callbackfn: (value: Uint8, index: number, array: this) => void,
+    callbackfn: (value: Uint8, index: number, array: Uint8Array) => void,
     thisArg?: unknown,
   ): void;
 
@@ -2623,7 +2623,7 @@ interface Uint8Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   map(
-    callbackfn: (value: Uint8, index: number, array: this) => Uint8,
+    callbackfn: (value: Uint8, index: number, array: Uint8Array) => Uint8,
     thisArg?: unknown,
   ): Uint8Array;
 
@@ -2642,7 +2642,7 @@ interface Uint8Array {
       previousValue: Uint8,
       currentValue: Uint8,
       currentIndex: number,
-      array: this,
+      array: Uint8Array,
     ) => Uint8,
   ): Uint8;
   reduce(
@@ -2650,7 +2650,7 @@ interface Uint8Array {
       previousValue: Uint8,
       currentValue: Uint8,
       currentIndex: number,
-      array: this,
+      array: Uint8Array,
     ) => Uint8,
     initialValue: Uint8,
   ): Uint8;
@@ -2690,7 +2690,7 @@ interface Uint8Array {
       previousValue: Uint8,
       currentValue: Uint8,
       currentIndex: number,
-      array: this,
+      array: Uint8Array,
     ) => Uint8,
   ): Uint8;
   reduceRight(
@@ -2698,7 +2698,7 @@ interface Uint8Array {
       previousValue: Uint8,
       currentValue: Uint8,
       currentIndex: number,
-      array: this,
+      array: Uint8Array,
     ) => Uint8,
     initialValue: Uint8,
   ): Uint8;
@@ -2751,7 +2751,7 @@ interface Uint8Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   some(
-    predicate: (value: Uint8, index: number, array: this) => boolean,
+    predicate: (value: Uint8, index: number, array: Uint8Array) => boolean,
     thisArg?: unknown,
   ): boolean;
 
@@ -2876,7 +2876,11 @@ interface Uint8ClampedArray {
    * If thisArg is omitted, undefined is used as the this value.
    */
   every(
-    predicate: (value: Uint8, index: number, array: this) => boolean,
+    predicate: (
+      value: Uint8,
+      index: number,
+      array: Uint8ClampedArray,
+    ) => boolean,
     thisArg?: unknown,
   ): boolean;
 
@@ -2898,7 +2902,11 @@ interface Uint8ClampedArray {
    * If thisArg is omitted, undefined is used as the this value.
    */
   filter(
-    predicate: (value: Uint8, index: number, array: this) => boolean,
+    predicate: (
+      value: Uint8,
+      index: number,
+      array: Uint8ClampedArray,
+    ) => boolean,
     thisArg?: unknown,
   ): Uint8ClampedArray;
 
@@ -2912,7 +2920,7 @@ interface Uint8ClampedArray {
    * predicate. If it is not provided, undefined is used instead.
    */
   find(
-    predicate: (value: Uint8, index: number, obj: this) => boolean,
+    predicate: (value: Uint8, index: number, obj: Uint8ClampedArray) => boolean,
     thisArg?: unknown,
   ): Uint8 | undefined;
 
@@ -2926,7 +2934,7 @@ interface Uint8ClampedArray {
    * predicate. If it is not provided, undefined is used instead.
    */
   findIndex(
-    predicate: (value: Uint8, index: number, obj: this) => boolean,
+    predicate: (value: Uint8, index: number, obj: Uint8ClampedArray) => boolean,
     thisArg?: unknown,
   ): number;
 
@@ -2938,7 +2946,7 @@ interface Uint8ClampedArray {
    * If thisArg is omitted, undefined is used as the this value.
    */
   forEach(
-    callbackfn: (value: Uint8, index: number, array: this) => void,
+    callbackfn: (value: Uint8, index: number, array: Uint8ClampedArray) => void,
     thisArg?: unknown,
   ): void;
 
@@ -2979,7 +2987,11 @@ interface Uint8ClampedArray {
    * If thisArg is omitted, undefined is used as the this value.
    */
   map(
-    callbackfn: (value: Uint8, index: number, array: this) => Uint8,
+    callbackfn: (
+      value: Uint8,
+      index: number,
+      array: Uint8ClampedArray,
+    ) => Uint8,
     thisArg?: unknown,
   ): Uint8ClampedArray;
 
@@ -2998,7 +3010,7 @@ interface Uint8ClampedArray {
       previousValue: Uint8,
       currentValue: Uint8,
       currentIndex: number,
-      array: this,
+      array: Uint8ClampedArray,
     ) => Uint8,
   ): Uint8;
   reduce(
@@ -3006,7 +3018,7 @@ interface Uint8ClampedArray {
       previousValue: Uint8,
       currentValue: Uint8,
       currentIndex: number,
-      array: this,
+      array: Uint8ClampedArray,
     ) => Uint8,
     initialValue: Uint8,
   ): Uint8;
@@ -3046,7 +3058,7 @@ interface Uint8ClampedArray {
       previousValue: Uint8,
       currentValue: Uint8,
       currentIndex: number,
-      array: this,
+      array: Uint8ClampedArray,
     ) => Uint8,
   ): Uint8;
   reduceRight(
@@ -3054,7 +3066,7 @@ interface Uint8ClampedArray {
       previousValue: Uint8,
       currentValue: Uint8,
       currentIndex: number,
-      array: this,
+      array: Uint8ClampedArray,
     ) => Uint8,
     initialValue: Uint8,
   ): Uint8;
@@ -3107,7 +3119,11 @@ interface Uint8ClampedArray {
    * If thisArg is omitted, undefined is used as the this value.
    */
   some(
-    predicate: (value: Uint8, index: number, array: this) => boolean,
+    predicate: (
+      value: Uint8,
+      index: number,
+      array: Uint8ClampedArray,
+    ) => boolean,
     thisArg?: unknown,
   ): boolean;
 
@@ -3232,7 +3248,7 @@ interface Int16Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   every(
-    predicate: (value: number, index: number, array: this) => boolean,
+    predicate: (value: number, index: number, array: Int16Array) => boolean,
     thisArg?: unknown,
   ): boolean;
 
@@ -3254,7 +3270,7 @@ interface Int16Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   filter(
-    predicate: (value: number, index: number, array: this) => boolean,
+    predicate: (value: number, index: number, array: Int16Array) => boolean,
     thisArg?: unknown,
   ): Int16Array;
 
@@ -3268,7 +3284,7 @@ interface Int16Array {
    * predicate. If it is not provided, undefined is used instead.
    */
   find(
-    predicate: (value: number, index: number, obj: this) => boolean,
+    predicate: (value: number, index: number, obj: Int16Array) => boolean,
     thisArg?: unknown,
   ): number | undefined;
 
@@ -3282,7 +3298,7 @@ interface Int16Array {
    * predicate. If it is not provided, undefined is used instead.
    */
   findIndex(
-    predicate: (value: number, index: number, obj: this) => boolean,
+    predicate: (value: number, index: number, obj: Int16Array) => boolean,
     thisArg?: unknown,
   ): number;
 
@@ -3294,7 +3310,7 @@ interface Int16Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   forEach(
-    callbackfn: (value: number, index: number, array: this) => void,
+    callbackfn: (value: number, index: number, array: Int16Array) => void,
     thisArg?: unknown,
   ): void;
 
@@ -3335,7 +3351,7 @@ interface Int16Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   map(
-    callbackfn: (value: number, index: number, array: this) => number,
+    callbackfn: (value: number, index: number, array: Int16Array) => number,
     thisArg?: unknown,
   ): Int16Array;
 
@@ -3354,7 +3370,7 @@ interface Int16Array {
       previousValue: number,
       currentValue: number,
       currentIndex: number,
-      array: this,
+      array: Int16Array,
     ) => number,
   ): number;
   reduce(
@@ -3362,7 +3378,7 @@ interface Int16Array {
       previousValue: number,
       currentValue: number,
       currentIndex: number,
-      array: this,
+      array: Int16Array,
     ) => number,
     initialValue: number,
   ): number;
@@ -3402,7 +3418,7 @@ interface Int16Array {
       previousValue: number,
       currentValue: number,
       currentIndex: number,
-      array: this,
+      array: Int16Array,
     ) => number,
   ): number;
   reduceRight(
@@ -3410,7 +3426,7 @@ interface Int16Array {
       previousValue: number,
       currentValue: number,
       currentIndex: number,
-      array: this,
+      array: Int16Array,
     ) => number,
     initialValue: number,
   ): number;
@@ -3463,7 +3479,7 @@ interface Int16Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   some(
-    predicate: (value: number, index: number, array: this) => boolean,
+    predicate: (value: number, index: number, array: Int16Array) => boolean,
     thisArg?: unknown,
   ): boolean;
 
@@ -3588,7 +3604,7 @@ interface Uint16Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   every(
-    predicate: (value: number, index: number, array: this) => boolean,
+    predicate: (value: number, index: number, array: Uint16Array) => boolean,
     thisArg?: unknown,
   ): boolean;
 
@@ -3610,7 +3626,7 @@ interface Uint16Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   filter(
-    predicate: (value: number, index: number, array: this) => boolean,
+    predicate: (value: number, index: number, array: Uint16Array) => boolean,
     thisArg?: unknown,
   ): Uint16Array;
 
@@ -3624,7 +3640,7 @@ interface Uint16Array {
    * predicate. If it is not provided, undefined is used instead.
    */
   find(
-    predicate: (value: number, index: number, obj: this) => boolean,
+    predicate: (value: number, index: number, obj: Uint16Array) => boolean,
     thisArg?: unknown,
   ): number | undefined;
 
@@ -3638,7 +3654,7 @@ interface Uint16Array {
    * predicate. If it is not provided, undefined is used instead.
    */
   findIndex(
-    predicate: (value: number, index: number, obj: this) => boolean,
+    predicate: (value: number, index: number, obj: Uint16Array) => boolean,
     thisArg?: unknown,
   ): number;
 
@@ -3650,7 +3666,7 @@ interface Uint16Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   forEach(
-    callbackfn: (value: number, index: number, array: this) => void,
+    callbackfn: (value: number, index: number, array: Uint16Array) => void,
     thisArg?: unknown,
   ): void;
 
@@ -3691,7 +3707,7 @@ interface Uint16Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   map(
-    callbackfn: (value: number, index: number, array: this) => number,
+    callbackfn: (value: number, index: number, array: Uint16Array) => number,
     thisArg?: unknown,
   ): Uint16Array;
 
@@ -3710,7 +3726,7 @@ interface Uint16Array {
       previousValue: number,
       currentValue: number,
       currentIndex: number,
-      array: this,
+      array: Uint16Array,
     ) => number,
   ): number;
   reduce(
@@ -3718,7 +3734,7 @@ interface Uint16Array {
       previousValue: number,
       currentValue: number,
       currentIndex: number,
-      array: this,
+      array: Uint16Array,
     ) => number,
     initialValue: number,
   ): number;
@@ -3758,7 +3774,7 @@ interface Uint16Array {
       previousValue: number,
       currentValue: number,
       currentIndex: number,
-      array: this,
+      array: Uint16Array,
     ) => number,
   ): number;
   reduceRight(
@@ -3766,7 +3782,7 @@ interface Uint16Array {
       previousValue: number,
       currentValue: number,
       currentIndex: number,
-      array: this,
+      array: Uint16Array,
     ) => number,
     initialValue: number,
   ): number;
@@ -3819,7 +3835,7 @@ interface Uint16Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   some(
-    predicate: (value: number, index: number, array: this) => boolean,
+    predicate: (value: number, index: number, array: Uint16Array) => boolean,
     thisArg?: unknown,
   ): boolean;
 
@@ -3943,7 +3959,7 @@ interface Int32Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   every(
-    predicate: (value: number, index: number, array: this) => boolean,
+    predicate: (value: number, index: number, array: Int32Array) => boolean,
     thisArg?: unknown,
   ): boolean;
 
@@ -3965,7 +3981,7 @@ interface Int32Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   filter(
-    predicate: (value: number, index: number, array: this) => boolean,
+    predicate: (value: number, index: number, array: Int32Array) => boolean,
     thisArg?: unknown,
   ): Int32Array;
 
@@ -3979,7 +3995,7 @@ interface Int32Array {
    * predicate. If it is not provided, undefined is used instead.
    */
   find(
-    predicate: (value: number, index: number, obj: this) => boolean,
+    predicate: (value: number, index: number, obj: Int32Array) => boolean,
     thisArg?: unknown,
   ): number | undefined;
 
@@ -3993,7 +4009,7 @@ interface Int32Array {
    * predicate. If it is not provided, undefined is used instead.
    */
   findIndex(
-    predicate: (value: number, index: number, obj: this) => boolean,
+    predicate: (value: number, index: number, obj: Int32Array) => boolean,
     thisArg?: unknown,
   ): number;
 
@@ -4005,7 +4021,7 @@ interface Int32Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   forEach(
-    callbackfn: (value: number, index: number, array: this) => void,
+    callbackfn: (value: number, index: number, array: Int32Array) => void,
     thisArg?: unknown,
   ): void;
 
@@ -4046,7 +4062,7 @@ interface Int32Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   map(
-    callbackfn: (value: number, index: number, array: this) => number,
+    callbackfn: (value: number, index: number, array: Int32Array) => number,
     thisArg?: unknown,
   ): Int32Array;
 
@@ -4065,7 +4081,7 @@ interface Int32Array {
       previousValue: number,
       currentValue: number,
       currentIndex: number,
-      array: this,
+      array: Int32Array,
     ) => number,
   ): number;
   reduce(
@@ -4073,7 +4089,7 @@ interface Int32Array {
       previousValue: number,
       currentValue: number,
       currentIndex: number,
-      array: this,
+      array: Int32Array,
     ) => number,
     initialValue: number,
   ): number;
@@ -4113,7 +4129,7 @@ interface Int32Array {
       previousValue: number,
       currentValue: number,
       currentIndex: number,
-      array: this,
+      array: Int32Array,
     ) => number,
   ): number;
   reduceRight(
@@ -4121,7 +4137,7 @@ interface Int32Array {
       previousValue: number,
       currentValue: number,
       currentIndex: number,
-      array: this,
+      array: Int32Array,
     ) => number,
     initialValue: number,
   ): number;
@@ -4174,7 +4190,7 @@ interface Int32Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   some(
-    predicate: (value: number, index: number, array: this) => boolean,
+    predicate: (value: number, index: number, array: Int32Array) => boolean,
     thisArg?: unknown,
   ): boolean;
 
@@ -4299,7 +4315,7 @@ interface Uint32Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   every(
-    predicate: (value: number, index: number, array: this) => boolean,
+    predicate: (value: number, index: number, array: Uint32Array) => boolean,
     thisArg?: unknown,
   ): boolean;
 
@@ -4321,7 +4337,7 @@ interface Uint32Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   filter(
-    predicate: (value: number, index: number, array: this) => boolean,
+    predicate: (value: number, index: number, array: Uint32Array) => boolean,
     thisArg?: unknown,
   ): Uint32Array;
 
@@ -4335,7 +4351,7 @@ interface Uint32Array {
    * predicate. If it is not provided, undefined is used instead.
    */
   find(
-    predicate: (value: number, index: number, obj: this) => boolean,
+    predicate: (value: number, index: number, obj: Uint32Array) => boolean,
     thisArg?: unknown,
   ): number | undefined;
 
@@ -4349,7 +4365,7 @@ interface Uint32Array {
    * predicate. If it is not provided, undefined is used instead.
    */
   findIndex(
-    predicate: (value: number, index: number, obj: this) => boolean,
+    predicate: (value: number, index: number, obj: Uint32Array) => boolean,
     thisArg?: unknown,
   ): number;
 
@@ -4361,7 +4377,7 @@ interface Uint32Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   forEach(
-    callbackfn: (value: number, index: number, array: this) => void,
+    callbackfn: (value: number, index: number, array: Uint32Array) => void,
     thisArg?: unknown,
   ): void;
 
@@ -4402,7 +4418,7 @@ interface Uint32Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   map(
-    callbackfn: (value: number, index: number, array: this) => number,
+    callbackfn: (value: number, index: number, array: Uint32Array) => number,
     thisArg?: unknown,
   ): Uint32Array;
 
@@ -4421,7 +4437,7 @@ interface Uint32Array {
       previousValue: number,
       currentValue: number,
       currentIndex: number,
-      array: this,
+      array: Uint32Array,
     ) => number,
   ): number;
   reduce(
@@ -4429,7 +4445,7 @@ interface Uint32Array {
       previousValue: number,
       currentValue: number,
       currentIndex: number,
-      array: this,
+      array: Uint32Array,
     ) => number,
     initialValue: number,
   ): number;
@@ -4469,7 +4485,7 @@ interface Uint32Array {
       previousValue: number,
       currentValue: number,
       currentIndex: number,
-      array: this,
+      array: Uint32Array,
     ) => number,
   ): number;
   reduceRight(
@@ -4477,7 +4493,7 @@ interface Uint32Array {
       previousValue: number,
       currentValue: number,
       currentIndex: number,
-      array: this,
+      array: Uint32Array,
     ) => number,
     initialValue: number,
   ): number;
@@ -4530,7 +4546,7 @@ interface Uint32Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   some(
-    predicate: (value: number, index: number, array: this) => boolean,
+    predicate: (value: number, index: number, array: Uint32Array) => boolean,
     thisArg?: unknown,
   ): boolean;
 
@@ -4655,7 +4671,7 @@ interface Float32Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   every(
-    predicate: (value: number, index: number, array: this) => boolean,
+    predicate: (value: number, index: number, array: Float32Array) => boolean,
     thisArg?: unknown,
   ): boolean;
 
@@ -4677,7 +4693,7 @@ interface Float32Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   filter(
-    predicate: (value: number, index: number, array: this) => boolean,
+    predicate: (value: number, index: number, array: Float32Array) => boolean,
     thisArg?: unknown,
   ): Float32Array;
 
@@ -4691,7 +4707,7 @@ interface Float32Array {
    * predicate. If it is not provided, undefined is used instead.
    */
   find(
-    predicate: (value: number, index: number, obj: this) => boolean,
+    predicate: (value: number, index: number, obj: Float32Array) => boolean,
     thisArg?: unknown,
   ): number | undefined;
 
@@ -4705,7 +4721,7 @@ interface Float32Array {
    * predicate. If it is not provided, undefined is used instead.
    */
   findIndex(
-    predicate: (value: number, index: number, obj: this) => boolean,
+    predicate: (value: number, index: number, obj: Float32Array) => boolean,
     thisArg?: unknown,
   ): number;
 
@@ -4717,7 +4733,7 @@ interface Float32Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   forEach(
-    callbackfn: (value: number, index: number, array: this) => void,
+    callbackfn: (value: number, index: number, array: Float32Array) => void,
     thisArg?: unknown,
   ): void;
 
@@ -4758,7 +4774,7 @@ interface Float32Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   map(
-    callbackfn: (value: number, index: number, array: this) => number,
+    callbackfn: (value: number, index: number, array: Float32Array) => number,
     thisArg?: unknown,
   ): Float32Array;
 
@@ -4777,7 +4793,7 @@ interface Float32Array {
       previousValue: number,
       currentValue: number,
       currentIndex: number,
-      array: this,
+      array: Float32Array,
     ) => number,
   ): number;
   reduce(
@@ -4785,7 +4801,7 @@ interface Float32Array {
       previousValue: number,
       currentValue: number,
       currentIndex: number,
-      array: this,
+      array: Float32Array,
     ) => number,
     initialValue: number,
   ): number;
@@ -4825,7 +4841,7 @@ interface Float32Array {
       previousValue: number,
       currentValue: number,
       currentIndex: number,
-      array: this,
+      array: Float32Array,
     ) => number,
   ): number;
   reduceRight(
@@ -4833,7 +4849,7 @@ interface Float32Array {
       previousValue: number,
       currentValue: number,
       currentIndex: number,
-      array: this,
+      array: Float32Array,
     ) => number,
     initialValue: number,
   ): number;
@@ -4886,7 +4902,7 @@ interface Float32Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   some(
-    predicate: (value: number, index: number, array: this) => boolean,
+    predicate: (value: number, index: number, array: Float32Array) => boolean,
     thisArg?: unknown,
   ): boolean;
 
@@ -5011,7 +5027,7 @@ interface Float64Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   every(
-    predicate: (value: number, index: number, array: this) => boolean,
+    predicate: (value: number, index: number, array: Float64Array) => boolean,
     thisArg?: unknown,
   ): boolean;
 
@@ -5033,7 +5049,7 @@ interface Float64Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   filter(
-    predicate: (value: number, index: number, array: this) => boolean,
+    predicate: (value: number, index: number, array: Float64Array) => boolean,
     thisArg?: unknown,
   ): Float64Array;
 
@@ -5047,7 +5063,7 @@ interface Float64Array {
    * predicate. If it is not provided, undefined is used instead.
    */
   find(
-    predicate: (value: number, index: number, obj: this) => boolean,
+    predicate: (value: number, index: number, obj: Float64Array) => boolean,
     thisArg?: unknown,
   ): number | undefined;
 
@@ -5061,7 +5077,7 @@ interface Float64Array {
    * predicate. If it is not provided, undefined is used instead.
    */
   findIndex(
-    predicate: (value: number, index: number, obj: this) => boolean,
+    predicate: (value: number, index: number, obj: Float64Array) => boolean,
     thisArg?: unknown,
   ): number;
 
@@ -5073,7 +5089,7 @@ interface Float64Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   forEach(
-    callbackfn: (value: number, index: number, array: this) => void,
+    callbackfn: (value: number, index: number, array: Float64Array) => void,
     thisArg?: unknown,
   ): void;
 
@@ -5114,7 +5130,7 @@ interface Float64Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   map(
-    callbackfn: (value: number, index: number, array: this) => number,
+    callbackfn: (value: number, index: number, array: Float64Array) => number,
     thisArg?: unknown,
   ): Float64Array;
 
@@ -5133,7 +5149,7 @@ interface Float64Array {
       previousValue: number,
       currentValue: number,
       currentIndex: number,
-      array: this,
+      array: Float64Array,
     ) => number,
   ): number;
   reduce(
@@ -5141,7 +5157,7 @@ interface Float64Array {
       previousValue: number,
       currentValue: number,
       currentIndex: number,
-      array: this,
+      array: Float64Array,
     ) => number,
     initialValue: number,
   ): number;
@@ -5181,7 +5197,7 @@ interface Float64Array {
       previousValue: number,
       currentValue: number,
       currentIndex: number,
-      array: this,
+      array: Float64Array,
     ) => number,
   ): number;
   reduceRight(
@@ -5189,7 +5205,7 @@ interface Float64Array {
       previousValue: number,
       currentValue: number,
       currentIndex: number,
-      array: this,
+      array: Float64Array,
     ) => number,
     initialValue: number,
   ): number;
@@ -5242,7 +5258,7 @@ interface Float64Array {
    * If thisArg is omitted, undefined is used as the this value.
    */
   some(
-    predicate: (value: number, index: number, array: this) => boolean,
+    predicate: (value: number, index: number, array: Float64Array) => boolean,
     thisArg?: unknown,
   ): boolean;
 

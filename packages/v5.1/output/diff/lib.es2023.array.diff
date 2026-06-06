@@ -84,11 +84,11 @@
 -  findLast<S extends number>(predicate: (value: number, index: number, array: Int8Array) => value is S, thisArg?: any): S | undefined;
 -  findLast(predicate: (value: number, index: number, array: Int8Array) => unknown, thisArg?: any): number | undefined;
 +  findLast<S extends Int8>(
-+    predicate: (value: Int8, index: number, array: this) => value is S,
++    predicate: (value: Int8, index: number, array: Int8Array) => value is S,
 +    thisArg?: unknown,
 +  ): S | undefined;
 +  findLast(
-+    predicate: (value: Int8, index: number, array: this) => boolean,
++    predicate: (value: Int8, index: number, array: Int8Array) => boolean,
 +    thisArg?: unknown,
 +  ): Int8 | undefined;
  
@@ -100,7 +100,7 @@
     */
 -  findLastIndex(predicate: (value: number, index: number, array: Int8Array) => unknown, thisArg?: any): number;
 +  findLastIndex(
-+    predicate: (value: Int8, index: number, array: this) => boolean,
++    predicate: (value: Int8, index: number, array: Int8Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  }
@@ -113,11 +113,11 @@
 -  findLast<S extends number>(predicate: (value: number, index: number, array: Uint8Array) => value is S, thisArg?: any): S | undefined;
 -  findLast(predicate: (value: number, index: number, array: Uint8Array) => unknown, thisArg?: any): number | undefined;
 +  findLast<S extends Uint8>(
-+    predicate: (value: Uint8, index: number, array: this) => value is S,
++    predicate: (value: Uint8, index: number, array: Uint8Array) => value is S,
 +    thisArg?: unknown,
 +  ): S | undefined;
 +  findLast(
-+    predicate: (value: Uint8, index: number, array: this) => boolean,
++    predicate: (value: Uint8, index: number, array: Uint8Array) => boolean,
 +    thisArg?: unknown,
 +  ): Uint8 | undefined;
  
@@ -129,268 +129,296 @@
     */
 -  findLastIndex(predicate: (value: number, index: number, array: Uint8Array) => unknown, thisArg?: any): number;
 +  findLastIndex(
-+    predicate: (value: Uint8, index: number, array: this) => boolean,
++    predicate: (value: Uint8, index: number, array: Uint8Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  }
  
  interface Uint8ClampedArray {
-@@ -125,8 +147,14 @@ interface Uint8ClampedArray {
+@@ -125,8 +147,22 @@ interface Uint8ClampedArray {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLast<S extends number>(predicate: (value: number, index: number, array: Uint8ClampedArray) => value is S, thisArg?: any): S | undefined;
 -  findLast(predicate: (value: number, index: number, array: Uint8ClampedArray) => unknown, thisArg?: any): number | undefined;
 +  findLast<S extends Uint8>(
-+    predicate: (value: Uint8, index: number, array: this) => value is S,
++    predicate: (
++      value: Uint8,
++      index: number,
++      array: Uint8ClampedArray,
++    ) => value is S,
 +    thisArg?: unknown,
 +  ): S | undefined;
 +  findLast(
-+    predicate: (value: Uint8, index: number, array: this) => boolean,
++    predicate: (
++      value: Uint8,
++      index: number,
++      array: Uint8ClampedArray,
++    ) => boolean,
 +    thisArg?: unknown,
 +  ): Uint8 | undefined;
  
    /**
     * Returns the index of the last element in the array where predicate is true, and -1
-@@ -137,7 +165,10 @@ interface Uint8ClampedArray {
+@@ -137,7 +173,14 @@ interface Uint8ClampedArray {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLastIndex(predicate: (value: number, index: number, array: Uint8ClampedArray) => unknown, thisArg?: any): number;
 +  findLastIndex(
-+    predicate: (value: Uint8, index: number, array: this) => boolean,
++    predicate: (
++      value: Uint8,
++      index: number,
++      array: Uint8ClampedArray,
++    ) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  }
  
  interface Int16Array {
-@@ -150,8 +181,14 @@ interface Int16Array {
+@@ -150,8 +193,14 @@ interface Int16Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLast<S extends number>(predicate: (value: number, index: number, array: Int16Array) => value is S, thisArg?: any): S | undefined;
 -  findLast(predicate: (value: number, index: number, array: Int16Array) => unknown, thisArg?: any): number | undefined;
 +  findLast<S extends number>(
-+    predicate: (value: number, index: number, array: this) => value is S,
++    predicate: (value: number, index: number, array: Int16Array) => value is S,
 +    thisArg?: unknown,
 +  ): S | undefined;
 +  findLast(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Int16Array) => boolean,
 +    thisArg?: unknown,
 +  ): number | undefined;
  
    /**
     * Returns the index of the last element in the array where predicate is true, and -1
-@@ -162,7 +199,10 @@ interface Int16Array {
+@@ -162,7 +211,10 @@ interface Int16Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLastIndex(predicate: (value: number, index: number, array: Int16Array) => unknown, thisArg?: any): number;
 +  findLastIndex(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Int16Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  }
  
  interface Uint16Array {
-@@ -175,8 +215,14 @@ interface Uint16Array {
+@@ -175,8 +227,14 @@ interface Uint16Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLast<S extends number>(predicate: (value: number, index: number, array: Uint16Array) => value is S, thisArg?: any): S | undefined;
 -  findLast(predicate: (value: number, index: number, array: Uint16Array) => unknown, thisArg?: any): number | undefined;
 +  findLast<S extends number>(
-+    predicate: (value: number, index: number, array: this) => value is S,
++    predicate: (value: number, index: number, array: Uint16Array) => value is S,
 +    thisArg?: unknown,
 +  ): S | undefined;
 +  findLast(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Uint16Array) => boolean,
 +    thisArg?: unknown,
 +  ): number | undefined;
  
    /**
     * Returns the index of the last element in the array where predicate is true, and -1
-@@ -187,7 +233,10 @@ interface Uint16Array {
+@@ -187,7 +245,10 @@ interface Uint16Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLastIndex(predicate: (value: number, index: number, array: Uint16Array) => unknown, thisArg?: any): number;
 +  findLastIndex(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Uint16Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  }
  
  interface Int32Array {
-@@ -200,8 +249,14 @@ interface Int32Array {
+@@ -200,8 +261,14 @@ interface Int32Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLast<S extends number>(predicate: (value: number, index: number, array: Int32Array) => value is S, thisArg?: any): S | undefined;
 -  findLast(predicate: (value: number, index: number, array: Int32Array) => unknown, thisArg?: any): number | undefined;
 +  findLast<S extends number>(
-+    predicate: (value: number, index: number, array: this) => value is S,
++    predicate: (value: number, index: number, array: Int32Array) => value is S,
 +    thisArg?: unknown,
 +  ): S | undefined;
 +  findLast(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Int32Array) => boolean,
 +    thisArg?: unknown,
 +  ): number | undefined;
  
    /**
     * Returns the index of the last element in the array where predicate is true, and -1
-@@ -212,7 +267,10 @@ interface Int32Array {
+@@ -212,7 +279,10 @@ interface Int32Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLastIndex(predicate: (value: number, index: number, array: Int32Array) => unknown, thisArg?: any): number;
 +  findLastIndex(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Int32Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  }
  
  interface Uint32Array {
-@@ -225,8 +283,14 @@ interface Uint32Array {
+@@ -225,8 +295,14 @@ interface Uint32Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLast<S extends number>(predicate: (value: number, index: number, array: Uint32Array) => value is S, thisArg?: any): S | undefined;
 -  findLast(predicate: (value: number, index: number, array: Uint32Array) => unknown, thisArg?: any): number | undefined;
 +  findLast<S extends number>(
-+    predicate: (value: number, index: number, array: this) => value is S,
++    predicate: (value: number, index: number, array: Uint32Array) => value is S,
 +    thisArg?: unknown,
 +  ): S | undefined;
 +  findLast(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Uint32Array) => boolean,
 +    thisArg?: unknown,
 +  ): number | undefined;
  
    /**
     * Returns the index of the last element in the array where predicate is true, and -1
-@@ -237,7 +301,10 @@ interface Uint32Array {
+@@ -237,7 +313,10 @@ interface Uint32Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLastIndex(predicate: (value: number, index: number, array: Uint32Array) => unknown, thisArg?: any): number;
 +  findLastIndex(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Uint32Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  }
  
  interface Float32Array {
-@@ -250,8 +317,14 @@ interface Float32Array {
+@@ -250,8 +329,18 @@ interface Float32Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLast<S extends number>(predicate: (value: number, index: number, array: Float32Array) => value is S, thisArg?: any): S | undefined;
 -  findLast(predicate: (value: number, index: number, array: Float32Array) => unknown, thisArg?: any): number | undefined;
 +  findLast<S extends number>(
-+    predicate: (value: number, index: number, array: this) => value is S,
++    predicate: (
++      value: number,
++      index: number,
++      array: Float32Array,
++    ) => value is S,
 +    thisArg?: unknown,
 +  ): S | undefined;
 +  findLast(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Float32Array) => boolean,
 +    thisArg?: unknown,
 +  ): number | undefined;
  
    /**
     * Returns the index of the last element in the array where predicate is true, and -1
-@@ -262,7 +335,10 @@ interface Float32Array {
+@@ -262,7 +351,10 @@ interface Float32Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLastIndex(predicate: (value: number, index: number, array: Float32Array) => unknown, thisArg?: any): number;
 +  findLastIndex(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Float32Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  }
  
  interface Float64Array {
-@@ -275,8 +351,14 @@ interface Float64Array {
+@@ -275,8 +367,18 @@ interface Float64Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLast<S extends number>(predicate: (value: number, index: number, array: Float64Array) => value is S, thisArg?: any): S | undefined;
 -  findLast(predicate: (value: number, index: number, array: Float64Array) => unknown, thisArg?: any): number | undefined;
 +  findLast<S extends number>(
-+    predicate: (value: number, index: number, array: this) => value is S,
++    predicate: (
++      value: number,
++      index: number,
++      array: Float64Array,
++    ) => value is S,
 +    thisArg?: unknown,
 +  ): S | undefined;
 +  findLast(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Float64Array) => boolean,
 +    thisArg?: unknown,
 +  ): number | undefined;
  
    /**
     * Returns the index of the last element in the array where predicate is true, and -1
-@@ -287,7 +369,10 @@ interface Float64Array {
+@@ -287,7 +389,10 @@ interface Float64Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLastIndex(predicate: (value: number, index: number, array: Float64Array) => unknown, thisArg?: any): number;
 +  findLastIndex(
-+    predicate: (value: number, index: number, array: this) => boolean,
++    predicate: (value: number, index: number, array: Float64Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  }
  
  interface BigInt64Array {
-@@ -300,8 +385,14 @@ interface BigInt64Array {
+@@ -300,8 +405,18 @@ interface BigInt64Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLast<S extends bigint>(predicate: (value: bigint, index: number, array: BigInt64Array) => value is S, thisArg?: any): S | undefined;
 -  findLast(predicate: (value: bigint, index: number, array: BigInt64Array) => unknown, thisArg?: any): bigint | undefined;
 +  findLast<S extends bigint>(
-+    predicate: (value: bigint, index: number, array: this) => value is S,
++    predicate: (
++      value: bigint,
++      index: number,
++      array: BigInt64Array,
++    ) => value is S,
 +    thisArg?: unknown,
 +  ): S | undefined;
 +  findLast(
-+    predicate: (value: bigint, index: number, array: this) => boolean,
++    predicate: (value: bigint, index: number, array: BigInt64Array) => boolean,
 +    thisArg?: unknown,
 +  ): bigint | undefined;
  
    /**
     * Returns the index of the last element in the array where predicate is true, and -1
-@@ -312,7 +403,10 @@ interface BigInt64Array {
+@@ -312,7 +427,10 @@ interface BigInt64Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLastIndex(predicate: (value: bigint, index: number, array: BigInt64Array) => unknown, thisArg?: any): number;
 +  findLastIndex(
-+    predicate: (value: bigint, index: number, array: this) => boolean,
++    predicate: (value: bigint, index: number, array: BigInt64Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  }
  
  interface BigUint64Array {
-@@ -325,8 +419,14 @@ interface BigUint64Array {
+@@ -325,8 +443,18 @@ interface BigUint64Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLast<S extends bigint>(predicate: (value: bigint, index: number, array: BigUint64Array) => value is S, thisArg?: any): S | undefined;
 -  findLast(predicate: (value: bigint, index: number, array: BigUint64Array) => unknown, thisArg?: any): bigint | undefined;
 +  findLast<S extends bigint>(
-+    predicate: (value: bigint, index: number, array: this) => value is S,
++    predicate: (
++      value: bigint,
++      index: number,
++      array: BigUint64Array,
++    ) => value is S,
 +    thisArg?: unknown,
 +  ): S | undefined;
 +  findLast(
-+    predicate: (value: bigint, index: number, array: this) => boolean,
++    predicate: (value: bigint, index: number, array: BigUint64Array) => boolean,
 +    thisArg?: unknown,
 +  ): bigint | undefined;
  
    /**
     * Returns the index of the last element in the array where predicate is true, and -1
-@@ -337,5 +437,8 @@ interface BigUint64Array {
+@@ -337,5 +465,8 @@ interface BigUint64Array {
     * @param thisArg If provided, it will be used as the this value for each invocation of
     * predicate. If it is not provided, undefined is used instead.
     */
 -  findLastIndex(predicate: (value: bigint, index: number, array: BigUint64Array) => unknown, thisArg?: any): number;
 +  findLastIndex(
-+    predicate: (value: bigint, index: number, array: this) => boolean,
++    predicate: (value: bigint, index: number, array: BigUint64Array) => boolean,
 +    thisArg?: unknown,
 +  ): number;
  }

@@ -8,7 +8,7 @@ import {
 import {
   closeBraceRegexp,
   typedArrayInterfaceStartRegexp,
-  typedArrayThisRegexSource,
+  typedArrayThisCaptureRegexSource,
   type ConverterOptions,
 } from './common.mjs';
 import {
@@ -155,24 +155,24 @@ export const convertLibEs2023Array =
               ),
               replaceWithNoMatchCheck(
                 new RegExp(
-                  String.raw`findLast<S extends ${typedArrayTypeToElemBaseType(elemType)}>\(predicate: \(value: ${typedArrayTypeToElemBaseType(elemType)}, index: number, array: ${typedArrayThisRegexSource(`${elemType}Array`)}\) => value is S, thisArg\?: unknown\): S \| undefined;`,
+                  String.raw`findLast<S extends ${typedArrayTypeToElemBaseType(elemType)}>\(predicate: \(value: ${typedArrayTypeToElemBaseType(elemType)}, index: number, array: ${typedArrayThisCaptureRegexSource(`${elemType}Array`)}\) => value is S, thisArg\?: unknown\): S \| undefined;`,
                   'gu',
                 ),
-                `findLast<S extends ${typedArrayTypeToElemType(elemType, useBrandedNumber)}>(predicate: (value: ${typedArrayTypeToElemType(elemType, useBrandedNumber)}, index: ${brandedNumber.TypedArraySize}, array: this) => value is S, thisArg?: unknown): S | undefined;`,
+                `findLast<S extends ${typedArrayTypeToElemType(elemType, useBrandedNumber)}>(predicate: (value: ${typedArrayTypeToElemType(elemType, useBrandedNumber)}, index: ${brandedNumber.TypedArraySize}, array: $1) => value is S, thisArg?: unknown): S | undefined;`,
               ),
               replaceWithNoMatchCheck(
                 new RegExp(
-                  String.raw`findLast\(predicate: \(value: ${typedArrayTypeToElemBaseType(elemType)}, index: number, array: ${typedArrayThisRegexSource(`${elemType}Array`)}\) => unknown, thisArg\?: unknown\): ${typedArrayTypeToElemBaseType(elemType)} \| undefined;`,
+                  String.raw`findLast\(predicate: \(value: ${typedArrayTypeToElemBaseType(elemType)}, index: number, array: ${typedArrayThisCaptureRegexSource(`${elemType}Array`)}\) => unknown, thisArg\?: unknown\): ${typedArrayTypeToElemBaseType(elemType)} \| undefined;`,
                   'gu',
                 ),
-                `findLast(predicate: (value: ${typedArrayTypeToElemType(elemType, useBrandedNumber)}, index: ${brandedNumber.TypedArraySize}, array: this) => boolean, thisArg?: unknown): ${typedArrayTypeToElemType(elemType, useBrandedNumber)} | undefined;`,
+                `findLast(predicate: (value: ${typedArrayTypeToElemType(elemType, useBrandedNumber)}, index: ${brandedNumber.TypedArraySize}, array: $1) => boolean, thisArg?: unknown): ${typedArrayTypeToElemType(elemType, useBrandedNumber)} | undefined;`,
               ),
               replaceWithNoMatchCheck(
                 new RegExp(
-                  String.raw`findLastIndex\(predicate: \(value: ${typedArrayTypeToElemBaseType(elemType)}, index: number, array: ${typedArrayThisRegexSource(`${elemType}Array`)}\) => unknown, thisArg\?: unknown\): number;`,
+                  String.raw`findLastIndex\(predicate: \(value: ${typedArrayTypeToElemBaseType(elemType)}, index: number, array: ${typedArrayThisCaptureRegexSource(`${elemType}Array`)}\) => unknown, thisArg\?: unknown\): number;`,
                   'gu',
                 ),
-                `findLastIndex(predicate: (value: ${typedArrayTypeToElemType(elemType, useBrandedNumber)}, index: ${brandedNumber.TypedArraySize}, array: this) => boolean, thisArg?: unknown): ${brandedNumber.TypedArraySearchResult};`,
+                `findLastIndex(predicate: (value: ${typedArrayTypeToElemType(elemType, useBrandedNumber)}, index: ${brandedNumber.TypedArraySize}, array: $1) => boolean, thisArg?: unknown): ${brandedNumber.TypedArraySearchResult};`,
               ),
               replaceWithNoMatchCheck(
                 `toSorted(compareFn?: (a: ${typedArrayTypeToElemBaseType(elemType)}, b: ${typedArrayTypeToElemBaseType(elemType)}) => number)`,

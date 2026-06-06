@@ -27,7 +27,7 @@ type IteratorResult<T, TReturn = any> =
 
 interface Iterator<T, TReturn = any, TNext = undefined> {
   // NOTE: 'next' is defined using a tuple to ensure we report the correct assignability errors in all places.
-  next(...[value]: [] | [TNext]): IteratorResult<T, TReturn>;
+  next(...args: readonly [] | readonly [TNext]): IteratorResult<T, TReturn>;
   return?(value?: TReturn): IteratorResult<T, TReturn>;
   throw?(e?: unknown): IteratorResult<T, TReturn>;
 }
