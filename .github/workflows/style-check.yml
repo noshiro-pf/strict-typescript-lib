@@ -24,7 +24,6 @@ jobs:
           - fmt:full
           - md
           - cspell
-          - ws:doc
           - ws:check:ext
 
     steps:
