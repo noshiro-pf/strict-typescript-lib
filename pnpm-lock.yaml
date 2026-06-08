@@ -7231,38 +7231,38 @@ snapshots:
 
   ts-data-forge@6.9.6(typescript@5.0.4):
     dependencies:
-      '@sindresorhus/is': 8.0.0
-      ts-type-forge: 3.0.1
+      '@sindresorhus/is': 8.1.0
+      ts-type-forge: 3.1.0
       typescript: 5.0.4
 
   ts-data-forge@6.9.6(typescript@5.1.6):
     dependencies:
-      '@sindresorhus/is': 8.0.0
-      ts-type-forge: 3.0.1
+      '@sindresorhus/is': 8.1.0
+      ts-type-forge: 3.1.0
       typescript: 5.1.6
 
   ts-data-forge@6.9.6(typescript@5.2.2):
     dependencies:
-      '@sindresorhus/is': 8.0.0
-      ts-type-forge: 3.0.1
+      '@sindresorhus/is': 8.1.0
+      ts-type-forge: 3.1.0
       typescript: 5.2.2
 
   ts-data-forge@6.9.6(typescript@5.3.3):
     dependencies:
-      '@sindresorhus/is': 8.0.0
-      ts-type-forge: 3.0.1
+      '@sindresorhus/is': 8.1.0
+      ts-type-forge: 3.1.0
       typescript: 5.3.3
 
   ts-data-forge@6.9.6(typescript@5.4.5):
     dependencies:
-      '@sindresorhus/is': 8.0.0
-      ts-type-forge: 3.0.1
+      '@sindresorhus/is': 8.1.0
+      ts-type-forge: 3.1.0
       typescript: 5.4.5
 
   ts-data-forge@6.9.6(typescript@5.5.4):
     dependencies:
-      '@sindresorhus/is': 8.0.0
-      ts-type-forge: 3.0.1
+      '@sindresorhus/is': 8.1.0
+      ts-type-forge: 3.1.0
       typescript: 5.5.4
 
   ts-data-forge@6.9.6(typescript@5.6.3):
@@ -7279,8 +7279,8 @@ snapshots:
 
   ts-data-forge@6.9.6(typescript@5.8.3):
     dependencies:
-      '@sindresorhus/is': 8.0.0
-      ts-type-forge: 3.0.1
+      '@sindresorhus/is': 8.1.0
+      ts-type-forge: 3.1.0
       typescript: 5.8.3
 
   ts-data-forge@6.9.6(typescript@5.9.3):
@@ -7318,7 +7318,7 @@ snapshots:
       prettier: 3.8.3
       ts-data-forge: 6.9.6(typescript@5.0.4)
       ts-type-forge: 3.0.1
-      tsx: 4.21.0
+      tsx: 4.22.3
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -7334,7 +7334,7 @@ snapshots:
       prettier: 3.8.3
       ts-data-forge: 6.9.6(typescript@5.1.6)
       ts-type-forge: 3.0.1
-      tsx: 4.21.0
+      tsx: 4.22.3
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -7350,7 +7350,7 @@ snapshots:
       prettier: 3.8.3
       ts-data-forge: 6.9.6(typescript@5.2.2)
       ts-type-forge: 3.0.1
-      tsx: 4.21.0
+      tsx: 4.22.3
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -7366,7 +7366,7 @@ snapshots:
       prettier: 3.8.3
       ts-data-forge: 6.9.6(typescript@5.3.3)
       ts-type-forge: 3.0.1
-      tsx: 4.21.0
+      tsx: 4.22.3
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -7382,7 +7382,7 @@ snapshots:
       prettier: 3.8.3
       ts-data-forge: 6.9.6(typescript@5.4.5)
       ts-type-forge: 3.0.1
-      tsx: 4.21.0
+      tsx: 4.22.3
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -7398,7 +7398,7 @@ snapshots:
       prettier: 3.8.3
       ts-data-forge: 6.9.6(typescript@5.5.4)
       ts-type-forge: 3.0.1
-      tsx: 4.21.0
+      tsx: 4.22.3
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -7446,7 +7446,7 @@ snapshots:
       prettier: 3.8.3
       ts-data-forge: 6.9.6(typescript@5.8.3)
       ts-type-forge: 3.0.1
-      tsx: 4.21.0
+      tsx: 4.22.3
     transitivePeerDependencies:
       - supports-color
       - typescript
