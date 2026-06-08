@@ -243,7 +243,6 @@ export type LibReplacementStrategy = Readonly<{
 {
   "scripts": {
     "check-all": "tsx ./scripts/cmd/check-all.mts",
-    "check:ext": "tsx ./scripts/cmd/check-ext.mts",
 
     "v5.7:gen": "pnpm --filter strict-ts-lib-v5.7-source gen",
     "v5.7:gen:full": "pnpm --filter strict-ts-lib-v5.7-source gen:full",
@@ -295,7 +294,6 @@ export type LibReplacementStrategy = Readonly<{
 
 1. `pnpm i`
 2. `pnpm run cspell`
-3. `pnpm run check:ext`
 4. `pnpm run gen:all` — TS 各バージョンの生成を実行
 5. **`git diff --exit-code` で `output*/` の変更が無いことを確認** (生成が再現可能であることを保証)
 6. `pnpm run test:all` — `output*/tsconfig.json` を `tsc -p` で型チェック

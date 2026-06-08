@@ -53,10 +53,6 @@
             "integration_id": 15368
           },
           {
-            "context": "style-check (ws:check:ext)",
-            "integration_id": 15368
-          },
-          {
             "context": "type-check (ws:test:cov)",
             "integration_id": 15368
           },

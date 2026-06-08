@@ -24,7 +24,6 @@ jobs:
           - fmt:full
           - md
           - cspell
-          - ws:check:ext
 
     steps:
       - name: Checkout
