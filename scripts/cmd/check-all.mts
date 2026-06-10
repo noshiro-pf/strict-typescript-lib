@@ -1,8 +1,9 @@
-import { $, Result } from 'ts-repo-utils';
+import { spawn } from 'node:child_process';
 
-/**
- * Runs all validation and build steps for the project.
- */
+// Runs all validation and build steps for the strict-typescript-lib repository.
+// The pipeline: install deps, spell/md lint, root tsc/eslint, regenerate every
+// packages/vX.Y/source, type-check each generated output directory, lint --fix
+// across workspaces, and format the entire repo (must not produce a diff).
 const checkAll = async (): Promise<void> => {
   console.log('Starting full project validation and build...\n');
 
@@ -14,56 +15,46 @@ const checkAll = async (): Promise<void> => {
 
   await logStep({
     startMessage: 'Running spell check',
-    action: () =>
-      runCmdStep('pnpm run cspell --fail-fast', 'Spell check failed'),
+    action: () => runCmdStep('pnpm run cspell', 'Spell check failed'),
     successMessage: 'Spell check passed',
   });
 
   await logStep({
-    startMessage: 'Checking file extensions',
-    action: () =>
-      runCmdStep('pnpm run check:ext', 'Checking file extensions failed'),
-    successMessage: 'File extensions validated',
+    startMessage: 'Running Markdown check',
+    action: () => runCmdStep('pnpm run md', 'Markdown check failed'),
+    successMessage: 'Markdown check passed',
   });
 
   await logStep({
-    startMessage: 'Running tests',
-    action: () => runCmdStep('pnpm run test', 'Tests failed'),
-    successMessage: 'Tests passed',
+    startMessage: 'Checking root scripts and configs',
+    action: () =>
+      runCmdStep('pnpm run check:root', 'Checking scripts and configs failed'),
+    successMessage: 'Scripts and configs validated',
+  });
+
+  await logStep({
+    startMessage: 'Generating strict-typescript-lib outputs (gen)',
+    action: () =>
+      runCmdStep('pnpm run ws:gen', 'Generation of lib files failed'),
+    successMessage: 'Generation completed',
+  });
+
+  await logStep({
+    startMessage: 'Type-checking generated outputs',
+    action: () => runCmdStep('pnpm run ws:test', 'Type-check failed'),
+    successMessage: 'Type-check passed',
   });
 
   await logStep({
     startMessage: 'Running lint fixes',
-    action: () => runCmdStep('pnpm run lint:fix', 'Linting failed'),
+    action: () => runCmdStep('pnpm run ws:lint:fix', 'Linting failed'),
     successMessage: 'Lint fixes applied',
   });
 
   await logStep({
-    startMessage: 'Running codemod',
-    action: () => runCmdStep('pnpm run codemod:full', 'Codemod failed'),
-    successMessage: 'Codemod applied',
-  });
-
-  await logStep({
-    startMessage: 'Building project',
-    action: () => runCmdStep('pnpm run build', 'Build failed'),
-    successMessage: 'Build succeeded',
-  });
-
-  await logStep({
-    startMessage: 'Generating documentation',
-    action: () => runCmdStep('pnpm run doc', 'Documentation generation failed'),
-    successMessage: 'Documentation generated',
-  });
-
-  await logStep({
-    startMessage: 'Backing up repository settings',
-    action: () =>
-      runCmdStep(
-        'pnpm run gh:backup-all',
-        'Backing up repository settings failed',
-      ),
-    successMessage: 'Repository settings backed up',
+    startMessage: 'Formatting code',
+    action: () => runCmdStep('pnpm run fmt:full', 'File formatting failed'),
+    successMessage: 'Code formatted',
   });
 
   console.log('✅ All checks completed successfully!\n');
@@ -89,16 +80,37 @@ const logStep = async ({
   mut_step.current += 1;
 };
 
-const runCmdStep = async (cmd: string, errorMsg: string): Promise<void> => {
-  const result = await $(cmd);
+// We use `spawn` with `stdio: 'inherit'` so that the (potentially huge)
+// gen pipeline output streams directly through, instead of being buffered
+// by `child_process.exec` (which caps at 1MB by default).
+const runCmdStep = (cmd: string, errorMsg: string): Promise<void> =>
+  new Promise((resolve) => {
+    const child = spawn(cmd, {
+      shell: true,
+      stdio: 'inherit',
+    });
 
-  if (Result.isErr(result)) {
-    console.error(`${errorMsg}: ${result.value.message}`);
+    child.on('close', (code) => {
+      if (code === 0) {
+        resolve();
 
-    console.error('❌ Check failed');
+        return;
+      }
 
-    process.exit(1);
-  }
-};
+      console.log(`${errorMsg}: exit code ${code ?? 'null'}`);
+
+      console.log('❌ Check failed');
+
+      process.exit(1);
+    });
+
+    child.on('error', (err) => {
+      console.log(`${errorMsg}: ${err.message}`);
+
+      console.log('❌ Check failed');
+
+      process.exit(1);
+    });
+  });
 
 await checkAll();

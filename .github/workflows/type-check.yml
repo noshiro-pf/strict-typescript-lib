@@ -1,0 +1,66 @@
+name: Type Check
+
+on:
+  push:
+    branches-ignore:
+      - 'develop'
+      - 'develop*'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  type-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    strategy:
+      fail-fast: true
+      matrix:
+        command:
+          - check:root
+          - ws:type-check
+          - ws:lint:fix
+          - codemod:full
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Fetch main
+        run: git fetch origin main # To allow check-should-run-type-checks to get the diff from main
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
+
+      - name: Set up Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version-file: 'package.json'
+          registry-url: https://npm.pkg.github.com/
+          scope: '@noshiro-pf'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # NOTE: To include this workflow in the branch protection rule status check,
+      # skip each step instead of skipping the entire workflow with paths-ignore.
+      - name: Check diff
+        id: check_diff_type
+        run: pnpm exec check-should-run-type-checks
+
+      - name: Exit if no relevant changes
+        if: steps.check_diff_type.outputs.should_run != 'true'
+        run: exit 0
+
+      - name: Build all packages
+        run: pnpm run ws:build
+
+      - name: Run "${{ matrix.command }}"
+        run: pnpm run ${{ matrix.command }}
+
+      - name: Check if there is no file diff
+        run: pnpm exec assert-repo-is-clean

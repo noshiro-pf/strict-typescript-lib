@@ -1,0 +1,9 @@
+/// <reference no-default-lib="true"/>
+/// <reference types="ts-type-forge/global" />
+
+/// <reference path="./lib.es2021.d.ts" />
+/// <reference path="./lib.dom.d.ts" />
+/// <reference path="./lib.webworker.importscripts.d.ts" />
+/// <reference path="./lib.scripthost.d.ts" />
+/// <reference path="./lib.dom.iterable.d.ts" />
+/// <reference path="./lib.dom.asynciterable.d.ts" />

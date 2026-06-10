@@ -1,22 +1,19 @@
 name: Style Check
 
-# Controls when the action will run.
 on:
-  # Triggers the workflow on push events (excluding develop branches) and manual runs
   push:
     branches-ignore:
       - 'develop'
       - 'develop*'
     paths-ignore:
-      - '.gitignore'
+      - '**.png'
+      - '**.jpg'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   style-check:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -25,27 +22,31 @@ jobs:
       matrix:
         command:
           - fmt:full
+          - md
           - cspell
-          - doc
-          - check:ext
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Fetch main
+        run: git fetch origin main
 
       - name: Install pnpm
         uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
 
       - name: Set up Node.js
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
-        id: setup_node_id
         with:
           node-version-file: 'package.json'
+          registry-url: https://npm.pkg.github.com/
+          scope: '@noshiro-pf'
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run "${{ matrix.command }}"
         run: pnpm run ${{ matrix.command }}

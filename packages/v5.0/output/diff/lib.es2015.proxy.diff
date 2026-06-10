@@ -1,0 +1,105 @@
+@@ -1,40 +1,34 @@
+-/*! *****************************************************************************
+-Copyright (c) Microsoft Corporation. All rights reserved.
+-Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+-this file except in compliance with the License. You may obtain a copy of the
+-License at http://www.apache.org/licenses/LICENSE-2.0
+-
+-THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+-KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+-WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+-MERCHANTABLITY OR NON-INFRINGEMENT.
+-
+-See the Apache Version 2.0 License for specific language governing permissions
+-and limitations under the License.
+-***************************************************************************** */
+-
+ /// <reference no-default-lib="true"/>
++/// <reference types="ts-type-forge/global" />
+ 
+ interface ProxyHandler<T extends object> {
+   /**
+    * A trap method for a function call.
+    * @param target The original callable object which is being proxied.
+    */
+-  apply?(target: T, thisArg: any, argArray: any[]): any;
++  apply?(target: T, thisArg: unknown, argArray: readonly unknown[]): unknown;
+ 
+   /**
+    * A trap for the `new` operator.
+    * @param target The original object which is being proxied.
+    * @param newTarget The constructor that was originally called.
+    */
+-  construct?(target: T, argArray: any[], newTarget: Function): object;
++  construct?(
++    target: T,
++    argArray: readonly unknown[],
++    newTarget: Function,
++  ): object;
+ 
+   /**
+    * A trap for `Object.defineProperty()`.
+    * @param target The original object which is being proxied.
+    * @returns A `Boolean` indicating whether or not the property has been defined.
+    */
+-  defineProperty?(target: T, property: string | symbol, attributes: PropertyDescriptor): boolean;
++  defineProperty?(
++    target: T,
++    property: string | symbol,
++    attributes: PropertyDescriptor,
++  ): boolean;
+ 
+   /**
+    * A trap for the `delete` operator.
+@@ -50,14 +44,17 @@ interface ProxyHandler<T extends object> {
+    * @param p The name or `Symbol` of the property to get.
+    * @param receiver The proxy or an object that inherits from the proxy.
+    */
+-  get?(target: T, p: string | symbol, receiver: any): any;
++  get?(target: T, p: string | symbol, receiver: unknown): unknown;
+ 
+   /**
+    * A trap for `Object.getOwnPropertyDescriptor()`.
+    * @param target The original object which is being proxied.
+    * @param p The name of the property whose description should be retrieved.
+    */
+-  getOwnPropertyDescriptor?(target: T, p: string | symbol): PropertyDescriptor | undefined;
++  getOwnPropertyDescriptor?(
++    target: T,
++    p: string | symbol,
++  ): PropertyDescriptor | undefined;
+ 
+   /**
+    * A trap for the `[[GetPrototypeOf]]` internal method.
+@@ -97,7 +94,12 @@ interface ProxyHandler<T extends object> {
+    * @param receiver The object to which the assignment was originally directed.
+    * @returns A `Boolean` indicating whether or not the property was set.
+    */
+-  set?(target: T, p: string | symbol, newValue: any, receiver: any): boolean;
++  set?(
++    target: T,
++    p: string | symbol,
++    newValue: unknown,
++    receiver: unknown,
++  ): boolean;
+ 
+   /**
+    * A trap for `Object.setPrototypeOf()`.
+@@ -113,7 +115,10 @@ interface ProxyConstructor {
+    * @param target A target object to wrap with Proxy.
+    * @param handler An object whose properties define the behavior of Proxy when an operation is attempted on it.
+    */
+-  revocable<T extends object>(target: T, handler: ProxyHandler<T>): { proxy: T; revoke: () => void };
++  revocable<T extends object>(
++    target: T,
++    handler: ProxyHandler<T>,
++  ): { proxy: T; revoke: () => void };
+ 
+   /**
+    * Creates a Proxy object. The Proxy object allows you to create an object that can be used in place of the
+@@ -124,4 +129,4 @@ interface ProxyConstructor {
+    */
+   new <T extends object>(target: T, handler: ProxyHandler<T>): T;
+ }
+-declare var Proxy: ProxyConstructor;
++declare const Proxy: ProxyConstructor;

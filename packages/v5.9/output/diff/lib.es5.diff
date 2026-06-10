@@ -1,0 +1,4229 @@
+@@ -1,35 +1,22 @@
+-/*! *****************************************************************************
+-Copyright (c) Microsoft Corporation. All rights reserved.
+-Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+-this file except in compliance with the License. You may obtain a copy of the
+-License at http://www.apache.org/licenses/LICENSE-2.0
+-
+-THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+-KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+-WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+-MERCHANTABLITY OR NON-INFRINGEMENT.
+-
+-See the Apache Version 2.0 License for specific language governing permissions
+-and limitations under the License.
+-***************************************************************************** */
+-
+ /// <reference no-default-lib="true"/>
++/// <reference types="ts-type-forge/global" />
+ 
+-/// <reference lib="decorators" />
+-/// <reference lib="decorators.legacy" />
++/// <reference path="./lib.decorators.d.ts" />
++/// <reference path="./lib.decorators.legacy.d.ts" />
+ 
+ /////////////////////////////
+ /// ECMAScript APIs
+ /////////////////////////////
+ 
+-declare var NaN: number;
+-declare var Infinity: number;
++declare const NaN: number;
++declare const Infinity: number;
+ 
+ /**
+  * Evaluates JavaScript code and executes it.
+  * @param x A String value that contains valid JavaScript code.
++ * @deprecated
+  */
+-declare function eval(x: string): any;
++declare function eval(x: string): unknown;
+ 
+ /**
+  * Converts a string to an integer.
+@@ -38,7 +25,7 @@ declare function eval(x: string): any;
+  * If this argument is not supplied, strings with a prefix of '0x' are considered hexadecimal.
+  * All other strings are considered decimal.
+  */
+-declare function parseInt(string: string, radix?: number): number;
++declare function parseInt(string: string, radix?: UintRange<2, 37>): number;
+ 
+ /**
+  * Converts a string to a floating-point number.
+@@ -49,12 +36,14 @@ declare function parseFloat(string: string): number;
+ /**
+  * Returns a Boolean value that indicates whether a value is the reserved value NaN (not a number).
+  * @param number A numeric value.
++ * @deprecated Use `Number.isNaN` instead.
+  */
+ declare function isNaN(number: number): boolean;
+ 
+ /**
+  * Determines whether a supplied number is finite.
+  * @param number Any numeric value.
++ * @deprecated Use `Number.isFinite` instead.
+  */
+ declare function isFinite(number: number): boolean;
+ 
+@@ -80,7 +69,9 @@ declare function encodeURI(uri: string): string;
+  * Encodes a text string as a valid component of a Uniform Resource Identifier (URI).
+  * @param uriComponent A value representing an unencoded URI component.
+  */
+-declare function encodeURIComponent(uriComponent: string | number | boolean): string;
++declare function encodeURIComponent(
++  uriComponent: string | number | boolean,
++): string;
+ 
+ /**
+  * Computes a new string in which certain characters have been replaced by a hexadecimal escape sequence.
+@@ -107,21 +98,21 @@ interface Symbol {
+ declare type PropertyKey = string | number | symbol;
+ 
+ interface PropertyDescriptor {
+-  configurable?: boolean;
+-  enumerable?: boolean;
+-  value?: any;
+-  writable?: boolean;
+-  get?(): any;
+-  set?(v: any): void;
++  readonly configurable?: boolean;
++  readonly enumerable?: boolean;
++  readonly value?: unknown;
++  readonly writable?: boolean;
++  get?(): unknown;
++  set?(v: unknown): void;
+ }
+ 
+ interface PropertyDescriptorMap {
+-  [key: PropertyKey]: PropertyDescriptor;
++  readonly [key: PropertyKey]: PropertyDescriptor;
+ }
+ 
+ interface Object {
+   /** The initial value of Object.prototype.constructor is the standard built-in Object constructor. */
+-  constructor: Function;
++  readonly constructor: Function;
+ 
+   /** Returns a string representation of an object. */
+   toString(): string;
+@@ -152,9 +143,12 @@ interface Object {
+ }
+ 
+ interface ObjectConstructor {
+-  new (value?: any): Object;
+-  (): any;
+-  (value: any): any;
++  /** @deprecated Don't use Object constructor */
++  new (value?: unknown): Object;
++  /** @deprecated Don't use Object constructor */
++  (): unknown;
++  /** @deprecated Don't use Object constructor */
++  (value: unknown): unknown;
+ 
+   /** A reference to the prototype for a class of objects. */
+   readonly prototype: Object;
+@@ -163,7 +157,7 @@ interface ObjectConstructor {
+    * Returns the prototype of an object.
+    * @param o The object that references the prototype.
+    */
+-  getPrototypeOf(o: any): any;
++  getPrototypeOf(o: unknown): unknown;
+ 
+   /**
+    * Gets the own property descriptor of the specified object.
+@@ -171,27 +165,33 @@ interface ObjectConstructor {
+    * @param o Object that contains the property.
+    * @param p Name of the property.
+    */
+-  getOwnPropertyDescriptor(o: any, p: PropertyKey): PropertyDescriptor | undefined;
++  getOwnPropertyDescriptor(
++    o: unknown,
++    p: PropertyKey,
++  ): PropertyDescriptor | undefined;
+ 
+   /**
+    * Returns the names of the own properties of an object. The own properties of an object are those that are defined directly
+    * on that object, and are not inherited from the object's prototype. The properties of an object include both fields (objects) and functions.
+    * @param o Object that contains the own properties.
+    */
+-  getOwnPropertyNames(o: any): string[];
++  getOwnPropertyNames(o: unknown): string[];
+ 
+   /**
+    * Creates an object that has the specified prototype or that has null prototype.
+    * @param o Object to use as a prototype. May be null.
+    */
+-  create(o: object | null): any;
++  create(o: object | null): unknown;
+ 
+   /**
+    * Creates an object that has the specified prototype, and that optionally contains specified properties.
+    * @param o Object to use as a prototype. May be null
+    * @param properties JavaScript object that contains one or more property descriptors.
+    */
+-  create(o: object | null, properties: PropertyDescriptorMap & ThisType<any>): any;
++  create(
++    o: object | null,
++    properties: PropertyDescriptorMap & ThisType<unknown>,
++  ): unknown;
+ 
+   /**
+    * Adds a property to an object, or modifies attributes of an existing property.
+@@ -199,14 +199,21 @@ interface ObjectConstructor {
+    * @param p The property name.
+    * @param attributes Descriptor for the property. It can be for a data property or an accessor property.
+    */
+-  defineProperty<T>(o: T, p: PropertyKey, attributes: PropertyDescriptor & ThisType<any>): T;
++  defineProperty<T>(
++    o: T,
++    p: PropertyKey,
++    attributes: PropertyDescriptor & ThisType<unknown>,
++  ): T;
+ 
+   /**
+    * Adds one or more properties to an object, and/or modifies attributes of existing properties.
+    * @param o Object on which to add or modify the properties. This can be a native JavaScript object or a DOM object.
+    * @param properties JavaScript object that contains one or more descriptor objects. Each descriptor object describes a data property or an accessor property.
+    */
+-  defineProperties<T>(o: T, properties: PropertyDescriptorMap & ThisType<any>): T;
++  defineProperties<T>(
++    o: T,
++    properties: PropertyDescriptorMap & ThisType<unknown>,
++  ): T;
+ 
+   /**
+    * Prevents the modification of attributes of existing properties, and prevents the addition of new properties.
+@@ -224,7 +231,12 @@ interface ObjectConstructor {
+    * Prevents the modification of existing property attributes and values, and prevents the addition of new properties.
+    * @param o Object on which to lock the attributes.
+    */
+-  freeze<T extends { [idx: string]: U | null | undefined | object }, U extends string | bigint | number | boolean | symbol>(o: T): Readonly<T>;
++  freeze<
++    T extends { readonly [idx: string]: U | null | undefined | object },
++    U extends string | bigint | number | boolean | symbol,
++  >(
++    o: T,
++  ): Readonly<T>;
+ 
+   /**
+    * Prevents the modification of existing property attributes and values, and prevents the addition of new properties.
+@@ -242,31 +254,38 @@ interface ObjectConstructor {
+    * Returns true if existing property attributes cannot be modified in an object and new properties cannot be added to the object.
+    * @param o Object to test.
+    */
+-  isSealed(o: any): boolean;
++  isSealed(o: unknown): boolean;
+ 
+   /**
+    * Returns true if existing property attributes and values cannot be modified in an object, and new properties cannot be added to the object.
+    * @param o Object to test.
+    */
+-  isFrozen(o: any): boolean;
++  isFrozen(o: unknown): boolean;
+ 
+   /**
+    * Returns a value that indicates whether new properties can be added to an object.
+    * @param o Object to test.
+    */
+-  isExtensible(o: any): boolean;
++  isExtensible(o: unknown): boolean;
+ 
+   /**
+    * Returns the names of the enumerable string properties and methods of an object.
+    * @param o Object that contains the properties and methods. This can be an object that you created or an existing Document Object Model (DOM) object.
++   *
++   * @example
++   * ```ts
++   * const ks = Object.keys({ x: 1, y: 2, z: '3', 3: 4 }); // ('3' | 'x' | 'y' | 'z' | (string & {}))[]
++   * ```
+    */
+-  keys(o: object): string[];
++  keys<const R extends UnknownRecord>(
++    object: R,
++  ): StrictLibInternals.ToObjectKeys<R>[];
+ }
+ 
+ /**
+  * Provides functionality common to all JavaScript objects.
+  */
+-declare var Object: ObjectConstructor;
++declare const Object: ObjectConstructor;
+ 
+ /**
+  * Creates a new function.
+@@ -277,14 +296,18 @@ interface Function {
+    * @param thisArg The object to be used as the this object.
+    * @param argArray A set of arguments to be passed to the function.
+    */
+-  apply(this: Function, thisArg: any, argArray?: any): any;
++  apply(this: Function, thisArg: unknown, argArray?: unknown): unknown;
+ 
+   /**
+    * Calls a method of an object, substituting another object for the current object.
+    * @param thisArg The object to be used as the current object.
+    * @param argArray A list of arguments to be passed to the method.
+    */
+-  call(this: Function, thisArg: any, ...argArray: any[]): any;
++  call(
++    this: Function,
++    thisArg: unknown,
++    ...argArray: readonly unknown[]
++  ): unknown;
+ 
+   /**
+    * For a given function, creates a bound function that has the same body as the original function.
+@@ -292,40 +315,53 @@ interface Function {
+    * @param thisArg An object to which the this keyword can refer inside the new function.
+    * @param argArray A list of arguments to be passed to the new function.
+    */
+-  bind(this: Function, thisArg: any, ...argArray: any[]): any;
++  bind(
++    this: Function,
++    thisArg: unknown,
++    ...argArray: readonly unknown[]
++  ): unknown;
+ 
+   /** Returns a string representation of a function. */
+   toString(): string;
+ 
+-  prototype: any;
++  readonly prototype: unknown;
+   readonly length: number;
+ 
+   // Non-standard extensions
+-  arguments: any;
+-  caller: Function;
++  readonly arguments: unknown;
++  readonly caller: Function;
+ }
+ 
+ interface FunctionConstructor {
+   /**
+    * Creates a new function.
+    * @param args A list of arguments the function accepts.
++   * @deprecated Don't use Function constructor
+    */
+-  new (...args: string[]): Function;
+-  (...args: string[]): Function;
++  new (...args: readonly string[]): Function;
++  /** @deprecated Don't use Function constructor */
++  (...args: readonly string[]): Function;
+   readonly prototype: Function;
+ }
+ 
+-declare var Function: FunctionConstructor;
++declare const Function: FunctionConstructor;
+ 
+ /**
+  * Extracts the type of the 'this' parameter of a function type, or 'unknown' if the function type has no 'this' parameter.
+  */
+-type ThisParameterType<T> = T extends (this: infer U, ...args: never) => any ? U : unknown;
++type ThisParameterType<T> = T extends (this: infer U, ...args: never) => unknown
++  ? U
++  : unknown;
+ 
+ /**
+  * Removes the 'this' parameter from a function type.
+  */
+-type OmitThisParameter<T> = unknown extends ThisParameterType<T> ? T : T extends (...args: infer A) => infer R ? (...args: A) => R : T;
++type OmitThisParameter<T> =
++  unknown extends ThisParameterType<T>
++    ? T
++    : T extends (...args: infer A) => infer R
++      ? (...args: A) => R
++      : T;
+ 
+ interface CallableFunction extends Function {
+   /**
+@@ -339,14 +375,22 @@ interface CallableFunction extends Function {
+    * @param thisArg The object to be used as the this object.
+    * @param args An array of argument values to be passed to the function.
+    */
+-  apply<T, A extends any[], R>(this: (this: T, ...args: A) => R, thisArg: T, args: A): R;
++  apply<T, A extends readonly unknown[], R>(
++    this: (this: T, ...args: A) => R,
++    thisArg: T,
++    args: A,
++  ): R;
+ 
+   /**
+    * Calls the function with the specified object as the this value and the specified rest arguments as the arguments.
+    * @param thisArg The object to be used as the this object.
+    * @param args Argument values to be passed to the function.
+    */
+-  call<T, A extends any[], R>(this: (this: T, ...args: A) => R, thisArg: T, ...args: A): R;
++  call<T, A extends readonly unknown[], R>(
++    this: (this: T, ...args: A) => R,
++    thisArg: T,
++    ...args: A
++  ): R;
+ 
+   /**
+    * For a given function, creates a bound function that has the same body as the original function.
+@@ -361,7 +405,11 @@ interface CallableFunction extends Function {
+    * @param thisArg The object to be used as the this object.
+    * @param args Arguments to bind to the parameters of the function.
+    */
+-  bind<T, A extends any[], B extends any[], R>(this: (this: T, ...args: [...A, ...B]) => R, thisArg: T, ...args: A): (...args: B) => R;
++  bind<T, A extends readonly unknown[], B extends readonly unknown[], R>(
++    this: (this: T, ...args: readonly [...A, ...B]) => R,
++    thisArg: T,
++    ...args: A
++  ): (...args: B) => R;
+ }
+ 
+ interface NewableFunction extends Function {
+@@ -375,21 +423,29 @@ interface NewableFunction extends Function {
+    * @param thisArg The object to be used as the this object.
+    * @param args An array of argument values to be passed to the function.
+    */
+-  apply<T, A extends any[]>(this: new (...args: A) => T, thisArg: T, args: A): void;
++  apply<T, A extends readonly unknown[]>(
++    this: new (...args: A) => T,
++    thisArg: T,
++    args: A,
++  ): void;
+ 
+   /**
+    * Calls the function with the specified object as the this value and the specified rest arguments as the arguments.
+    * @param thisArg The object to be used as the this object.
+    * @param args Argument values to be passed to the function.
+    */
+-  call<T, A extends any[]>(this: new (...args: A) => T, thisArg: T, ...args: A): void;
++  call<T, A extends readonly unknown[]>(
++    this: new (...args: A) => T,
++    thisArg: T,
++    ...args: A
++  ): void;
+ 
+   /**
+    * For a given function, creates a bound function that has the same body as the original function.
+    * The this object of the bound function is associated with the specified object, and has the specified initial parameters.
+    * @param thisArg The object to be used as the this object.
+    */
+-  bind<T>(this: T, thisArg: any): T;
++  bind<T>(this: T, thisArg: unknown): T;
+ 
+   /**
+    * For a given function, creates a bound function that has the same body as the original function.
+@@ -397,13 +453,17 @@ interface NewableFunction extends Function {
+    * @param thisArg The object to be used as the this object.
+    * @param args Arguments to bind to the parameters of the function.
+    */
+-  bind<A extends any[], B extends any[], R>(this: new (...args: [...A, ...B]) => R, thisArg: any, ...args: A): new (...args: B) => R;
++  bind<A extends readonly unknown[], B extends readonly unknown[], R>(
++    this: new (...args: readonly [...A, ...B]) => R,
++    thisArg: unknown,
++    ...args: A
++  ): new (...args: B) => R;
+ }
+ 
+ interface IArguments {
+-  [index: number]: any;
+-  length: number;
+-  callee: Function;
++  readonly [index: number]: unknown;
++  readonly length: number;
++  readonly callee: Function;
+ }
+ 
+ interface String {
+@@ -413,6 +473,7 @@ interface String {
+   /**
+    * Returns the character at the specified index.
+    * @param pos The zero-based index of the desired character.
++   * @deprecated Prefer `String#at(...)` over `String#charAt(...)`. eslint(unicorn/prefer-at)
+    */
+   charAt(pos: number): string;
+ 
+@@ -425,8 +486,9 @@ interface String {
+   /**
+    * Returns a string that contains the concatenation of two or more strings.
+    * @param strings The strings to append to the end of the string.
++   * @deprecated Prefer the spread operator over `Array#concat(...)`. eslint(unicorn/prefer-spread)
+    */
+-  concat(...strings: string[]): string;
++  concat(...strings: readonly string[]): string;
+ 
+   /**
+    * Returns the position of the first occurrence of a substring.
+@@ -466,7 +528,10 @@ interface String {
+    * @param searchValue A string to search for.
+    * @param replacer A function that returns the replacement text.
+    */
+-  replace(searchValue: string | RegExp, replacer: (substring: string, ...args: any[]) => string): string;
++  replace(
++    searchValue: string | RegExp,
++    replacer: (substring: string, ...args: readonly unknown[]) => string,
++  ): string;
+ 
+   /**
+    * Finds the first substring match in a regular expression search.
+@@ -501,13 +566,13 @@ interface String {
+   toLowerCase(): string;
+ 
+   /** Converts all alphabetic characters to lowercase, taking into account the host environment's current locale. */
+-  toLocaleLowerCase(locales?: string | string[]): string;
++  toLocaleLowerCase(locales?: string | readonly string[]): string;
+ 
+   /** Converts all the alphabetic characters in a string to uppercase. */
+   toUpperCase(): string;
+ 
+   /** Returns a string where all alphabetic characters have been converted to uppercase, taking into account the host environment's current locale. */
+-  toLocaleUpperCase(locales?: string | string[]): string;
++  toLocaleUpperCase(locales?: string | readonly string[]): string;
+ 
+   /** Removes the leading and trailing white space and line terminator characters from a string. */
+   trim(): string;
+@@ -531,16 +596,18 @@ interface String {
+ }
+ 
+ interface StringConstructor {
+-  new (value?: any): String;
+-  (value?: any): string;
++  /** @deprecated Don't use String constructor */
++  new (value?: unknown): String;
++  /** @deprecated Don't use String constructor */
++  (value?: unknown): string;
+   readonly prototype: String;
+-  fromCharCode(...codes: number[]): string;
++  fromCharCode(...codes: readonly number[]): string;
+ }
+ 
+ /**
+  * Allows manipulation and formatting of text strings and determination and location of substrings within strings.
+  */
+-declare var String: StringConstructor;
++declare const String: StringConstructor;
+ 
+ interface Boolean {
+   /** Returns the primitive value of the specified object. */
+@@ -548,45 +615,48 @@ interface Boolean {
+ }
+ 
+ interface BooleanConstructor {
+-  new (value?: any): Boolean;
++  /** @deprecated Don't use Boolean constructor */
++  new (value?: unknown): Boolean;
++  /** @deprecated Don't use Boolean constructor */
+   <T>(value?: T): boolean;
+   readonly prototype: Boolean;
+ }
+ 
+-declare var Boolean: BooleanConstructor;
++declare const Boolean: BooleanConstructor;
+ 
+ interface Number {
+   /**
+    * Returns a string representation of an object.
+    * @param radix Specifies a radix for converting numeric values to strings. This value is only used for numbers.
+    */
+-  toString(radix?: number): string;
++  toString(radix?: UintRange<2, 37>): string;
+ 
+   /**
+    * Returns a string representing a number in fixed-point notation.
+    * @param fractionDigits Number of digits after the decimal point. Must be in the range 0 - 20, inclusive.
+    */
+-  toFixed(fractionDigits?: number): string;
++  toFixed(fractionDigits?: UintRange<0, 101>): string;
+ 
+   /**
+    * Returns a string containing a number represented in exponential notation.
+    * @param fractionDigits Number of digits after the decimal point. Must be in the range 0 - 20, inclusive.
+    */
+-  toExponential(fractionDigits?: number): string;
++  toExponential(fractionDigits?: UintRange<1, 101>): string;
+ 
+   /**
+    * Returns a string containing a number represented either in exponential or fixed-point notation with a specified number of digits.
+    * @param precision Number of significant digits. Must be in the range 1 - 21, inclusive.
+    */
+-  toPrecision(precision?: number): string;
++  toPrecision(precision?: UintRange<1, 101>): string;
+ 
+   /** Returns the primitive value of the specified object. */
+   valueOf(): number;
+ }
+ 
+ interface NumberConstructor {
+-  new (value?: any): Number;
+-  (value?: any): number;
++  /** @deprecated Don't use Number constructor */
++  new (value?: unknown): Number;
++  (value?: unknown): number;
+   readonly prototype: Number;
+ 
+   /** The largest number that can be represented in JavaScript. Equal to approximately 1.79E+308. */
+@@ -615,7 +685,7 @@ interface NumberConstructor {
+ }
+ 
+ /** An object that represents a number of any kind. All JavaScript numbers are 64-bit floating-point numbers. */
+-declare var Number: NumberConstructor;
++declare const Number: NumberConstructor;
+ 
+ interface TemplateStringsArray extends ReadonlyArray<string> {
+   readonly raw: readonly string[];
+@@ -636,8 +706,8 @@ interface ImportMeta {}
+  * augmented via interface merging.
+  */
+ interface ImportCallOptions {
+-  /** @deprecated*/ assert?: ImportAssertions;
+-  with?: ImportAttributes;
++  /** @deprecated*/ readonly assert?: ImportAssertions;
++  readonly with?: ImportAttributes;
+ }
+ 
+ /**
+@@ -645,14 +715,14 @@ interface ImportCallOptions {
+  * @deprecated
+  */
+ interface ImportAssertions {
+-  [key: string]: string;
++  readonly [key: string]: string;
+ }
+ 
+ /**
+  * The type for the `with` property of the optional second argument to `import()`.
+  */
+ interface ImportAttributes {
+-  [key: string]: string;
++  readonly [key: string]: string;
+ }
+ 
+ interface Math {
+@@ -677,6 +747,7 @@ interface Math {
+    * For example, the absolute value of -5 is the same as the absolute value of 5.
+    * @param x A numeric expression for which the absolute value is needed.
+    */
++  abs<N extends number>(x: N): AbsoluteValue<N>;
+   abs(x: number): number;
+   /**
+    * Returns the arc cosine (or inverse cosine) of a number.
+@@ -728,12 +799,12 @@ interface Math {
+    * Returns the larger of a set of supplied numeric expressions.
+    * @param values Numeric expressions to be evaluated.
+    */
+-  max(...values: number[]): number;
++  max(...values: readonly number[]): number;
+   /**
+    * Returns the smaller of a set of supplied numeric expressions.
+    * @param values Numeric expressions to be evaluated.
+    */
+-  min(...values: number[]): number;
++  min(...values: readonly number[]): number;
+   /**
+    * Returns the value of a base expression taken to a specified power.
+    * @param x The base value of the expression.
+@@ -764,7 +835,7 @@ interface Math {
+   tan(x: number): number;
+ }
+ /** An intrinsic object that provides basic mathematics functionality and constants. */
+-declare var Math: Math;
++declare const Math: Math;
+ 
+ /** Enables basic storage and retrieval of dates and times. */
+ interface Date {
+@@ -789,33 +860,33 @@ interface Date {
+   /** Gets the year using Universal Coordinated Time (UTC). */
+   getUTCFullYear(): number;
+   /** Gets the month, using local time. */
+-  getMonth(): number;
++  getMonth(): MonthIndexEnum;
+   /** Gets the month of a Date object using Universal Coordinated Time (UTC). */
+-  getUTCMonth(): number;
++  getUTCMonth(): MonthIndexEnum;
+   /** Gets the day-of-the-month, using local time. */
+-  getDate(): number;
++  getDate(): DateEnum;
+   /** Gets the day-of-the-month, using Universal Coordinated Time (UTC). */
+-  getUTCDate(): number;
++  getUTCDate(): DateEnum;
+   /** Gets the day of the week, using local time. */
+-  getDay(): number;
++  getDay(): DayOfWeekIndex;
+   /** Gets the day of the week using Universal Coordinated Time (UTC). */
+-  getUTCDay(): number;
++  getUTCDay(): DayOfWeekIndex;
+   /** Gets the hours in a date, using local time. */
+-  getHours(): number;
++  getHours(): HoursEnum;
+   /** Gets the hours value in a Date object using Universal Coordinated Time (UTC). */
+-  getUTCHours(): number;
++  getUTCHours(): HoursEnum;
+   /** Gets the minutes of a Date object, using local time. */
+-  getMinutes(): number;
++  getMinutes(): MinutesEnum;
+   /** Gets the minutes of a Date object using Universal Coordinated Time (UTC). */
+-  getUTCMinutes(): number;
++  getUTCMinutes(): MinutesEnum;
+   /** Gets the seconds of a Date object, using local time. */
+-  getSeconds(): number;
++  getSeconds(): SecondsEnum;
+   /** Gets the seconds of a Date object using Universal Coordinated Time (UTC). */
+-  getUTCSeconds(): number;
++  getUTCSeconds(): SecondsEnum;
+   /** Gets the milliseconds of a Date, using local time. */
+-  getMilliseconds(): number;
++  getMilliseconds(): MillisecondsEnum;
+   /** Gets the milliseconds of a Date object using Universal Coordinated Time (UTC). */
+-  getUTCMilliseconds(): number;
++  getUTCMilliseconds(): MillisecondsEnum;
+   /** Gets the difference in minutes between Universal Coordinated Time (UTC) and the time on the local computer. */
+   getTimezoneOffset(): number;
+   /**
+@@ -917,7 +988,7 @@ interface Date {
+   /** Returns a date as a string value in ISO format. */
+   toISOString(): string;
+   /** Used by the JSON.stringify method to enable the transformation of an object's data for JavaScript Object Notation (JSON) serialization. */
+-  toJSON(key?: any): string;
++  toJSON(key?: unknown): string;
+ }
+ 
+ interface DateConstructor {
+@@ -933,7 +1004,15 @@ interface DateConstructor {
+    * @param seconds Must be supplied if milliseconds is supplied. A number from 0 to 59 that specifies the seconds.
+    * @param ms A number from 0 to 999 that specifies the milliseconds.
+    */
+-  new (year: number, monthIndex: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date;
++  new (
++    year: number,
++    monthIndex: MonthIndexEnum,
++    date?: DateEnum,
++    hours?: HoursEnum,
++    minutes?: MinutesEnum,
++    seconds?: SecondsEnum,
++    ms?: MillisecondsEnum,
++  ): Date;
+   (): string;
+   readonly prototype: Date;
+   /**
+@@ -951,41 +1030,49 @@ interface DateConstructor {
+    * @param seconds Must be supplied if milliseconds is supplied. A number from 0 to 59 that specifies the seconds.
+    * @param ms A number from 0 to 999 that specifies the milliseconds.
+    */
+-  UTC(year: number, monthIndex: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number;
++  UTC(
++    year: number,
++    monthIndex: MonthIndexEnum,
++    date?: DateEnum,
++    hours?: HoursEnum,
++    minutes?: MinutesEnum,
++    seconds?: SecondsEnum,
++    ms?: MillisecondsEnum,
++  ): number;
+   /** Returns the number of milliseconds elapsed since midnight, January 1, 1970 Universal Coordinated Time (UTC). */
+   now(): number;
+ }
+ 
+-declare var Date: DateConstructor;
++declare const Date: DateConstructor;
+ 
+ interface RegExpMatchArray extends Array<string> {
+   /**
+    * The index of the search at which the result was found.
+    */
+-  index?: number;
++  readonly index?: number;
+   /**
+    * A copy of the search string.
+    */
+-  input?: string;
++  readonly input?: string;
+   /**
+    * The first match. This will always be present because `null` will be returned if there are no matches.
+    */
+-  0: string;
++  readonly 0: string;
+ }
+ 
+ interface RegExpExecArray extends Array<string> {
+   /**
+    * The index of the search at which the result was found.
+    */
+-  index: number;
++  readonly index: number;
+   /**
+    * A copy of the search string.
+    */
+-  input: string;
++  readonly input: string;
+   /**
+    * The first match. This will always be present because `null` will be returned if there are no matches.
+    */
+-  0: string;
++  readonly 0: string;
+ }
+ 
+ interface RegExp {
+@@ -1013,7 +1100,7 @@ interface RegExp {
+   /** Returns a Boolean value indicating the state of the multiline flag (m) used with a regular expression. Default is false. Read-only. */
+   readonly multiline: boolean;
+ 
+-  lastIndex: number;
++  readonly lastIndex: number;
+ 
+   // Non-standard extensions
+   /** @deprecated A legacy feature for browser compatibility */
+@@ -1029,50 +1116,50 @@ interface RegExpConstructor {
+ 
+   // Non-standard extensions
+   /** @deprecated A legacy feature for browser compatibility */
+-  $1: string;
++  readonly $1: string;
+   /** @deprecated A legacy feature for browser compatibility */
+-  $2: string;
++  readonly $2: string;
+   /** @deprecated A legacy feature for browser compatibility */
+-  $3: string;
++  readonly $3: string;
+   /** @deprecated A legacy feature for browser compatibility */
+-  $4: string;
++  readonly $4: string;
+   /** @deprecated A legacy feature for browser compatibility */
+-  $5: string;
++  readonly $5: string;
+   /** @deprecated A legacy feature for browser compatibility */
+-  $6: string;
++  readonly $6: string;
+   /** @deprecated A legacy feature for browser compatibility */
+-  $7: string;
++  readonly $7: string;
+   /** @deprecated A legacy feature for browser compatibility */
+-  $8: string;
++  readonly $8: string;
+   /** @deprecated A legacy feature for browser compatibility */
+-  $9: string;
++  readonly $9: string;
+   /** @deprecated A legacy feature for browser compatibility */
+-  input: string;
++  readonly input: string;
+   /** @deprecated A legacy feature for browser compatibility */
+-  $_: string;
++  readonly $_: string;
+   /** @deprecated A legacy feature for browser compatibility */
+-  lastMatch: string;
++  readonly lastMatch: string;
+   /** @deprecated A legacy feature for browser compatibility */
+-  '$&': string;
++  readonly '$&': string;
+   /** @deprecated A legacy feature for browser compatibility */
+-  lastParen: string;
++  readonly lastParen: string;
+   /** @deprecated A legacy feature for browser compatibility */
+-  '$+': string;
++  readonly '$+': string;
+   /** @deprecated A legacy feature for browser compatibility */
+-  leftContext: string;
++  readonly leftContext: string;
+   /** @deprecated A legacy feature for browser compatibility */
+-  '$`': string;
++  readonly '$`': string;
+   /** @deprecated A legacy feature for browser compatibility */
+-  rightContext: string;
++  readonly rightContext: string;
+   /** @deprecated A legacy feature for browser compatibility */
+-  "$'": string;
++  readonly "$'": string;
+ }
+ 
+-declare var RegExp: RegExpConstructor;
++declare const RegExp: RegExpConstructor;
+ 
+ interface Error {
+   name: string;
+-  message: string;
++  readonly message: string;
+   stack?: string;
+ }
+ 
+@@ -1082,7 +1169,7 @@ interface ErrorConstructor {
+   readonly prototype: Error;
+ }
+ 
+-declare var Error: ErrorConstructor;
++declare const Error: ErrorConstructor;
+ 
+ interface EvalError extends Error {}
+ 
+@@ -1092,7 +1179,7 @@ interface EvalErrorConstructor extends ErrorConstructor {
+   readonly prototype: EvalError;
+ }
+ 
+-declare var EvalError: EvalErrorConstructor;
++declare const EvalError: EvalErrorConstructor;
+ 
+ interface RangeError extends Error {}
+ 
+@@ -1102,7 +1189,7 @@ interface RangeErrorConstructor extends ErrorConstructor {
+   readonly prototype: RangeError;
+ }
+ 
+-declare var RangeError: RangeErrorConstructor;
++declare const RangeError: RangeErrorConstructor;
+ 
+ interface ReferenceError extends Error {}
+ 
+@@ -1112,7 +1199,7 @@ interface ReferenceErrorConstructor extends ErrorConstructor {
+   readonly prototype: ReferenceError;
+ }
+ 
+-declare var ReferenceError: ReferenceErrorConstructor;
++declare const ReferenceError: ReferenceErrorConstructor;
+ 
+ interface SyntaxError extends Error {}
+ 
+@@ -1122,7 +1209,7 @@ interface SyntaxErrorConstructor extends ErrorConstructor {
+   readonly prototype: SyntaxError;
+ }
+ 
+-declare var SyntaxError: SyntaxErrorConstructor;
++declare const SyntaxError: SyntaxErrorConstructor;
+ 
+ interface TypeError extends Error {}
+ 
+@@ -1132,7 +1219,7 @@ interface TypeErrorConstructor extends ErrorConstructor {
+   readonly prototype: TypeError;
+ }
+ 
+-declare var TypeError: TypeErrorConstructor;
++declare const TypeError: TypeErrorConstructor;
+ 
+ interface URIError extends Error {}
+ 
+@@ -1142,7 +1229,7 @@ interface URIErrorConstructor extends ErrorConstructor {
+   readonly prototype: URIError;
+ }
+ 
+-declare var URIError: URIErrorConstructor;
++declare const URIError: URIErrorConstructor;
+ 
+ interface JSON {
+   /**
+@@ -1152,7 +1239,10 @@ interface JSON {
+    * If a member contains nested objects, the nested objects are transformed before the parent object is.
+    * @throws {SyntaxError} If `text` is not valid JSON.
+    */
+-  parse(text: string, reviver?: (this: any, key: string, value: any) => any): any;
++  parse(
++    text: string,
++    reviver?: (this: unknown, key: string, value: unknown) => unknown,
++  ): MutableJsonValue;
+   /**
+    * Converts a JavaScript value to a JavaScript Object Notation (JSON) string.
+    * @param value A JavaScript value, usually an object or array, to be converted.
+@@ -1160,7 +1250,11 @@ interface JSON {
+    * @param space Adds indentation, white space, and line break characters to the return-value JSON text to make it easier to read.
+    * @throws {TypeError} If a circular reference or a BigInt value is found.
+    */
+-  stringify(value: any, replacer?: (this: any, key: string, value: any) => any, space?: string | number): string;
++  stringify(
++    value: unknown,
++    replacer?: (this: unknown, key: string, value: unknown) => unknown,
++    space?: string | UintRange<1, 11>,
++  ): string;
+   /**
+    * Converts a JavaScript value to a JavaScript Object Notation (JSON) string.
+    * @param value A JavaScript value, usually an object or array, to be converted.
+@@ -1168,13 +1262,17 @@ interface JSON {
+    * @param space Adds indentation, white space, and line break characters to the return-value JSON text to make it easier to read.
+    * @throws {TypeError} If a circular reference or a BigInt value is found.
+    */
+-  stringify(value: any, replacer?: (number | string)[] | null, space?: string | number): string;
++  stringify(
++    value: unknown,
++    replacer?: readonly (number | string)[] | null,
++    space?: string | UintRange<1, 11>,
++  ): string;
+ }
+ 
+ /**
+  * An intrinsic object that provides functions to convert JavaScript values to and from the JavaScript Object Notation (JSON) format.
+  */
+-declare var JSON: JSON;
++declare const JSON: JSON;
+ 
+ /////////////////////////////
+ /// ECMAScript Array API (specially handled by compiler)
+@@ -1197,12 +1295,12 @@ interface ReadonlyArray<T> {
+    * Combines two or more arrays.
+    * @param items Additional items to add to the end of array1.
+    */
+-  concat(...items: ConcatArray<T>[]): T[];
++  concat(...items: readonly ConcatArray<T>[]): T[];
+   /**
+    * Combines two or more arrays.
+    * @param items Additional items to add to the end of array1.
+    */
+-  concat(...items: (T | ConcatArray<T>)[]): T[];
++  concat(...items: readonly (T | ConcatArray<T>)[]): T[];
+   /**
+    * Adds all the elements of an array separated by the specified separator string.
+    * @param separator A string used to separate one element of an array from the next in the resulting String. If omitted, the array elements are separated with a comma.
+@@ -1234,7 +1332,10 @@ interface ReadonlyArray<T> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  every<S extends T>(predicate: (value: T, index: number, array: readonly T[]) => value is S, thisArg?: any): this is readonly S[];
++  every<S extends T>(
++    predicate: (value: T, index: number, array: readonly T[]) => value is S,
++    thisArg?: unknown,
++  ): this is readonly S[];
+   /**
+    * Determines whether all the members of an array satisfy the specified test.
+    * @param predicate A function that accepts up to three arguments. The every method calls
+@@ -1243,7 +1344,10 @@ interface ReadonlyArray<T> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  every(predicate: (value: T, index: number, array: readonly T[]) => unknown, thisArg?: any): boolean;
++  every(
++    predicate: (value: T, index: number, array: readonly T[]) => boolean,
++    thisArg?: unknown,
++  ): boolean;
+   /**
+    * Determines whether the specified callback function returns true for any element of an array.
+    * @param predicate A function that accepts up to three arguments. The some method calls
+@@ -1252,57 +1356,118 @@ interface ReadonlyArray<T> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  some(predicate: (value: T, index: number, array: readonly T[]) => unknown, thisArg?: any): boolean;
++  some(
++    predicate: (value: T, index: number, array: readonly T[]) => boolean,
++    thisArg?: unknown,
++  ): boolean;
+   /**
+    * Performs the specified action for each element in an array.
+    * @param callbackfn A function that accepts up to three arguments. forEach calls the callbackfn function one time for each element in the array.
+    * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
+    */
+-  forEach(callbackfn: (value: T, index: number, array: readonly T[]) => void, thisArg?: any): void;
++  forEach(
++    callbackfn: (value: T, index: number, array: readonly T[]) => void,
++    thisArg?: unknown,
++  ): void;
+   /**
+    * Calls a defined callback function on each element of an array, and returns an array that contains the results.
+    * @param callbackfn A function that accepts up to three arguments. The map method calls the callbackfn function one time for each element in the array.
+    * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
+    */
+-  map<U>(callbackfn: (value: T, index: number, array: readonly T[]) => U, thisArg?: any): U[];
++  map<U>(
++    callbackfn: (value: T, index: number, array: readonly T[]) => U,
++    thisArg?: unknown,
++  ): U[];
+   /**
+    * Returns the elements of an array that meet the condition specified in a callback function.
+    * @param predicate A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.
+    * @param thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.
+    */
+-  filter<S extends T>(predicate: (value: T, index: number, array: readonly T[]) => value is S, thisArg?: any): S[];
++  filter<S extends T>(
++    predicate: (value: T, index: number, array: readonly T[]) => value is S,
++    thisArg?: unknown,
++  ): S[];
+   /**
+    * Returns the elements of an array that meet the condition specified in a callback function.
+    * @param predicate A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.
+    * @param thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.
+    */
+-  filter(predicate: (value: T, index: number, array: readonly T[]) => unknown, thisArg?: any): T[];
++  filter(
++    predicate: (value: T, index: number, array: readonly T[]) => boolean,
++    thisArg?: unknown,
++  ): T[];
+   /**
+    * Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.
+    * @param callbackfn A function that accepts up to four arguments. The reduce method calls the callbackfn function one time for each element in the array.
+    * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.
+    */
+-  reduce(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: readonly T[]) => T): T;
+-  reduce(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: readonly T[]) => T, initialValue: T): T;
++  reduce(
++    callbackfn: (
++      previousValue: T,
++      currentValue: T,
++      currentIndex: number,
++      array: readonly T[],
++    ) => T,
++  ): T;
++  reduce(
++    callbackfn: (
++      previousValue: T,
++      currentValue: T,
++      currentIndex: number,
++      array: readonly T[],
++    ) => T,
++    initialValue: T,
++  ): T;
+   /**
+    * Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.
+    * @param callbackfn A function that accepts up to four arguments. The reduce method calls the callbackfn function one time for each element in the array.
+    * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.
+    */
+-  reduce<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: readonly T[]) => U, initialValue: U): U;
++  reduce<U>(
++    callbackfn: (
++      previousValue: U,
++      currentValue: T,
++      currentIndex: number,
++      array: readonly T[],
++    ) => U,
++    initialValue: U,
++  ): U;
+   /**
+    * Calls the specified callback function for all the elements in an array, in descending order. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.
+    * @param callbackfn A function that accepts up to four arguments. The reduceRight method calls the callbackfn function one time for each element in the array.
+    * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.
+    */
+-  reduceRight(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: readonly T[]) => T): T;
+-  reduceRight(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: readonly T[]) => T, initialValue: T): T;
++  reduceRight(
++    callbackfn: (
++      previousValue: T,
++      currentValue: T,
++      currentIndex: number,
++      array: readonly T[],
++    ) => T,
++  ): T;
++  reduceRight(
++    callbackfn: (
++      previousValue: T,
++      currentValue: T,
++      currentIndex: number,
++      array: readonly T[],
++    ) => T,
++    initialValue: T,
++  ): T;
+   /**
+    * Calls the specified callback function for all the elements in an array, in descending order. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.
+    * @param callbackfn A function that accepts up to four arguments. The reduceRight method calls the callbackfn function one time for each element in the array.
+    * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.
+    */
+-  reduceRight<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: readonly T[]) => U, initialValue: U): U;
++  reduceRight<U>(
++    callbackfn: (
++      previousValue: U,
++      currentValue: T,
++      currentIndex: number,
++      array: readonly T[],
++    ) => U,
++    initialValue: U,
++  ): U;
+ 
+   readonly [n: number]: T;
+ }
+@@ -1318,7 +1483,7 @@ interface Array<T> {
+   /**
+    * Gets or sets the length of the array. This is a number one higher than the highest index in the array.
+    */
+-  length: number;
++  readonly length: number;
+   /**
+    * Returns a string representation of an array.
+    */
+@@ -1336,19 +1501,19 @@ interface Array<T> {
+    * Appends new elements to the end of an array, and returns the new length of the array.
+    * @param items New elements to add to the array.
+    */
+-  push(...items: T[]): number;
++  push(...items: readonly T[]): number;
+   /**
+    * Combines two or more arrays.
+    * This method returns a new array without modifying any existing arrays.
+    * @param items Additional arrays and/or items to add to the end of the array.
+    */
+-  concat(...items: ConcatArray<T>[]): T[];
++  concat(...items: readonly ConcatArray<T>[]): T[];
+   /**
+    * Combines two or more arrays.
+    * This method returns a new array without modifying any existing arrays.
+    * @param items Additional arrays and/or items to add to the end of the array.
+    */
+-  concat(...items: (T | ConcatArray<T>)[]): T[];
++  concat(...items: readonly (T | ConcatArray<T>)[]): T[];
+   /**
+    * Adds all the elements of an array into a string, separated by the specified separator string.
+    * @param separator A string used to separate one element of the array from the next in the resulting string. If omitted, the array elements are separated with a comma.
+@@ -1403,12 +1568,12 @@ interface Array<T> {
+    * @param items Elements to insert into the array in place of the deleted elements.
+    * @returns An array containing the elements that were deleted.
+    */
+-  splice(start: number, deleteCount: number, ...items: T[]): T[];
++  splice(start: number, deleteCount: number, ...items: readonly T[]): T[];
+   /**
+    * Inserts new elements at the start of an array, and returns the new length of the array.
+    * @param items Elements to insert at the start of the array.
+    */
+-  unshift(...items: T[]): number;
++  unshift(...items: readonly T[]): number;
+   /**
+    * Returns the index of the first occurrence of a value in an array, or -1 if it is not present.
+    * @param searchElement The value to locate in the array.
+@@ -1429,7 +1594,10 @@ interface Array<T> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  every<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): this is S[];
++  every<S extends T>(
++    predicate: (value: T, index: number, array: readonly T[]) => value is S,
++    thisArg?: unknown,
++  ): this is S[];
+   /**
+    * Determines whether all the members of an array satisfy the specified test.
+    * @param predicate A function that accepts up to three arguments. The every method calls
+@@ -1438,7 +1606,10 @@ interface Array<T> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  every(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): boolean;
++  every(
++    predicate: (value: T, index: number, array: readonly T[]) => boolean,
++    thisArg?: unknown,
++  ): boolean;
+   /**
+    * Determines whether the specified callback function returns true for any element of an array.
+    * @param predicate A function that accepts up to three arguments. The some method calls
+@@ -1447,84 +1618,156 @@ interface Array<T> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  some(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): boolean;
++  some(
++    predicate: (value: T, index: number, array: readonly T[]) => boolean,
++    thisArg?: unknown,
++  ): boolean;
+   /**
+    * Performs the specified action for each element in an array.
+    * @param callbackfn A function that accepts up to three arguments. forEach calls the callbackfn function one time for each element in the array.
+    * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
+    */
+-  forEach(callbackfn: (value: T, index: number, array: T[]) => void, thisArg?: any): void;
++  forEach(
++    callbackfn: (value: T, index: number, array: readonly T[]) => void,
++    thisArg?: unknown,
++  ): void;
+   /**
+    * Calls a defined callback function on each element of an array, and returns an array that contains the results.
+    * @param callbackfn A function that accepts up to three arguments. The map method calls the callbackfn function one time for each element in the array.
+    * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
+    */
+-  map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[];
++  map<U>(
++    callbackfn: (value: T, index: number, array: readonly T[]) => U,
++    thisArg?: unknown,
++  ): U[];
+   /**
+    * Returns the elements of an array that meet the condition specified in a callback function.
+    * @param predicate A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.
+    * @param thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.
+    */
+-  filter<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): S[];
++  filter<S extends T>(
++    predicate: (value: T, index: number, array: readonly T[]) => value is S,
++    thisArg?: unknown,
++  ): S[];
+   /**
+    * Returns the elements of an array that meet the condition specified in a callback function.
+    * @param predicate A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.
+    * @param thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.
+    */
+-  filter(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): T[];
++  filter(
++    predicate: (value: T, index: number, array: readonly T[]) => boolean,
++    thisArg?: unknown,
++  ): T[];
+   /**
+    * Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.
+    * @param callbackfn A function that accepts up to four arguments. The reduce method calls the callbackfn function one time for each element in the array.
+    * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.
+    */
+-  reduce(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T): T;
+-  reduce(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue: T): T;
++  reduce(
++    callbackfn: (
++      previousValue: T,
++      currentValue: T,
++      currentIndex: number,
++      array: readonly T[],
++    ) => T,
++  ): T;
++  reduce(
++    callbackfn: (
++      previousValue: T,
++      currentValue: T,
++      currentIndex: number,
++      array: readonly T[],
++    ) => T,
++    initialValue: T,
++  ): T;
+   /**
+    * Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.
+    * @param callbackfn A function that accepts up to four arguments. The reduce method calls the callbackfn function one time for each element in the array.
+    * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.
+    */
+-  reduce<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U;
++  reduce<U>(
++    callbackfn: (
++      previousValue: U,
++      currentValue: T,
++      currentIndex: number,
++      array: readonly T[],
++    ) => U,
++    initialValue: U,
++  ): U;
+   /**
+    * Calls the specified callback function for all the elements in an array, in descending order. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.
+    * @param callbackfn A function that accepts up to four arguments. The reduceRight method calls the callbackfn function one time for each element in the array.
+    * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.
+    */
+-  reduceRight(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T): T;
+-  reduceRight(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue: T): T;
++  reduceRight(
++    callbackfn: (
++      previousValue: T,
++      currentValue: T,
++      currentIndex: number,
++      array: readonly T[],
++    ) => T,
++  ): T;
++  reduceRight(
++    callbackfn: (
++      previousValue: T,
++      currentValue: T,
++      currentIndex: number,
++      array: readonly T[],
++    ) => T,
++    initialValue: T,
++  ): T;
+   /**
+    * Calls the specified callback function for all the elements in an array, in descending order. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.
+    * @param callbackfn A function that accepts up to four arguments. The reduceRight method calls the callbackfn function one time for each element in the array.
+    * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.
+    */
+-  reduceRight<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U;
++  reduceRight<U>(
++    callbackfn: (
++      previousValue: U,
++      currentValue: T,
++      currentIndex: number,
++      array: readonly T[],
++    ) => U,
++    initialValue: U,
++  ): U;
+ 
+   [n: number]: T;
+ }
+ 
+ interface ArrayConstructor {
+-  new (arrayLength?: number): any[];
++  /** @deprecated use `Array.from({ length })` instead */
++  new (arrayLength?: number): unknown[];
++  /** @deprecated use `Array.from({ length })` instead */
+   new <T>(arrayLength: number): T[];
+-  new <T>(...items: T[]): T[];
+-  (arrayLength?: number): any[];
++  /** @deprecated use `[...items]` instead */
++  new <T>(...items: readonly T[]): T[];
++  /** @deprecated use `Array.from({ length })` instead */
++  (arrayLength?: number): unknown[];
++  /** @deprecated use `Array.from({ length })` instead */
+   <T>(arrayLength: number): T[];
+-  <T>(...items: T[]): T[];
+-  isArray(arg: any): arg is any[];
+-  readonly prototype: any[];
++  /** @deprecated use `[...items]` instead */
++  <T>(...items: readonly T[]): T[];
++  isArray(arg: unknown): arg is unknown[];
++  readonly prototype: readonly unknown[];
+ }
+ 
+-declare var Array: ArrayConstructor;
++declare const Array: ArrayConstructor;
+ 
+ interface TypedPropertyDescriptor<T> {
+-  enumerable?: boolean;
+-  configurable?: boolean;
+-  writable?: boolean;
+-  value?: T;
+-  get?: () => T;
+-  set?: (value: T) => void;
++  readonly enumerable?: boolean;
++  readonly configurable?: boolean;
++  readonly writable?: boolean;
++  readonly value?: T;
++  readonly get?: () => T;
++  readonly set?: (value: T) => void;
+ }
+ 
+-declare type PromiseConstructorLike = new <T>(executor: (resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void) => PromiseLike<T>;
++declare type PromiseConstructorLike = new <T>(
++  executor: (
++    resolve: (value: T | PromiseLike<T>) => void,
++    reject: (reason?: unknown) => void,
++  ) => void,
++) => PromiseLike<T>;
+ 
+ interface PromiseLike<T> {
+   /**
+@@ -1533,7 +1776,16 @@ interface PromiseLike<T> {
+    * @param onrejected The callback to execute when the Promise is rejected.
+    * @returns A Promise for the completion of which ever callback is executed.
+    */
+-  then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): PromiseLike<TResult1 | TResult2>;
++  then<TResult1 = T, TResult2 = never>(
++    onfulfilled?:
++      | ((value: T) => TResult1 | PromiseLike<TResult1>)
++      | undefined
++      | null,
++    onrejected?:
++      | ((reason: unknown) => TResult2 | PromiseLike<TResult2>)
++      | undefined
++      | null,
++  ): PromiseLike<TResult1 | TResult2>;
+ }
+ 
+ /**
+@@ -1546,14 +1798,28 @@ interface Promise<T> {
+    * @param onrejected The callback to execute when the Promise is rejected.
+    * @returns A Promise for the completion of which ever callback is executed.
+    */
+-  then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
++  then<TResult1 = T, TResult2 = never>(
++    onfulfilled?:
++      | ((value: T) => TResult1 | PromiseLike<TResult1>)
++      | undefined
++      | null,
++    onrejected?:
++      | ((reason: unknown) => TResult2 | PromiseLike<TResult2>)
++      | undefined
++      | null,
++  ): Promise<TResult1 | TResult2>;
+ 
+   /**
+    * Attaches a callback for only the rejection of the Promise.
+    * @param onrejected The callback to execute when the Promise is rejected.
+    * @returns A Promise for the completion of the callback.
+    */
+-  catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
++  catch<TResult = never>(
++    onrejected?:
++      | ((reason: unknown) => TResult | PromiseLike<TResult>)
++      | undefined
++      | null,
++  ): Promise<T | TResult>;
+ }
+ 
+ /**
+@@ -1561,8 +1827,8 @@ interface Promise<T> {
+  */
+ type Awaited<T> = T extends null | undefined
+   ? T // special case for `null | undefined` when not in `--strictNullChecks` mode
+-  : T extends object & { then(onfulfilled: infer F, ...args: infer _): any } // `await` only unwraps object types with a callable `then`. Non-object types are not unwrapped
+-    ? F extends (value: infer V, ...args: infer _) => any // if the argument to `then` is callable, extracts the first argument
++  : T extends object & { then(onfulfilled: infer F, ...args: infer _): unknown } // `await` only unwraps object types with a callable `then`. Non-object types are not unwrapped
++    ? F extends (value: infer V, ...args: infer _) => unknown // if the argument to `then` is callable, extracts the first argument
+       ? Awaited<V> // recursively unwrap the value
+       : never // the argument to `then` was not callable
+     : T; // non-object or non-thenable
+@@ -1603,14 +1869,12 @@ type Pick<T, K extends keyof T> = {
+ /**
+  * Construct a type with a set of properties K of type T
+  */
+-type Record<K extends keyof any, T> = {
+-  [P in K]: T;
+-};
++type Record<K extends PropertyKey, T> = { readonly [P in K]: T };
+ 
+ /**
+  * Exclude from T those types that are assignable to U
+  */
+-type Exclude<T, U> = T extends U ? never : T;
++type Exclude<T, U extends T> = T extends U ? never : T;
+ 
+ /**
+  * Extract from T those types that are assignable to U
+@@ -1620,7 +1884,7 @@ type Extract<T, U> = T extends U ? T : never;
+ /**
+  * Construct a type with the properties of T except for those in type K.
+  */
+-type Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>;
++type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+ 
+ /**
+  * Exclude null and undefined from T
+@@ -1630,22 +1894,34 @@ type NonNullable<T> = T & {};
+ /**
+  * Obtain the parameters of a function type in a tuple
+  */
+-type Parameters<T extends (...args: any) => any> = T extends (...args: infer P) => any ? P : never;
++type Parameters<T extends (...args: readonly never[]) => unknown> = T extends (
++  ...args: infer P
++) => unknown
++  ? P
++  : never;
+ 
+ /**
+  * Obtain the parameters of a constructor function type in a tuple
+  */
+-type ConstructorParameters<T extends abstract new (...args: any) => any> = T extends abstract new (...args: infer P) => any ? P : never;
++type ConstructorParameters<
++  T extends abstract new (...args: readonly never[]) => unknown,
++> = T extends abstract new (...args: infer P) => unknown ? P : never;
+ 
+ /**
+  * Obtain the return type of a function type
+  */
+-type ReturnType<T extends (...args: any) => any> = T extends (...args: any) => infer R ? R : any;
++type ReturnType<T extends (...args: readonly never[]) => unknown> = T extends (
++  ...args: readonly never[]
++) => infer R
++  ? R
++  : unknown;
+ 
+ /**
+  * Obtain the return type of a constructor function type
+  */
+-type InstanceType<T extends abstract new (...args: any) => any> = T extends abstract new (...args: any) => infer R ? R : any;
++type InstanceType<
++  T extends abstract new (...args: readonly never[]) => unknown,
++> = T extends abstract new (...args: readonly never[]) => infer R ? R : unknown;
+ 
+ /**
+  * Convert string literal type to uppercase
+@@ -1681,7 +1957,7 @@ interface ThisType<T> {}
+  * Stores types to be used with WeakSet, WeakMap, WeakRef, and FinalizationRegistry
+  */
+ interface WeakKeyTypes {
+-  object: object;
++  readonly object: object;
+ }
+ 
+ type WeakKey = WeakKeyTypes[keyof WeakKeyTypes];
+@@ -1708,18 +1984,20 @@ interface ArrayBuffer {
+  * Allowed ArrayBuffer types for the buffer of an ArrayBufferView and related Typed Arrays.
+  */
+ interface ArrayBufferTypes {
+-  ArrayBuffer: ArrayBuffer;
++  readonly ArrayBuffer: ArrayBuffer;
+ }
+ type ArrayBufferLike = ArrayBufferTypes[keyof ArrayBufferTypes];
+ 
+ interface ArrayBufferConstructor {
+   readonly prototype: ArrayBuffer;
+   new (byteLength: number): ArrayBuffer;
+-  isView(arg: any): arg is ArrayBufferView;
++  isView(arg: unknown): arg is ArrayBufferView;
+ }
+-declare var ArrayBuffer: ArrayBufferConstructor;
++declare const ArrayBuffer: ArrayBufferConstructor;
+ 
+-interface ArrayBufferView<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
++interface ArrayBufferView<
++  TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
++> {
+   /**
+    * The ArrayBuffer instance referenced by the array.
+    */
+@@ -1761,7 +2039,7 @@ interface DataView<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * no alignment constraint; multi-byte values may be fetched from any offset.
+    * @param byteOffset The place in the buffer at which the value should be retrieved.
+    */
+-  getInt8(byteOffset: number): number;
++  getInt8(byteOffset: number): Int8;
+ 
+   /**
+    * Gets the Int16 value at the specified byte offset from the start of the view. There is
+@@ -1783,7 +2061,7 @@ interface DataView<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * no alignment constraint; multi-byte values may be fetched from any offset.
+    * @param byteOffset The place in the buffer at which the value should be retrieved.
+    */
+-  getUint8(byteOffset: number): number;
++  getUint8(byteOffset: number): Uint8;
+ 
+   /**
+    * Gets the Uint16 value at the specified byte offset from the start of the view. There is
+@@ -1822,7 +2100,7 @@ interface DataView<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param byteOffset The place in the buffer at which the value should be set.
+    * @param value The value to set.
+    */
+-  setInt8(byteOffset: number, value: number): void;
++  setInt8(byteOffset: number, value: Int8): void;
+ 
+   /**
+    * Stores an Int16 value at the specified byte offset from the start of the view.
+@@ -1845,7 +2123,7 @@ interface DataView<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param byteOffset The place in the buffer at which the value should be set.
+    * @param value The value to set.
+    */
+-  setUint8(byteOffset: number, value: number): void;
++  setUint8(byteOffset: number, value: Uint8): void;
+ 
+   /**
+    * Stores an Uint16 value at the specified byte offset from the start of the view.
+@@ -1865,9 +2143,17 @@ interface DataView<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+ }
+ interface DataViewConstructor {
+   readonly prototype: DataView<ArrayBufferLike>;
+-  new <TArrayBuffer extends ArrayBufferLike & { BYTES_PER_ELEMENT?: never }>(buffer: TArrayBuffer, byteOffset?: number, byteLength?: number): DataView<TArrayBuffer>;
++  new <
++    TArrayBuffer extends ArrayBufferLike & {
++      readonly BYTES_PER_ELEMENT?: never;
++    },
++  >(
++    buffer: TArrayBuffer,
++    byteOffset?: number,
++    byteLength?: number,
++  ): DataView<TArrayBuffer>;
+ }
+-declare var DataView: DataViewConstructor;
++declare const DataView: DataViewConstructor;
+ 
+ /**
+  * A typed array of 8-bit integer values. The contents are initialized to 0. If the requested
+@@ -1877,7 +2163,7 @@ interface Int8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+   /**
+    * The size in bytes of each element in the array.
+    */
+-  readonly BYTES_PER_ELEMENT: number;
++  readonly BYTES_PER_ELEMENT: 1;
+ 
+   /**
+    * The ArrayBuffer instance referenced by the array.
+@@ -1913,7 +2199,10 @@ interface Int8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  every(predicate: (value: number, index: number, array: this) => unknown, thisArg?: any): boolean;
++  every(
++    predicate: (value: Int8, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): boolean;
+ 
+   /**
+    * Changes all array elements from `start` to `end` index to a static `value` and returns the modified array
+@@ -1923,7 +2212,7 @@ interface Int8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param end index to stop filling the array at. If end is negative, it is treated as
+    * length+end.
+    */
+-  fill(value: number, start?: number, end?: number): this;
++  fill(value: Int8, start?: number, end?: number): this;
+ 
+   /**
+    * Returns the elements of an array that meet the condition specified in a callback function.
+@@ -1932,7 +2221,10 @@ interface Int8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  filter(predicate: (value: number, index: number, array: this) => any, thisArg?: any): Int8Array<ArrayBuffer>;
++  filter(
++    predicate: (value: Int8, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): Int8Array<ArrayBuffer>;
+ 
+   /**
+    * Returns the value of the first element in the array where predicate is true, and undefined
+@@ -1943,7 +2235,10 @@ interface Int8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  find(predicate: (value: number, index: number, obj: this) => boolean, thisArg?: any): number | undefined;
++  find(
++    predicate: (value: Int8, index: number, obj: this) => boolean,
++    thisArg?: unknown,
++  ): Int8 | undefined;
+ 
+   /**
+    * Returns the index of the first element in the array where predicate is true, and -1
+@@ -1954,7 +2249,10 @@ interface Int8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findIndex(predicate: (value: number, index: number, obj: this) => boolean, thisArg?: any): number;
++  findIndex(
++    predicate: (value: Int8, index: number, obj: this) => boolean,
++    thisArg?: unknown,
++  ): number;
+ 
+   /**
+    * Performs the specified action for each element in an array.
+@@ -1963,7 +2261,10 @@ interface Int8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the callbackfn function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  forEach(callbackfn: (value: number, index: number, array: this) => void, thisArg?: any): void;
++  forEach(
++    callbackfn: (value: Int8, index: number, array: this) => void,
++    thisArg?: unknown,
++  ): void;
+ 
+   /**
+    * Returns the index of the first occurrence of a value in an array.
+@@ -1971,7 +2272,7 @@ interface Int8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param fromIndex The array index at which to begin the search. If fromIndex is omitted, the
+    * search starts at index 0.
+    */
+-  indexOf(searchElement: number, fromIndex?: number): number;
++  indexOf(searchElement: Int8, fromIndex?: number): number;
+ 
+   /**
+    * Adds all the elements of an array separated by the specified separator string.
+@@ -1986,7 +2287,7 @@ interface Int8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param fromIndex The array index at which to begin the search. If fromIndex is omitted, the
+    * search starts at index 0.
+    */
+-  lastIndexOf(searchElement: number, fromIndex?: number): number;
++  lastIndexOf(searchElement: Int8, fromIndex?: number): number;
+ 
+   /**
+    * The length of the array.
+@@ -2001,7 +2302,10 @@ interface Int8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the callbackfn function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  map(callbackfn: (value: number, index: number, array: this) => number, thisArg?: any): Int8Array<ArrayBuffer>;
++  map(
++    callbackfn: (value: Int8, index: number, array: this) => Int8,
++    thisArg?: unknown,
++  ): Int8Array<ArrayBuffer>;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array. The return value of
+@@ -2013,8 +2317,23 @@ interface Int8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduce(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number): number;
+-  reduce(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number, initialValue: number): number;
++  reduce(
++    callbackfn: (
++      previousValue: Int8,
++      currentValue: Int8,
++      currentIndex: number,
++      array: this,
++    ) => Int8,
++  ): Int8;
++  reduce(
++    callbackfn: (
++      previousValue: Int8,
++      currentValue: Int8,
++      currentIndex: number,
++      array: this,
++    ) => Int8,
++    initialValue: Int8,
++  ): Int8;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array. The return value of
+@@ -2026,7 +2345,15 @@ interface Int8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduce<U>(callbackfn: (previousValue: U, currentValue: number, currentIndex: number, array: this) => U, initialValue: U): U;
++  reduce<U>(
++    callbackfn: (
++      previousValue: U,
++      currentValue: Int8,
++      currentIndex: number,
++      array: this,
++    ) => U,
++    initialValue: U,
++  ): U;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array, in descending order.
+@@ -2038,8 +2365,23 @@ interface Int8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an
+    * argument instead of an array value.
+    */
+-  reduceRight(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number): number;
+-  reduceRight(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number, initialValue: number): number;
++  reduceRight(
++    callbackfn: (
++      previousValue: Int8,
++      currentValue: Int8,
++      currentIndex: number,
++      array: this,
++    ) => Int8,
++  ): Int8;
++  reduceRight(
++    callbackfn: (
++      previousValue: Int8,
++      currentValue: Int8,
++      currentIndex: number,
++      array: this,
++    ) => Int8,
++    initialValue: Int8,
++  ): Int8;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array, in descending order.
+@@ -2051,7 +2393,15 @@ interface Int8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduceRight<U>(callbackfn: (previousValue: U, currentValue: number, currentIndex: number, array: this) => U, initialValue: U): U;
++  reduceRight<U>(
++    callbackfn: (
++      previousValue: U,
++      currentValue: Int8,
++      currentIndex: number,
++      array: this,
++    ) => U,
++    initialValue: U,
++  ): U;
+ 
+   /**
+    * Reverses the elements in an Array.
+@@ -2063,7 +2413,7 @@ interface Int8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param array A typed or untyped array of values to set.
+    * @param offset The index in the current array at which the values are to be written.
+    */
+-  set(array: ArrayLike<number>, offset?: number): void;
++  set(array: ArrayLike<Int8>, offset?: number): void;
+ 
+   /**
+    * Returns a section of an array.
+@@ -2080,18 +2430,21 @@ interface Int8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  some(predicate: (value: number, index: number, array: this) => unknown, thisArg?: any): boolean;
++  some(
++    predicate: (value: Int8, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): boolean;
+ 
+   /**
+    * Sorts an array.
+    * @param compareFn Function used to determine the order of the elements. It is expected to return
+-   * a negative value if first argument is less than second argument, zero if they're equal and a positive
++   * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
+    * value otherwise. If omitted, the elements are sorted in ascending order.
+    * ```ts
+    * [11,2,22,1].sort((a, b) => a - b)
+    * ```
+    */
+-  sort(compareFn?: (a: number, b: number) => number): this;
++  sort(compareFn?: (a: Int8, b: Int8) => number): this;
+ 
+   /**
+    * Gets a new Int8Array view of the ArrayBuffer store for this array, referencing the elements
+@@ -2114,32 +2467,40 @@ interface Int8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+   /** Returns the primitive value of the specified object. */
+   valueOf(): this;
+ 
+-  [index: number]: number;
++  [index: number]: Int8;
+ }
+ interface Int8ArrayConstructor {
+   readonly prototype: Int8Array<ArrayBufferLike>;
+   new (length: number): Int8Array<ArrayBuffer>;
+-  new (array: ArrayLike<number>): Int8Array<ArrayBuffer>;
+-  new <TArrayBuffer extends ArrayBufferLike = ArrayBuffer>(buffer: TArrayBuffer, byteOffset?: number, length?: number): Int8Array<TArrayBuffer>;
+-  new (buffer: ArrayBuffer, byteOffset?: number, length?: number): Int8Array<ArrayBuffer>;
+-  new (array: ArrayLike<number> | ArrayBuffer): Int8Array<ArrayBuffer>;
++  new (array: ArrayLike<Int8>): Int8Array<ArrayBuffer>;
++  new <TArrayBuffer extends ArrayBufferLike = ArrayBuffer>(
++    buffer: TArrayBuffer,
++    byteOffset?: number,
++    length?: number,
++  ): Int8Array<TArrayBuffer>;
++  new (
++    buffer: ArrayBuffer,
++    byteOffset?: number,
++    length?: number,
++  ): Int8Array<ArrayBuffer>;
++  new (array: ArrayLike<Int8> | ArrayBuffer): Int8Array<ArrayBuffer>;
+ 
+   /**
+    * The size in bytes of each element in the array.
+    */
+-  readonly BYTES_PER_ELEMENT: number;
++  readonly BYTES_PER_ELEMENT: 1;
+ 
+   /**
+    * Returns a new array from a set of elements.
+    * @param items A set of elements to include in the new array object.
+    */
+-  of(...items: number[]): Int8Array<ArrayBuffer>;
++  of(...items: readonly Int8[]): Int8Array<ArrayBuffer>;
+ 
+   /**
+    * Creates an array from an array-like or iterable object.
+    * @param arrayLike An array-like object to convert to an array.
+    */
+-  from(arrayLike: ArrayLike<number>): Int8Array<ArrayBuffer>;
++  from(arrayLike: ArrayLike<Int8>): Int8Array<ArrayBuffer>;
+ 
+   /**
+    * Creates an array from an array-like or iterable object.
+@@ -2147,9 +2508,13 @@ interface Int8ArrayConstructor {
+    * @param mapfn A mapping function to call on every element of the array.
+    * @param thisArg Value of 'this' used to invoke the mapfn.
+    */
+-  from<T>(arrayLike: ArrayLike<T>, mapfn: (v: T, k: number) => number, thisArg?: any): Int8Array<ArrayBuffer>;
++  from<T>(
++    arrayLike: ArrayLike<T>,
++    mapfn: (v: T, k: number) => Int8,
++    thisArg?: unknown,
++  ): Int8Array<ArrayBuffer>;
+ }
+-declare var Int8Array: Int8ArrayConstructor;
++declare const Int8Array: Int8ArrayConstructor;
+ 
+ /**
+  * A typed array of 8-bit unsigned integer values. The contents are initialized to 0. If the
+@@ -2159,7 +2524,7 @@ interface Uint8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+   /**
+    * The size in bytes of each element in the array.
+    */
+-  readonly BYTES_PER_ELEMENT: number;
++  readonly BYTES_PER_ELEMENT: 1;
+ 
+   /**
+    * The ArrayBuffer instance referenced by the array.
+@@ -2195,7 +2560,10 @@ interface Uint8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  every(predicate: (value: number, index: number, array: this) => unknown, thisArg?: any): boolean;
++  every(
++    predicate: (value: Uint8, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): boolean;
+ 
+   /**
+    * Changes all array elements from `start` to `end` index to a static `value` and returns the modified array
+@@ -2205,7 +2573,7 @@ interface Uint8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param end index to stop filling the array at. If end is negative, it is treated as
+    * length+end.
+    */
+-  fill(value: number, start?: number, end?: number): this;
++  fill(value: Uint8, start?: number, end?: number): this;
+ 
+   /**
+    * Returns the elements of an array that meet the condition specified in a callback function.
+@@ -2214,7 +2582,10 @@ interface Uint8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  filter(predicate: (value: number, index: number, array: this) => any, thisArg?: any): Uint8Array<ArrayBuffer>;
++  filter(
++    predicate: (value: Uint8, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): Uint8Array<ArrayBuffer>;
+ 
+   /**
+    * Returns the value of the first element in the array where predicate is true, and undefined
+@@ -2225,7 +2596,10 @@ interface Uint8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  find(predicate: (value: number, index: number, obj: this) => boolean, thisArg?: any): number | undefined;
++  find(
++    predicate: (value: Uint8, index: number, obj: this) => boolean,
++    thisArg?: unknown,
++  ): Uint8 | undefined;
+ 
+   /**
+    * Returns the index of the first element in the array where predicate is true, and -1
+@@ -2236,7 +2610,10 @@ interface Uint8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findIndex(predicate: (value: number, index: number, obj: this) => boolean, thisArg?: any): number;
++  findIndex(
++    predicate: (value: Uint8, index: number, obj: this) => boolean,
++    thisArg?: unknown,
++  ): number;
+ 
+   /**
+    * Performs the specified action for each element in an array.
+@@ -2245,7 +2622,10 @@ interface Uint8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the callbackfn function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  forEach(callbackfn: (value: number, index: number, array: this) => void, thisArg?: any): void;
++  forEach(
++    callbackfn: (value: Uint8, index: number, array: this) => void,
++    thisArg?: unknown,
++  ): void;
+ 
+   /**
+    * Returns the index of the first occurrence of a value in an array.
+@@ -2253,7 +2633,7 @@ interface Uint8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param fromIndex The array index at which to begin the search. If fromIndex is omitted, the
+    * search starts at index 0.
+    */
+-  indexOf(searchElement: number, fromIndex?: number): number;
++  indexOf(searchElement: Uint8, fromIndex?: number): number;
+ 
+   /**
+    * Adds all the elements of an array separated by the specified separator string.
+@@ -2268,7 +2648,7 @@ interface Uint8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param fromIndex The array index at which to begin the search. If fromIndex is omitted, the
+    * search starts at index 0.
+    */
+-  lastIndexOf(searchElement: number, fromIndex?: number): number;
++  lastIndexOf(searchElement: Uint8, fromIndex?: number): number;
+ 
+   /**
+    * The length of the array.
+@@ -2283,7 +2663,10 @@ interface Uint8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the callbackfn function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  map(callbackfn: (value: number, index: number, array: this) => number, thisArg?: any): Uint8Array<ArrayBuffer>;
++  map(
++    callbackfn: (value: Uint8, index: number, array: this) => Uint8,
++    thisArg?: unknown,
++  ): Uint8Array<ArrayBuffer>;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array. The return value of
+@@ -2295,8 +2678,23 @@ interface Uint8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduce(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number): number;
+-  reduce(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number, initialValue: number): number;
++  reduce(
++    callbackfn: (
++      previousValue: Uint8,
++      currentValue: Uint8,
++      currentIndex: number,
++      array: this,
++    ) => Uint8,
++  ): Uint8;
++  reduce(
++    callbackfn: (
++      previousValue: Uint8,
++      currentValue: Uint8,
++      currentIndex: number,
++      array: this,
++    ) => Uint8,
++    initialValue: Uint8,
++  ): Uint8;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array. The return value of
+@@ -2308,7 +2706,15 @@ interface Uint8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduce<U>(callbackfn: (previousValue: U, currentValue: number, currentIndex: number, array: this) => U, initialValue: U): U;
++  reduce<U>(
++    callbackfn: (
++      previousValue: U,
++      currentValue: Uint8,
++      currentIndex: number,
++      array: this,
++    ) => U,
++    initialValue: U,
++  ): U;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array, in descending order.
+@@ -2320,8 +2726,23 @@ interface Uint8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an
+    * argument instead of an array value.
+    */
+-  reduceRight(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number): number;
+-  reduceRight(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number, initialValue: number): number;
++  reduceRight(
++    callbackfn: (
++      previousValue: Uint8,
++      currentValue: Uint8,
++      currentIndex: number,
++      array: this,
++    ) => Uint8,
++  ): Uint8;
++  reduceRight(
++    callbackfn: (
++      previousValue: Uint8,
++      currentValue: Uint8,
++      currentIndex: number,
++      array: this,
++    ) => Uint8,
++    initialValue: Uint8,
++  ): Uint8;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array, in descending order.
+@@ -2333,7 +2754,15 @@ interface Uint8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduceRight<U>(callbackfn: (previousValue: U, currentValue: number, currentIndex: number, array: this) => U, initialValue: U): U;
++  reduceRight<U>(
++    callbackfn: (
++      previousValue: U,
++      currentValue: Uint8,
++      currentIndex: number,
++      array: this,
++    ) => U,
++    initialValue: U,
++  ): U;
+ 
+   /**
+    * Reverses the elements in an Array.
+@@ -2345,7 +2774,7 @@ interface Uint8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param array A typed or untyped array of values to set.
+    * @param offset The index in the current array at which the values are to be written.
+    */
+-  set(array: ArrayLike<number>, offset?: number): void;
++  set(array: ArrayLike<Uint8>, offset?: number): void;
+ 
+   /**
+    * Returns a section of an array.
+@@ -2362,18 +2791,21 @@ interface Uint8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  some(predicate: (value: number, index: number, array: this) => unknown, thisArg?: any): boolean;
++  some(
++    predicate: (value: Uint8, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): boolean;
+ 
+   /**
+    * Sorts an array.
+    * @param compareFn Function used to determine the order of the elements. It is expected to return
+-   * a negative value if first argument is less than second argument, zero if they're equal and a positive
++   * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
+    * value otherwise. If omitted, the elements are sorted in ascending order.
+    * ```ts
+    * [11,2,22,1].sort((a, b) => a - b)
+    * ```
+    */
+-  sort(compareFn?: (a: number, b: number) => number): this;
++  sort(compareFn?: (a: Uint8, b: Uint8) => number): this;
+ 
+   /**
+    * Gets a new Uint8Array view of the ArrayBuffer store for this array, referencing the elements
+@@ -2396,32 +2828,40 @@ interface Uint8Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+   /** Returns the primitive value of the specified object. */
+   valueOf(): this;
+ 
+-  [index: number]: number;
++  [index: number]: Uint8;
+ }
+ interface Uint8ArrayConstructor {
+   readonly prototype: Uint8Array<ArrayBufferLike>;
+   new (length: number): Uint8Array<ArrayBuffer>;
+-  new (array: ArrayLike<number>): Uint8Array<ArrayBuffer>;
+-  new <TArrayBuffer extends ArrayBufferLike = ArrayBuffer>(buffer: TArrayBuffer, byteOffset?: number, length?: number): Uint8Array<TArrayBuffer>;
+-  new (buffer: ArrayBuffer, byteOffset?: number, length?: number): Uint8Array<ArrayBuffer>;
+-  new (array: ArrayLike<number> | ArrayBuffer): Uint8Array<ArrayBuffer>;
++  new (array: ArrayLike<Uint8>): Uint8Array<ArrayBuffer>;
++  new <TArrayBuffer extends ArrayBufferLike = ArrayBuffer>(
++    buffer: TArrayBuffer,
++    byteOffset?: number,
++    length?: number,
++  ): Uint8Array<TArrayBuffer>;
++  new (
++    buffer: ArrayBuffer,
++    byteOffset?: number,
++    length?: number,
++  ): Uint8Array<ArrayBuffer>;
++  new (array: ArrayLike<Uint8> | ArrayBuffer): Uint8Array<ArrayBuffer>;
+ 
+   /**
+    * The size in bytes of each element in the array.
+    */
+-  readonly BYTES_PER_ELEMENT: number;
++  readonly BYTES_PER_ELEMENT: 1;
+ 
+   /**
+    * Returns a new array from a set of elements.
+    * @param items A set of elements to include in the new array object.
+    */
+-  of(...items: number[]): Uint8Array<ArrayBuffer>;
++  of(...items: readonly Uint8[]): Uint8Array<ArrayBuffer>;
+ 
+   /**
+    * Creates an array from an array-like or iterable object.
+    * @param arrayLike An array-like object to convert to an array.
+    */
+-  from(arrayLike: ArrayLike<number>): Uint8Array<ArrayBuffer>;
++  from(arrayLike: ArrayLike<Uint8>): Uint8Array<ArrayBuffer>;
+ 
+   /**
+    * Creates an array from an array-like or iterable object.
+@@ -2429,19 +2869,25 @@ interface Uint8ArrayConstructor {
+    * @param mapfn A mapping function to call on every element of the array.
+    * @param thisArg Value of 'this' used to invoke the mapfn.
+    */
+-  from<T>(arrayLike: ArrayLike<T>, mapfn: (v: T, k: number) => number, thisArg?: any): Uint8Array<ArrayBuffer>;
++  from<T>(
++    arrayLike: ArrayLike<T>,
++    mapfn: (v: T, k: number) => Uint8,
++    thisArg?: unknown,
++  ): Uint8Array<ArrayBuffer>;
+ }
+-declare var Uint8Array: Uint8ArrayConstructor;
++declare const Uint8Array: Uint8ArrayConstructor;
+ 
+ /**
+  * A typed array of 8-bit unsigned integer (clamped) values. The contents are initialized to 0.
+  * If the requested number of bytes could not be allocated an exception is raised.
+  */
+-interface Uint8ClampedArray<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
++interface Uint8ClampedArray<
++  TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
++> {
+   /**
+    * The size in bytes of each element in the array.
+    */
+-  readonly BYTES_PER_ELEMENT: number;
++  readonly BYTES_PER_ELEMENT: 1;
+ 
+   /**
+    * The ArrayBuffer instance referenced by the array.
+@@ -2477,7 +2923,10 @@ interface Uint8ClampedArray<TArrayBuffer extends ArrayBufferLike = ArrayBufferLi
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  every(predicate: (value: number, index: number, array: this) => unknown, thisArg?: any): boolean;
++  every(
++    predicate: (value: Uint8, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): boolean;
+ 
+   /**
+    * Changes all array elements from `start` to `end` index to a static `value` and returns the modified array
+@@ -2487,7 +2936,7 @@ interface Uint8ClampedArray<TArrayBuffer extends ArrayBufferLike = ArrayBufferLi
+    * @param end index to stop filling the array at. If end is negative, it is treated as
+    * length+end.
+    */
+-  fill(value: number, start?: number, end?: number): this;
++  fill(value: Uint8, start?: number, end?: number): this;
+ 
+   /**
+    * Returns the elements of an array that meet the condition specified in a callback function.
+@@ -2496,7 +2945,10 @@ interface Uint8ClampedArray<TArrayBuffer extends ArrayBufferLike = ArrayBufferLi
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  filter(predicate: (value: number, index: number, array: this) => any, thisArg?: any): Uint8ClampedArray<ArrayBuffer>;
++  filter(
++    predicate: (value: Uint8, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): Uint8ClampedArray<ArrayBuffer>;
+ 
+   /**
+    * Returns the value of the first element in the array where predicate is true, and undefined
+@@ -2507,7 +2959,10 @@ interface Uint8ClampedArray<TArrayBuffer extends ArrayBufferLike = ArrayBufferLi
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  find(predicate: (value: number, index: number, obj: this) => boolean, thisArg?: any): number | undefined;
++  find(
++    predicate: (value: Uint8, index: number, obj: this) => boolean,
++    thisArg?: unknown,
++  ): Uint8 | undefined;
+ 
+   /**
+    * Returns the index of the first element in the array where predicate is true, and -1
+@@ -2518,7 +2973,10 @@ interface Uint8ClampedArray<TArrayBuffer extends ArrayBufferLike = ArrayBufferLi
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findIndex(predicate: (value: number, index: number, obj: this) => boolean, thisArg?: any): number;
++  findIndex(
++    predicate: (value: Uint8, index: number, obj: this) => boolean,
++    thisArg?: unknown,
++  ): number;
+ 
+   /**
+    * Performs the specified action for each element in an array.
+@@ -2527,7 +2985,10 @@ interface Uint8ClampedArray<TArrayBuffer extends ArrayBufferLike = ArrayBufferLi
+    * @param thisArg An object to which the this keyword can refer in the callbackfn function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  forEach(callbackfn: (value: number, index: number, array: this) => void, thisArg?: any): void;
++  forEach(
++    callbackfn: (value: Uint8, index: number, array: this) => void,
++    thisArg?: unknown,
++  ): void;
+ 
+   /**
+    * Returns the index of the first occurrence of a value in an array.
+@@ -2535,7 +2996,7 @@ interface Uint8ClampedArray<TArrayBuffer extends ArrayBufferLike = ArrayBufferLi
+    * @param fromIndex The array index at which to begin the search. If fromIndex is omitted, the
+    * search starts at index 0.
+    */
+-  indexOf(searchElement: number, fromIndex?: number): number;
++  indexOf(searchElement: Uint8, fromIndex?: number): number;
+ 
+   /**
+    * Adds all the elements of an array separated by the specified separator string.
+@@ -2550,7 +3011,7 @@ interface Uint8ClampedArray<TArrayBuffer extends ArrayBufferLike = ArrayBufferLi
+    * @param fromIndex The array index at which to begin the search. If fromIndex is omitted, the
+    * search starts at index 0.
+    */
+-  lastIndexOf(searchElement: number, fromIndex?: number): number;
++  lastIndexOf(searchElement: Uint8, fromIndex?: number): number;
+ 
+   /**
+    * The length of the array.
+@@ -2565,7 +3026,10 @@ interface Uint8ClampedArray<TArrayBuffer extends ArrayBufferLike = ArrayBufferLi
+    * @param thisArg An object to which the this keyword can refer in the callbackfn function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  map(callbackfn: (value: number, index: number, array: this) => number, thisArg?: any): Uint8ClampedArray<ArrayBuffer>;
++  map(
++    callbackfn: (value: Uint8, index: number, array: this) => Uint8,
++    thisArg?: unknown,
++  ): Uint8ClampedArray<ArrayBuffer>;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array. The return value of
+@@ -2577,8 +3041,23 @@ interface Uint8ClampedArray<TArrayBuffer extends ArrayBufferLike = ArrayBufferLi
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduce(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number): number;
+-  reduce(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number, initialValue: number): number;
++  reduce(
++    callbackfn: (
++      previousValue: Uint8,
++      currentValue: Uint8,
++      currentIndex: number,
++      array: this,
++    ) => Uint8,
++  ): Uint8;
++  reduce(
++    callbackfn: (
++      previousValue: Uint8,
++      currentValue: Uint8,
++      currentIndex: number,
++      array: this,
++    ) => Uint8,
++    initialValue: Uint8,
++  ): Uint8;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array. The return value of
+@@ -2590,7 +3069,15 @@ interface Uint8ClampedArray<TArrayBuffer extends ArrayBufferLike = ArrayBufferLi
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduce<U>(callbackfn: (previousValue: U, currentValue: number, currentIndex: number, array: this) => U, initialValue: U): U;
++  reduce<U>(
++    callbackfn: (
++      previousValue: U,
++      currentValue: Uint8,
++      currentIndex: number,
++      array: this,
++    ) => U,
++    initialValue: U,
++  ): U;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array, in descending order.
+@@ -2602,8 +3089,23 @@ interface Uint8ClampedArray<TArrayBuffer extends ArrayBufferLike = ArrayBufferLi
+    * the accumulation. The first call to the callbackfn function provides this value as an
+    * argument instead of an array value.
+    */
+-  reduceRight(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number): number;
+-  reduceRight(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number, initialValue: number): number;
++  reduceRight(
++    callbackfn: (
++      previousValue: Uint8,
++      currentValue: Uint8,
++      currentIndex: number,
++      array: this,
++    ) => Uint8,
++  ): Uint8;
++  reduceRight(
++    callbackfn: (
++      previousValue: Uint8,
++      currentValue: Uint8,
++      currentIndex: number,
++      array: this,
++    ) => Uint8,
++    initialValue: Uint8,
++  ): Uint8;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array, in descending order.
+@@ -2615,7 +3117,15 @@ interface Uint8ClampedArray<TArrayBuffer extends ArrayBufferLike = ArrayBufferLi
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduceRight<U>(callbackfn: (previousValue: U, currentValue: number, currentIndex: number, array: this) => U, initialValue: U): U;
++  reduceRight<U>(
++    callbackfn: (
++      previousValue: U,
++      currentValue: Uint8,
++      currentIndex: number,
++      array: this,
++    ) => U,
++    initialValue: U,
++  ): U;
+ 
+   /**
+    * Reverses the elements in an Array.
+@@ -2627,7 +3137,7 @@ interface Uint8ClampedArray<TArrayBuffer extends ArrayBufferLike = ArrayBufferLi
+    * @param array A typed or untyped array of values to set.
+    * @param offset The index in the current array at which the values are to be written.
+    */
+-  set(array: ArrayLike<number>, offset?: number): void;
++  set(array: ArrayLike<Uint8>, offset?: number): void;
+ 
+   /**
+    * Returns a section of an array.
+@@ -2644,18 +3154,21 @@ interface Uint8ClampedArray<TArrayBuffer extends ArrayBufferLike = ArrayBufferLi
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  some(predicate: (value: number, index: number, array: this) => unknown, thisArg?: any): boolean;
++  some(
++    predicate: (value: Uint8, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): boolean;
+ 
+   /**
+    * Sorts an array.
+    * @param compareFn Function used to determine the order of the elements. It is expected to return
+-   * a negative value if first argument is less than second argument, zero if they're equal and a positive
++   * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
+    * value otherwise. If omitted, the elements are sorted in ascending order.
+    * ```ts
+    * [11,2,22,1].sort((a, b) => a - b)
+    * ```
+    */
+-  sort(compareFn?: (a: number, b: number) => number): this;
++  sort(compareFn?: (a: Uint8, b: Uint8) => number): this;
+ 
+   /**
+    * Gets a new Uint8ClampedArray view of the ArrayBuffer store for this array, referencing the elements
+@@ -2678,32 +3191,40 @@ interface Uint8ClampedArray<TArrayBuffer extends ArrayBufferLike = ArrayBufferLi
+   /** Returns the primitive value of the specified object. */
+   valueOf(): this;
+ 
+-  [index: number]: number;
++  [index: number]: Uint8;
+ }
+ interface Uint8ClampedArrayConstructor {
+   readonly prototype: Uint8ClampedArray<ArrayBufferLike>;
+   new (length: number): Uint8ClampedArray<ArrayBuffer>;
+-  new (array: ArrayLike<number>): Uint8ClampedArray<ArrayBuffer>;
+-  new <TArrayBuffer extends ArrayBufferLike = ArrayBuffer>(buffer: TArrayBuffer, byteOffset?: number, length?: number): Uint8ClampedArray<TArrayBuffer>;
+-  new (buffer: ArrayBuffer, byteOffset?: number, length?: number): Uint8ClampedArray<ArrayBuffer>;
+-  new (array: ArrayLike<number> | ArrayBuffer): Uint8ClampedArray<ArrayBuffer>;
++  new (array: ArrayLike<Uint8>): Uint8ClampedArray<ArrayBuffer>;
++  new <TArrayBuffer extends ArrayBufferLike = ArrayBuffer>(
++    buffer: TArrayBuffer,
++    byteOffset?: number,
++    length?: number,
++  ): Uint8ClampedArray<TArrayBuffer>;
++  new (
++    buffer: ArrayBuffer,
++    byteOffset?: number,
++    length?: number,
++  ): Uint8ClampedArray<ArrayBuffer>;
++  new (array: ArrayLike<Uint8> | ArrayBuffer): Uint8ClampedArray<ArrayBuffer>;
+ 
+   /**
+    * The size in bytes of each element in the array.
+    */
+-  readonly BYTES_PER_ELEMENT: number;
++  readonly BYTES_PER_ELEMENT: 1;
+ 
+   /**
+    * Returns a new array from a set of elements.
+    * @param items A set of elements to include in the new array object.
+    */
+-  of(...items: number[]): Uint8ClampedArray<ArrayBuffer>;
++  of(...items: readonly Uint8[]): Uint8ClampedArray<ArrayBuffer>;
+ 
+   /**
+    * Creates an array from an array-like or iterable object.
+    * @param arrayLike An array-like object to convert to an array.
+    */
+-  from(arrayLike: ArrayLike<number>): Uint8ClampedArray<ArrayBuffer>;
++  from(arrayLike: ArrayLike<Uint8>): Uint8ClampedArray<ArrayBuffer>;
+ 
+   /**
+    * Creates an array from an array-like or iterable object.
+@@ -2711,9 +3232,13 @@ interface Uint8ClampedArrayConstructor {
+    * @param mapfn A mapping function to call on every element of the array.
+    * @param thisArg Value of 'this' used to invoke the mapfn.
+    */
+-  from<T>(arrayLike: ArrayLike<T>, mapfn: (v: T, k: number) => number, thisArg?: any): Uint8ClampedArray<ArrayBuffer>;
++  from<T>(
++    arrayLike: ArrayLike<T>,
++    mapfn: (v: T, k: number) => Uint8,
++    thisArg?: unknown,
++  ): Uint8ClampedArray<ArrayBuffer>;
+ }
+-declare var Uint8ClampedArray: Uint8ClampedArrayConstructor;
++declare const Uint8ClampedArray: Uint8ClampedArrayConstructor;
+ 
+ /**
+  * A typed array of 16-bit signed integer values. The contents are initialized to 0. If the
+@@ -2723,7 +3248,7 @@ interface Int16Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+   /**
+    * The size in bytes of each element in the array.
+    */
+-  readonly BYTES_PER_ELEMENT: number;
++  readonly BYTES_PER_ELEMENT: 2;
+ 
+   /**
+    * The ArrayBuffer instance referenced by the array.
+@@ -2759,7 +3284,10 @@ interface Int16Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  every(predicate: (value: number, index: number, array: this) => unknown, thisArg?: any): boolean;
++  every(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): boolean;
+ 
+   /**
+    * Changes all array elements from `start` to `end` index to a static `value` and returns the modified array
+@@ -2778,7 +3306,10 @@ interface Int16Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  filter(predicate: (value: number, index: number, array: this) => any, thisArg?: any): Int16Array<ArrayBuffer>;
++  filter(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): Int16Array<ArrayBuffer>;
+ 
+   /**
+    * Returns the value of the first element in the array where predicate is true, and undefined
+@@ -2789,7 +3320,10 @@ interface Int16Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  find(predicate: (value: number, index: number, obj: this) => boolean, thisArg?: any): number | undefined;
++  find(
++    predicate: (value: number, index: number, obj: this) => boolean,
++    thisArg?: unknown,
++  ): number | undefined;
+ 
+   /**
+    * Returns the index of the first element in the array where predicate is true, and -1
+@@ -2800,7 +3334,10 @@ interface Int16Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findIndex(predicate: (value: number, index: number, obj: this) => boolean, thisArg?: any): number;
++  findIndex(
++    predicate: (value: number, index: number, obj: this) => boolean,
++    thisArg?: unknown,
++  ): number;
+ 
+   /**
+    * Performs the specified action for each element in an array.
+@@ -2809,7 +3346,11 @@ interface Int16Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the callbackfn function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  forEach(callbackfn: (value: number, index: number, array: this) => void, thisArg?: any): void;
++  forEach(
++    callbackfn: (value: number, index: number, array: this) => void,
++    thisArg?: unknown,
++  ): void;
++
+   /**
+    * Returns the index of the first occurrence of a value in an array.
+    * @param searchElement The value to locate in the array.
+@@ -2846,7 +3387,10 @@ interface Int16Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the callbackfn function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  map(callbackfn: (value: number, index: number, array: this) => number, thisArg?: any): Int16Array<ArrayBuffer>;
++  map(
++    callbackfn: (value: number, index: number, array: this) => number,
++    thisArg?: unknown,
++  ): Int16Array<ArrayBuffer>;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array. The return value of
+@@ -2858,8 +3402,23 @@ interface Int16Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduce(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number): number;
+-  reduce(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number, initialValue: number): number;
++  reduce(
++    callbackfn: (
++      previousValue: number,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => number,
++  ): number;
++  reduce(
++    callbackfn: (
++      previousValue: number,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => number,
++    initialValue: number,
++  ): number;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array. The return value of
+@@ -2871,7 +3430,15 @@ interface Int16Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduce<U>(callbackfn: (previousValue: U, currentValue: number, currentIndex: number, array: this) => U, initialValue: U): U;
++  reduce<U>(
++    callbackfn: (
++      previousValue: U,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => U,
++    initialValue: U,
++  ): U;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array, in descending order.
+@@ -2883,8 +3450,23 @@ interface Int16Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an
+    * argument instead of an array value.
+    */
+-  reduceRight(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number): number;
+-  reduceRight(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number, initialValue: number): number;
++  reduceRight(
++    callbackfn: (
++      previousValue: number,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => number,
++  ): number;
++  reduceRight(
++    callbackfn: (
++      previousValue: number,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => number,
++    initialValue: number,
++  ): number;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array, in descending order.
+@@ -2896,7 +3478,15 @@ interface Int16Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduceRight<U>(callbackfn: (previousValue: U, currentValue: number, currentIndex: number, array: this) => U, initialValue: U): U;
++  reduceRight<U>(
++    callbackfn: (
++      previousValue: U,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => U,
++    initialValue: U,
++  ): U;
+ 
+   /**
+    * Reverses the elements in an Array.
+@@ -2925,12 +3515,15 @@ interface Int16Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  some(predicate: (value: number, index: number, array: this) => unknown, thisArg?: any): boolean;
++  some(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): boolean;
+ 
+   /**
+    * Sorts an array.
+    * @param compareFn Function used to determine the order of the elements. It is expected to return
+-   * a negative value if first argument is less than second argument, zero if they're equal and a positive
++   * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
+    * value otherwise. If omitted, the elements are sorted in ascending order.
+    * ```ts
+    * [11,2,22,1].sort((a, b) => a - b)
+@@ -2965,20 +3558,28 @@ interface Int16ArrayConstructor {
+   readonly prototype: Int16Array<ArrayBufferLike>;
+   new (length: number): Int16Array<ArrayBuffer>;
+   new (array: ArrayLike<number>): Int16Array<ArrayBuffer>;
+-  new <TArrayBuffer extends ArrayBufferLike = ArrayBuffer>(buffer: TArrayBuffer, byteOffset?: number, length?: number): Int16Array<TArrayBuffer>;
+-  new (buffer: ArrayBuffer, byteOffset?: number, length?: number): Int16Array<ArrayBuffer>;
++  new <TArrayBuffer extends ArrayBufferLike = ArrayBuffer>(
++    buffer: TArrayBuffer,
++    byteOffset?: number,
++    length?: number,
++  ): Int16Array<TArrayBuffer>;
++  new (
++    buffer: ArrayBuffer,
++    byteOffset?: number,
++    length?: number,
++  ): Int16Array<ArrayBuffer>;
+   new (array: ArrayLike<number> | ArrayBuffer): Int16Array<ArrayBuffer>;
+ 
+   /**
+    * The size in bytes of each element in the array.
+    */
+-  readonly BYTES_PER_ELEMENT: number;
++  readonly BYTES_PER_ELEMENT: 2;
+ 
+   /**
+    * Returns a new array from a set of elements.
+    * @param items A set of elements to include in the new array object.
+    */
+-  of(...items: number[]): Int16Array<ArrayBuffer>;
++  of(...items: readonly number[]): Int16Array<ArrayBuffer>;
+ 
+   /**
+    * Creates an array from an array-like or iterable object.
+@@ -2992,9 +3593,13 @@ interface Int16ArrayConstructor {
+    * @param mapfn A mapping function to call on every element of the array.
+    * @param thisArg Value of 'this' used to invoke the mapfn.
+    */
+-  from<T>(arrayLike: ArrayLike<T>, mapfn: (v: T, k: number) => number, thisArg?: any): Int16Array<ArrayBuffer>;
++  from<T>(
++    arrayLike: ArrayLike<T>,
++    mapfn: (v: T, k: number) => number,
++    thisArg?: unknown,
++  ): Int16Array<ArrayBuffer>;
+ }
+-declare var Int16Array: Int16ArrayConstructor;
++declare const Int16Array: Int16ArrayConstructor;
+ 
+ /**
+  * A typed array of 16-bit unsigned integer values. The contents are initialized to 0. If the
+@@ -3004,7 +3609,7 @@ interface Uint16Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+   /**
+    * The size in bytes of each element in the array.
+    */
+-  readonly BYTES_PER_ELEMENT: number;
++  readonly BYTES_PER_ELEMENT: 2;
+ 
+   /**
+    * The ArrayBuffer instance referenced by the array.
+@@ -3040,7 +3645,10 @@ interface Uint16Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  every(predicate: (value: number, index: number, array: this) => unknown, thisArg?: any): boolean;
++  every(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): boolean;
+ 
+   /**
+    * Changes all array elements from `start` to `end` index to a static `value` and returns the modified array
+@@ -3059,7 +3667,10 @@ interface Uint16Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  filter(predicate: (value: number, index: number, array: this) => any, thisArg?: any): Uint16Array<ArrayBuffer>;
++  filter(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): Uint16Array<ArrayBuffer>;
+ 
+   /**
+    * Returns the value of the first element in the array where predicate is true, and undefined
+@@ -3070,7 +3681,10 @@ interface Uint16Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  find(predicate: (value: number, index: number, obj: this) => boolean, thisArg?: any): number | undefined;
++  find(
++    predicate: (value: number, index: number, obj: this) => boolean,
++    thisArg?: unknown,
++  ): number | undefined;
+ 
+   /**
+    * Returns the index of the first element in the array where predicate is true, and -1
+@@ -3081,7 +3695,10 @@ interface Uint16Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findIndex(predicate: (value: number, index: number, obj: this) => boolean, thisArg?: any): number;
++  findIndex(
++    predicate: (value: number, index: number, obj: this) => boolean,
++    thisArg?: unknown,
++  ): number;
+ 
+   /**
+    * Performs the specified action for each element in an array.
+@@ -3090,7 +3707,10 @@ interface Uint16Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the callbackfn function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  forEach(callbackfn: (value: number, index: number, array: this) => void, thisArg?: any): void;
++  forEach(
++    callbackfn: (value: number, index: number, array: this) => void,
++    thisArg?: unknown,
++  ): void;
+ 
+   /**
+    * Returns the index of the first occurrence of a value in an array.
+@@ -3128,7 +3748,10 @@ interface Uint16Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the callbackfn function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  map(callbackfn: (value: number, index: number, array: this) => number, thisArg?: any): Uint16Array<ArrayBuffer>;
++  map(
++    callbackfn: (value: number, index: number, array: this) => number,
++    thisArg?: unknown,
++  ): Uint16Array<ArrayBuffer>;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array. The return value of
+@@ -3140,8 +3763,23 @@ interface Uint16Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduce(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number): number;
+-  reduce(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number, initialValue: number): number;
++  reduce(
++    callbackfn: (
++      previousValue: number,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => number,
++  ): number;
++  reduce(
++    callbackfn: (
++      previousValue: number,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => number,
++    initialValue: number,
++  ): number;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array. The return value of
+@@ -3153,7 +3791,15 @@ interface Uint16Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduce<U>(callbackfn: (previousValue: U, currentValue: number, currentIndex: number, array: this) => U, initialValue: U): U;
++  reduce<U>(
++    callbackfn: (
++      previousValue: U,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => U,
++    initialValue: U,
++  ): U;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array, in descending order.
+@@ -3165,8 +3811,23 @@ interface Uint16Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an
+    * argument instead of an array value.
+    */
+-  reduceRight(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number): number;
+-  reduceRight(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number, initialValue: number): number;
++  reduceRight(
++    callbackfn: (
++      previousValue: number,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => number,
++  ): number;
++  reduceRight(
++    callbackfn: (
++      previousValue: number,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => number,
++    initialValue: number,
++  ): number;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array, in descending order.
+@@ -3178,7 +3839,15 @@ interface Uint16Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduceRight<U>(callbackfn: (previousValue: U, currentValue: number, currentIndex: number, array: this) => U, initialValue: U): U;
++  reduceRight<U>(
++    callbackfn: (
++      previousValue: U,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => U,
++    initialValue: U,
++  ): U;
+ 
+   /**
+    * Reverses the elements in an Array.
+@@ -3207,12 +3876,15 @@ interface Uint16Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  some(predicate: (value: number, index: number, array: this) => unknown, thisArg?: any): boolean;
++  some(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): boolean;
+ 
+   /**
+    * Sorts an array.
+    * @param compareFn Function used to determine the order of the elements. It is expected to return
+-   * a negative value if first argument is less than second argument, zero if they're equal and a positive
++   * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
+    * value otherwise. If omitted, the elements are sorted in ascending order.
+    * ```ts
+    * [11,2,22,1].sort((a, b) => a - b)
+@@ -3247,20 +3919,28 @@ interface Uint16ArrayConstructor {
+   readonly prototype: Uint16Array<ArrayBufferLike>;
+   new (length: number): Uint16Array<ArrayBuffer>;
+   new (array: ArrayLike<number>): Uint16Array<ArrayBuffer>;
+-  new <TArrayBuffer extends ArrayBufferLike = ArrayBuffer>(buffer: TArrayBuffer, byteOffset?: number, length?: number): Uint16Array<TArrayBuffer>;
+-  new (buffer: ArrayBuffer, byteOffset?: number, length?: number): Uint16Array<ArrayBuffer>;
++  new <TArrayBuffer extends ArrayBufferLike = ArrayBuffer>(
++    buffer: TArrayBuffer,
++    byteOffset?: number,
++    length?: number,
++  ): Uint16Array<TArrayBuffer>;
++  new (
++    buffer: ArrayBuffer,
++    byteOffset?: number,
++    length?: number,
++  ): Uint16Array<ArrayBuffer>;
+   new (array: ArrayLike<number> | ArrayBuffer): Uint16Array<ArrayBuffer>;
+ 
+   /**
+    * The size in bytes of each element in the array.
+    */
+-  readonly BYTES_PER_ELEMENT: number;
++  readonly BYTES_PER_ELEMENT: 2;
+ 
+   /**
+    * Returns a new array from a set of elements.
+    * @param items A set of elements to include in the new array object.
+    */
+-  of(...items: number[]): Uint16Array<ArrayBuffer>;
++  of(...items: readonly number[]): Uint16Array<ArrayBuffer>;
+ 
+   /**
+    * Creates an array from an array-like or iterable object.
+@@ -3274,9 +3954,13 @@ interface Uint16ArrayConstructor {
+    * @param mapfn A mapping function to call on every element of the array.
+    * @param thisArg Value of 'this' used to invoke the mapfn.
+    */
+-  from<T>(arrayLike: ArrayLike<T>, mapfn: (v: T, k: number) => number, thisArg?: any): Uint16Array<ArrayBuffer>;
++  from<T>(
++    arrayLike: ArrayLike<T>,
++    mapfn: (v: T, k: number) => number,
++    thisArg?: unknown,
++  ): Uint16Array<ArrayBuffer>;
+ }
+-declare var Uint16Array: Uint16ArrayConstructor;
++declare const Uint16Array: Uint16ArrayConstructor;
+ /**
+  * A typed array of 32-bit signed integer values. The contents are initialized to 0. If the
+  * requested number of bytes could not be allocated an exception is raised.
+@@ -3285,7 +3969,7 @@ interface Int32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+   /**
+    * The size in bytes of each element in the array.
+    */
+-  readonly BYTES_PER_ELEMENT: number;
++  readonly BYTES_PER_ELEMENT: 4;
+ 
+   /**
+    * The ArrayBuffer instance referenced by the array.
+@@ -3321,7 +4005,10 @@ interface Int32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  every(predicate: (value: number, index: number, array: this) => unknown, thisArg?: any): boolean;
++  every(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): boolean;
+ 
+   /**
+    * Changes all array elements from `start` to `end` index to a static `value` and returns the modified array
+@@ -3340,7 +4027,10 @@ interface Int32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  filter(predicate: (value: number, index: number, array: this) => any, thisArg?: any): Int32Array<ArrayBuffer>;
++  filter(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): Int32Array<ArrayBuffer>;
+ 
+   /**
+    * Returns the value of the first element in the array where predicate is true, and undefined
+@@ -3351,7 +4041,10 @@ interface Int32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  find(predicate: (value: number, index: number, obj: this) => boolean, thisArg?: any): number | undefined;
++  find(
++    predicate: (value: number, index: number, obj: this) => boolean,
++    thisArg?: unknown,
++  ): number | undefined;
+ 
+   /**
+    * Returns the index of the first element in the array where predicate is true, and -1
+@@ -3362,7 +4055,10 @@ interface Int32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findIndex(predicate: (value: number, index: number, obj: this) => boolean, thisArg?: any): number;
++  findIndex(
++    predicate: (value: number, index: number, obj: this) => boolean,
++    thisArg?: unknown,
++  ): number;
+ 
+   /**
+    * Performs the specified action for each element in an array.
+@@ -3371,7 +4067,10 @@ interface Int32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the callbackfn function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  forEach(callbackfn: (value: number, index: number, array: this) => void, thisArg?: any): void;
++  forEach(
++    callbackfn: (value: number, index: number, array: this) => void,
++    thisArg?: unknown,
++  ): void;
+ 
+   /**
+    * Returns the index of the first occurrence of a value in an array.
+@@ -3409,7 +4108,10 @@ interface Int32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the callbackfn function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  map(callbackfn: (value: number, index: number, array: this) => number, thisArg?: any): Int32Array<ArrayBuffer>;
++  map(
++    callbackfn: (value: number, index: number, array: this) => number,
++    thisArg?: unknown,
++  ): Int32Array<ArrayBuffer>;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array. The return value of
+@@ -3421,8 +4123,23 @@ interface Int32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduce(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number): number;
+-  reduce(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number, initialValue: number): number;
++  reduce(
++    callbackfn: (
++      previousValue: number,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => number,
++  ): number;
++  reduce(
++    callbackfn: (
++      previousValue: number,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => number,
++    initialValue: number,
++  ): number;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array. The return value of
+@@ -3434,7 +4151,15 @@ interface Int32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduce<U>(callbackfn: (previousValue: U, currentValue: number, currentIndex: number, array: this) => U, initialValue: U): U;
++  reduce<U>(
++    callbackfn: (
++      previousValue: U,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => U,
++    initialValue: U,
++  ): U;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array, in descending order.
+@@ -3446,8 +4171,23 @@ interface Int32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an
+    * argument instead of an array value.
+    */
+-  reduceRight(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number): number;
+-  reduceRight(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number, initialValue: number): number;
++  reduceRight(
++    callbackfn: (
++      previousValue: number,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => number,
++  ): number;
++  reduceRight(
++    callbackfn: (
++      previousValue: number,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => number,
++    initialValue: number,
++  ): number;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array, in descending order.
+@@ -3459,7 +4199,15 @@ interface Int32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduceRight<U>(callbackfn: (previousValue: U, currentValue: number, currentIndex: number, array: this) => U, initialValue: U): U;
++  reduceRight<U>(
++    callbackfn: (
++      previousValue: U,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => U,
++    initialValue: U,
++  ): U;
+ 
+   /**
+    * Reverses the elements in an Array.
+@@ -3488,12 +4236,15 @@ interface Int32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  some(predicate: (value: number, index: number, array: this) => unknown, thisArg?: any): boolean;
++  some(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): boolean;
+ 
+   /**
+    * Sorts an array.
+    * @param compareFn Function used to determine the order of the elements. It is expected to return
+-   * a negative value if first argument is less than second argument, zero if they're equal and a positive
++   * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
+    * value otherwise. If omitted, the elements are sorted in ascending order.
+    * ```ts
+    * [11,2,22,1].sort((a, b) => a - b)
+@@ -3528,20 +4279,28 @@ interface Int32ArrayConstructor {
+   readonly prototype: Int32Array<ArrayBufferLike>;
+   new (length: number): Int32Array<ArrayBuffer>;
+   new (array: ArrayLike<number>): Int32Array<ArrayBuffer>;
+-  new <TArrayBuffer extends ArrayBufferLike = ArrayBuffer>(buffer: TArrayBuffer, byteOffset?: number, length?: number): Int32Array<TArrayBuffer>;
+-  new (buffer: ArrayBuffer, byteOffset?: number, length?: number): Int32Array<ArrayBuffer>;
++  new <TArrayBuffer extends ArrayBufferLike = ArrayBuffer>(
++    buffer: TArrayBuffer,
++    byteOffset?: number,
++    length?: number,
++  ): Int32Array<TArrayBuffer>;
++  new (
++    buffer: ArrayBuffer,
++    byteOffset?: number,
++    length?: number,
++  ): Int32Array<ArrayBuffer>;
+   new (array: ArrayLike<number> | ArrayBuffer): Int32Array<ArrayBuffer>;
+ 
+   /**
+    * The size in bytes of each element in the array.
+    */
+-  readonly BYTES_PER_ELEMENT: number;
++  readonly BYTES_PER_ELEMENT: 4;
+ 
+   /**
+    * Returns a new array from a set of elements.
+    * @param items A set of elements to include in the new array object.
+    */
+-  of(...items: number[]): Int32Array<ArrayBuffer>;
++  of(...items: readonly number[]): Int32Array<ArrayBuffer>;
+ 
+   /**
+    * Creates an array from an array-like or iterable object.
+@@ -3555,9 +4314,13 @@ interface Int32ArrayConstructor {
+    * @param mapfn A mapping function to call on every element of the array.
+    * @param thisArg Value of 'this' used to invoke the mapfn.
+    */
+-  from<T>(arrayLike: ArrayLike<T>, mapfn: (v: T, k: number) => number, thisArg?: any): Int32Array<ArrayBuffer>;
++  from<T>(
++    arrayLike: ArrayLike<T>,
++    mapfn: (v: T, k: number) => number,
++    thisArg?: unknown,
++  ): Int32Array<ArrayBuffer>;
+ }
+-declare var Int32Array: Int32ArrayConstructor;
++declare const Int32Array: Int32ArrayConstructor;
+ 
+ /**
+  * A typed array of 32-bit unsigned integer values. The contents are initialized to 0. If the
+@@ -3567,7 +4330,7 @@ interface Uint32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+   /**
+    * The size in bytes of each element in the array.
+    */
+-  readonly BYTES_PER_ELEMENT: number;
++  readonly BYTES_PER_ELEMENT: 4;
+ 
+   /**
+    * The ArrayBuffer instance referenced by the array.
+@@ -3603,7 +4366,10 @@ interface Uint32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  every(predicate: (value: number, index: number, array: this) => unknown, thisArg?: any): boolean;
++  every(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): boolean;
+ 
+   /**
+    * Changes all array elements from `start` to `end` index to a static `value` and returns the modified array
+@@ -3622,7 +4388,10 @@ interface Uint32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  filter(predicate: (value: number, index: number, array: this) => any, thisArg?: any): Uint32Array<ArrayBuffer>;
++  filter(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): Uint32Array<ArrayBuffer>;
+ 
+   /**
+    * Returns the value of the first element in the array where predicate is true, and undefined
+@@ -3633,7 +4402,10 @@ interface Uint32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  find(predicate: (value: number, index: number, obj: this) => boolean, thisArg?: any): number | undefined;
++  find(
++    predicate: (value: number, index: number, obj: this) => boolean,
++    thisArg?: unknown,
++  ): number | undefined;
+ 
+   /**
+    * Returns the index of the first element in the array where predicate is true, and -1
+@@ -3644,7 +4416,10 @@ interface Uint32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findIndex(predicate: (value: number, index: number, obj: this) => boolean, thisArg?: any): number;
++  findIndex(
++    predicate: (value: number, index: number, obj: this) => boolean,
++    thisArg?: unknown,
++  ): number;
+ 
+   /**
+    * Performs the specified action for each element in an array.
+@@ -3653,7 +4428,11 @@ interface Uint32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the callbackfn function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  forEach(callbackfn: (value: number, index: number, array: this) => void, thisArg?: any): void;
++  forEach(
++    callbackfn: (value: number, index: number, array: this) => void,
++    thisArg?: unknown,
++  ): void;
++
+   /**
+    * Returns the index of the first occurrence of a value in an array.
+    * @param searchElement The value to locate in the array.
+@@ -3690,7 +4469,10 @@ interface Uint32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the callbackfn function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  map(callbackfn: (value: number, index: number, array: this) => number, thisArg?: any): Uint32Array<ArrayBuffer>;
++  map(
++    callbackfn: (value: number, index: number, array: this) => number,
++    thisArg?: unknown,
++  ): Uint32Array<ArrayBuffer>;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array. The return value of
+@@ -3702,8 +4484,23 @@ interface Uint32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduce(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number): number;
+-  reduce(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number, initialValue: number): number;
++  reduce(
++    callbackfn: (
++      previousValue: number,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => number,
++  ): number;
++  reduce(
++    callbackfn: (
++      previousValue: number,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => number,
++    initialValue: number,
++  ): number;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array. The return value of
+@@ -3715,7 +4512,15 @@ interface Uint32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduce<U>(callbackfn: (previousValue: U, currentValue: number, currentIndex: number, array: this) => U, initialValue: U): U;
++  reduce<U>(
++    callbackfn: (
++      previousValue: U,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => U,
++    initialValue: U,
++  ): U;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array, in descending order.
+@@ -3727,8 +4532,23 @@ interface Uint32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an
+    * argument instead of an array value.
+    */
+-  reduceRight(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number): number;
+-  reduceRight(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number, initialValue: number): number;
++  reduceRight(
++    callbackfn: (
++      previousValue: number,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => number,
++  ): number;
++  reduceRight(
++    callbackfn: (
++      previousValue: number,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => number,
++    initialValue: number,
++  ): number;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array, in descending order.
+@@ -3740,7 +4560,15 @@ interface Uint32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduceRight<U>(callbackfn: (previousValue: U, currentValue: number, currentIndex: number, array: this) => U, initialValue: U): U;
++  reduceRight<U>(
++    callbackfn: (
++      previousValue: U,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => U,
++    initialValue: U,
++  ): U;
+ 
+   /**
+    * Reverses the elements in an Array.
+@@ -3769,12 +4597,15 @@ interface Uint32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  some(predicate: (value: number, index: number, array: this) => unknown, thisArg?: any): boolean;
++  some(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): boolean;
+ 
+   /**
+    * Sorts an array.
+    * @param compareFn Function used to determine the order of the elements. It is expected to return
+-   * a negative value if first argument is less than second argument, zero if they're equal and a positive
++   * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
+    * value otherwise. If omitted, the elements are sorted in ascending order.
+    * ```ts
+    * [11,2,22,1].sort((a, b) => a - b)
+@@ -3809,20 +4640,28 @@ interface Uint32ArrayConstructor {
+   readonly prototype: Uint32Array<ArrayBufferLike>;
+   new (length: number): Uint32Array<ArrayBuffer>;
+   new (array: ArrayLike<number>): Uint32Array<ArrayBuffer>;
+-  new <TArrayBuffer extends ArrayBufferLike = ArrayBuffer>(buffer: TArrayBuffer, byteOffset?: number, length?: number): Uint32Array<TArrayBuffer>;
+-  new (buffer: ArrayBuffer, byteOffset?: number, length?: number): Uint32Array<ArrayBuffer>;
++  new <TArrayBuffer extends ArrayBufferLike = ArrayBuffer>(
++    buffer: TArrayBuffer,
++    byteOffset?: number,
++    length?: number,
++  ): Uint32Array<TArrayBuffer>;
++  new (
++    buffer: ArrayBuffer,
++    byteOffset?: number,
++    length?: number,
++  ): Uint32Array<ArrayBuffer>;
+   new (array: ArrayLike<number> | ArrayBuffer): Uint32Array<ArrayBuffer>;
+ 
+   /**
+    * The size in bytes of each element in the array.
+    */
+-  readonly BYTES_PER_ELEMENT: number;
++  readonly BYTES_PER_ELEMENT: 4;
+ 
+   /**
+    * Returns a new array from a set of elements.
+    * @param items A set of elements to include in the new array object.
+    */
+-  of(...items: number[]): Uint32Array<ArrayBuffer>;
++  of(...items: readonly number[]): Uint32Array<ArrayBuffer>;
+ 
+   /**
+    * Creates an array from an array-like or iterable object.
+@@ -3836,9 +4675,13 @@ interface Uint32ArrayConstructor {
+    * @param mapfn A mapping function to call on every element of the array.
+    * @param thisArg Value of 'this' used to invoke the mapfn.
+    */
+-  from<T>(arrayLike: ArrayLike<T>, mapfn: (v: T, k: number) => number, thisArg?: any): Uint32Array<ArrayBuffer>;
++  from<T>(
++    arrayLike: ArrayLike<T>,
++    mapfn: (v: T, k: number) => number,
++    thisArg?: unknown,
++  ): Uint32Array<ArrayBuffer>;
+ }
+-declare var Uint32Array: Uint32ArrayConstructor;
++declare const Uint32Array: Uint32ArrayConstructor;
+ 
+ /**
+  * A typed array of 32-bit float values. The contents are initialized to 0. If the requested number
+@@ -3848,7 +4691,7 @@ interface Float32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+   /**
+    * The size in bytes of each element in the array.
+    */
+-  readonly BYTES_PER_ELEMENT: number;
++  readonly BYTES_PER_ELEMENT: 4;
+ 
+   /**
+    * The ArrayBuffer instance referenced by the array.
+@@ -3884,7 +4727,10 @@ interface Float32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  every(predicate: (value: number, index: number, array: this) => unknown, thisArg?: any): boolean;
++  every(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): boolean;
+ 
+   /**
+    * Changes all array elements from `start` to `end` index to a static `value` and returns the modified array
+@@ -3903,7 +4749,10 @@ interface Float32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  filter(predicate: (value: number, index: number, array: this) => any, thisArg?: any): Float32Array<ArrayBuffer>;
++  filter(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): Float32Array<ArrayBuffer>;
+ 
+   /**
+    * Returns the value of the first element in the array where predicate is true, and undefined
+@@ -3914,7 +4763,10 @@ interface Float32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  find(predicate: (value: number, index: number, obj: this) => boolean, thisArg?: any): number | undefined;
++  find(
++    predicate: (value: number, index: number, obj: this) => boolean,
++    thisArg?: unknown,
++  ): number | undefined;
+ 
+   /**
+    * Returns the index of the first element in the array where predicate is true, and -1
+@@ -3925,7 +4777,10 @@ interface Float32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findIndex(predicate: (value: number, index: number, obj: this) => boolean, thisArg?: any): number;
++  findIndex(
++    predicate: (value: number, index: number, obj: this) => boolean,
++    thisArg?: unknown,
++  ): number;
+ 
+   /**
+    * Performs the specified action for each element in an array.
+@@ -3934,7 +4789,10 @@ interface Float32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the callbackfn function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  forEach(callbackfn: (value: number, index: number, array: this) => void, thisArg?: any): void;
++  forEach(
++    callbackfn: (value: number, index: number, array: this) => void,
++    thisArg?: unknown,
++  ): void;
+ 
+   /**
+    * Returns the index of the first occurrence of a value in an array.
+@@ -3972,7 +4830,10 @@ interface Float32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the callbackfn function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  map(callbackfn: (value: number, index: number, array: this) => number, thisArg?: any): Float32Array<ArrayBuffer>;
++  map(
++    callbackfn: (value: number, index: number, array: this) => number,
++    thisArg?: unknown,
++  ): Float32Array<ArrayBuffer>;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array. The return value of
+@@ -3984,8 +4845,23 @@ interface Float32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduce(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number): number;
+-  reduce(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number, initialValue: number): number;
++  reduce(
++    callbackfn: (
++      previousValue: number,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => number,
++  ): number;
++  reduce(
++    callbackfn: (
++      previousValue: number,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => number,
++    initialValue: number,
++  ): number;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array. The return value of
+@@ -3997,7 +4873,15 @@ interface Float32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduce<U>(callbackfn: (previousValue: U, currentValue: number, currentIndex: number, array: this) => U, initialValue: U): U;
++  reduce<U>(
++    callbackfn: (
++      previousValue: U,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => U,
++    initialValue: U,
++  ): U;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array, in descending order.
+@@ -4009,8 +4893,23 @@ interface Float32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an
+    * argument instead of an array value.
+    */
+-  reduceRight(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number): number;
+-  reduceRight(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number, initialValue: number): number;
++  reduceRight(
++    callbackfn: (
++      previousValue: number,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => number,
++  ): number;
++  reduceRight(
++    callbackfn: (
++      previousValue: number,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => number,
++    initialValue: number,
++  ): number;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array, in descending order.
+@@ -4022,7 +4921,15 @@ interface Float32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduceRight<U>(callbackfn: (previousValue: U, currentValue: number, currentIndex: number, array: this) => U, initialValue: U): U;
++  reduceRight<U>(
++    callbackfn: (
++      previousValue: U,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => U,
++    initialValue: U,
++  ): U;
+ 
+   /**
+    * Reverses the elements in an Array.
+@@ -4051,12 +4958,15 @@ interface Float32Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  some(predicate: (value: number, index: number, array: this) => unknown, thisArg?: any): boolean;
++  some(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): boolean;
+ 
+   /**
+    * Sorts an array.
+    * @param compareFn Function used to determine the order of the elements. It is expected to return
+-   * a negative value if first argument is less than second argument, zero if they're equal and a positive
++   * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
+    * value otherwise. If omitted, the elements are sorted in ascending order.
+    * ```ts
+    * [11,2,22,1].sort((a, b) => a - b)
+@@ -4091,20 +5001,28 @@ interface Float32ArrayConstructor {
+   readonly prototype: Float32Array<ArrayBufferLike>;
+   new (length: number): Float32Array<ArrayBuffer>;
+   new (array: ArrayLike<number>): Float32Array<ArrayBuffer>;
+-  new <TArrayBuffer extends ArrayBufferLike = ArrayBuffer>(buffer: TArrayBuffer, byteOffset?: number, length?: number): Float32Array<TArrayBuffer>;
+-  new (buffer: ArrayBuffer, byteOffset?: number, length?: number): Float32Array<ArrayBuffer>;
++  new <TArrayBuffer extends ArrayBufferLike = ArrayBuffer>(
++    buffer: TArrayBuffer,
++    byteOffset?: number,
++    length?: number,
++  ): Float32Array<TArrayBuffer>;
++  new (
++    buffer: ArrayBuffer,
++    byteOffset?: number,
++    length?: number,
++  ): Float32Array<ArrayBuffer>;
+   new (array: ArrayLike<number> | ArrayBuffer): Float32Array<ArrayBuffer>;
+ 
+   /**
+    * The size in bytes of each element in the array.
+    */
+-  readonly BYTES_PER_ELEMENT: number;
++  readonly BYTES_PER_ELEMENT: 4;
+ 
+   /**
+    * Returns a new array from a set of elements.
+    * @param items A set of elements to include in the new array object.
+    */
+-  of(...items: number[]): Float32Array<ArrayBuffer>;
++  of(...items: readonly number[]): Float32Array<ArrayBuffer>;
+ 
+   /**
+    * Creates an array from an array-like or iterable object.
+@@ -4118,9 +5036,13 @@ interface Float32ArrayConstructor {
+    * @param mapfn A mapping function to call on every element of the array.
+    * @param thisArg Value of 'this' used to invoke the mapfn.
+    */
+-  from<T>(arrayLike: ArrayLike<T>, mapfn: (v: T, k: number) => number, thisArg?: any): Float32Array<ArrayBuffer>;
++  from<T>(
++    arrayLike: ArrayLike<T>,
++    mapfn: (v: T, k: number) => number,
++    thisArg?: unknown,
++  ): Float32Array<ArrayBuffer>;
+ }
+-declare var Float32Array: Float32ArrayConstructor;
++declare const Float32Array: Float32ArrayConstructor;
+ 
+ /**
+  * A typed array of 64-bit float values. The contents are initialized to 0. If the requested
+@@ -4130,7 +5052,7 @@ interface Float64Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+   /**
+    * The size in bytes of each element in the array.
+    */
+-  readonly BYTES_PER_ELEMENT: number;
++  readonly BYTES_PER_ELEMENT: 8;
+ 
+   /**
+    * The ArrayBuffer instance referenced by the array.
+@@ -4166,7 +5088,10 @@ interface Float64Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  every(predicate: (value: number, index: number, array: this) => unknown, thisArg?: any): boolean;
++  every(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): boolean;
+ 
+   /**
+    * Changes all array elements from `start` to `end` index to a static `value` and returns the modified array
+@@ -4185,7 +5110,10 @@ interface Float64Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  filter(predicate: (value: number, index: number, array: this) => any, thisArg?: any): Float64Array<ArrayBuffer>;
++  filter(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): Float64Array<ArrayBuffer>;
+ 
+   /**
+    * Returns the value of the first element in the array where predicate is true, and undefined
+@@ -4196,7 +5124,10 @@ interface Float64Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  find(predicate: (value: number, index: number, obj: this) => boolean, thisArg?: any): number | undefined;
++  find(
++    predicate: (value: number, index: number, obj: this) => boolean,
++    thisArg?: unknown,
++  ): number | undefined;
+ 
+   /**
+    * Returns the index of the first element in the array where predicate is true, and -1
+@@ -4207,7 +5138,10 @@ interface Float64Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg If provided, it will be used as the this value for each invocation of
+    * predicate. If it is not provided, undefined is used instead.
+    */
+-  findIndex(predicate: (value: number, index: number, obj: this) => boolean, thisArg?: any): number;
++  findIndex(
++    predicate: (value: number, index: number, obj: this) => boolean,
++    thisArg?: unknown,
++  ): number;
+ 
+   /**
+    * Performs the specified action for each element in an array.
+@@ -4216,7 +5150,10 @@ interface Float64Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the callbackfn function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  forEach(callbackfn: (value: number, index: number, array: this) => void, thisArg?: any): void;
++  forEach(
++    callbackfn: (value: number, index: number, array: this) => void,
++    thisArg?: unknown,
++  ): void;
+ 
+   /**
+    * Returns the index of the first occurrence of a value in an array.
+@@ -4254,7 +5191,10 @@ interface Float64Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the callbackfn function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  map(callbackfn: (value: number, index: number, array: this) => number, thisArg?: any): Float64Array<ArrayBuffer>;
++  map(
++    callbackfn: (value: number, index: number, array: this) => number,
++    thisArg?: unknown,
++  ): Float64Array<ArrayBuffer>;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array. The return value of
+@@ -4266,8 +5206,23 @@ interface Float64Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduce(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number): number;
+-  reduce(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number, initialValue: number): number;
++  reduce(
++    callbackfn: (
++      previousValue: number,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => number,
++  ): number;
++  reduce(
++    callbackfn: (
++      previousValue: number,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => number,
++    initialValue: number,
++  ): number;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array. The return value of
+@@ -4279,7 +5234,15 @@ interface Float64Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduce<U>(callbackfn: (previousValue: U, currentValue: number, currentIndex: number, array: this) => U, initialValue: U): U;
++  reduce<U>(
++    callbackfn: (
++      previousValue: U,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => U,
++    initialValue: U,
++  ): U;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array, in descending order.
+@@ -4291,8 +5254,23 @@ interface Float64Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an
+    * argument instead of an array value.
+    */
+-  reduceRight(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number): number;
+-  reduceRight(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: this) => number, initialValue: number): number;
++  reduceRight(
++    callbackfn: (
++      previousValue: number,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => number,
++  ): number;
++  reduceRight(
++    callbackfn: (
++      previousValue: number,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => number,
++    initialValue: number,
++  ): number;
+ 
+   /**
+    * Calls the specified callback function for all the elements in an array, in descending order.
+@@ -4304,7 +5282,15 @@ interface Float64Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * the accumulation. The first call to the callbackfn function provides this value as an argument
+    * instead of an array value.
+    */
+-  reduceRight<U>(callbackfn: (previousValue: U, currentValue: number, currentIndex: number, array: this) => U, initialValue: U): U;
++  reduceRight<U>(
++    callbackfn: (
++      previousValue: U,
++      currentValue: number,
++      currentIndex: number,
++      array: this,
++    ) => U,
++    initialValue: U,
++  ): U;
+ 
+   /**
+    * Reverses the elements in an Array.
+@@ -4333,12 +5319,15 @@ interface Float64Array<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike> {
+    * @param thisArg An object to which the this keyword can refer in the predicate function.
+    * If thisArg is omitted, undefined is used as the this value.
+    */
+-  some(predicate: (value: number, index: number, array: this) => unknown, thisArg?: any): boolean;
++  some(
++    predicate: (value: number, index: number, array: this) => boolean,
++    thisArg?: unknown,
++  ): boolean;
+ 
+   /**
+    * Sorts an array.
+    * @param compareFn Function used to determine the order of the elements. It is expected to return
+-   * a negative value if first argument is less than second argument, zero if they're equal and a positive
++   * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
+    * value otherwise. If omitted, the elements are sorted in ascending order.
+    * ```ts
+    * [11,2,22,1].sort((a, b) => a - b)
+@@ -4373,20 +5362,28 @@ interface Float64ArrayConstructor {
+   readonly prototype: Float64Array<ArrayBufferLike>;
+   new (length: number): Float64Array<ArrayBuffer>;
+   new (array: ArrayLike<number>): Float64Array<ArrayBuffer>;
+-  new <TArrayBuffer extends ArrayBufferLike = ArrayBuffer>(buffer: TArrayBuffer, byteOffset?: number, length?: number): Float64Array<TArrayBuffer>;
+-  new (buffer: ArrayBuffer, byteOffset?: number, length?: number): Float64Array<ArrayBuffer>;
++  new <TArrayBuffer extends ArrayBufferLike = ArrayBuffer>(
++    buffer: TArrayBuffer,
++    byteOffset?: number,
++    length?: number,
++  ): Float64Array<TArrayBuffer>;
++  new (
++    buffer: ArrayBuffer,
++    byteOffset?: number,
++    length?: number,
++  ): Float64Array<ArrayBuffer>;
+   new (array: ArrayLike<number> | ArrayBuffer): Float64Array<ArrayBuffer>;
+ 
+   /**
+    * The size in bytes of each element in the array.
+    */
+-  readonly BYTES_PER_ELEMENT: number;
++  readonly BYTES_PER_ELEMENT: 8;
+ 
+   /**
+    * Returns a new array from a set of elements.
+    * @param items A set of elements to include in the new array object.
+    */
+-  of(...items: number[]): Float64Array<ArrayBuffer>;
++  of(...items: readonly number[]): Float64Array<ArrayBuffer>;
+ 
+   /**
+    * Creates an array from an array-like or iterable object.
+@@ -4400,9 +5397,13 @@ interface Float64ArrayConstructor {
+    * @param mapfn A mapping function to call on every element of the array.
+    * @param thisArg Value of 'this' used to invoke the mapfn.
+    */
+-  from<T>(arrayLike: ArrayLike<T>, mapfn: (v: T, k: number) => number, thisArg?: any): Float64Array<ArrayBuffer>;
++  from<T>(
++    arrayLike: ArrayLike<T>,
++    mapfn: (v: T, k: number) => number,
++    thisArg?: unknown,
++  ): Float64Array<ArrayBuffer>;
+ }
+-declare var Float64Array: Float64ArrayConstructor;
++declare const Float64Array: Float64ArrayConstructor;
+ 
+ /////////////////////////////
+ /// ECMAScript Internationalization API
+@@ -4410,23 +5411,41 @@ declare var Float64Array: Float64ArrayConstructor;
+ 
+ declare namespace Intl {
+   interface CollatorOptions {
+-    usage?: 'sort' | 'search' | undefined;
+-    localeMatcher?: 'lookup' | 'best fit' | undefined;
+-    numeric?: boolean | undefined;
+-    caseFirst?: 'upper' | 'lower' | 'false' | undefined;
+-    sensitivity?: 'base' | 'accent' | 'case' | 'variant' | undefined;
+-    collation?: 'big5han' | 'compat' | 'dict' | 'direct' | 'ducet' | 'emoji' | 'eor' | 'gb2312' | 'phonebk' | 'phonetic' | 'pinyin' | 'reformed' | 'searchjl' | 'stroke' | 'trad' | 'unihan' | 'zhuyin' | undefined;
+-    ignorePunctuation?: boolean | undefined;
++    readonly usage?: 'sort' | 'search' | undefined;
++    readonly localeMatcher?: 'lookup' | 'best fit' | undefined;
++    readonly numeric?: boolean | undefined;
++    readonly caseFirst?: 'upper' | 'lower' | 'false' | undefined;
++    readonly sensitivity?: 'base' | 'accent' | 'case' | 'variant' | undefined;
++    readonly collation?:
++      | 'big5han'
++      | 'compat'
++      | 'dict'
++      | 'direct'
++      | 'ducet'
++      | 'emoji'
++      | 'eor'
++      | 'gb2312'
++      | 'phonebk'
++      | 'phonetic'
++      | 'pinyin'
++      | 'reformed'
++      | 'searchjl'
++      | 'stroke'
++      | 'trad'
++      | 'unihan'
++      | 'zhuyin'
++      | undefined;
++    readonly ignorePunctuation?: boolean | undefined;
+   }
+ 
+   interface ResolvedCollatorOptions {
+-    locale: string;
+-    usage: string;
+-    sensitivity: string;
+-    ignorePunctuation: boolean;
+-    collation: string;
+-    caseFirst: string;
+-    numeric: boolean;
++    readonly locale: string;
++    readonly usage: string;
++    readonly sensitivity: string;
++    readonly ignorePunctuation: boolean;
++    readonly collation: string;
++    readonly caseFirst: string;
++    readonly numeric: boolean;
+   }
+ 
+   interface Collator {
+@@ -4435,59 +5454,76 @@ declare namespace Intl {
+   }
+ 
+   interface CollatorConstructor {
+-    new (locales?: string | string[], options?: CollatorOptions): Collator;
+-    (locales?: string | string[], options?: CollatorOptions): Collator;
+-    supportedLocalesOf(locales: string | string[], options?: CollatorOptions): string[];
++    new (
++      locales?: string | readonly string[],
++      options?: CollatorOptions,
++    ): Collator;
++    (locales?: string | readonly string[], options?: CollatorOptions): Collator;
++    supportedLocalesOf(
++      locales: string | readonly string[],
++      options?: CollatorOptions,
++    ): string[];
+   }
+ 
+-  var Collator: CollatorConstructor;
++  const Collator: CollatorConstructor;
+ 
+   interface NumberFormatOptionsStyleRegistry {
+-    decimal: never;
+-    percent: never;
+-    currency: never;
++    readonly decimal: never;
++    readonly percent: never;
++    readonly currency: never;
+   }
+ 
+   type NumberFormatOptionsStyle = keyof NumberFormatOptionsStyleRegistry;
+ 
+   interface NumberFormatOptionsCurrencyDisplayRegistry {
+-    code: never;
+-    symbol: never;
+-    name: never;
++    readonly code: never;
++    readonly symbol: never;
++    readonly name: never;
+   }
+ 
+-  type NumberFormatOptionsCurrencyDisplay = keyof NumberFormatOptionsCurrencyDisplayRegistry;
++  type NumberFormatOptionsCurrencyDisplay =
++    keyof NumberFormatOptionsCurrencyDisplayRegistry;
+ 
+   interface NumberFormatOptionsUseGroupingRegistry {}
+ 
+-  type NumberFormatOptionsUseGrouping = {} extends NumberFormatOptionsUseGroupingRegistry ? boolean : keyof NumberFormatOptionsUseGroupingRegistry | 'true' | 'false' | boolean;
+-  type ResolvedNumberFormatOptionsUseGrouping = {} extends NumberFormatOptionsUseGroupingRegistry ? boolean : keyof NumberFormatOptionsUseGroupingRegistry | false;
++  type NumberFormatOptionsUseGrouping =
++    {} extends NumberFormatOptionsUseGroupingRegistry
++      ? boolean
++      :
++          | keyof NumberFormatOptionsUseGroupingRegistry
++          | 'true'
++          | 'false'
++          | boolean;
++  type ResolvedNumberFormatOptionsUseGrouping =
++    {} extends NumberFormatOptionsUseGroupingRegistry
++      ? boolean
++      : keyof NumberFormatOptionsUseGroupingRegistry | false;
+ 
+   interface NumberFormatOptions {
+-    localeMatcher?: 'lookup' | 'best fit' | undefined;
+-    style?: NumberFormatOptionsStyle | undefined;
+-    currency?: string | undefined;
+-    currencyDisplay?: NumberFormatOptionsCurrencyDisplay | undefined;
+-    useGrouping?: NumberFormatOptionsUseGrouping | undefined;
+-    minimumIntegerDigits?: number | undefined;
+-    minimumFractionDigits?: number | undefined;
+-    maximumFractionDigits?: number | undefined;
+-    minimumSignificantDigits?: number | undefined;
+-    maximumSignificantDigits?: number | undefined;
++    readonly localeMatcher?: 'lookup' | 'best fit' | undefined;
++    readonly style?: NumberFormatOptionsStyle | undefined;
++    readonly currency?: string | undefined;
++    readonly currencyDisplay?: NumberFormatOptionsCurrencyDisplay | undefined;
++    readonly useGrouping?: NumberFormatOptionsUseGrouping | undefined;
++    readonly minimumIntegerDigits?: UintRange<1, 22> | undefined;
++    readonly minimumFractionDigits?: UintRange<0, 21> | undefined;
++    readonly maximumFractionDigits?: UintRange<0, 21> | undefined;
++    readonly minimumSignificantDigits?: UintRange<1, 22> | undefined;
++    readonly maximumSignificantDigits?: UintRange<1, 22> | undefined;
+   }
+ 
+   interface ResolvedNumberFormatOptions {
+-    locale: string;
+-    numberingSystem: string;
+-    style: NumberFormatOptionsStyle;
+-    currency?: string;
+-    currencyDisplay?: NumberFormatOptionsCurrencyDisplay;
+-    minimumIntegerDigits: number;
+-    minimumFractionDigits?: number;
+-    maximumFractionDigits?: number;
+-    minimumSignificantDigits?: number;
+-    maximumSignificantDigits?: number;
+-    useGrouping: ResolvedNumberFormatOptionsUseGrouping;
++    readonly locale: string;
++    readonly numberingSystem: string;
++    readonly style: NumberFormatOptionsStyle;
++    readonly currency?: string;
++    readonly currencyDisplay?: NumberFormatOptionsCurrencyDisplay;
++    readonly minimumIntegerDigits: UintRange<1, 22>;
++    readonly minimumFractionDigits?: UintRange<0, 21>;
++    readonly maximumFractionDigits?: UintRange<0, 21>;
++    readonly minimumSignificantDigits?: UintRange<1, 22>;
++    readonly maximumSignificantDigits?: UintRange<1, 22>;
++    readonly useGrouping: ResolvedNumberFormatOptionsUseGrouping;
+   }
+ 
+   interface NumberFormat {
+@@ -4496,45 +5532,67 @@ declare namespace Intl {
+   }
+ 
+   interface NumberFormatConstructor {
+-    new (locales?: string | string[], options?: NumberFormatOptions): NumberFormat;
+-    (locales?: string | string[], options?: NumberFormatOptions): NumberFormat;
+-    supportedLocalesOf(locales: string | string[], options?: NumberFormatOptions): string[];
++    new (
++      locales?: string | readonly string[],
++      options?: NumberFormatOptions,
++    ): NumberFormat;
++    (
++      locales?: string | readonly string[],
++      options?: NumberFormatOptions,
++    ): NumberFormat;
++    supportedLocalesOf(
++      locales: string | readonly string[],
++      options?: NumberFormatOptions,
++    ): string[];
+     readonly prototype: NumberFormat;
+   }
+ 
+-  var NumberFormat: NumberFormatConstructor;
++  const NumberFormat: NumberFormatConstructor;
+ 
+   interface DateTimeFormatOptions {
+-    localeMatcher?: 'best fit' | 'lookup' | undefined;
+-    weekday?: 'long' | 'short' | 'narrow' | undefined;
+-    era?: 'long' | 'short' | 'narrow' | undefined;
+-    year?: 'numeric' | '2-digit' | undefined;
+-    month?: 'numeric' | '2-digit' | 'long' | 'short' | 'narrow' | undefined;
+-    day?: 'numeric' | '2-digit' | undefined;
+-    hour?: 'numeric' | '2-digit' | undefined;
+-    minute?: 'numeric' | '2-digit' | undefined;
+-    second?: 'numeric' | '2-digit' | undefined;
+-    timeZoneName?: 'short' | 'long' | 'shortOffset' | 'longOffset' | 'shortGeneric' | 'longGeneric' | undefined;
+-    formatMatcher?: 'best fit' | 'basic' | undefined;
+-    hour12?: boolean | undefined;
+-    timeZone?: string | undefined;
++    readonly localeMatcher?: 'best fit' | 'lookup' | undefined;
++    readonly weekday?: 'long' | 'short' | 'narrow' | undefined;
++    readonly era?: 'long' | 'short' | 'narrow' | undefined;
++    readonly year?: 'numeric' | '2-digit' | undefined;
++    readonly month?:
++      | 'numeric'
++      | '2-digit'
++      | 'long'
++      | 'short'
++      | 'narrow'
++      | undefined;
++    readonly day?: 'numeric' | '2-digit' | undefined;
++    readonly hour?: 'numeric' | '2-digit' | undefined;
++    readonly minute?: 'numeric' | '2-digit' | undefined;
++    readonly second?: 'numeric' | '2-digit' | undefined;
++    readonly timeZoneName?:
++      | 'short'
++      | 'long'
++      | 'shortOffset'
++      | 'longOffset'
++      | 'shortGeneric'
++      | 'longGeneric'
++      | undefined;
++    readonly formatMatcher?: 'best fit' | 'basic' | undefined;
++    readonly hour12?: boolean | undefined;
++    readonly timeZone?: string | undefined;
+   }
+ 
+   interface ResolvedDateTimeFormatOptions {
+-    locale: string;
+-    calendar: string;
+-    numberingSystem: string;
+-    timeZone: string;
+-    hour12?: boolean;
+-    weekday?: string;
+-    era?: string;
+-    year?: string;
+-    month?: string;
+-    day?: string;
+-    hour?: string;
+-    minute?: string;
+-    second?: string;
+-    timeZoneName?: string;
++    readonly locale: string;
++    readonly calendar: string;
++    readonly numberingSystem: string;
++    readonly timeZone: string;
++    readonly hour12?: boolean;
++    readonly weekday?: string;
++    readonly era?: string;
++    readonly year?: string;
++    readonly month?: string;
++    readonly day?: string;
++    readonly hour?: string;
++    readonly minute?: string;
++    readonly second?: string;
++    readonly timeZoneName?: string;
+   }
+ 
+   interface DateTimeFormat {
+@@ -4543,13 +5601,22 @@ declare namespace Intl {
+   }
+ 
+   interface DateTimeFormatConstructor {
+-    new (locales?: string | string[], options?: DateTimeFormatOptions): DateTimeFormat;
+-    (locales?: string | string[], options?: DateTimeFormatOptions): DateTimeFormat;
+-    supportedLocalesOf(locales: string | string[], options?: DateTimeFormatOptions): string[];
++    new (
++      locales?: string | readonly string[],
++      options?: DateTimeFormatOptions,
++    ): DateTimeFormat;
++    (
++      locales?: string | readonly string[],
++      options?: DateTimeFormatOptions,
++    ): DateTimeFormat;
++    supportedLocalesOf(
++      locales: string | readonly string[],
++      options?: DateTimeFormatOptions,
++    ): string[];
+     readonly prototype: DateTimeFormat;
+   }
+ 
+-  var DateTimeFormat: DateTimeFormatConstructor;
++  const DateTimeFormat: DateTimeFormatConstructor;
+ }
+ 
+ interface String {
+@@ -4559,7 +5626,11 @@ interface String {
+    * @param locales A locale string or array of locale strings that contain one or more language or locale tags. If you include more than one locale string, list them in descending order of priority so that the first entry is the preferred locale. If you omit this parameter, the default locale of the JavaScript runtime is used. This parameter must conform to BCP 47 standards; see the Intl.Collator object for details.
+    * @param options An object that contains one or more properties that specify comparison options. see the Intl.Collator object for details.
+    */
+-  localeCompare(that: string, locales?: string | string[], options?: Intl.CollatorOptions): number;
++  localeCompare(
++    that: string,
++    locales?: string | readonly string[],
++    options?: Intl.CollatorOptions,
++  ): number;
+ }
+ 
+ interface Number {
+@@ -4568,7 +5639,10 @@ interface Number {
+    * @param locales A locale string or array of locale strings that contain one or more language or locale tags. If you include more than one locale string, list them in descending order of priority so that the first entry is the preferred locale. If you omit this parameter, the default locale of the JavaScript runtime is used.
+    * @param options An object that contains one or more properties that specify comparison options.
+    */
+-  toLocaleString(locales?: string | string[], options?: Intl.NumberFormatOptions): string;
++  toLocaleString(
++    locales?: string | readonly string[],
++    options?: Intl.NumberFormatOptions,
++  ): string;
+ }
+ 
+ interface Date {
+@@ -4577,18 +5651,33 @@ interface Date {
+    * @param locales A locale string or array of locale strings that contain one or more language or locale tags. If you include more than one locale string, list them in descending order of priority so that the first entry is the preferred locale. If you omit this parameter, the default locale of the JavaScript runtime is used.
+    * @param options An object that contains one or more properties that specify comparison options.
+    */
+-  toLocaleString(locales?: string | string[], options?: Intl.DateTimeFormatOptions): string;
++  toLocaleString(
++    locales?: string | readonly string[],
++    options?: Intl.DateTimeFormatOptions,
++  ): string;
+   /**
+    * Converts a date to a string by using the current or specified locale.
+    * @param locales A locale string or array of locale strings that contain one or more language or locale tags. If you include more than one locale string, list them in descending order of priority so that the first entry is the preferred locale. If you omit this parameter, the default locale of the JavaScript runtime is used.
+    * @param options An object that contains one or more properties that specify comparison options.
+    */
+-  toLocaleDateString(locales?: string | string[], options?: Intl.DateTimeFormatOptions): string;
++  toLocaleDateString(
++    locales?: string | readonly string[],
++    options?: Intl.DateTimeFormatOptions,
++  ): string;
+ 
+   /**
+    * Converts a time to a string by using the current or specified locale.
+    * @param locales A locale string or array of locale strings that contain one or more language or locale tags. If you include more than one locale string, list them in descending order of priority so that the first entry is the preferred locale. If you omit this parameter, the default locale of the JavaScript runtime is used.
+    * @param options An object that contains one or more properties that specify comparison options.
+    */
+-  toLocaleTimeString(locales?: string | string[], options?: Intl.DateTimeFormatOptions): string;
++  toLocaleTimeString(
++    locales?: string | readonly string[],
++    options?: Intl.DateTimeFormatOptions,
++  ): string;
+ }
++
++type RawDateMutType = Date;
++
++type RawDateType = Readonly<RawDateMutType>;
++
++type TimerId = ReturnType<typeof setTimeout>; // NodeJS.Timeout or number

@@ -1,0 +1,59 @@
+@@ -1,24 +1,15 @@
+-/*! *****************************************************************************
+-Copyright (c) Microsoft Corporation. All rights reserved.
+-Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+-this file except in compliance with the License. You may obtain a copy of the
+-License at http://www.apache.org/licenses/LICENSE-2.0
+-
+-THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+-KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+-WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+-MERCHANTABLITY OR NON-INFRINGEMENT.
+-
+-See the Apache Version 2.0 License for specific language governing permissions
+-and limitations under the License.
+-***************************************************************************** */
+-
+ /// <reference no-default-lib="true"/>
++/// <reference types="ts-type-forge/global" />
+ 
+ /**
+  * The decorator context types provided to class element decorators.
+  */
+-type ClassMemberDecoratorContext = ClassMethodDecoratorContext | ClassGetterDecoratorContext | ClassSetterDecoratorContext | ClassFieldDecoratorContext | ClassAccessorDecoratorContext;
++type ClassMemberDecoratorContext =
++  | ClassMethodDecoratorContext
++  | ClassGetterDecoratorContext
++  | ClassSetterDecoratorContext
++  | ClassFieldDecoratorContext
++  | ClassAccessorDecoratorContext;
+ 
+ /**
+  * The decorator context types provided to any decorator.
+@@ -29,7 +20,10 @@ type DecoratorContext = ClassDecoratorContext | ClassMemberDecoratorContext;
+  * Context provided to a class decorator.
+  * @template Class The type of the decorated class associated with this context.
+  */
+-interface ClassDecoratorContext<Class extends abstract new (...args: any) => any = abstract new (...args: any) => any> {
++interface ClassDecoratorContext<
++  Class extends abstract new (...args: readonly never[]) => unknown =
++    abstract new (...args: readonly never[]) => unknown,
++> {
+   /** The kind of element that was decorated. */
+   readonly kind: 'class';
+ 
+@@ -62,7 +56,13 @@ interface ClassDecoratorContext<Class extends abstract new (...args: any) => any
+  * the type of the constructor. For a non-static class element, this will be the type of the instance.
+  * @template Value The type of the decorated class method.
+  */
+-interface ClassMethodDecoratorContext<This = unknown, Value extends (this: This, ...args: any) => any = (this: This, ...args: any) => any> {
++interface ClassMethodDecoratorContext<
++  This = unknown,
++  Value extends (this: This, ...args: readonly never[]) => unknown = (
++    this: This,
++    ...args: readonly never[]
++  ) => unknown,
++> {
+   /** The kind of class element that was decorated. */
+   readonly kind: 'method';
+ 

@@ -1,0 +1,28 @@
+{
+  "name": "strict-ts-lib-v5.9-source",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Generator harness for TypeScript 5.9 strict lib packages",
+  "type": "module",
+  "scripts": {
+    "build": "tsx ./scripts/gen.mts",
+    "gen": "tsx ./scripts/gen.mts",
+    "gen:full": "tsx ./scripts/gen-full.mts",
+    "gen:lib-files": "tsx ./scripts/gen-lib-files.mts",
+    "gen:packages": "tsx ./scripts/gen-packages.mts",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "tsc": "tsc --noEmit",
+    "type-check": "tsc --noEmit",
+    "zz:eslint": "TIMING=1 eslint"
+  },
+  "dependencies": {
+    "strict-ts-lib-scripts-common": "workspace:*"
+  },
+  "devDependencies": {
+    "ts-data-forge": "6.9.6",
+    "ts-repo-utils": "10.1.0",
+    "ts-type-forge": "3.0.1",
+    "typescript": "5.9.3"
+  }
+}
