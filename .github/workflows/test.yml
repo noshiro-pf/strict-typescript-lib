@@ -61,21 +61,17 @@ jobs:
         id: check_diff_type
         run: pnpm exec check-should-run-type-checks
 
-      - name: Exit if no relevant changes
-        if: steps.check_diff_type.outputs.should_run != 'true'
-        run: exit 0
-
       - name: Install Playwright Browsers
-        if: matrix.command == 'test:browser'
+        if: matrix.command == 'test:browser' && steps.check_diff_type.outputs.should_run == 'true'
         run: pnpm exec playwright install chromium
 
       - name: Run "${{ matrix.command }}"
-        if: matrix.command != 'test:browser'
+        if: matrix.command != 'test:browser' && steps.check_diff_type.outputs.should_run == 'true'
         run: pnpm run ${{ matrix.command }}
 
       # Source - https://stackoverflow.com/a/71583518
       - name: Run 'test:browser' with retry
-        if: matrix.command == 'test:browser'
+        if: matrix.command == 'test:browser' && steps.check_diff_type.outputs.should_run == 'true'
         uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
         with:
           timeout_minutes: 10
@@ -83,7 +79,7 @@ jobs:
           command: pnpm run ${{ matrix.command }}
 
       - name: Upload coverage reports to Codecov
-        if: matrix.command == 'test:cov'
+        if: matrix.command == 'test:cov' && steps.check_diff_type.outputs.should_run == 'true'
         uses: codecov/codecov-action@e79a6962e0d4c0c17b229090214935d2e33f8354 # v6.0.1
         with:
           fail_ci_if_error: true
