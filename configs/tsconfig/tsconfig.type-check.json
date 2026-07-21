@@ -37,19 +37,24 @@
     "checkJs": true,
 
     // Interop Constraints
-    "allowSyntheticDefaultImports": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "allowImportingTsExtensions": false,
-
-    "erasableSyntaxOnly": false,
     "verbatimModuleSyntax": false,
 
     // Don't include @types/* by default
     "types": [],
 
-    "lib": ["ESNext", "DOM"],
+    "lib": ["ESNext"],
+
+    // Stock lib by default. The generated `@typescript/lib-*` packages
+    // (installed for dogfooding / lib validation) would otherwise be picked up
+    // implicitly by every tsc run once `typescript` is in their peer range,
+    // imposing the strict lib on build tooling that expects the stock lib.
+    // Enabled explicitly only in the root dogfood tsconfig and the standalone
+    // `tsconfig.lib-check*.json`.
+    "libReplacement": false,
 
     // Completeness
     "skipLibCheck": true

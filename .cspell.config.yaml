@@ -4,12 +4,43 @@ allowCompoundWords: true
 caseSensitive: false
 ignoreRandomStrings: true
 words:
+  - branded
+  - corepack
+  - cspell
+  - dedent
+  - destructures
+  - esbuild
+  - esnext
+  - jiti
+  - libname
+  - merchantablity
+  - mtsx
+  - napi
   - noshiro
+  - oxfmtrc
+  - parenthesization
+  - strictify
   - testw
+  - tsbuildinfo
+  - tsconfigs
   - tscw
+  - tslib
+  - tsup
+  - tsx
+  - unrs
+  - unshifted
+  - untokenized
 ignorePaths:
   - pnpm-lock.yaml
   - pnpm-workspace.yaml
   - dist/**
   - docs/**
   - agents/common/**
+  - packages/v*/temp/**
+  - packages/v*/output/lib-files/**
+  - packages/v*/output/packages/**
+  - packages/v*/output/diff/**
+  - packages/v*/diff-from-prev/**
+  - packages/v*/output-branded/lib-files/**
+  - packages/v*/output-branded/packages/**
+  - packages/v*/output-branded/diff/**

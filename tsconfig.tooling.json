@@ -1,0 +1,14 @@
+{
+  "extends": "./configs/tsconfig/tsconfig.type-check.json",
+  "compilerOptions": {
+    "types": ["node"]
+  },
+  "include": [
+    "./scripts/**/*",
+    "./configs/**/*",
+    "./eslint.config.mts",
+    "./.markdownlint-cli2.mjs",
+    "./packages/scripts-common/src/**/*.mts",
+    "./packages/v*/scripts/**/*.mts"
+  ]
+}

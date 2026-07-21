@@ -6,32 +6,26 @@ on:
       - 'develop'
       - 'develop*'
     paths-ignore:
-      - '**.md'
-      - '**.txt'
-      - 'agents/**'
-      - 'docs/**'
-      - 'documents/**'
       - '.gitignore'
-      - '.cspell.config.yaml'
-      - '.editorconfig'
-      - '.markdownlint-cli2.mjs'
-      - 'LICENSE'
 
   workflow_dispatch:
 
 jobs:
   test-node-versions:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
 
     strategy:
       fail-fast: false
       matrix:
-        node-version: ['22.18.0', '22.22.2', '24.14.1', '25.9.0']
+        node-version: ['22.22.2', '24.17.0', '26.3.1']
 
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Fetch main
+        run: git fetch origin main # To allow check-should-run-type-checks to get the diff from main
 
       - name: Install pnpm
         uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
@@ -48,8 +42,12 @@ jobs:
       - name: Verify installation
         run: pnpm list
 
-      - name: Build
-        run: pnpm run build
+      # NOTE: To include this workflow in the branch protection rule status check,
+      # skip each step instead of skipping the entire workflow with paths-ignore.
+      - name: Check diff
+        id: check_diff_type
+        run: pnpm exec check-should-run-type-checks
 
-      - name: Test
-        run: pnpm run test
+      - name: Run type-check
+        if: steps.check_diff_type.outputs.should_run == 'true'
+        run: pnpm run ws:type-check

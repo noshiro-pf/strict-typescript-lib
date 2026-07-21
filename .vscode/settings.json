@@ -1,0 +1,51 @@
+{
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
+  // このワークスペースにおいて、Prettierによる自動整形を明示的に無効化する
+  "prettier.enable": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.oxc": "always" // run lint fixes after
+  },
+
+  // このリポジトリ内でのみ、言語別のデフォルトフォーマッタを oxc に上書き
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "[markdown]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+    "diffEditor.ignoreTrimWhitespace": false
+  },
+  "[html]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[yml]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+    "diffEditor.ignoreTrimWhitespace": true
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+    "diffEditor.ignoreTrimWhitespace": true
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "id": 13393641,
+  "id": 17363923,
   "name": "main",
   "target": "branch",
   "enforcement": "active",
@@ -7,11 +7,6 @@
     {
       "actor_id": 5,
       "actor_type": "RepositoryRole",
-      "bypass_mode": "always"
-    },
-    {
-      "actor_id": 1442563,
-      "actor_type": "Integration",
       "bypass_mode": "always"
     }
   ],
@@ -50,47 +45,31 @@
         "do_not_enforce_on_create": true,
         "required_status_checks": [
           {
-            "context": "style-check (check:ext)",
-            "integration_id": 15368
-          },
-          {
             "context": "style-check (cspell)",
             "integration_id": 15368
           },
           {
-            "context": "style-check (doc)",
+            "context": "style-check (md)",
             "integration_id": 15368
           },
           {
-            "context": "style-check (fmt:full)",
+            "context": "style-check (fmt)",
             "integration_id": 15368
           },
           {
-            "context": "lint-and-build (build)",
+            "context": "type-check (check:root)",
             "integration_id": 15368
           },
           {
-            "context": "lint-and-build (lint:fix)",
+            "context": "type-check (lint:fix)",
             "integration_id": 15368
           },
           {
-            "context": "lint-and-build (codemod:full)",
+            "context": "type-check (ws:type-check)",
             "integration_id": 15368
           },
           {
-            "context": "test (test)",
-            "integration_id": 15368
-          },
-          {
-            "context": "test (test:browser)",
-            "integration_id": 15368
-          },
-          {
-            "context": "test (test:cov)",
-            "integration_id": 15368
-          },
-          {
-            "context": "test-node-versions (22.18.0)",
+            "context": "type-check (codemod:full)",
             "integration_id": 15368
           },
           {
@@ -98,11 +77,11 @@
             "integration_id": 15368
           },
           {
-            "context": "test-node-versions (24.14.1)",
+            "context": "test-node-versions (24.17.0)",
             "integration_id": 15368
           },
           {
-            "context": "test-node-versions (25.9.0)",
+            "context": "test-node-versions (26.3.1)",
             "integration_id": 15368
           }
         ]
