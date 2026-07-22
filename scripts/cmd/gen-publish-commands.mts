@@ -219,7 +219,7 @@ const HEADER = (versionName: string): string =>
       console.info(\`$ \${cmd}\`);
       const result = await $(cmd, { cwd: versionRoot });
       if (Result.isErr(result)) {
-        console.error(\`  FAILED: \${result.value.message.split('\\n').slice(0, 3).join(' ')}\`);
+        console.error(\`  FAILED: \${result.value.message.slice(0, 300)}\`);
       }
       await sleep(DELAY_MS);
     };

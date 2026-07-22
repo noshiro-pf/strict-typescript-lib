@@ -2,6 +2,11 @@
 
 In addition to the common instructions above (vendored into `agents/common-rules.md` from the common-agent-config repository), project-specific rules are shown below.
 
+## Pull requests
+
+Before pushing a branch for a pull request, run `pnpm run check-all` and confirm
+it completes with **no errors**. Push the branch only after it passes.
+
 ## Project overview
 
 `strict-typescript-lib` generates a **strict** rewrite of TypeScript's built-in
