@@ -2,7 +2,7 @@ import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
 import { Json, Result, pipe } from 'ts-data-forge';
 import * as t from 'ts-fortress';
-import { makeEmptyDir, pathExists } from 'ts-repo-utils';
+import { $, makeEmptyDir, pathExists } from 'ts-repo-utils';
 import { type Context } from '../context.mjs';
 import { type ConverterConfig } from '../convert-dts/common.mjs';
 import { typeUtilsName } from '../convert-dts/constants.mjs';
@@ -146,8 +146,13 @@ const createPackages = async (
             sideEffects: false,
             type: 'module',
             types: './index.d.ts',
-            peerDependencies: {
+            // ts-type-forge is a real runtime-resolvable dependency: the
+            // generated lib references its types via `import('ts-type-forge')`,
+            // so consumers must have it installed (not merely provide it).
+            dependencies: {
               [typeUtilsName]: tsTypeUtilsRange,
+            },
+            peerDependencies: {
               typescript: versionConfig.typescriptVersionRange,
             },
           }),
@@ -166,7 +171,103 @@ const createPackages = async (
     }
   }
 
+  await genUmbrellaPackage(ctx, config, packageDirList, subPackageVersion);
+
   return Result.ok(undefined);
+};
+
+/**
+ * Generates the umbrella meta-package (`output/lib` / `output-branded/lib`).
+ *
+ * Installing it alone (`npm install -D strict-ts-lib-vX.Y`) pulls in every
+ * per-lib package as a `@typescript/lib-*` alias dependency, so TypeScript's
+ * library-replacement picks up the strict declarations without the consumer
+ * wiring each alias by hand. It carries no `.d.ts` of its own.
+ */
+const genUmbrellaPackage = async (
+  ctx: Context,
+  config: ConverterConfig,
+  packageDirList: readonly Readonly<{
+    filename: string;
+    packageRelativePath: string;
+  }>[],
+  version: string,
+): Promise<void> => {
+  const { paths, versionConfig } = ctx;
+
+  const umbrellaDir = path.resolve(
+    paths.strictTsLib[config.useBrandedNumber ? 'outputBranded' : 'output']
+      .packages.$,
+    '..',
+    'lib',
+  );
+
+  const libPrefix =
+    `${versionConfig.libName}${config.useBrandedNumber ? '-branded' : ''}` as const;
+
+  // `@typescript/lib-<name>` (dots -> dashes) resolves to our per-lib package.
+  const dependencies = Object.fromEntries(
+    packageDirList
+      .map(({ packageRelativePath }) =>
+        packageRelativePath.replaceAll('/', '-'),
+      )
+      .toSorted((a, b) => a.localeCompare(b))
+      .map(
+        (suffix) =>
+          [
+            `@typescript/lib-${suffix}`,
+            `npm:${libPrefix}-${suffix}@${version}`,
+          ] as const,
+      ),
+  );
+
+  await makeEmptyDir(umbrellaDir);
+
+  await fs.writeFile(
+    path.resolve(umbrellaDir, 'package.json'),
+    JSON.stringify({
+      name: libPrefix,
+      version,
+      private: false,
+      description: `Strict TypeScript ${versionConfig.typescriptVersion} standard library (all libs, single install)`,
+      repository: { type: 'git', url: versionConfig.repo },
+      license: versionConfig.license,
+      author: 'noshiro-pf <noshiro.pf@gmail.com>',
+      sideEffects: false,
+      type: 'module',
+      dependencies,
+      peerDependencies: {
+        typescript: versionConfig.typescriptVersionRange,
+      },
+    }),
+  );
+
+  const repoUrl = versionConfig.repo.replace(/\.git$/u, '');
+
+  await fs.writeFile(
+    path.resolve(umbrellaDir, 'README.md'),
+    [
+      `# ${libPrefix}`,
+      '',
+      `Strict rewrite of TypeScript ${versionConfig.typescriptVersion}'s built-in`,
+      'standard library declarations, bundled as a single package.',
+      '',
+      '```sh',
+      `npm install -D ${libPrefix}`,
+      '```',
+      '',
+      'Installing this package pulls in the strict `@typescript/lib-*` replacements',
+      'for every built-in library, so TypeScript picks them up automatically',
+      '(library replacement is on by default since TypeScript 4.5).',
+      '',
+      `See <${repoUrl}> for usage and version support.`,
+      '',
+    ].join('\n'),
+  );
+
+  await $(`pnpm -w run fmt`);
+
+  console.log(`${umbrellaDir} (umbrella package) generated.`);
 };
 
 const getPackageDirListFromLibFiles = async (

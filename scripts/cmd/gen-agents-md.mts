@@ -10,6 +10,21 @@ const localRulesPath = path.resolve(projectRootPath, 'agents/local-rules.md');
 
 const outputPath = path.resolve(projectRootPath, 'AGENTS.md');
 
+/**
+ * Common-rules sections that describe a generic application (Rollup build,
+ * `src/` entry points, React) and do not apply to this lib-generator repo.
+ * They are omitted from the generated `AGENTS.md` while `common-rules.md` stays
+ * pristine — it is vendored and shared with other repos via
+ * `pnpm run agents:sync`, so it must not be edited here. Accurate build and
+ * layout guidance for this repo lives in `agents/local-rules.md` instead.
+ */
+const omittedCommonSections: readonly string[] = [
+  'Essential Development Commands',
+  'Project Structure & Module Organization',
+  'TypeScript/React File Organization',
+  'React Coding Style',
+] as const;
+
 const header = [
   '<!-- AUTO-GENERATED FILE. DO NOT EDIT DIRECTLY. -->',
   '<!--',
@@ -55,12 +70,18 @@ export const genAgentsMd = async (): Promise<Result<undefined, string>> => {
 
     const localContent = await fs.readFile(localRulesPath, 'utf8');
 
+    // Drop sections that do not apply to this repo (see `omittedCommonSections`).
+    const commonContentFiltered = stripSections(
+      commonContent,
+      omittedCommonSections,
+    );
+
     // Demote the local part's headings by one level so the concatenated
     // document keeps a single top-level heading (markdownlint MD025).
     const localContentDemoted = demoteHeadings(localContent);
 
     const output =
-      `${header}\n${commonContent.trimEnd()}\n${separator}\n${localContentDemoted.trimEnd()}\n` as const;
+      `${header}\n${commonContentFiltered.trimEnd()}\n${separator}\n${localContentDemoted.trimEnd()}\n` as const;
 
     await fs.writeFile(outputPath, output, 'utf8');
 
@@ -74,6 +95,50 @@ export const genAgentsMd = async (): Promise<Result<undefined, string>> => {
       `❌ Failed to generate AGENTS.md: ${unknownToString(error)}`,
     );
   }
+};
+
+/**
+ * Removes the markdown sections whose heading title is in `titles`, along with
+ * everything under them up to the next heading of the same or shallower level.
+ * Fenced code blocks are ignored when detecting headings.
+ */
+const stripSections = (markdown: string, titles: readonly string[]): string => {
+  let mut_inFence = false;
+
+  let mut_skipLevel = 0; // 0 = not currently skipping
+
+  return markdown
+    .split('\n')
+    .map((line) => {
+      const isFence = line.trimStart().startsWith('```');
+
+      if (isFence) {
+        mut_inFence = !mut_inFence;
+      }
+
+      const heading =
+        !mut_inFence && !isFence ? /^(#{1,6}) +(.+?) *$/u.exec(line) : null;
+
+      const level = heading?.[1]?.length ?? 0;
+
+      const title = heading?.[2]?.trim() ?? '';
+
+      if (level > 0) {
+        if (mut_skipLevel !== 0 && level <= mut_skipLevel) {
+          mut_skipLevel = 0; // the skipped section has ended
+        }
+
+        if (mut_skipLevel === 0 && titles.includes(title)) {
+          mut_skipLevel = level; // start skipping this section
+
+          return undefined;
+        }
+      }
+
+      return mut_skipLevel === 0 ? line : undefined;
+    })
+    .filter((line) => line !== undefined)
+    .join('\n');
 };
 
 /**

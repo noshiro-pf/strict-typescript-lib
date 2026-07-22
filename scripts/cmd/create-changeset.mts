@@ -1,16 +1,21 @@
 #!/usr/bin/env tsx
 
 /**
- * Creates a single changeset that bumps every publishable package (optionally
- * restricted to a subset of TypeScript versions) at once.
+ * Creates a single changeset that bumps the per-version source packages
+ * (optionally restricted to a subset of TypeScript versions) at once.
  *
  * This repo publishes ~1700 fine-grained lib packages (one per lib file, for
- * each TypeScript version, branded and non-branded). They are generated under
- * `packages/vX.Y/output/packages/**` and `packages/vX.Y/output-branded/packages/**`
- * and are NOT pnpm workspace members, so `changeset add`'s interactive picker is
- * unusable at that scale. This script discovers them from disk and writes the
- * changeset frontmatter directly. Each package's version is taken from its
- * `packages/vX.Y/` path segment.
+ * each TypeScript version, branded and non-branded), generated under
+ * `packages/vX.Y/output/packages/**` and `packages/vX.Y/output-branded/packages/**`.
+ * Those generated packages are NOT pnpm workspace members, so `changeset
+ * version` cannot bump them directly. Instead, each version's single source
+ * harness package `strict-ts-lib-vX.Y-source` (`packages/vX.Y/package.json`, a
+ * private workspace member) is the version carrier: `ws:gen` stamps its version
+ * onto every generated sub-package of that version. So the changeset targets
+ * those `-source` packages — `changeset version` bumps them (private, so it
+ * does not publish them), and the next `ws:gen` propagates the new version.
+ * Targeting the generated names instead would be lost on regeneration, because
+ * they are re-stamped from the (unbumped) `-source` version.
  *
  * Usage:
  *   tsx scripts/cmd/create-changeset.mts <major|minor|patch> [summary...] [--version=<range>] [--dry-run]
@@ -168,18 +173,16 @@ const parsePackageJson = (text: string): PackageJson | undefined => {
 };
 
 /**
- * Reads a `package.json` and returns its `name` when the package is
- * publishable (i.e. not `private`); otherwise `undefined`.
+ * Reads a version harness `package.json` (e.g. `packages/v5.9/package.json`)
+ * and returns its `name` (`strict-ts-lib-vX.Y-source`). These are private
+ * workspace members and the version carriers, so `changeset version` bumps
+ * their version — the value `ws:gen` stamps onto every generated sub-package —
+ * without publishing them.
  */
-const readPublishableName = async (
+const readSourcePackageName = async (
   packageJsonPath: string,
-): Promise<string | undefined> => {
-  const pkg = parsePackageJson(await fs.readFile(packageJsonPath, 'utf8'));
-
-  if (pkg === undefined) return undefined;
-
-  return pkg.name !== undefined && pkg.private !== true ? pkg.name : undefined;
-};
+): Promise<string | undefined> =>
+  parsePackageJson(await fs.readFile(packageJsonPath, 'utf8'))?.name;
 
 /** Package names to skip, from `.changeset/config.json`'s `ignore` field. */
 const readIgnoredNames = async (): Promise<ReadonlySet<string>> => {
@@ -231,7 +234,9 @@ const main = async (): Promise<void> => {
     ? summaryParts.join(' ')
     : (`Bump ${scopeLabel === 'all' ? 'all packages' : `packages matching "${scopeLabel}"`} (${bumpArg}).` as const);
 
-  const globbed = await glob(path.join(packagesDir, '**', 'package.json'), {
+  // Only the per-version source packages (`packages/vX.Y/package.json`), which
+  // are the workspace members `changeset version` can bump.
+  const globbed = await glob(path.join(packagesDir, 'v*', 'package.json'), {
     ignore: ['**/node_modules/**'],
   });
 
@@ -249,7 +254,7 @@ const main = async (): Promise<void> => {
       matchesVersion(versionFromPath(p)),
   );
 
-  const resolved = await Promise.all(scopedPaths.map(readPublishableName));
+  const resolved = await Promise.all(scopedPaths.map(readSourcePackageName));
 
   const names = resolved
     .filter((n): n is string => n !== undefined)
@@ -258,7 +263,7 @@ const main = async (): Promise<void> => {
 
   if (Arr.isFixedLengthArray(names, 0)) {
     console.error(
-      `No publishable packages matched (scope: ${scopeLabel}). Check --version.`,
+      `No source packages matched (scope: ${scopeLabel}). Check --version.`,
     );
 
     process.exit(1);
@@ -266,13 +271,13 @@ const main = async (): Promise<void> => {
 
   if (dryRun) {
     console.log(
-      `[dry-run] would bump ${names.length} packages (${bumpArg}, scope: ${scopeLabel}). First 5:\n  ${Arr.take(names, 5).join('\n  ')}`,
+      `[dry-run] would bump ${names.length} source package(s) (${bumpArg}, scope: ${scopeLabel}):\n  ${Arr.take(names, 5).join('\n  ')}`,
     );
 
     return;
   }
 
-  const frontmatter = names.map((n) => `"${n}": ${bumpArg}`).join('\n');
+  const frontmatter = names.map((n) => `'${n}': ${bumpArg}`).join('\n');
 
   const content = `---\n${frontmatter}\n---\n\n${summary}\n` as const;
 
@@ -289,7 +294,7 @@ const main = async (): Promise<void> => {
   await fs.writeFile(filePath, content, 'utf8');
 
   console.log(
-    `Wrote ${path.relative(projectRootPath, filePath)} bumping ${names.length} packages (${bumpArg}, scope: ${scopeLabel}).`,
+    `Wrote ${path.relative(projectRootPath, filePath)} bumping ${names.length} source package(s) (${bumpArg}, scope: ${scopeLabel}).`,
   );
 };
 
