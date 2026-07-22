@@ -55,7 +55,8 @@
     "ws:gen:packages": "tsx ./scripts/cmd/ws-gen-packages-stages.mts",
     "ws:type-check": "pnpm run --recursive --if-present type-check",
     "z:eslint": "NODE_OPTIONS='--max-old-space-size=6144' TIMING=1 eslint",
-    "publish:packages": "tsx ./scripts/cmd/publish-packages.mts"
+    "publish:packages": "tsx ./scripts/cmd/publish-packages.mts",
+    "gen:publish-commands": "tsx ./scripts/cmd/gen-publish-commands.mts"
   },
   "devDependencies": {
     "@changesets/cli": "2.31.0",

@@ -10,5 +10,6 @@
     "./.markdownlint-cli2.mjs",
     "./packages/scripts-common/src/**/*.mts",
     "./packages/v*/scripts/**/*.mts"
-  ]
+  ],
+  "exclude": ["./packages/v*/scripts/publish-commands.mts"]
 }

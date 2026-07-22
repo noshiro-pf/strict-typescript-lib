@@ -36,10 +36,7 @@ const checkAll = async (): Promise<void> => {
   await logStep({
     startMessage: 'Generating strict-typescript-lib outputs (gen)',
     action: () =>
-      runCmdStep(
-        'pnpm run ws:gen:with-codemod-fixed',
-        'Generation of lib files failed',
-      ),
+      runCmdStep('pnpm run ws:gen', 'Generation of lib files failed'),
     successMessage: 'Generation completed',
   });
 
