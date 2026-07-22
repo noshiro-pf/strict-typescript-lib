@@ -9,6 +9,6 @@
   },
   "dependencies": {
     "ts-type-forge": "7.2.1",
-    "typescript": "5.2.2"
+    "typescript": "7.0.2"
   }
 }
