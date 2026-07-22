@@ -9,11 +9,15 @@
  * (npm 2FA prompts per package). This script:
  *
  * 1. discovers every publishable package (`private !== true`, with a `name` and
- *    `version`) under the `output*` trees,
- * 2. skips those whose exact `name@version` is already on the registry
- *    (`npm view`), so it is safe to re-run and it naturally covers both the
- *    first release and later additions (e.g. a new `es2027` lib file), and
- * 3. publishes the rest with bounded concurrency and retries.
+ *    `version`) under the `output*` trees, and
+ * 2. runs `npm publish` for each, treating "you cannot publish over the
+ *    previously published version" as an (idempotent) skip.
+ *
+ * Because it skips already-published versions, it is safe to re-run and it
+ * naturally covers both the first release and later additions (e.g. a new
+ * `es2027` lib file). It does NOT pre-query the registry with `npm view`: for a
+ * first release that would double the request count and make rate limiting
+ * worse.
  *
  * Authentication is taken from the ambient npm config: set an npm **automation
  * token** (which bypasses 2FA) via `NODE_AUTH_TOKEN` / an `.npmrc` line like
@@ -21,10 +25,16 @@
  * without an automation token, pass `--otp=<code>` (a single OTP may expire
  * before all packages are published, so an automation token is recommended).
  *
- * Publishing this many packages can trip npm's rate limit (HTTP 429), so
- * publishes are throttled: a bounded number run at once (`--concurrency`), each
- * worker waits `--delay` ms between publishes, and a failed publish is retried
- * with exponential backoff (longer when the failure looks like a 429).
+ * ## Rate limiting (HTTP 429)
+ *
+ * Publishing ~1700 *new* package names is exactly what npm's anti-abuse limits
+ * target, so 429s are expected. This script defends against them by publishing
+ * with low concurrency, a delay between publishes, and long exponential backoff
+ * on 429 (up to `MAX_BACKOFF_MS`), retrying each package up to `MAX_ATTEMPTS`
+ * times. Tune with `--concurrency` / `--delay`. If a run still gives up on some
+ * packages, just re-run it — already-published packages are skipped, so it
+ * resumes where it left off. For a very large first release you may need
+ * several runs spread over time (or ask npm support to raise the limit).
  *
  * Usage:
  *   tsx scripts/cmd/publish-packages.mts [--dry-run] [--otp=<code>] [--concurrency=<n>] [--delay=<ms>]
@@ -40,19 +50,35 @@ import * as t from 'ts-fortress';
 import { $, glob } from 'ts-repo-utils';
 import { projectRootPath } from '../project-root-path.mjs';
 
-// Kept modest to stay under npm's publish rate limit (429).
-const DEFAULT_CONCURRENCY = 4;
+// Low, to stay under npm's publish rate limit (429).
+const DEFAULT_CONCURRENCY = 2;
 
 // Delay each worker waits before every publish, spacing out requests.
 const DEFAULT_DELAY_MS = 250;
 
-const MAX_ATTEMPTS = 5;
+const MAX_ATTEMPTS = 8;
 
+// Backoff base for ordinary transient failures.
 const RETRY_BASE_DELAY_MS = 2000;
+
+// Backoff base for rate-limit (429) failures — much longer, to wait out the
+// limit window rather than hammering it again.
+const RATE_LIMIT_BASE_DELAY_MS = 15_000;
+
+// Cap on any single backoff wait.
+const MAX_BACKOFF_MS = 300_000;
 
 const registry = process.env['NPM_REGISTRY'] ?? 'https://registry.npmjs.org/';
 
+/** npm's "version already exists" responses (safe to treat as a skip). */
+const ALREADY_PUBLISHED_RE =
+  /cannot publish over|previously published|cannot modify pre-?existing version|EPUBLISHCONFLICT/iu;
+
+const RATE_LIMIT_RE = /\b429\b|too many requests/iu;
+
 type Pkg = Readonly<{ name: string; version: string; dir: string }>;
+
+type PublishStatus = 'published' | 'skipped';
 
 const main = async (): Promise<void> => {
   const args = Arr.skip(process.argv, 2);
@@ -83,32 +109,14 @@ const main = async (): Promise<void> => {
     process.exit(1);
   }
 
-  console.info(
-    `Found ${packages.length} publishable packages. Checking ${registry} ...`,
-  );
-
-  const statuses = await mapWithConcurrency(
-    packages,
-    async (pkg) => ({ pkg, published: await isAlreadyPublished(pkg) }),
-    concurrency,
-  );
-
-  const toPublish = statuses.filter((s) => !s.published).map((s) => s.pkg);
-
-  console.info(
-    `${packages.length - toPublish.length} already published, ${toPublish.length} to publish.`,
-  );
-
-  if (!Arr.isNonEmpty(toPublish)) {
-    console.info('Nothing to publish. ✅');
-
-    return;
-  }
+  console.info(`Found ${packages.length} publishable packages.`);
 
   if (dryRun) {
-    console.info('[dry-run] would publish:');
+    console.info(
+      '[dry-run] would attempt to publish (already-published versions are skipped at runtime):',
+    );
 
-    for (const pkg of toPublish) {
+    for (const pkg of packages) {
       console.info(`  ${pkg.name}@${pkg.version}`);
     }
 
@@ -116,19 +124,27 @@ const main = async (): Promise<void> => {
   }
 
   console.info(
-    `Publishing with concurrency ${concurrency}, ${delayMs}ms delay between publishes ...`,
+    `Publishing to ${registry} (concurrency ${concurrency}, ${delayMs}ms delay) ...`,
   );
 
   const results = await mapWithConcurrency(
-    toPublish,
-    async (pkg) => ({ pkg, result: await publishWithRetry(pkg, otp, delayMs) }),
+    packages,
+    async (pkg) => ({ pkg, result: await publishOne(pkg, otp, delayMs) }),
     concurrency,
   );
+
+  const published = results.filter(
+    ({ result }) => Result.isOk(result) && result.value === 'published',
+  ).length;
+
+  const skipped = results.filter(
+    ({ result }) => Result.isOk(result) && result.value === 'skipped',
+  ).length;
 
   const failures = results.filter(({ result }) => Result.isErr(result));
 
   console.info(
-    `\nPublished ${results.length - failures.length}/${results.length}.`,
+    `\nPublished ${published}, already-published ${skipped}, failed ${failures.length} (of ${results.length}).`,
   );
 
   if (Arr.isNonEmpty(failures)) {
@@ -141,13 +157,13 @@ const main = async (): Promise<void> => {
     }
 
     console.error(
-      '\nRe-run this command to retry (already-published are skipped).',
+      '\nRe-run this command to retry — already-published packages are skipped.',
     );
 
     process.exit(1);
   }
 
-  console.info('All packages published. ✅');
+  console.info('Done. ✅');
 };
 
 /** Reads a `--name=value` flag from the argument list. */
@@ -234,28 +250,17 @@ const collectPublishablePackages = async (): Promise<readonly Pkg[]> => {
     .toSorted((a, b) => a.name.localeCompare(b.name));
 };
 
-/** True when `name@version` already exists on the registry. */
-const isAlreadyPublished = async (pkg: Pkg): Promise<boolean> => {
-  const result = await $(
-    `npm view ${pkg.name}@${pkg.version} version --registry=${registry}`,
-    { silent: true },
-  );
-
-  // A 404 (package/version not found) resolves to Err -> not published yet.
-  return Result.isOk(result) && result.value.stdout.trim() !== '';
-};
-
 /**
  * Publishes one package, throttled and with retries. Waits `delayMs` before
- * each attempt to space out requests, and backs off exponentially on failure
- * (longer when the failure looks like a rate limit / HTTP 429).
+ * each attempt to space out requests. An "already published" response is a
+ * successful skip; a 429 backs off for much longer than other failures.
  */
-const publishWithRetry = async (
+const publishOne = async (
   pkg: Pkg,
   otp: string | undefined,
   delayMs: number,
   attempt = 1,
-): Promise<Result<undefined, string>> => {
+): Promise<Result<PublishStatus, string>> => {
   const otpFlag = otp === undefined ? '' : (` --otp=${otp}` as const);
 
   if (delayMs > 0) {
@@ -264,35 +269,53 @@ const publishWithRetry = async (
 
   const result = await $(
     `npm publish --access public --registry=${registry}${otpFlag}`,
-    { cwd: pkg.dir },
+    { cwd: pkg.dir, silent: true },
   );
 
   if (Result.isOk(result)) {
     console.info(`  published ${pkg.name}@${pkg.version}`);
 
-    return Result.ok(undefined);
+    return Result.ok('published');
+  }
+
+  const message = result.value.message;
+
+  if (ALREADY_PUBLISHED_RE.test(message)) {
+    return Result.ok('skipped');
   }
 
   if (attempt >= MAX_ATTEMPTS) {
-    return Result.err(result.value.message);
+    return Result.err(summarizeError(message));
   }
 
-  const rateLimited = /\b429\b|too many requests/iu.test(result.value.message);
+  const rateLimited = RATE_LIMIT_RE.test(message);
 
-  // Exponential backoff; start higher for rate limits so we actually wait out
-  // the window instead of hammering it again.
-  const backoffMs =
-    (rateLimited ? RETRY_BASE_DELAY_MS * 4 : RETRY_BASE_DELAY_MS) *
-    2 ** (attempt - 1);
+  const backoffMs = Math.min(
+    (rateLimited ? RATE_LIMIT_BASE_DELAY_MS : RETRY_BASE_DELAY_MS) *
+      2 ** (attempt - 1),
+    MAX_BACKOFF_MS,
+  );
 
   console.info(
-    `  retrying ${pkg.name}@${pkg.version} in ${backoffMs}ms (attempt ${attempt + 1}/${MAX_ATTEMPTS}${rateLimited ? ', rate-limited' : ''})`,
+    `  retrying ${pkg.name}@${pkg.version} in ${Math.round(backoffMs / 1000)}s (attempt ${attempt + 1}/${MAX_ATTEMPTS}${rateLimited ? ', rate-limited' : ''})`,
   );
 
   await sleep(backoffMs);
 
-  return publishWithRetry(pkg, otp, delayMs, attempt + 1);
+  return publishOne(pkg, otp, delayMs, attempt + 1);
 };
+
+/** Condenses a multi-line npm error into a short single line for the summary. */
+const summarizeError = (message: string): string =>
+  Arr.take(
+    message
+      .split('\n')
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0),
+    3,
+  )
+    .join(' | ')
+    .slice(0, 300);
 
 const sleep = (ms: number): Promise<void> =>
   new Promise((resolve) => {
