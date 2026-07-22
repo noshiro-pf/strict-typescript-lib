@@ -27,6 +27,7 @@ words:
   - tslib
   - tsup
   - tsx
+  - unbumped
   - unrs
   - unshifted
   - untokenized
