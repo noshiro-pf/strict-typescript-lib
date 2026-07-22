@@ -39,18 +39,19 @@
 import { randomUUID } from 'node:crypto';
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
-import { Arr, Json, Num, Result } from 'ts-data-forge';
+import { Arr, Json, Result } from 'ts-data-forge';
 import * as t from 'ts-fortress';
 import { glob } from 'ts-repo-utils';
 import { projectRootPath } from '../project-root-path.mjs';
+import {
+  parseVersionExpr,
+  versionFromPath,
+  type Version,
+} from '../version-filter.mjs';
 
 const BUMP_TYPES = ['major', 'minor', 'patch'] as const;
 
 type BumpType = (typeof BUMP_TYPES)[number];
-
-type Version = Readonly<{ major: number; minor: number }>;
-
-type VersionPredicate = (v: Version) => boolean;
 
 const changesetDir = path.join(projectRootPath, '.changeset');
 
@@ -74,86 +75,6 @@ type PackageJson = t.TypeOf<typeof packageJsonType>;
 const changesetConfigType = t.record({
   ignore: t.optional(t.array(t.string())),
 });
-
-/** Extracts the version from a `.../packages/vX.Y/...` path, if present. */
-const versionFromPath = (filePath: string): Version | undefined => {
-  const m = /[/\\]v(\d+)\.(\d+)[/\\]/u.exec(filePath);
-
-  return m === null ? undefined : { major: Number(m[1]), minor: Number(m[2]) };
-};
-
-const compareVersion = (a: Version, b: Version): number =>
-  a.major !== b.major ? a.major - b.major : a.minor - b.minor;
-
-const compareByOp = (a: number, b: number, op: string): boolean =>
-  op === '>='
-    ? a >= b
-    : op === '<='
-      ? a <= b
-      : op === '>'
-        ? a > b
-        : op === '<'
-          ? a < b
-          : a === b; // '='
-
-/**
- * Parses one `--version` term (e.g. `5`, `5.9`, `>=5.3`) into a predicate, or
- * `undefined` when malformed. A bare version (no comparator) matches exactly
- * (`5.9`) or the whole major line (`5`); a comparator compares at minor
- * granularity when a minor is given, otherwise at major granularity.
- */
-const OPERATORS = ['>=', '<=', '>', '<', '='] as const;
-
-const parseVersionTerm = (term: string): VersionPredicate | undefined => {
-  const cleaned = term.replaceAll(/\s+/gu, '');
-
-  const op = OPERATORS.find((o) => cleaned.startsWith(o));
-
-  const rest = op === undefined ? cleaned : cleaned.slice(op.length);
-
-  const digits = rest.startsWith('v') ? rest.slice(1) : rest;
-
-  const [majorStr, minorStr, ...extra] = digits.split('.');
-
-  if (
-    !Arr.isEmpty(extra) ||
-    majorStr === undefined ||
-    !/^\d+$/u.test(majorStr) ||
-    (minorStr !== undefined && !/^\d+$/u.test(minorStr))
-  ) {
-    return undefined;
-  }
-
-  const major = Result.unwrapOkOr(Num.safeParseFloat(majorStr), Number.NaN);
-
-  const minor =
-    minorStr === undefined
-      ? undefined
-      : Result.unwrapOkOr(Num.safeParseFloat(minorStr), Number.NaN);
-
-  if (op === undefined) {
-    return minor === undefined
-      ? (v) => v.major === major
-      : (v) => v.major === major && v.minor === minor;
-  }
-
-  return minor === undefined
-    ? (v) => compareByOp(v.major, major, op)
-    : (v) => compareByOp(compareVersion(v, { major, minor }), 0, op);
-};
-
-/** Parses a full `--version` expression (`&`-separated terms, all must hold). */
-const parseVersionExpr = (expr: string): VersionPredicate | undefined => {
-  const predicates = expr
-    .split('&')
-    .map((s) => s.trim())
-    .filter((s) => s.length > 0)
-    .map(parseVersionTerm);
-
-  return Arr.isEmpty(predicates) || predicates.includes(undefined)
-    ? undefined
-    : (v) => predicates.every((p) => p?.(v) ?? false);
-};
 
 /** Reads a `--name=value` flag from the argument list. */
 const getFlagValue = (
