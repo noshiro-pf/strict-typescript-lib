@@ -32,7 +32,7 @@ Repository permissions:
 - **Actions**: Read (to trigger workflows)
 - **Metadata**: Read (always required)
 
-**Important Note about GitHub Packages**: GitHub Apps cannot have package permissions. If you need to publish packages to GitHub Packages, you must use a Personal Access Token (PAT) with `write:packages` permission instead. See the [GitHub Packages Setup guide](./github-packages-setup.md) for details on configuring package publishing.
+**Note about npm publishing**: this GitHub App is only used to open the Changesets release PR; it does not publish to npm. npm publishing uses a separate npm **automation token** (`NPM_TOKEN`). See the [npm Publishing guide](./npm-publishing.md).
 
 ### Where can this GitHub App be installed?
 
@@ -83,17 +83,17 @@ If workflows still don't trigger:
 3. Check that the secrets and variables are correctly named
 4. Look at the Actions logs for any authentication errors
 
-## GitHub Packages Publishing
+## npm Publishing
 
-This GitHub App setup is specifically for triggering workflows when Changesets creates PRs. However, **GitHub Apps cannot publish packages to GitHub Packages**.
+This GitHub App setup is specifically for triggering workflows when Changesets creates PRs. It does **not** publish packages.
 
 For package publishing, you need:
 
-1. A Personal Access Token (PAT) with `write:packages` permission
-2. Store it as `NPM_TOKEN` in repository secrets
-3. The release workflow will use this token for publishing
+1. An npm **automation token** (bypasses 2FA), created on npmjs.com.
+2. Stored as the `NPM_TOKEN` repository secret.
+3. The release workflow uses this token to publish to the public npm registry.
 
-See the [GitHub Packages Setup guide](./github-packages-setup.md) for complete package publishing configuration.
+See the [npm Publishing guide](./npm-publishing.md) for complete configuration.
 
 ## Security Notes
 

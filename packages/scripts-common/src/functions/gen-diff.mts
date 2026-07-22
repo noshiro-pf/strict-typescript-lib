@@ -54,7 +54,7 @@ export const genDiff = async (
 
     const name = path.basename(file, '.d.ts');
 
-    console.log(filename);
+    console.info(filename);
 
     const args = [
       '--no-index',

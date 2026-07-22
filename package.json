@@ -23,7 +23,7 @@
     "check:root:tooling": "tsc -p ./tsconfig.tooling.json --noEmit",
     "changeset:all": "tsx ./scripts/cmd/create-changeset.mts",
     "changeset:version-packages": "pnpm changeset version && pnpm run ws:gen:packages && pnpm install --no-frozen-lockfile",
-    "changeset:publish": "pnpm run ws:gen:packages && pnpm changeset publish",
+    "changeset:publish": "pnpm run ws:gen:packages && tsx ./scripts/cmd/publish-packages.mts",
     "check-all": "tsx ./scripts/cmd/check-all.mts",
     "codemod": "run-s codemod:uncommitted:as-const fmt codemod:uncommitted:readonly fmt",
     "codemod:diff": "run-s codemod:diff:as-const fmt codemod:diff:readonly fmt",
@@ -54,7 +54,8 @@
     "ws:gen:with-codemod-fixed": "tsx ./scripts/cmd/ws-gen-with-codemod-fixed-stages.mts",
     "ws:gen:packages": "tsx ./scripts/cmd/ws-gen-packages-stages.mts",
     "ws:type-check": "pnpm run --recursive --if-present type-check",
-    "z:eslint": "NODE_OPTIONS='--max-old-space-size=6144' TIMING=1 eslint"
+    "z:eslint": "NODE_OPTIONS='--max-old-space-size=6144' TIMING=1 eslint",
+    "publish:packages": "tsx ./scripts/cmd/publish-packages.mts"
   },
   "devDependencies": {
     "@changesets/cli": "2.31.0",

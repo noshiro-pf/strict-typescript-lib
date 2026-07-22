@@ -4,11 +4,11 @@ export const wrapStartEnd = async (
   fn: () => Promise<UnknownResult>,
   fnName: string,
 ): Promise<UnknownResult> => {
-  console.log(`\nStart ${fnName}`);
+  console.info(`\nStart ${fnName}`);
 
   const res = await fn();
 
-  console.log(`Done.\n`);
+  console.info(`Done.\n`);
 
   return res;
 };

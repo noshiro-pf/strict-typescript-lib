@@ -71,7 +71,7 @@ const createPackages = async (
 
   const packageDirList = await getPackageDirListFromLibFiles(ctx, config);
 
-  console.log(
+  console.info(
     'target directories:',
     packageDirList.map((a) => path.resolve(outDir, a.packageRelativePath)),
   );
@@ -119,7 +119,7 @@ const createPackages = async (
           ).value,
         );
 
-        console.log(`${outputFile} generated.`);
+        console.info(`${outputFile} generated.`);
       }
 
       // package.json
@@ -158,7 +158,7 @@ const createPackages = async (
           }),
         );
 
-        console.log(`${outputFile} generated.`);
+        console.info(`${outputFile} generated.`);
 
         return Result.ok(undefined);
       }
@@ -267,7 +267,7 @@ const genUmbrellaPackage = async (
 
   await $(`pnpm -w run fmt`);
 
-  console.log(`${umbrellaDir} (umbrella package) generated.`);
+  console.info(`${umbrellaDir} (umbrella package) generated.`);
 };
 
 const getPackageDirListFromLibFiles = async (

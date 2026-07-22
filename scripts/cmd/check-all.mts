@@ -6,7 +6,7 @@ import { spawn } from 'node:child_process';
 // generated lib against its pinned typescript@5.x, lint --fix across
 // workspaces, and format the entire repo (must not produce a diff).
 const checkAll = async (): Promise<void> => {
-  console.log('Starting full project validation and build...\n');
+  console.info('Starting full project validation and build...\n');
 
   await logStep({
     startMessage: 'Installing dependencies',
@@ -61,7 +61,7 @@ const checkAll = async (): Promise<void> => {
     successMessage: 'Code formatted',
   });
 
-  console.log('✅ All checks completed successfully!\n');
+  console.info('✅ All checks completed successfully!\n');
 };
 
 const mut_step = { current: 1 };
@@ -75,11 +75,11 @@ const logStep = async ({
   action: () => Promise<void>;
   successMessage: string;
 }>): Promise<void> => {
-  console.log(`${mut_step.current}. ${startMessage}...`);
+  console.info(`${mut_step.current}. ${startMessage}...`);
 
   await action();
 
-  console.log(`✓ ${successMessage}.\n`);
+  console.info(`✓ ${successMessage}.\n`);
 
   mut_step.current += 1;
 };
@@ -101,17 +101,17 @@ const runCmdStep = (cmd: string, errorMsg: string): Promise<void> =>
         return;
       }
 
-      console.log(`${errorMsg}: exit code ${code ?? 'null'}`);
+      console.info(`${errorMsg}: exit code ${code ?? 'null'}`);
 
-      console.log('❌ Check failed');
+      console.info('❌ Check failed');
 
       process.exit(1);
     });
 
     child.on('error', (err) => {
-      console.log(`${errorMsg}: ${err.message}`);
+      console.info(`${errorMsg}: ${err.message}`);
 
-      console.log('❌ Check failed');
+      console.info('❌ Check failed');
 
       process.exit(1);
     });

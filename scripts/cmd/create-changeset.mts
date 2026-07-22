@@ -270,7 +270,7 @@ const main = async (): Promise<void> => {
   }
 
   if (dryRun) {
-    console.log(
+    console.info(
       `[dry-run] would bump ${names.length} source package(s) (${bumpArg}, scope: ${scopeLabel}):\n  ${Arr.take(names, 5).join('\n  ')}`,
     );
 
@@ -293,7 +293,7 @@ const main = async (): Promise<void> => {
 
   await fs.writeFile(filePath, content, 'utf8');
 
-  console.log(
+  console.info(
     `Wrote ${path.relative(projectRootPath, filePath)} bumping ${names.length} source package(s) (${bumpArg}, scope: ${scopeLabel}).`,
   );
 };
