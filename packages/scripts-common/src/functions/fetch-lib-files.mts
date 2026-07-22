@@ -104,7 +104,7 @@ export const fetchLibFiles = async (
 
   const tsVersion = ctx.versionConfig.typescriptVersion;
 
-  console.log(`TypeScript version: ${tsVersion}.\n`);
+  console.info(`TypeScript version: ${tsVersion}.\n`);
 
   const files = await fetchLibFileNameList(tsVersion);
 
@@ -127,7 +127,7 @@ export const fetchLibFiles = async (
 
       await fs.writeFile(path.resolve(copiedDir, file), text);
 
-      console.log(`fetched ${file}`);
+      console.info(`fetched ${file}`);
     }
   } catch (error) {
     console.error(error);

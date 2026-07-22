@@ -67,7 +67,7 @@ const main = async (): Promise<void> => {
     process.exit(1);
   }
 
-  console.log(
+  console.info(
     `Found ${packages.length} publishable packages. Checking ${registry} ...`,
   );
 
@@ -79,21 +79,21 @@ const main = async (): Promise<void> => {
 
   const toPublish = statuses.filter((s) => !s.published).map((s) => s.pkg);
 
-  console.log(
+  console.info(
     `${packages.length - toPublish.length} already published, ${toPublish.length} to publish.`,
   );
 
   if (!Arr.isNonEmpty(toPublish)) {
-    console.log('Nothing to publish. ✅');
+    console.info('Nothing to publish. ✅');
 
     return;
   }
 
   if (dryRun) {
-    console.log('[dry-run] would publish:');
+    console.info('[dry-run] would publish:');
 
     for (const pkg of toPublish) {
-      console.log(`  ${pkg.name}@${pkg.version}`);
+      console.info(`  ${pkg.name}@${pkg.version}`);
     }
 
     return;
@@ -107,7 +107,7 @@ const main = async (): Promise<void> => {
 
   const failures = results.filter(({ result }) => Result.isErr(result));
 
-  console.log(
+  console.info(
     `\nPublished ${results.length - failures.length}/${results.length}.`,
   );
 
@@ -127,7 +127,7 @@ const main = async (): Promise<void> => {
     process.exit(1);
   }
 
-  console.log('All packages published. ✅');
+  console.info('All packages published. ✅');
 };
 
 /** Reads a `--name=value` flag from the argument list. */
@@ -239,7 +239,7 @@ const publishWithRetry = async (
   );
 
   if (Result.isOk(result)) {
-    console.log(`  published ${pkg.name}@${pkg.version}`);
+    console.info(`  published ${pkg.name}@${pkg.version}`);
 
     return Result.ok(undefined);
   }

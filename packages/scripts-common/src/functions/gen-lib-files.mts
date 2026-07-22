@@ -53,7 +53,7 @@ const createDtsFiles = async (
         rewriteTsTypeForgeRefs(convert(filename, config, tsVersion)(content)),
       );
 
-      console.log(`${outputFile} generated.`);
+      console.info(`${outputFile} generated.`);
     }),
   );
 };
