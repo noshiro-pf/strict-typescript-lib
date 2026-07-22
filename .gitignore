@@ -141,4 +141,4 @@ packages/v*/temp/codemod-fixed
 packages/v*/temp/copied-for-diff
 
 # generated per-version manual publish scripts (hand-edited, transient)
-packages/v*/scripts/publish-commands.mts
+# packages/v*/scripts/publish-commands.mts

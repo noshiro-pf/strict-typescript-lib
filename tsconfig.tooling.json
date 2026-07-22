@@ -1,9 +1,7 @@
 {
   "extends": "./configs/tsconfig/tsconfig.type-check.json",
   "compilerOptions": {
-    "types": [
-      "node"
-    ]
+    "types": ["node"]
   },
   "include": [
     "./scripts/**/*",
@@ -13,7 +11,5 @@
     "./packages/scripts-common/src/**/*.mts",
     "./packages/v*/scripts/**/*.mts"
   ],
-  "exclude": [
-    "./packages/v*/scripts/publish-commands.mts"
-  ]
+  "exclude": ["./packages/v*/scripts/publish-commands.mts"]
 }
