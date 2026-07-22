@@ -37,7 +37,10 @@
  * several runs spread over time (or ask npm support to raise the limit).
  *
  * Usage:
- *   tsx scripts/cmd/publish-packages.mts [--dry-run] [--otp=<code>] [--concurrency=<n>] [--delay=<ms>]
+ *   tsx scripts/cmd/publish-packages.mts [--version=<range>] [--dry-run] [--otp=<code>] [--concurrency=<n>] [--delay=<ms>]
+ *
+ * `--version` restricts publishing to a subset of TypeScript versions, using
+ * the same syntax as `changeset:all` (e.g. `5`, `5.9`, `">=5.3&<=5.5"`).
  *
  * Env:
  *   NPM_REGISTRY  registry to publish to (default https://registry.npmjs.org/)
@@ -49,6 +52,7 @@ import { Num, Arr, Json, Result } from 'ts-data-forge';
 import * as t from 'ts-fortress';
 import { $, glob } from 'ts-repo-utils';
 import { projectRootPath } from '../project-root-path.mjs';
+import { parseVersionExpr, versionFromPath } from '../version-filter.mjs';
 
 // Low, to stay under npm's publish rate limit (429).
 const DEFAULT_CONCURRENCY = 2;
@@ -101,15 +105,45 @@ const main = async (): Promise<void> => {
       ? Result.unwrapOkOr(Num.safeParseFloat(delayArg), Number.NaN)
       : DEFAULT_DELAY_MS;
 
-  const packages = await collectPublishablePackages();
+  const versionExpr = getFlagValue(args, 'version');
 
-  if (!Arr.isNonEmpty(packages)) {
-    console.error('No publishable packages found under output* trees.');
+  const versionPredicate =
+    versionExpr === undefined ? undefined : parseVersionExpr(versionExpr);
+
+  if (versionExpr !== undefined && versionPredicate === undefined) {
+    console.error(
+      `Invalid --version="${versionExpr}" (examples: 5, 5.9, ">=5.3&<=5.5").`,
+    );
 
     process.exit(1);
   }
 
-  console.info(`Found ${packages.length} publishable packages.`);
+  const allPackages = await collectPublishablePackages();
+
+  const packages =
+    versionPredicate === undefined
+      ? allPackages
+      : allPackages.filter((pkg) => {
+          const v = versionFromPath(pkg.dir);
+
+          return v !== undefined && versionPredicate(v);
+        });
+
+  if (!Arr.isNonEmpty(packages)) {
+    console.error(
+      versionExpr === undefined
+        ? 'No publishable packages found under output* trees.'
+        : `No publishable packages matched --version="${versionExpr}".`,
+    );
+
+    process.exit(1);
+  }
+
+  const scopeLabel = versionExpr ?? 'all';
+
+  console.info(
+    `Found ${packages.length} publishable packages (scope: ${scopeLabel}).`,
+  );
 
   if (dryRun) {
     console.info(
