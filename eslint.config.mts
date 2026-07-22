@@ -55,6 +55,8 @@ const config: readonly FlatConfig[] = [
       '**/output/**',
       '**/output-branded/**',
       'packages/*/output*/**',
+      // Generated, hand-edited manual publish scripts (see gen:publish-commands).
+      'packages/*/scripts/publish-commands.mts',
       // External common-agent-config submodule; not part of this repo's tooling.
       'agents/**',
     ],
