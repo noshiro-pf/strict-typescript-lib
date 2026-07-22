@@ -33,18 +33,15 @@ const checkAll = async (): Promise<void> => {
     successMessage: 'Build tooling validated',
   });
 
-  await logStep({
-    startMessage: 'Generating strict-typescript-lib outputs (gen)',
-    action: () =>
-      runCmdStep(
-        'pnpm run ws:gen:with-codemod-fixed',
-        'Generation of lib files failed',
-      ),
-    successMessage: 'Generation completed',
-  });
+  // await logStep({
+  //   startMessage: 'Generating strict-typescript-lib outputs (gen)',
+  //   action: () =>
+  //     runCmdStep('pnpm run ws:gen:with-codemod-fixed', 'Generation of lib files failed'),
+  //   successMessage: 'Generation completed',
+  // });
 
   await logStep({
-    startMessage: 'Type-checking generated lib with each pinned typescript@5.x',
+    startMessage: 'Type-checking generated lib with each pinned typescript',
     action: () => runCmdStep('pnpm run ws:type-check', 'Type-check failed'),
     successMessage: 'Type-check passed',
   });

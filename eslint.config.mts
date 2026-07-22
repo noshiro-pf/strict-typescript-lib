@@ -54,6 +54,8 @@ const config: readonly FlatConfig[] = [
       '**/output/**',
       '**/output-branded/**',
       'packages/*/output*/**',
+      // Generated, hand-edited manual publish scripts (see gen:publish-commands).
+      'packages/*/scripts/publish-commands.mts',
     ],
   },
   ...eslintConfigForTypeScript({
