@@ -21,8 +21,13 @@
  * without an automation token, pass `--otp=<code>` (a single OTP may expire
  * before all packages are published, so an automation token is recommended).
  *
+ * Publishing this many packages can trip npm's rate limit (HTTP 429), so
+ * publishes are throttled: a bounded number run at once (`--concurrency`), each
+ * worker waits `--delay` ms between publishes, and a failed publish is retried
+ * with exponential backoff (longer when the failure looks like a 429).
+ *
  * Usage:
- *   tsx scripts/cmd/publish-packages.mts [--dry-run] [--otp=<code>] [--concurrency=<n>]
+ *   tsx scripts/cmd/publish-packages.mts [--dry-run] [--otp=<code>] [--concurrency=<n>] [--delay=<ms>]
  *
  * Env:
  *   NPM_REGISTRY  registry to publish to (default https://registry.npmjs.org/)
@@ -35,11 +40,15 @@ import * as t from 'ts-fortress';
 import { $, glob } from 'ts-repo-utils';
 import { projectRootPath } from '../project-root-path.mjs';
 
-const DEFAULT_CONCURRENCY = 8;
+// Kept modest to stay under npm's publish rate limit (429).
+const DEFAULT_CONCURRENCY = 4;
 
-const MAX_ATTEMPTS = 3;
+// Delay each worker waits before every publish, spacing out requests.
+const DEFAULT_DELAY_MS = 250;
 
-const RETRY_BASE_DELAY_MS = 1000;
+const MAX_ATTEMPTS = 5;
+
+const RETRY_BASE_DELAY_MS = 2000;
 
 const registry = process.env['NPM_REGISTRY'] ?? 'https://registry.npmjs.org/';
 
@@ -58,6 +67,13 @@ const main = async (): Promise<void> => {
     concurrencyArg !== undefined && /^[1-9]\d*$/u.test(concurrencyArg)
       ? Result.unwrapOkOr(Num.safeParseFloat(concurrencyArg), Number.NaN)
       : DEFAULT_CONCURRENCY;
+
+  const delayArg = getFlagValue(args, 'delay');
+
+  const delayMs =
+    delayArg !== undefined && /^\d+$/u.test(delayArg)
+      ? Result.unwrapOkOr(Num.safeParseFloat(delayArg), Number.NaN)
+      : DEFAULT_DELAY_MS;
 
   const packages = await collectPublishablePackages();
 
@@ -99,9 +115,13 @@ const main = async (): Promise<void> => {
     return;
   }
 
+  console.info(
+    `Publishing with concurrency ${concurrency}, ${delayMs}ms delay between publishes ...`,
+  );
+
   const results = await mapWithConcurrency(
     toPublish,
-    async (pkg) => ({ pkg, result: await publishWithRetry(pkg, otp) }),
+    async (pkg) => ({ pkg, result: await publishWithRetry(pkg, otp, delayMs) }),
     concurrency,
   );
 
@@ -225,13 +245,22 @@ const isAlreadyPublished = async (pkg: Pkg): Promise<boolean> => {
   return Result.isOk(result) && result.value.stdout.trim() !== '';
 };
 
-/** Publishes one package, retrying transient failures. */
+/**
+ * Publishes one package, throttled and with retries. Waits `delayMs` before
+ * each attempt to space out requests, and backs off exponentially on failure
+ * (longer when the failure looks like a rate limit / HTTP 429).
+ */
 const publishWithRetry = async (
   pkg: Pkg,
   otp: string | undefined,
+  delayMs: number,
   attempt = 1,
 ): Promise<Result<undefined, string>> => {
   const otpFlag = otp === undefined ? '' : (` --otp=${otp}` as const);
+
+  if (delayMs > 0) {
+    await sleep(delayMs);
+  }
 
   const result = await $(
     `npm publish --access public --registry=${registry}${otpFlag}`,
@@ -248,9 +277,21 @@ const publishWithRetry = async (
     return Result.err(result.value.message);
   }
 
-  await sleep(RETRY_BASE_DELAY_MS * attempt);
+  const rateLimited = /\b429\b|too many requests/iu.test(result.value.message);
 
-  return publishWithRetry(pkg, otp, attempt + 1);
+  // Exponential backoff; start higher for rate limits so we actually wait out
+  // the window instead of hammering it again.
+  const backoffMs =
+    (rateLimited ? RETRY_BASE_DELAY_MS * 4 : RETRY_BASE_DELAY_MS) *
+    2 ** (attempt - 1);
+
+  console.info(
+    `  retrying ${pkg.name}@${pkg.version} in ${backoffMs}ms (attempt ${attempt + 1}/${MAX_ATTEMPTS}${rateLimited ? ', rate-limited' : ''})`,
+  );
+
+  await sleep(backoffMs);
+
+  return publishWithRetry(pkg, otp, delayMs, attempt + 1);
 };
 
 const sleep = (ms: number): Promise<void> =>
