@@ -205,20 +205,26 @@ const genUmbrellaPackage = async (
   const libPrefix =
     `${versionConfig.libName}${config.useBrandedNumber ? '-branded' : ''}` as const;
 
-  // `@typescript/lib-<name>` (dots -> dashes) resolves to our per-lib package.
+  // Packages are distributed as GitHub Release tarball assets (not npm), so
+  // each `@typescript/lib-<name>` (dots -> dashes) points at a tarball URL. The
+  // release tag is per TypeScript version (flavor-independent), matching what
+  // `dist-github-release.mts` uploads.
+  const releaseBase = githubReleaseBaseUrl(versionConfig, version);
+
   const dependencies = Object.fromEntries(
     packageDirList
       .map(({ packageRelativePath }) =>
         packageRelativePath.replaceAll('/', '-'),
       )
       .toSorted((a, b) => a.localeCompare(b))
-      .map(
-        (suffix) =>
-          [
-            `@typescript/lib-${suffix}`,
-            `npm:${libPrefix}-${suffix}@${version}`,
-          ] as const,
-      ),
+      .map((suffix) => {
+        const subPackageName = `${libPrefix}-${suffix}` as const;
+
+        return [
+          `@typescript/lib-${suffix}`,
+          `${releaseBase}/${subPackageName}-${version}.tgz`,
+        ] as const;
+      }),
   );
 
   await makeEmptyDir(umbrellaDir);
@@ -250,10 +256,11 @@ const genUmbrellaPackage = async (
       `# ${libPrefix}`,
       '',
       `Strict rewrite of TypeScript ${versionConfig.typescriptVersion}'s built-in`,
-      'standard library declarations, bundled as a single package.',
+      'standard library declarations, distributed as GitHub Release tarballs',
+      '(no npm registry, no auth).',
       '',
       '```sh',
-      `npm install -D ${libPrefix}`,
+      `npm install -D ${releaseBase}/${libPrefix}-${version}.tgz`,
       '```',
       '',
       'Installing this package pulls in the strict `@typescript/lib-*` replacements',
@@ -268,6 +275,27 @@ const genUmbrellaPackage = async (
   await $(`pnpm -w run fmt`);
 
   console.info(`${umbrellaDir} (umbrella package) generated.`);
+};
+
+/**
+ * Base URL of the GitHub Release that hosts a version's tarball assets, e.g.
+ * `https://github.com/<owner>/<repo>/releases/download/dist-v5.9-<version>`.
+ * The tag is per TypeScript version (flavor-independent) so branded and
+ * non-branded share one release; `dist-github-release.mts` uploads to it.
+ */
+const githubReleaseBaseUrl = (
+  versionConfig: Context['versionConfig'],
+  version: string,
+): string => {
+  const repoPath =
+    /github\.com[/:]([^/]+\/[^/]+?)(?:\.git)?$/u.exec(
+      versionConfig.repo,
+    )?.[1] ?? '';
+
+  const versionName =
+    /v\d+\.\d+/u.exec(versionConfig.libName)?.[0] ?? versionConfig.libName;
+
+  return `https://github.com/${repoPath}/releases/download/dist-${versionName}-${version}`;
 };
 
 const getPackageDirListFromLibFiles = async (

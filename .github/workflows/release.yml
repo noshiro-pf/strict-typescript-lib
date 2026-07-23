@@ -32,8 +32,6 @@ jobs:
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version-file: 'package.json'
-          # Public, unscoped packages are published to the npm public registry.
-          registry-url: https://registry.npmjs.org/
           cache: 'pnpm'
 
       - name: Install dependencies
@@ -50,15 +48,12 @@ jobs:
         id: changesets
         uses: changesets/action@63a615b9cd06ba9a3e6d13796c7fbcb080a60a0b # v1.8.0
         with:
-          publish: pnpm run changeset:publish
+          publish: pnpm run release:publish
           version: pnpm run changeset:version-packages
           title: 'chore: version packages'
           commit: 'chore: version packages'
         env:
-          # GitHub App token: used by changesets to open the release PR.
+          # Used by changesets to open the release PR, and by the `gh` CLI in
+          # `dist:github-release` to create/upload the tarball GitHub Release.
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-          # npm automation token (bypasses 2FA): used by `npm publish`. The
-          # authToken line written by setup-node expands NODE_AUTH_TOKEN at
-          # publish time, so publish-packages.mts authenticates with this.
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}

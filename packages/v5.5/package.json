@@ -10,8 +10,7 @@
     "gen:lib-files": "tsx ./scripts/gen-lib-files.mts",
     "gen:packages": "tsx ./scripts/gen-packages.mts",
     "gen:with-codemod-fixed": "tsx ./scripts/gen-with-codemod-fixed.mts",
-    "type-check": "tsc -p tsconfig.lib-check.json && tsc -p tsconfig.lib-check.webworker.json",
-    "publish:packages": "tsx ../../scripts/cmd/publish-packages.mts --version=5.5"
+    "type-check": "tsc -p tsconfig.lib-check.json && tsc -p tsconfig.lib-check.webworker.json"
   },
   "dependencies": {
     "strict-ts-lib-scripts-common": "workspace:*"

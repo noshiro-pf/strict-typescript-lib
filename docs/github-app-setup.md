@@ -32,7 +32,7 @@ Repository permissions:
 - **Actions**: Read (to trigger workflows)
 - **Metadata**: Read (always required)
 
-**Note about npm publishing**: this GitHub App is only used to open the Changesets release PR; it does not publish to npm. npm publishing uses a separate npm **automation token** (`NPM_TOKEN`). See the [npm Publishing guide](./npm-publishing.md).
+**Note about distribution**: this GitHub App is only used to open the Changesets release PR; it does not distribute packages. Packages are shipped as GitHub Release tarballs via `pnpm dist:github-release` (an authenticated `gh` CLI). See the [Distribution guide](./distribution.md).
 
 ### Where can this GitHub App be installed?
 
@@ -83,17 +83,13 @@ If workflows still don't trigger:
 3. Check that the secrets and variables are correctly named
 4. Look at the Actions logs for any authentication errors
 
-## npm Publishing
+## Distribution
 
-This GitHub App setup is specifically for triggering workflows when Changesets creates PRs. It does **not** publish packages.
+This GitHub App setup is specifically for triggering workflows when Changesets creates PRs.
 
-For package publishing, you need:
+Packages are **not** published to any npm registry — no `NPM_TOKEN` is needed. On merge of the "Version Packages" PR, the release workflow packs the generated packages and uploads them as **GitHub Release tarballs** via the `gh` CLI (authenticated with the workflow's token).
 
-1. An npm **automation token** (bypasses 2FA), created on npmjs.com.
-2. Stored as the `NPM_TOKEN` repository secret.
-3. The release workflow uses this token to publish to the public npm registry.
-
-See the [npm Publishing guide](./npm-publishing.md) for complete configuration.
+See the [Distribution guide](./distribution.md) for the full flow.
 
 ## Security Notes
 
