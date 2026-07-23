@@ -1,10 +1,11 @@
 # strict-ts-lib-v5.7
 
 Strict rewrite of TypeScript 5.7.2's built-in
-standard library declarations, bundled as a single package.
+standard library declarations, distributed as GitHub Release tarballs
+(no npm registry, no auth).
 
 ```sh
-npm install -D strict-ts-lib-v5.7
+npm install -D https://github.com/noshiro-pf/strict-typescript-lib/releases/download/dist-v5.7-0.2.0/strict-ts-lib-v5.7-0.2.0.tgz
 ```
 
 Installing this package pulls in the strict `@typescript/lib-*` replacements
