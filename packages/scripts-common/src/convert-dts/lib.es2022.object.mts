@@ -18,6 +18,11 @@ export const convertLibEs2022Object =
             /// <reference no-default-lib="true"/>
             /// <reference lib="es5" />
           `,
+          // TypeScript 6.0 dropped the `no-default-lib="true"` directive from
+          // every lib file, so this anchor is absent there; 5.x still has it
+          // (byte-identical output). The es5 reference is provided transitively
+          // by the aggregate lib graph under 6.0.
+          { onNotFound: 'off' },
         ),
         replaceWithNoMatchCheck(
           'interface ObjectConstructor {',
