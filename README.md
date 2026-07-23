@@ -13,30 +13,31 @@ declarations (`lib.es5.d.ts`, `lib.dom.d.ts`, …), one set per TypeScript minor
 version, distributed as **GitHub Release tarballs** — not the npm registry, so
 there is no registry account or authentication involved.
 
-Install the umbrella package for **the exact TypeScript version you use** from
-its release. For TypeScript 5.9:
+Pick the release matching **the exact TypeScript version you use** from the
+[Releases](https://github.com/noshiro-pf/strict-typescript-lib/releases) page
+(tags look like `dist-v5.9-1.0.0`). Installing pulls in the strict
+`@typescript/lib-*` replacements for every built-in library, so TypeScript's
+library-replacement mechanism (on by default since TypeScript 4.5) loads the
+strict declarations in place of the bundled ones — no other configuration
+required. A **branded-number** flavor is published alongside as
+`strict-ts-lib-vX.Y-branded`.
+
+### npm / yarn — install the umbrella (one line)
 
 ```sh
 npm install -D https://github.com/noshiro-pf/strict-typescript-lib/releases/download/dist-v5.9-<version>/strict-ts-lib-v5.9-<version>.tgz
 ```
 
-Replace `<version>` with the release you want — see the
-[Releases](https://github.com/noshiro-pf/strict-typescript-lib/releases) page
-(tags look like `dist-v5.9-1.0.0`). Installing the umbrella pulls in the strict
-`@typescript/lib-*` replacements for every built-in library (as further tarball
-dependencies), so TypeScript's library-replacement mechanism (on by default
-since TypeScript 4.5) loads the strict declarations in place of the bundled ones
-— no other configuration required. A **branded-number** flavor is available as
-`strict-ts-lib-v5.9-branded` in the same release.
+The umbrella depends on all the per-lib tarballs, so this single install wires
+up every `@typescript/lib-*`.
 
-> **pnpm users:** the umbrella's transitive dependencies aren't hoisted to your
-> project root by default, so add `public-hoist-pattern[]=@typescript/lib-*` to
-> your `.npmrc` (or use the per-lib entries below).
+### pnpm — add the per-lib entries directly
 
-### Advanced: per-lib
-
-To pull in only some libraries, skip the umbrella and point each
-`@typescript/lib-*` at its individual tarball from the same release:
+pnpm blocks URL dependencies that appear as **sub-dependencies**
+(`blockExoticSubdeps`), so installing the umbrella fails with
+`ERR_PNPM_EXOTIC_SUBDEP`. Instead, add the per-lib tarball URLs **directly** to
+your `devDependencies` (top-level URL deps are allowed, and need no extra
+config). Each release's notes contain a ready-to-paste block; it looks like:
 
 ```jsonc
 // package.json
@@ -45,9 +46,13 @@ To pull in only some libraries, skip the umbrella and point each
         "typescript": "5.9.3",
         "@typescript/lib-es5": "https://github.com/noshiro-pf/strict-typescript-lib/releases/download/dist-v5.9-<version>/strict-ts-lib-v5.9-es5-<version>.tgz",
         "@typescript/lib-dom": "https://github.com/noshiro-pf/strict-typescript-lib/releases/download/dist-v5.9-<version>/strict-ts-lib-v5.9-dom-<version>.tgz",
+        // …one entry per lib (full block on the release page)
     },
 }
 ```
+
+(Alternatively, set `block-exotic-subdeps=false` in your `.npmrc` and add
+`public-hoist-pattern[]=@typescript/lib-*`, then install the umbrella as above.)
 
 The `@typescript/lib-<name>` key is the built-in lib name with dots replaced by
 `-` (e.g. `lib.dom.iterable` → `@typescript/lib-dom-iterable`), and the version

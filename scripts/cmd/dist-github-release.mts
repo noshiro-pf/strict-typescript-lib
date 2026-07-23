@@ -113,6 +113,10 @@ const main = async (): Promise<void> => {
   console.info(dryRun ? '\n[dry-run] done.' : '\nAll releases uploaded. ✅');
 };
 
+/** Renders a `devDependencies` JSON block for pasting into package.json. */
+const depsBlock = (deps: Readonly<Record<string, string>> = {}): string =>
+  JSON.stringify({ devDependencies: deps }, null, 2);
+
 /** Reads a `--name=value` flag from the argument list. */
 const getFlagValue = (
   args: readonly string[],
@@ -182,10 +186,87 @@ const releaseVersion = async (
 
     const files = tarballs.filter(Result.isOk).map((r) => r.value);
 
-    return await uploadRelease(tag, versionName, files);
+    const notesFile = path.join(tmpDir, 'RELEASE_NOTES.md');
+
+    await fs.writeFile(
+      notesFile,
+      await buildReleaseNotes(versionRoot, versionName),
+      'utf8',
+    );
+
+    return await uploadRelease(tag, versionName, files, notesFile);
   } finally {
     await fs.rm(tmpDir, { recursive: true, force: true });
   }
+};
+
+/**
+ * Builds the GitHub Release notes: the umbrella install line (npm/yarn) plus
+ * ready-to-paste per-lib `devDependencies` blocks (for pnpm, which blocks the
+ * umbrella's URL sub-dependencies). The blocks are exactly each umbrella's
+ * dependencies, so consumers can paste them and `install`.
+ */
+const buildReleaseNotes = async (
+  versionRoot: string,
+  versionName: string,
+): Promise<string> => {
+  const readUmbrella = async (
+    flavorDir: string,
+  ): Promise<t.TypeOf<typeof packageJsonType> | undefined> =>
+    parsePackageJson(
+      await fs
+        .readFile(
+          path.join(versionRoot, flavorDir, 'lib', 'package.json'),
+          'utf8',
+        )
+        .catch(() => ''),
+    );
+
+  const nonBranded = await readUmbrella('output');
+
+  const branded = await readUmbrella('output-branded');
+
+  const firstDepUrl = Object.values(nonBranded?.dependencies ?? {})[0] ?? '';
+
+  // Umbrella tarball URL = the release-download base of any dep URL + the
+  // umbrella's own filename.
+  const umbrellaUrl =
+    firstDepUrl === ''
+      ? ''
+      : (`${firstDepUrl.slice(0, firstDepUrl.lastIndexOf('/') + 1)}${nonBranded?.name ?? ''}-${nonBranded?.version ?? ''}.tgz` as const);
+
+  return [
+    `Strict TypeScript ${versionName} standard library, distributed as GitHub Release tarball assets.`,
+    '',
+    '## Install',
+    '',
+    '**npm / yarn** — install the umbrella package:',
+    '',
+    '```sh',
+    `npm install -D ${umbrellaUrl}`,
+    '```',
+    '',
+    '**pnpm** — pnpm blocks URL sub-dependencies by default (`blockExoticSubdeps`), so the umbrella one-liner fails. Either add `block-exotic-subdeps=false` to `.npmrc`, or paste the per-lib entries below directly (top-level URL deps are allowed):',
+    '',
+    `<details><summary>devDependencies — non-branded (${nonBranded?.name ?? ''})</summary>`,
+    '',
+    '```jsonc',
+    depsBlock(nonBranded?.dependencies),
+    '```',
+    '',
+    '</details>',
+    '',
+    `<details><summary>devDependencies — branded (${branded?.name ?? ''})</summary>`,
+    '',
+    '```jsonc',
+    depsBlock(branded?.dependencies),
+    '```',
+    '',
+    '</details>',
+    '',
+    'See the repository README for usage and version support.',
+    '',
+  ].join('\n');
 };
 
 /** Extracts the release tag from an umbrella package's tarball-URL deps. */
@@ -272,17 +353,14 @@ const uploadRelease = async (
   tag: string,
   versionName: string,
   files: readonly string[],
+  notesFile: string,
 ): Promise<string | undefined> => {
   const title = `${versionName} strict lib (${tag})` as const;
-
-  const notes =
-    'Strict TypeScript standard library tarballs. Install via the umbrella ' +
-    'tarball URL — see the repository README.';
 
   const fileArgs = files.join(' ');
 
   const created = await $(
-    `gh release create ${tag} --title "${title}" --notes "${notes}" ${fileArgs}`,
+    `gh release create ${tag} --title "${title}" --notes-file ${notesFile} ${fileArgs}`,
   );
 
   if (Result.isOk(created)) {
@@ -293,18 +371,20 @@ const uploadRelease = async (
     return undefined;
   }
 
-  // Most likely the release already exists — re-upload, clobbering assets.
+  // Most likely the release already exists — re-upload assets and refresh notes.
   const uploaded = await $(`gh release upload ${tag} ${fileArgs} --clobber`);
 
-  if (Result.isOk(uploaded)) {
-    console.info(
-      `  ${versionName}: updated release ${tag} (${files.length} assets)`,
-    );
-
-    return undefined;
+  if (Result.isErr(uploaded)) {
+    return `${versionName}: gh release failed: ${uploaded.value.message.slice(0, 200)}`;
   }
 
-  return `${versionName}: gh release failed: ${uploaded.value.message.slice(0, 200)}`;
+  await $(`gh release edit ${tag} --notes-file ${notesFile}`);
+
+  console.info(
+    `  ${versionName}: updated release ${tag} (${files.length} assets)`,
+  );
+
+  return undefined;
 };
 
 /**
