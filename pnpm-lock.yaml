@@ -105,8 +105,8 @@ importers:
         specifier: 12.0.0
         version: 12.0.0(typescript@5.9.3)
       ts-fortress:
-        specifier: 7.3.0
-        version: 7.3.0(typescript@5.9.3)
+        specifier: 10.0.0
+        version: 10.0.0(typescript@5.9.3)
       ts-repo-utils:
         specifier: 10.1.3
         version: 10.1.3(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.9.3)
@@ -139,8 +139,8 @@ importers:
         version: 5.9.3
     devDependencies:
       ts-fortress:
-        specifier: 7.3.0
-        version: 7.3.0(typescript@5.9.3)
+        specifier: 10.0.0
+        version: 10.0.0(typescript@5.9.3)
 
   packages/v5.0:
     dependencies:
@@ -5016,6 +5016,12 @@ packages:
       ts-repo-utils:
         optional: true
 
+  ts-data-forge@10.0.0:
+    resolution: {integrity: sha512-JbhsTcNhnAD7F/fDUPs1pMpj2phvEmRI/B/uXJpy47/nFN8Mhttj1mAH0qY9xPHIYcsQ7khh90uO64IPNNcFxg==}
+    engines: {node: '>=22.22.2', pnpm: '>=9.0.0'}
+    peerDependencies:
+      typescript: '>=4.8'
+
   ts-data-forge@11.0.0:
     resolution: {integrity: sha512-dJRBXLBMPG4gBYnPq/AsY5zISOV9OauzoAb/2y119G2H8DPH2LjrZmEhIkTjy4YZoQfOMvsVzYzDYSt/OJkk6A==}
     engines: {node: '>=22.22.2', pnpm: '>=9.0.0'}
@@ -5051,6 +5057,10 @@ packages:
     peerDependencies:
       typescript: '>=4.0.0'
 
+  ts-fortress@10.0.0:
+    resolution: {integrity: sha512-caZ8Y2RdvAY5s2lWqHKynhMnNIL0SM3Zz2KZoDtlAwzkfWTeXxREe4FVl5WAHJ5k7Tdm3vmEeKUYeQv8kTcutA==}
+    engines: {node: '>=22.22.2', pnpm: '>=9.0.0'}
+
   ts-fortress@7.3.0:
     resolution: {integrity: sha512-wE3VMdI9RwSZGi5Moo9R+FPgptelJfXjVpOif0VzT/6Om4EqX4UI/bQUm5+zKwUO9l8UvgaRQX3snMWhTqyemQ==}
     engines: {node: '>=22.22.2', pnpm: '>=9.0.0'}
@@ -5075,6 +5085,10 @@ packages:
 
   ts-type-forge@5.0.0:
     resolution: {integrity: sha512-+7t3WkIDz5IsAhPR7r0zGhWjqccRRsbiPC2F0d3hTl911GttOACd45PLIzoHha10384qEHNGIl4yi4kTgcQM2w==}
+    engines: {node: '>=22.22.2', pnpm: '>=9.0.0'}
+
+  ts-type-forge@6.1.0:
+    resolution: {integrity: sha512-mDv/zpRxHodAvf9pX1WetpQDG5IOKIzawElx+CyU41KBRwqNp6sczLaBWsexJE+tOUHm6UurmWDet0Xb484iSw==}
     engines: {node: '>=22.22.2', pnpm: '>=9.0.0'}
 
   ts-type-forge@7.2.1:
@@ -9806,6 +9820,12 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
+  ts-data-forge@10.0.0(typescript@5.9.3):
+    dependencies:
+      '@sindresorhus/is': 8.1.0
+      ts-type-forge: 6.1.0
+      typescript: 5.9.3
+
   ts-data-forge@11.0.0(typescript@5.9.3):
     dependencies:
       '@sindresorhus/is': 8.1.0
@@ -9948,6 +9968,14 @@ snapshots:
     dependencies:
       picomatch: 4.0.5
       typescript: 5.9.3
+
+  ts-fortress@10.0.0(typescript@5.9.3):
+    dependencies:
+      '@sindresorhus/is': 8.1.0
+      ts-data-forge: 10.0.0(typescript@5.9.3)
+      ts-type-forge: 6.1.0
+    transitivePeerDependencies:
+      - typescript
 
   ts-fortress@7.3.0(typescript@5.9.3):
     dependencies:
@@ -10127,6 +10155,8 @@ snapshots:
   ts-type-forge@4.0.0: {}
 
   ts-type-forge@5.0.0: {}
+
+  ts-type-forge@6.1.0: {}
 
   ts-type-forge@7.2.1: {}
 
