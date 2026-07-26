@@ -64,19 +64,24 @@ small and reviewable.
 
 ## Consuming
 
-See the root `README.md`: install the umbrella tarball URL
-(`npm install -D https://.../dist-vX.Y-<version>/strict-ts-lib-vX.Y-<version>.tgz`),
-or point individual `@typescript/lib-*` entries at their tarball URLs. A tarball
-dependency installs under its dependency **key**, so
-`"@typescript/lib-es5": "https://.../strict-ts-lib-v5.9-es5-....tgz"` lands at
-`node_modules/@typescript/lib-es5` and TypeScript's `libReplacement` picks it up
-(verified on both npm and pnpm).
+See the root `README.md`. A tarball dependency installs under its dependency
+**key**, so `"@typescript/lib-es5": "https://.../strict-ts-lib-v5.9-es5-....tgz"`
+lands at `node_modules/@typescript/lib-es5` and TypeScript's `libReplacement`
+picks it up (verified on npm and pnpm, including TypeScript 6.0).
+
+- **npm / yarn:** install the umbrella tarball URL — one line pulls in every
+  `@typescript/lib-*` as a (transitive) tarball dep.
+- **pnpm:** the umbrella one-liner fails with `ERR_PNPM_EXOTIC_SUBDEP` because
+  pnpm blocks URL **sub-dependencies** (`blockExoticSubdeps`, on by default).
+  Add the per-lib tarball URLs **directly** to `devDependencies` instead
+  (top-level URL deps are allowed and need no extra config). Each release's
+  notes carry a ready-to-paste block — see `buildReleaseNotes` in
+  `dist-github-release.mts`, which renders each umbrella's dependencies. As an
+  alternative, `block-exotic-subdeps=false` + `public-hoist-pattern[]=@typescript/lib-*`
+  in `.npmrc` lets pnpm use the umbrella.
 
 ## Notes
 
-- **pnpm consumers** may need `public-hoist-pattern[]=@typescript/lib-*` in
-  `.npmrc` so the umbrella's transitive libs resolve at the project root (or use
-  the per-lib entries).
 - **Versioning has no semver ranges** — tarball URLs pin an exact release. Bump
   by pointing at a newer tag.
 - **`ts-type-forge`** is still resolved from the public npm registry (it is a
