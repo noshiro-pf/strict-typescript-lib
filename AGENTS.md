@@ -428,10 +428,11 @@ In addition to the common instructions above (vendored into `agents/common-rules
 ### Project overview
 
 `strict-typescript-lib` generates a **strict** rewrite of TypeScript's built-in
-`lib.*.d.ts` declarations for every supported TypeScript minor (v5.0–v5.9), in
-both a plain and a **branded-number** flavor, and publishes them as ~1700
-fine-grained npm packages (`strict-ts-lib-vX.Y-*`, one per lib file). Consumers
-alias them onto `@typescript/lib-*` (see the root `README.md`).
+`lib.*.d.ts` declarations for every supported TypeScript minor (v5.0–v6.0), in
+both a plain and a **branded-number** flavor, and distributes them as **GitHub
+Release tarball assets** (fine-grained `strict-ts-lib-vX.Y-*` packages, one per
+lib file, plus a per-version umbrella). Consumers alias them onto
+`@typescript/lib-*` (see the root `README.md`).
 
 ### Layout
 

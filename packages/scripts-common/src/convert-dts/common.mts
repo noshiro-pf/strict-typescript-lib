@@ -2,6 +2,7 @@ import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
 import dedent from 'dedent';
 import { expectType } from 'ts-data-forge';
+import { type MonoTypeFunction } from 'ts-type-forge';
 import { generateKeyValueRecordFromKeys } from '../functions/utils/node-utils.mjs';
 
 export type ConverterConfig = Readonly<{
@@ -362,3 +363,27 @@ export const getSrcFileList = async (
 };
 
 export const idFn = (s: string): string => s;
+
+/**
+ * Ensures the file carries a top-of-file `/// <reference lib="es5" />`
+ * directive, so a lib that augments a base es5 interface (e.g.
+ * `ObjectConstructor` in `lib.es2019.object` / `lib.es2022.object`) can see the
+ * declaration it extends when resolved on its own.
+ *
+ * TypeScript 5.x lib files start with `/// <reference no-default-lib="true"/>`,
+ * and the es5 directive is inserted directly after it (preserving the
+ * historical byte-for-byte output). TypeScript 6.0 removed `no-default-lib`
+ * from every lib file, so there the es5 directive is prepended at the very top
+ * instead. Idempotent: a no-op if an es5 reference is already present.
+ */
+export const ensureEs5Reference: MonoTypeFunction<string> = (src) => {
+  const es5Ref = '/// <reference lib="es5" />';
+
+  if (src.includes(es5Ref)) return src;
+
+  const noDefaultLibRef = '/// <reference no-default-lib="true"/>';
+
+  return src.includes(noDefaultLibRef)
+    ? src.replace(noDefaultLibRef, () => `${noDefaultLibRef}\n${es5Ref}`)
+    : `${es5Ref}\n${src}`;
+};

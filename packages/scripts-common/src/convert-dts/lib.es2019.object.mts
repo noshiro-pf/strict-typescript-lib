@@ -5,7 +5,7 @@ import {
   composeMonoTypeFns,
   replaceWithNoMatchCheck,
 } from '../functions/utils/node-utils.mjs';
-import { type ConverterOptions } from './common.mjs';
+import { type ConverterOptions, ensureEs5Reference } from './common.mjs';
 
 export const convertLibEs2019Object =
   ({
@@ -15,13 +15,10 @@ export const convertLibEs2019Object =
   (src) =>
     pipe(src).map(
       composeMonoTypeFns(
-        replaceWithNoMatchCheck(
-          `/// <reference no-default-lib="true"/>`,
-          dedent`
-            /// <reference no-default-lib="true"/>
-            /// <reference lib="es5" />
-          `,
-        ),
+        // `lib.es2019.object` augments the base `ObjectConstructor` (es5), so
+        // it must reference es5. Works across TS 5.x (anchored after
+        // `no-default-lib`) and TS 6.0 (which dropped `no-default-lib`).
+        ensureEs5Reference,
 
         replaceWithNoMatchCheck(
           'interface ObjectConstructor {',
