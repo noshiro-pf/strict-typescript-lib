@@ -48,19 +48,41 @@ Releases are automated through Changesets + `.github/workflows/release.yml`:
    downloadable.
 
 `dist:github-release` reads the release tag from each umbrella's baked-in URLs,
-`npm pack`s all packages into a temp dir, and `gh release create`/`upload
---clobber`s the tarballs (using the workflow's `GH_TOKEN`; run locally it needs
-an authenticated `gh`). Re-running is safe (assets are clobbered).
+`npm pack`s all packages into a temp dir, and `gh release create`s the release
+then uploads the tarballs (using the workflow's `GH_TOKEN`; run locally it needs
+an authenticated `gh`). Re-running is safe, and cheap — see below.
 
 To release **manually** (or for a large first rollout, one version at a time):
 
 ```sh
 pnpm changeset version && pnpm ws:gen:packages   # bump + propagate, then commit
-pnpm dist:github-release [--version=5.9] [--dry-run]
+pnpm dist:github-release [--version=5.9] [--dry-run] [--force]
 ```
 
 There is no npm rate limit to worry about; `--version` just keeps each step
 small and reviewable.
+
+### Uploads are incremental (GitHub API rate limits)
+
+The publish step runs on **every** push to `main` (Changesets runs `publish`
+whenever no changesets are pending), so it must be a cheap no-op when nothing
+changed. It therefore reads each release once (`gh release view --json
+body,assets`) and uploads only the assets that are **missing or whose size
+differs**; the notes are rewritten only when they actually changed. `npm pack`
+output is byte-reproducible, so an equal size means the published asset is the
+same tarball.
+
+This matters because re-uploading everything with `--clobber` costs two REST
+calls per asset (delete + upload) — roughly 4000 calls across all versions,
+which exceeds the release App installation's hourly REST quota and fails the
+job partway through with `HTTP 403: API rate limit exceeded for installation
+ID …`. A no-op re-run now costs one API call per version, and an interrupted
+release resumes by uploading only what is still missing.
+
+Transient failures (rate limits, 5xx, dropped connections) are retried with
+exponential backoff, and uploads are batched so a retry never redoes the whole
+set. Use `--force` to re-upload every asset and rewrite the notes regardless
+(e.g. if a published asset is known to be corrupt).
 
 ## Consuming
 
