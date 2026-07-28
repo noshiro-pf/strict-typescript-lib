@@ -232,7 +232,11 @@ export const convert = (
                 return convertLibEs5(options);
 
               case 'lib.es2015.promise.d.ts':
-                // Fix incorrect results of eslint fix
+                // Resolve the `readonly -readonly` marker that the ts-morph
+                // codemod (transform-dts.mts) emits for `-readonly [K in ...]`
+                // mapped types: `readonly` for the readonly flavor, `-readonly`
+                // for the mutable one. (ts-morph runs config-independently, so
+                // it defers this choice to here.)
                 return options.config.returnType === 'readonly'
                   ? replaceWithNoMatchCheck('readonly -readonly', 'readonly')
                   : replaceWithNoMatchCheck('readonly -readonly', '-readonly');
@@ -314,7 +318,10 @@ export const convert = (
 
               case 'lib.es2020.promise.d.ts':
                 return composeMonoTypeFns(
-                  // Fix incorrect results of eslint fix
+                  // Resolve the `readonly -readonly` marker that the ts-morph
+                  // codemod (transform-dts.mts) emits for `-readonly [K in ...]`
+                  // mapped types: `readonly` for the readonly flavor,
+                  // `-readonly` for the mutable one (see lib.es2015.promise).
                   options.config.returnType === 'readonly'
                     ? replaceWithNoMatchCheck('readonly -readonly', 'readonly')
                     : replaceWithNoMatchCheck(
