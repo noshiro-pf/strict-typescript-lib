@@ -34,7 +34,7 @@
     "codemod:uncommitted:as-const": "append-as-const --uncommitted '**/*.mts'",
     "codemod:uncommitted:readonly": "convert-to-readonly --uncommitted '**/*.mts'",
     "clean:node_modules": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
-    "cspell": "cspell \"**\" --gitignore --gitignore-root ./ --no-progress",
+    "cspell": "cspell \"{**,.changeset/**/*,.github/**/*}\" --gitignore --gitignore-root ./ --no-progress",
     "fmt": "oxfmt --ignore-path=.gitignore --ignore-path=.oxfmtignore .",
     "gen:version-diff": "tsx ./scripts/cmd/gen-version-diff.mts",
     "gh:apply-all": "gh-apply-all",
