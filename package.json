@@ -47,7 +47,7 @@
     "lint": "pnpm run z:eslint .",
     "lint:fix": "pnpm run z:eslint . --fix",
     "md": "markdownlint-cli2",
-    "update-dependencies": "pnpm update --latest -r '!typescript' '!eslint'",
+    "update-packages": "pnpm update --latest -r '!typescript' '!eslint'",
     "ws:gen": "tsx ./scripts/cmd/ws-gen-stages.mts",
     "ws:gen:full": "tsx ./scripts/cmd/ws-gen-full-stages.mts",
     "ws:gen:with-codemod-fixed": "tsx ./scripts/cmd/ws-gen-with-codemod-fixed-stages.mts",
