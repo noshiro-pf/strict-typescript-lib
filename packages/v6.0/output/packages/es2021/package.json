@@ -13,7 +13,7 @@
   "sideEffects": false,
   "types": "./index.d.ts",
   "dependencies": {
-    "ts-type-forge": "^7.0.0"
+    "ts-type-forge": "^9.0.0"
   },
   "peerDependencies": {
     "typescript": ">=6.0.0 <6.1.0"
