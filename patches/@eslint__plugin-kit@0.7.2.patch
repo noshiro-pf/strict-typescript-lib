@@ -1,0 +1,13 @@
+diff --git a/dist/cjs/types.cts b/dist/cjs/types.cts
+index 19a5c672cf7f13dba8c084e50bb46a9a63184ad4..2212a20262d420415e540337ed278845e5ba50a9 100644
+--- a/dist/cjs/types.cts
++++ b/dist/cjs/types.cts
+@@ -57,7 +57,7 @@ export type CustomRuleDefinitionType<
+ 			// Rule specific type options (custom)
+ 			Options &
+ 				// Rule specific type options (defaults)
+-				Omit<CustomRuleTypeDefinitions, keyof Options>
++				Omit<CustomRuleTypeDefinitions, Extract<keyof CustomRuleTypeDefinitions, keyof Options>>
+ 		>
+ >;
+ 

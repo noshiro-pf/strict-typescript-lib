@@ -1,0 +1,25 @@
+diff --git a/dist/branded-types/predefined-arrays/length-constrained-array-bounds.d.mts b/dist/branded-types/predefined-arrays/length-constrained-array-bounds.d.mts
+index c857805523e1c36f74537dcb2d5526af45cd2d78..e356d6b8dd21b77b84342471ff1c3b723820daa6 100644
+--- a/dist/branded-types/predefined-arrays/length-constrained-array-bounds.d.mts
++++ b/dist/branded-types/predefined-arrays/length-constrained-array-bounds.d.mts
+@@ -145,7 +145,7 @@ export type ChangeArrayElement<Ar extends readonly unknown[], Elm> = HasLengthCo
+  * mention, so subtracting only that set leaves them behind and reports every
+  * mutable array as brand-carrying.
+  */
+-type LengthConstraintKeysOf<Ar extends readonly unknown[]> = Exclude<keyof Ar, keyof unknown[] | keyof (readonly unknown[]) | `${number}`>;
++type LengthConstraintKeysOf<Ar extends readonly unknown[]> = Exclude<keyof Ar, Extract<keyof Ar, keyof unknown[] | keyof (readonly unknown[]) | `${number}`>>;
+ /**
+  * @internal The shape a lower-bound brand contributes, with the encoded prefix
+  * left inferrable.
+diff --git a/dist/record/deep.d.mts b/dist/record/deep.d.mts
+index 71626acf283ad4f18b127d79f51546cc58c52174..b1a5b3fa7de49e7d8ddcee2a3490f05639a26710 100644
+--- a/dist/record/deep.d.mts
++++ b/dist/record/deep.d.mts
+@@ -110,6 +110,6 @@ type DeepRequiredArray<T extends readonly unknown[]> = [
+  * @internal The members of `T` that are neither array members nor tuple
+  * indices — for the length-constraint family, exactly its brand.
+  */
+-type ExtraKeysOf<T extends readonly unknown[]> = Exclude<keyof T, keyof unknown[] | keyof (readonly unknown[]) | `${number}`>;
++type ExtraKeysOf<T extends readonly unknown[]> = Exclude<keyof T, Extract<keyof T, keyof unknown[] | keyof (readonly unknown[]) | `${number}`>>;
+ export {};
+ //# sourceMappingURL=deep.d.mts.map
