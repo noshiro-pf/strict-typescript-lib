@@ -19,9 +19,9 @@ If you need to update these instructions, please update the central repository:
 ### Commit Messages
 
 - Use Conventional Commits to enable semantic-release, for example:
-    - `feat: add parser for .mts`
-    - `fix: handle Windows path resolution`
-    - `chore(deps): bump rollup to 4.50.1`
+  - `feat: add parser for .mts`
+  - `fix: handle Windows path resolution`
+  - `chore(deps): bump rollup to 4.50.1`
 
 | prefix   | description                                                                                 |
 | :------- | :------------------------------------------------------------------------------------------ |
@@ -43,11 +43,11 @@ If you need to update these instructions, please update the central repository:
 ## Important Instructions
 
 - After making code changes, run `pnpm run fmt`, then check for type errors with `pnpm run tsc` and lint errors with `pnpm run lint:fix` if you changed TypeScript/JavaScript code. Fix any errors found.
-    - Do not use file-level `/* eslint-disable */` or turn off rules in `eslint.config.mts` to fix lint errors.
-    - Avoid using `// eslint-disable-next-line` whenever possible.
+  - Do not use file-level `/* eslint-disable */` or turn off rules in `eslint.config.mts` to fix lint errors.
+  - Avoid using `// eslint-disable-next-line` whenever possible.
 - **RESTRICTIONS**: Do not perform these actions without explicit user instructions:
-    - Push to GitHub or remote repositories
-    - Access `~/.ssh` or other sensitive directories
+  - Push to GitHub or remote repositories
+  - Access `~/.ssh` or other sensitive directories
 
 ## Testing Guidelines
 
@@ -81,10 +81,10 @@ This project uses **Vitest** with a dual testing strategy:
 Example pattern:
 
 ```typescript
-import { expectType } from '../expect-type.mjs';
+import { expectType } from "../expect-type.mjs";
 
 // Type-level assertion
-expectType<typeof result, readonly [0, 0, 0]>('=');
+expectType<typeof result, readonly [0, 0, 0]>("=");
 // Runtime assertion
 assert.deepStrictEqual(result, [0, 0, 0]);
 ```
@@ -114,27 +114,27 @@ Use `expectType<A, B>('=')` whenever possible. Avoid using `expectType<A, B>('<=
 - **Type Safety**: Leverage `ts-type-forge` for advanced TypeScript patterns
 - **Type Guards**: Prefer type guard functions over type assertions
 - **Import Strategy**:
-    - Import `.mts` with extensions `.mjs`.
-    - Use relative paths within `src/`; avoid importing from generated `dist/` and `index.mjs` directly.
+  - Import `.mts` with extensions `.mjs`.
+  - Use relative paths within `src/`; avoid importing from generated `dist/` and `index.mjs` directly.
 - **Export Strategy**:
-    - All exports go through generated `index.mts` files
-    - Modules should use named exports, default exports are only allowed for configuration.
+  - All exports go through generated `index.mts` files
+  - Modules should use named exports, default exports are only allowed for configuration.
 - **Documentation**: Auto-generated from TSDoc comments using TypeDoc
 - **File Naming**:
-    - `camelCase` for variables/functions, `PascalCase` for types/classes, `kebab-case` for file names.
-    - Language: TypeScript ESM; prefer `.mts` for modules and `.d.mts` for types. Compiled output is `.mjs`.
+  - `camelCase` for variables/functions, `PascalCase` for types/classes, `kebab-case` for file names.
+  - Language: TypeScript ESM; prefer `.mts` for modules and `.d.mts` for types. Compiled output is `.mjs`.
 - **Formatting**:
-    - Follow the repository’s Prettier setup with organize-imports and package.json plugins—avoid manual formatting.
-        - Indentation: 2 spaces; LF endings. Markdown uses 4-space indents (see `.editorconfig`).
+  - Follow the repository’s Prettier setup with organize-imports and package.json plugins—avoid manual formatting.
+    - Indentation: 2 spaces; LF endings. Markdown uses 4-space indents (see `.editorconfig`).
 
 #### Why enforce readonly?
 
 ```ts
 // ❌
-const t: [string, number] = ['a', 1];
+const t: [string, number] = ["a", 1];
 
 function f(x: number) {
-    if (typeof x !== 'number') throw new Error('Error!!');
+  if (typeof x !== "number") throw new Error("Error!!");
 }
 
 t.reverse(); // [1, 'a']
@@ -148,10 +148,10 @@ If we annotate it as readonly as shown below, the destructive method `reverse` c
 
 ```ts
 // ✅
-const t: readonly [string, number] = ['a', 1];
+const t: readonly [string, number] = ["a", 1];
 
 function f(x: number) {
-    if (typeof x !== 'number') throw new Error('Error!!');
+  if (typeof x !== "number") throw new Error("Error!!");
 }
 
 const r = t.toReversed(); // (string | number)[]
@@ -180,60 +180,60 @@ This organization makes the script easier to read and understand the execution f
 ### Syntax rules (and corresponding ESLint rules)
 
 - Type safety first
-    - **NEVER** use `as any`, `as never`, or `@ts-ignore` (use `@ts-expect-error` when absolutely necessary)
-    - Explicitly specify function return types (checked by `@typescript-eslint/explicit-function-return-type` rule)
-        - Explicit return types do make it visually more clear what type is returned by a function. They can also speed up TypeScript type checking performance in large codebases with many large functions.
-    - Avoid dangerous type assertions with `any` or `never`.
-    - Avoid any casting as possible.
-    - Use readonly properties and parameters by default. Follow lint configuration for type definition notation.
-    - Avoid implicit type coercion
-        - Do not use non-boolean values in conditions of if/while statements or as operands of logical operators (checked by `@typescript-eslint/strict-boolean-expressions` rule).
-        - Do not embed variables of types other than number, string, or boolean in template literals (checked by `@typescript-eslint/restrict-template-expressions` rule).
-    - Always provide a comparison function when sorting arrays. Exception: may be omitted only for string arrays (`string[]`) (checked by `require-array-sort-compare` rule).
-    - Prohibit operations that easily produce exceptions such as partial `reduce` or division
+  - **NEVER** use `as any`, `as never`, or `@ts-ignore` (use `@ts-expect-error` when absolutely necessary)
+  - Explicitly specify function return types (checked by `@typescript-eslint/explicit-function-return-type` rule)
+    - Explicit return types do make it visually more clear what type is returned by a function. They can also speed up TypeScript type checking performance in large codebases with many large functions.
+  - Avoid dangerous type assertions with `any` or `never`.
+  - Avoid any casting as possible.
+  - Use readonly properties and parameters by default. Follow lint configuration for type definition notation.
+  - Avoid implicit type coercion
+    - Do not use non-boolean values in conditions of if/while statements or as operands of logical operators (checked by `@typescript-eslint/strict-boolean-expressions` rule).
+    - Do not embed variables of types other than number, string, or boolean in template literals (checked by `@typescript-eslint/restrict-template-expressions` rule).
+  - Always provide a comparison function when sorting arrays. Exception: may be omitted only for string arrays (`string[]`) (checked by `require-array-sort-compare` rule).
+  - Prohibit operations that easily produce exceptions such as partial `reduce` or division
 - Operator usage restrictions
-    - Prohibit `+foo` (coercion to number) or `"" + foo` (coercion to string) (checked by `no-implicit-coercion` rule).
-    - Prohibit addition of different types like `"1" + 2` (checked by `@typescript-eslint/restrict-plus-operands` rule).
-    - Do not use `+` for string concatenation (checked by `prefer-template` rule). Instead, follow these patterns:
-        - For a few strings: use template literals (e.g., `${a}_${b}`)
-        - For many strings or dynamic lists: use array `.join()` or `.concat()` (e.g., `["aaa", "bbb", "ccc", ..., "zzz"].join("\n")`)
-        - For source code generation: consider using `dedent` for cleaner formatting
+  - Prohibit `+foo` (coercion to number) or `"" + foo` (coercion to string) (checked by `no-implicit-coercion` rule).
+  - Prohibit addition of different types like `"1" + 2` (checked by `@typescript-eslint/restrict-plus-operands` rule).
+  - Do not use `+` for string concatenation (checked by `prefer-template` rule). Instead, follow these patterns:
+    - For a few strings: use template literals (e.g., `${a}_${b}`)
+    - For many strings or dynamic lists: use array `.join()` or `.concat()` (e.g., `["aaa", "bbb", "ccc", ..., "zzz"].join("\n")`)
+    - For source code generation: consider using `dedent` for cleaner formatting
 - Immutable data orientation
-    - Use `const` instead of `let` (`functional/no-let`).
-        - If you absolutely must use it, add the `mut_` prefix to the variable name.
-    - Enforce readonly types.
-        - Always use `readonly T[]` instead of `T[]` for arrays.
-        - When nesting is deep and writing `Readonly<*>` becomes verbose, consider using `DeepReadonly` type utility like `DeepReadonly<{ a: { b: { c: number[] }}}>`.
-    - Define object and array constants with `as const`.
-    - Prohibit direct mutation of objects and avoid making arguments or return values mutable (checked by `functional/immutable-data` rule).
-    - Eliminate mutable/partial structures like class inheritance and enums in principle.
+  - Use `const` instead of `let` (`functional/no-let`).
+    - If you absolutely must use it, add the `mut_` prefix to the variable name.
+  - Enforce readonly types.
+    - Always use `readonly T[]` instead of `T[]` for arrays.
+    - When nesting is deep and writing `Readonly<*>` becomes verbose, consider using `DeepReadonly` type utility like `DeepReadonly<{ a: { b: { c: number[] }}}>`.
+  - Define object and array constants with `as const`.
+  - Prohibit direct mutation of objects and avoid making arguments or return values mutable (checked by `functional/immutable-data` rule).
+  - Eliminate mutable/partial structures like class inheritance and enums in principle.
 - Enforce modern syntax
-    - Do not use legacy syntax such as `var`, `new Array()`, `in` operator, or `React.useImperativeHandle`.
-    - Prefer template literals, object spread, and `Object.hasOwn`
-    - Use arrow functions in all cases
+  - Do not use legacy syntax such as `var`, `new Array()`, `in` operator, or `React.useImperativeHandle`.
+  - Prefer template literals, object spread, and `Object.hasOwn`
+  - Use arrow functions in all cases
 - Module and dependency management
-    - Use ES modules (import/export) syntax over CommonJS (require)
-    - Use named exports unless restricted by libraries or frameworks
-    - Destructuring imports when possible (e.g., `import { foo } from 'bar'`)
-        - Exceptions: Node utilities such as fs, path, url etc.
-    - Avoid circular imports (`import-x/no-cycle`).
-    - Use explicit type-imports and do not add extensions except for `.mjs`/`.json`.
-    - Do not use internal path imports like `./a/b`. Place index.mts files in each directory and export items to be referenced by other directories. Use `pnpm run gi` command to auto-generate index.mts files for all directories.
-    - Write code that is tree-shakeable
-    - Use standard modules with `node:` prefix
+  - Use ES modules (import/export) syntax over CommonJS (require)
+  - Use named exports unless restricted by libraries or frameworks
+  - Destructuring imports when possible (e.g., `import { foo } from 'bar'`)
+    - Exceptions: Node utilities such as fs, path, url etc.
+  - Avoid circular imports (`import-x/no-cycle`).
+  - Use explicit type-imports and do not add extensions except for `.mjs`/`.json`.
+  - Do not use internal path imports like `./a/b`. Place index.mts files in each directory and export items to be referenced by other directories. Use `pnpm run gi` command to auto-generate index.mts files for all directories.
+  - Write code that is tree-shakeable
+  - Use standard modules with `node:` prefix
 - Robust async handling
-    - Always use `await` or `.catch()` with Promises, eliminating nesting and multiple resolutions (checked by `no-floating-promises` rule).
+  - Always use `await` or `.catch()` with Promises, eliminating nesting and multiple resolutions (checked by `no-floating-promises` rule).
 - React/JSX rules
-    - Define components with arrow functions + `.tsx` extension.
-    - Avoid props spread and inline functions/objects.
-    - Strictly manage Hooks dependency arrays and call order, preventing unnecessary re-renders and improper exports with React Refresh/Perf rules.
-    - In JSX conditionals, do not use short-circuit evaluation like `cond && <Something />`, instead use ternary operators for strict branching: `cond ? <Something /> : undefined` (checked by `react/jsx-no-leaked-render`).
-    - Do not concatenate strings by placing multiple expressions adjacently in JSX (e.g., `<div>{x}{y}</div>`). Instead, use template literals: `<div>{`${x}${y}`}</div>`.
+  - Define components with arrow functions + `.tsx` extension.
+  - Avoid props spread and inline functions/objects.
+  - Strictly manage Hooks dependency arrays and call order, preventing unnecessary re-renders and improper exports with React Refresh/Perf rules.
+  - In JSX conditionals, do not use short-circuit evaluation like `cond && <Something />`, instead use ternary operators for strict branching: `cond ? <Something /> : undefined` (checked by `react/jsx-no-leaked-render`).
+  - Do not concatenate strings by placing multiple expressions adjacently in JSX (e.g., `<div>{x}{y}</div>`). Instead, use template literals: `<div>{`${x}${y}`}</div>`.
 - Accessibility enforcement
-    - Provide roles and labels for all interactive elements. Follow JSX a11y rules for consistent `alt` and `aria-*` attributes, focus management, and tabindex control.
+  - Provide roles and labels for all interactive elements. Follow JSX a11y rules for consistent `alt` and `aria-*` attributes, focus management, and tabindex control.
 - Security and quality
-    - Prohibit `eval`, `Function`, dynamic `require`, `import`, and dangerous regular expressions.
-    - Enforce file naming, array operations, and modern DOM/Node API adoption with `unicorn/*`, improve readability and reduce bugs with `import-x/no-useless-path-segments` and `no-restricted-globals`.
+  - Prohibit `eval`, `Function`, dynamic `require`, `import`, and dangerous regular expressions.
+  - Enforce file naming, array operations, and modern DOM/Node API adoption with `unicorn/*`, improve readability and reduce bugs with `import-x/no-useless-path-segments` and `no-restricted-globals`.
 
 ## Troubleshooting
 
@@ -248,9 +248,9 @@ This project uses TypeScript with the strict setting noUncheckedIndexedAccess: t
 const xs: readonly number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 if (xs.length > 0) {
-    console.log(xs[0] * 2);
-    //          ~~~~~
-    //          Object is possibly 'undefined'.
+  console.log(xs[0] * 2);
+  //          ~~~~~
+  //          Object is possibly 'undefined'.
 }
 ```
 
@@ -258,12 +258,12 @@ This error can be resolved as follows:
 
 ```ts
 // ✅
-import { Arr } from 'ts-data-forge';
+import { Arr } from "ts-data-forge";
 
 const xs: readonly number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 if (Arr.isNonEmpty(xs)) {
-    console.log(xs[0] * 2);
+  console.log(xs[0] * 2);
 }
 ```
 
@@ -273,7 +273,7 @@ if (Arr.isNonEmpty(xs)) {
 type NonEmptyArray<A> = readonly [A, ...(readonly A[])];
 
 const isNonEmpty = <E>(array: readonly E[]): array is NonEmptyArray<E> =>
-    array.length > 0;
+  array.length > 0;
 ```
 
 ##### Early Return
@@ -281,27 +281,27 @@ const isNonEmpty = <E>(array: readonly E[]): array is NonEmptyArray<E> =>
 ```ts
 // ❌
 const fn = (xs: readonly number[]): void => {
-    if (xs.length === 0) {
-        return;
-    }
+  if (xs.length === 0) {
+    return;
+  }
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const first: number = xs[0]!;
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const first: number = xs[0]!;
 
-    // ...
+  // ...
 };
 ```
 
 ```ts
 // ✅
 const fn = (xs: readonly number[]): void => {
-    if (!Arr.isNonEmpty(xs)) {
-        return;
-    }
+  if (!Arr.isNonEmpty(xs)) {
+    return;
+  }
 
-    const first: number = xs[0];
+  const first: number = xs[0];
 
-    // ...
+  // ...
 };
 ```
 
@@ -317,17 +317,17 @@ const result = a / b; // Error: Division is partial
 
 // ❌ Don't create your own utility like this:
 const safeDivide = (a: number, b: number): number =>
-    // eslint-disable-next-line total-functions/no-partial-division
-    b === 0 ? 0 : a / b;
+  // eslint-disable-next-line total-functions/no-partial-division
+  b === 0 ? 0 : a / b;
 ```
 
 ```ts
 // ✅ Do this:
-import { Num } from 'ts-data-forge';
+import { Num } from "ts-data-forge";
 
 const calculateValue = (a: number, b: number): number => {
-    if (!Num.isNonZero(b)) return 0;
-    return Num.div(a, b);
+  if (!Num.isNonZero(b)) return 0;
+  return Num.div(a, b);
 };
 ```
 
@@ -369,8 +369,8 @@ mut_xs[0] = 100;
 expect(Result.isErr(result)).toBe(true);
 
 if (Result.isErr(result)) {
-    // error  Avoid calling `expect` inside conditional statements  vitest/no-conditional-expect
-    assert.deepStrictEqual(result.value, { data: [] });
+  // error  Avoid calling `expect` inside conditional statements  vitest/no-conditional-expect
+  assert.deepStrictEqual(result.value, { data: [] });
 }
 ```
 
@@ -388,13 +388,13 @@ NG:
 
 ```ts
 // error  Modifying an existing object/array is not allowed  functional/immutable-data
-temp.value = 'new value';
+temp.value = "new value";
 ```
 
 OK:
 
 ```ts
-mut_temp.value = 'new value';
+mut_temp.value = "new value";
 ```
 
 ## About Libraries
@@ -411,7 +411,7 @@ Types such as `DeepReadonly`, `StrictOmit`, `ReadonlyRecord` etc. are installed 
 - Use `memoizeFunction` for function memoization
 - Use `fastDeepEqual` for deep equality comparison
 - Unit test
-    - Write `assert.isTrue(Result.isErr(result))` instead of `expect(Result.isErr(result)).toBe(true)`
+  - Write `assert.isTrue(Result.isErr(result))` instead of `expect(Result.isErr(result)).toBe(true)`
 
 ### immer
 
@@ -440,10 +440,10 @@ lib file, plus a per-version umbrella). Consumers alias them onto
   holds the per-lib-file transforms, `src/functions/**` the pipeline (codemod →
   lib files → packages), `src/commands/**` the entry points.
 - `packages/vX.Y/` — one private harness project per TypeScript version.
-    - `scripts/version-config.mts` — that version's config (TypeScript version,
-      version ranges, lib name), imported by `scripts/_options.mts`. **Edit this**
-      (not a JSON file) to change a version's settings.
-    - `output/`, `output-branded/` — **generated** lib files and packages.
+  - `scripts/version-config.mts` — that version's config (TypeScript version,
+    version ranges, lib name), imported by `scripts/_options.mts`. **Edit this**
+    (not a JSON file) to change a version's settings.
+  - `output/`, `output-branded/` — **generated** lib files and packages.
 - `configs/` — shared tooling config. `docs/design.md` — the design doc.
 
 ### Essential Development Commands
