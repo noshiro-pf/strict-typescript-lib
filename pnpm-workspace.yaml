@@ -1,25 +1,55 @@
-allowBuilds:
-  esbuild: true
-  unrs-resolver: true
+packages:
+  - 'packages/scripts-common'
+  - 'packages/v*'
+  - 'packages/v*/output'
+  - 'packages/v*/output-branded'
+
+update:
+  githubActions: true
+  ignoreDeps:
+    - typescript
 
 minimumReleaseAge: 10080 # = 7 days
 
 minimumReleaseAgeExclude:
   - '@types/**'
   - ts-type-forge
+  - eslint-plugin-ts-type-forge
   - ts-data-forge
+  - eslint-plugin-ts-data-forge
   - ts-fortress
+  - eslint-plugin-ts-fortress
   - ts-repo-utils
   - ts-codemod-lib
   - synstate
   - 'synstate-*'
   - eslint-config-typed
-  - eslint-plugin-ts-data-forge
   - octokit-safe-types
   - github-settings-as-code
+  - 'strict-ts-lib-*'
 
-packages:
-  - 'packages/scripts-common'
-  - 'packages/v*'
-  - 'packages/v*/output'
-  - 'packages/v*/output-branded'
+allowBuilds:
+  esbuild: true
+  unrs-resolver: true
+
+# This patch does not change what any type means.
+#
+# The lib this repository publishes narrows two of the stock conditional
+# helpers: `Exclude<T, U extends T>` and `Omit<T, K extends keyof T>`, where
+# the stock lib leaves the second parameter unconstrained. A package that
+# subtracts a literal key union from a still-generic `keyof T` is therefore
+# accepted by the stock lib and rejected here with TS2344 — TypeScript cannot
+# prove the union is a subset of a `keyof T` it has not resolved yet. Wrapping
+# the subtrahend in `Extract<keyof T, …>` denotes exactly the same set (the
+# stock helpers ignore keys that are not in `T` anyway) and does satisfy the
+# constraint.
+#
+# - @eslint/plugin-kit@0.7.2: `CustomRuleDefinitionType`, reached from
+#   `eslint.config.mts` via a non-declaration `types.cts` that `skipLibCheck`
+#   does not skip. It breaks `check:root`. Arrived with the eslint 9 -> 10 bump
+#   (plugin-kit 0.4.1 -> 0.7.2).
+#
+# Drop it once the fix is released upstream. (The sibling ts-type-forge patch
+# is gone: 9.1.3 fixed it upstream with `RelaxedExclude`.)
+patchedDependencies:
+  '@eslint/plugin-kit@0.7.2': patches/@eslint__plugin-kit@0.7.2.patch

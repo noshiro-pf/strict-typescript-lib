@@ -2,7 +2,7 @@ import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
 import { range, Result } from 'ts-data-forge';
 import { makeEmptyDir } from 'ts-repo-utils';
-import { type UintRange } from 'ts-type-forge';
+import { type ReadonlyRecord, type UintRange } from 'ts-type-forge';
 import { type Context } from '../context.mjs';
 import { formatDir } from './utils/format.mjs';
 
@@ -36,7 +36,7 @@ const fetchWithRetry = async (
     try {
       const response = await fetch(url, options);
 
-      if (response.ok || isLastAttempt || !isRetryableStatus(response.status)) {
+      if (isLastAttempt || response.ok || !isRetryableStatus(response.status)) {
         return response;
       }
 
@@ -68,17 +68,16 @@ export const fetchLibFileNameList = async (
   const url =
     `https://api.github.com/repos/microsoft/TypeScript/contents/lib?ref=v${tsVersion}` as const;
 
-  const headers: Record<string, string> = {
+  const token = process.env['GITHUB_TOKEN'] ?? process.env['GH_TOKEN'];
+
+  const headers: ReadonlyRecord<string, string> = {
     Accept: 'application/vnd.github+json',
     'X-GitHub-Api-Version': '2022-11-28',
     'User-Agent': 'strict-typescript-lib-generator',
+    ...(token === undefined || token === ''
+      ? {}
+      : { Authorization: `Bearer ${token}` }),
   } as const;
-
-  const token = process.env['GITHUB_TOKEN'] ?? process.env['GH_TOKEN'];
-
-  if (token !== undefined && token !== '') {
-    headers['Authorization'] = `Bearer ${token}`;
-  }
 
   const response = await fetchWithRetry(url, { headers });
 

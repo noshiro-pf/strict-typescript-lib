@@ -36,6 +36,7 @@ import * as path from 'node:path';
 import { Arr, hasKey, isRecord, Json, Result } from 'ts-data-forge';
 import * as t from 'ts-fortress';
 import { $, glob } from 'ts-repo-utils';
+import { type ReadonlyRecord } from 'ts-type-forge';
 import { projectRootPath } from '../project-root-path.mjs';
 import { parseVersionExpr, versionFromPath } from '../version-filter.mjs';
 
@@ -165,7 +166,7 @@ const main = async (): Promise<void> => {
 };
 
 /** Renders a `devDependencies` JSON block for pasting into package.json. */
-const depsBlock = (deps: Readonly<Record<string, string>> = {}): string =>
+const depsBlock = (deps: ReadonlyRecord<string, string> = {}): string =>
   JSON.stringify({ devDependencies: deps }, null, 2);
 
 /** Reads a `--name=value` flag from the argument list. */

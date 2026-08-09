@@ -33,9 +33,9 @@
     "@typescript/lib-esnext": "file:output/packages/esnext",
     "@typescript/lib-scripthost": "file:output/packages/scripthost",
     "@typescript/lib-webworker": "file:output/packages/webworker",
-    "ts-data-forge": "12.0.0",
-    "ts-repo-utils": "10.1.3",
-    "ts-type-forge": "7.2.1",
+    "ts-data-forge": "^14.1.0",
+    "ts-repo-utils": "10.1.7",
+    "ts-type-forge": "9.1.3",
     "typescript": "6.0.3"
   }
 }

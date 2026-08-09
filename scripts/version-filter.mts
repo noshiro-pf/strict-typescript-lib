@@ -53,8 +53,8 @@ const parseVersionTerm = (term: string): VersionPredicate | undefined => {
   const [majorStr, minorStr, ...extra] = digits.split('.');
 
   if (
-    !Arr.isEmpty(extra) ||
     majorStr === undefined ||
+    Arr.isNonEmpty(extra) ||
     !/^\d+$/u.test(majorStr) ||
     (minorStr !== undefined && !/^\d+$/u.test(minorStr))
   ) {

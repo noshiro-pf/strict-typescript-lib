@@ -1,5 +1,5 @@
 import { expectType, pipe } from 'ts-data-forge';
-import { type MonoTypeFunction } from 'ts-type-forge';
+import { type MonoTypeFunction, type StrictExclude } from 'ts-type-forge';
 import {
   composeMonoTypeFns,
   replaceWithNoMatchCheck,
@@ -123,7 +123,7 @@ export const typedArrayTypeToElemBaseType = (
 export const typedArrayTypeToElemType = (
   s: TypedArrayElemType,
   useBrandedNumber: boolean,
-): Exclude<TypedArrayElemType, 'Uint8Clamped'> | 'bigint' | 'number' => {
+): StrictExclude<TypedArrayElemType, 'Uint8Clamped'> | 'bigint' | 'number' => {
   switch (s) {
     case 'Uint8Clamped':
       return enumType.Uint8;

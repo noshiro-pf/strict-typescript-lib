@@ -182,7 +182,7 @@ const main = async (): Promise<void> => {
     .filter((n) => !ignored.has(n))
     .toSorted((a, b) => a.localeCompare(b));
 
-  if (Arr.isFixedLengthArray(names, 0)) {
+  if (Arr.isEmpty(names)) {
     console.error(
       `No source packages matched (scope: ${scopeLabel}). Check --version.`,
     );

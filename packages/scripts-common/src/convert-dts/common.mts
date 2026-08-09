@@ -2,7 +2,7 @@ import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
 import dedent from 'dedent';
 import { expectType } from 'ts-data-forge';
-import { type MonoTypeFunction } from 'ts-type-forge';
+import { type MonoTypeFunction, type ReadonlyRecord } from 'ts-type-forge';
 import { generateKeyValueRecordFromKeys } from '../functions/utils/node-utils.mjs';
 
 export type ConverterConfig = Readonly<{
@@ -42,7 +42,7 @@ export type ConverterOptions = Readonly<{
  * function happen alongside upstream lib breaking changes.
  */
 export const tsLibShapeFor = (tsVersion: string): TsLibShape => {
-  const [majorStr, minorStr] = tsVersion.split('.');
+  const [majorStr, minorStr] = tsVersion.split('.', 2);
 
   const major = Number(majorStr);
 
@@ -232,7 +232,7 @@ const BrandedNumberName = generateKeyValueRecordFromKeys(
   brandedNumbers,
 ) satisfies BrandedNumberTypes;
 
-export type BrandedNumberTypes = Record<
+export type BrandedNumberTypes = ReadonlyRecord<
   (typeof brandedNumbers)[number],
   (typeof brandedNumbers)[number] | 'bigint' | 'number' | `NumberType.${string}`
 >;
