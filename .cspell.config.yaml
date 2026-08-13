@@ -38,7 +38,6 @@ ignorePaths:
   - pnpm-workspace.yaml
   - dist/**
   - docs/**
-  - agents/common/**
   - packages/v*/temp/**
   - packages/v*/output/lib-files/**
   - packages/v*/output/packages/**

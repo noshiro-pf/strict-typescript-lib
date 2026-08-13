@@ -16,8 +16,6 @@
   ],
   "type": "module",
   "scripts": {
-    "agents:gen": "tsx ./scripts/cmd/gen-agents-md.mts",
-    "agents:sync": "tsx ./scripts/cmd/sync-agent-config.mts",
     "changeset:all": "tsx ./scripts/cmd/create-changeset.mts",
     "changeset:version-packages": "pnpm changeset version && pnpm run ws:gen:packages && pnpm install --no-frozen-lockfile",
     "check-all": "tsx ./scripts/cmd/check-all.mts",
