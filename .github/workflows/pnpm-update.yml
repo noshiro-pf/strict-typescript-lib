@@ -1,7 +1,7 @@
 name: Weekly pnpm update
 
-# Runs this repository's own `update-packages` script (which encodes the
-# skip rules such as `!eslint` / `!typescript`) together with `pnpm
+# Runs `pnpm update --latest -r` (whose skip rules — `update.ignoreDeps`,
+# `minimumReleaseAge` — live in pnpm-workspace.yaml) together with `pnpm
 # self-update`, and opens a single bundled pull request that auto-merges once
 # CI passes. This replaces Dependabot's npm updates; GitHub Actions updates
 # stay with Dependabot (see .github/dependabot.yml).
@@ -49,7 +49,7 @@ jobs:
 
       - name: Update dependencies
         run: |
-          pnpm run update-packages
+          pnpm update --latest -r
           pnpm install --no-frozen-lockfile
 
       # 依存更新が終わってからトークンを発行する。許可済みビルドスクリプトが
@@ -92,6 +92,6 @@ jobs:
               --base main \
               --head "$branch" \
               --title "chore: update dependencies" \
-              --body "Automated weekly dependency update via \`pnpm run update-packages\` + \`pnpm self-update\`. Auto-merges once CI passes."
+              --body "Automated weekly dependency update via \`pnpm update --latest -r\` + \`pnpm self-update\`. Auto-merges once CI passes."
           fi
           gh pr merge --auto --squash "$branch"
