@@ -20,6 +20,7 @@ minimumReleaseAgeExclude:
   - ts-fortress
   - eslint-plugin-ts-fortress
   - ts-repo-utils
+  - ts-codemod-cli
   - ts-codemod-lib
   - synstate
   - 'synstate-*'
