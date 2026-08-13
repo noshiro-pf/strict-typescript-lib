@@ -98,6 +98,25 @@ const convertGroupByObject = (
 };
 
 /**
+ * Brands the length parameter of `String.prototype.padStart` / `padEnd`.
+ * TypeScript 7.0 renamed that parameter from `maxLength` to `targetLength`
+ * (aligning the lib with the spec), so the spelling actually present in the
+ * file is detected first; every lib file carries exactly one of the two.
+ */
+const convertLibEs2017String =
+  ({ brandedNumber }: ConverterOptions): MonoTypeFunction<string> =>
+  (src) => {
+    const paramName = src.includes('targetLength: number')
+      ? 'targetLength'
+      : 'maxLength';
+
+    return replaceWithNoMatchCheck(
+      `${paramName}: number`,
+      `${paramName}: ${brandedNumber.StringSizeArgNonNegative}`,
+    )(src);
+  };
+
+/**
  * TypeScript 6.0 turned several lib files (`lib.dom.iterable.d.ts`,
  * `lib.dom.asynciterable.d.ts`, and their WebWorker counterparts) into stubs
  * whose real declarations were folded into the main `lib.dom.d.ts` /
@@ -283,10 +302,7 @@ export const convert = (
                 return convertLibEs2017Object(options);
 
               case 'lib.es2017.string.d.ts':
-                return replaceWithNoMatchCheck(
-                  'maxLength: number',
-                  `maxLength: ${options.brandedNumber.StringSizeArgNonNegative}`,
-                );
+                return convertLibEs2017String(options);
 
               case 'lib.es2017.date.d.ts':
                 return convertLibEs2017Date(options);

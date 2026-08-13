@@ -428,7 +428,7 @@ In addition to the common instructions above (vendored into `agents/common-rules
 ### Project overview
 
 `strict-typescript-lib` generates a **strict** rewrite of TypeScript's built-in
-`lib.*.d.ts` declarations for every supported TypeScript minor (v5.0–v6.0), in
+`lib.*.d.ts` declarations for every supported TypeScript minor (v5.0–v7.0), in
 both a plain and a **branded-number** flavor, and distributes them as **GitHub
 Release tarball assets** (fine-grained `strict-ts-lib-vX.Y-*` packages, one per
 lib file, plus a per-version umbrella). Consumers alias them onto
@@ -441,8 +441,11 @@ lib file, plus a per-version umbrella). Consumers alias them onto
   lib files → packages), `src/commands/**` the entry points.
 - `packages/vX.Y/` — one private harness project per TypeScript version.
     - `scripts/version-config.mts` — that version's config (TypeScript version,
-      version ranges, lib name), imported by `scripts/_options.mts`. **Edit this**
-      (not a JSON file) to change a version's settings.
+      version ranges, lib name, and optionally `libSource` — where the upstream
+      `lib.*.d.ts` are fetched from; v7.0 reads them from `microsoft/typescript-go`
+      since `microsoft/TypeScript` carries no 7.x tag), imported by
+      `scripts/_options.mts`. **Edit this** (not a JSON file) to change a version's
+      settings.
     - `output/`, `output-branded/` — **generated** lib files and packages.
 - `configs/` — shared tooling config. `docs/design.md` — the design doc.
 
