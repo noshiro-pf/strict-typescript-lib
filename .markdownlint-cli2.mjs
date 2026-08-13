@@ -4,7 +4,6 @@ const config = {
     '!**/node_modules',
     '!**/dist/**/*',
     '!**/docs/**/*',
-    '!agents/**/*',
     '!**/CHANGELOG.md',
   ],
   prettier: true,

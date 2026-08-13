@@ -54,8 +54,6 @@ const config: readonly FlatConfig[] = [
       '**/output/**',
       '**/output-branded/**',
       'packages/*/output*/**',
-      // External common-agent-config submodule; not part of this repo's tooling.
-      'agents/**',
     ],
   },
   ...eslintConfigForTypeScript({
