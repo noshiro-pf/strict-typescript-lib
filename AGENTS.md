@@ -453,6 +453,28 @@ This repo has no bundler build; the "build" is the generator. Key commands:
 - `pnpm run lint` / `lint:fix`, `pnpm run fmt`, `pnpm run cspell`,
   `pnpm run md`, `pnpm run check-all` — validation and formatting.
 
+### Dependency updates
+
+`pnpm-update.yml` runs `pnpm update --latest -r` weekly; what it holds back
+lives in `pnpm-workspace.yaml` (`update.ignoreDeps`, `minimumReleaseAge`).
+
+**GitHub Action pins are updated by `pnpm run update-actions`, not by that
+command.** `update.githubActions` is `false` so the `--latest` run leaves the
+workflow files alone; `update-actions` turns the check back on with
+`--include-github-actions` and deliberately omits `--latest`, so an action only
+moves within `^current` and a major waits for a human. Do not set
+`update.githubActions` back to `true`, and do not add `--latest` to
+`update-actions`: `changesets/action` v2 requires Changesets CLI v3 and renamed
+every input, so taking that major unattended broke `release.yml` on main.
+
+Neither `minimumReleaseAge` nor `update.ignoreDeps` applies to actions. pnpm
+resolves action versions from `git ls-remote` refs, which carry a tag name and a
+SHA but no publication date, so there is nothing for the age check to read — a
+tag hours old is taken regardless. Hold an action back by leaving the major
+alone, not by listing it in `ignoreDeps`.
+`pnpm outdated --include-github-actions --latest` lists the majors that are
+waiting.
+
 ### Generated / auto-managed files — do NOT edit directly
 
 Hand-editing generated output is always wrong: the next generate run overwrites
