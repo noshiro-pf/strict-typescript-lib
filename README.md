@@ -60,12 +60,13 @@ segment (`v5.9`) must match your TypeScript minor version.
 
 ### TypeScript version support
 
-- **`>=5.0 <=6.0`** — Supported (v5.0–v6.0 published). `@typescript/lib-*`
+- **`>=5.0 <=7.0`** — Supported (v5.0–v7.0 published). `@typescript/lib-*`
   aliases are resolved automatically; use the `strict-ts-lib-vX.Y-*` matching
-  your minor. On TypeScript 6.0 you may need to set `"libReplacement": true` in
-  your `tsconfig.json` `compilerOptions`.
+  your minor. On TypeScript 6.0 and later, set `"libReplacement": true` in your
+  `tsconfig.json` `compilerOptions` — it no longer defaults to on, and the
+  aliases are ignored without it.
 - **`<5.0`** — Not supported.
-- **`>6.0`** — No matching version yet; use the closest published minor.
+- **`>7.0`** — No matching version yet; use the closest published minor.
 
 ## License
 

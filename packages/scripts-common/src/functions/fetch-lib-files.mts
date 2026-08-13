@@ -3,7 +3,7 @@ import * as path from 'node:path';
 import { range, Result } from 'ts-data-forge';
 import { makeEmptyDir } from 'ts-repo-utils';
 import { type ReadonlyRecord, type UintRange } from 'ts-type-forge';
-import { type Context } from '../context.mjs';
+import { libSourceOf, type Context, type LibSource } from '../context.mjs';
 import { formatDir } from './utils/format.mjs';
 
 type GitHubContentEntry = Readonly<{
@@ -58,15 +58,15 @@ const fetchWithRetry = async (
 };
 
 /**
- * List the names of `lib.*.d.ts` files in the TypeScript repository at the
- * given tag using the public GitHub Contents API. Authentication is not
- * required for public repositories.
+ * List the names of `lib.*.d.ts` files in the given lib-file source using the
+ * public GitHub Contents API. Authentication is not required for public
+ * repositories.
  */
 export const fetchLibFileNameList = async (
-  tsVersion: string,
+  libSource: LibSource,
 ): Promise<readonly string[]> => {
   const url =
-    `https://api.github.com/repos/microsoft/TypeScript/contents/lib?ref=v${tsVersion}` as const;
+    `https://api.github.com/repos/${libSource.repo}/contents/${libSource.dir}?ref=${libSource.ref}` as const;
 
   const token = process.env['GITHUB_TOKEN'] ?? process.env['GH_TOKEN'];
 
@@ -103,16 +103,22 @@ export const fetchLibFiles = async (
 
   const tsVersion = ctx.versionConfig.typescriptVersion;
 
+  const libSource = libSourceOf(ctx.versionConfig);
+
   console.info(`TypeScript version: ${tsVersion}.\n`);
 
-  const files = await fetchLibFileNameList(tsVersion);
+  console.info(
+    `Lib files: ${libSource.repo}@${libSource.ref}:${libSource.dir}.\n`,
+  );
+
+  const files = await fetchLibFileNameList(libSource);
 
   await makeEmptyDir(copiedDir);
 
   try {
     for (const file of files) {
       const url =
-        `https://raw.githubusercontent.com/microsoft/TypeScript/v${tsVersion}/lib/${file}` as const;
+        `https://raw.githubusercontent.com/${libSource.repo}/${libSource.ref}/${libSource.dir}/${file}` as const;
 
       const response = await fetchWithRetry(url);
 
