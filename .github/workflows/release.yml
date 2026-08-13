@@ -49,7 +49,12 @@ jobs:
 
       - name: Create Release Pull Request or Publish
         id: changesets
-        uses: changesets/action@198f833dd7d863100ea6e28967bc9a9fdefadb0a # v2.1.0
+        # v1 系に留めること。v2 は Changesets CLI v3 専用で、CLI v2 を検出すると
+        # 即エラーになる。入力名も全て改名されている
+        # （publish → publish-script, version → version-script,
+        #   title → pr-title, commit → commit-message）。
+        # 上げるなら @changesets/cli の v3 移行と下の with: の書き換えを同時に行う。
+        uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d # v1.9.0
         with:
           publish: pnpm run release:publish
           version: pnpm run changeset:version-packages

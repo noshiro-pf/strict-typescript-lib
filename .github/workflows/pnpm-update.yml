@@ -3,8 +3,18 @@ name: Weekly pnpm update
 # Runs `pnpm update --latest -r` (whose skip rules — `update.ignoreDeps`,
 # `minimumReleaseAge` — live in pnpm-workspace.yaml) together with `pnpm
 # self-update`, and opens a single bundled pull request that auto-merges once
-# CI passes. This replaces Dependabot's npm updates; GitHub Actions updates
-# stay with Dependabot (see .github/dependabot.yml).
+# CI passes. This replaces Dependabot entirely; there is no
+# .github/dependabot.yml.
+#
+# The action pins move in a second, separate step. `update.githubActions` is
+# deliberately `false`, so the `--latest` run above leaves the workflow files
+# alone, and `update-actions` turns the check back on per-invocation with
+# `--include-github-actions`. That second command has no `--latest`, so an
+# action only moves within `^current`: a major stays put until a human takes it.
+# `changesets/action` v2 is why. It requires Changesets CLI v3 and renamed every
+# input, so the major arriving in #107 broke release.yml on main, and neither
+# `minimumReleaseAge` nor `ignoreDeps` applies to actions (pnpm reads their
+# versions from `git ls-remote` refs, which carry no publication date).
 #
 # Authenticates with a GitHub App installation token (the same App used by
 # sync-agent-config.yml) so that the push triggers the push-based CI workflows
@@ -50,6 +60,7 @@ jobs:
       - name: Update dependencies
         run: |
           pnpm update --latest -r
+          pnpm run update-actions
           pnpm install --no-frozen-lockfile
 
       # 依存更新が終わってからトークンを発行する。許可済みビルドスクリプトが
@@ -62,6 +73,10 @@ jobs:
           private-key: ${{ secrets.REPO_AUTOMATION_BOT_PRIVATE_KEY }}
           permission-contents: write # ブランチの push
           permission-pull-requests: write # PR の作成と auto-merge の有効化
+          # `update-actions` により .github/workflows/ の action ピンも
+          # 更新されるため、これが無いと push が
+          # 「refusing to allow a GitHub App to create or update workflow ...」で拒否される。
+          permission-workflows: write # workflow ファイルを含むコミットの push
 
       - name: Open auto-merge PR if anything changed
         env:
@@ -92,6 +107,6 @@ jobs:
               --base main \
               --head "$branch" \
               --title "chore: update dependencies" \
-              --body "Automated weekly dependency update via \`pnpm update --latest -r\` + \`pnpm self-update\`. Auto-merges once CI passes."
+              --body "Automated weekly dependency update via \`pnpm update --latest -r\` + \`pnpm run update-actions\` + \`pnpm self-update\`. Action pins move within \`^current\` only, so a major waits for a human. Auto-merges once CI passes."
           fi
           gh pr merge --auto --squash "$branch"
