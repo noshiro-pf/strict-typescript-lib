@@ -72,11 +72,11 @@
     "@typescript/lib-webworker": "file:packages/v5.9/output/packages/webworker",
     "cspell": "10.0.1",
     "dedent": "1.7.2",
-    "eslint": "10.8.0",
-    "eslint-config-typed": "5.8.6",
-    "eslint-plugin-ts-data-forge": "0.4.5",
-    "eslint-plugin-ts-fortress": "1.0.1",
-    "eslint-plugin-ts-type-forge": "0.6.3",
+    "eslint": "10.8.1",
+    "eslint-config-typed": "5.9.1",
+    "eslint-plugin-ts-data-forge": "0.4.6",
+    "eslint-plugin-ts-fortress": "1.0.2",
+    "eslint-plugin-ts-type-forge": "0.6.4",
     "github-settings-as-code": "3.0.0",
     "jiti": "2.7.0",
     "markdownlint": "0.41.1",
@@ -89,7 +89,7 @@
     "ts-repo-utils": "10.2.0",
     "ts-type-forge": "9.2.1",
     "tslib": "2.8.1",
-    "tsx": "4.23.9",
+    "tsx": "4.23.11",
     "typescript": "6.0.3"
   },
   "engines": {
@@ -99,5 +99,5 @@
   "volta": {
     "node": "26.3.1"
   },
-  "packageManager": "pnpm@11.20.0"
+  "packageManager": "pnpm@11.21.0"
 }
