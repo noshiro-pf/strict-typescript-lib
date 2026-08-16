@@ -20,6 +20,16 @@ name: Weekly pnpm update
 # sync-agent-config.yml) so that the push triggers the push-based CI workflows
 # and the repository owner (a ruleset bypass actor) can auto-merge.
 
+# ## One branch, reused
+#
+# The branch is `chore/pnpm-update` with no date in it, and every run rebuilds
+# it from a fresh checkout of main and force-pushes. A week that lands no fix
+# therefore does not leave a stale pull request behind for the next one to sit
+# beside — there is only ever one open, and it is always rebased onto main.
+#
+# Reusing the name is what makes the two details below matter; with a new dated
+# branch each week neither could bite, because the branch never already existed.
+
 on:
   schedule:
     # Weekly, Saturday 06:07 JST (Friday 21:07 UTC) — lands before the weekend.
@@ -92,21 +102,44 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
 
-          branch="chore/pnpm-update-$(date -u +%Y%m%d)"
+          # A fixed branch name, not one carrying the date: every run starts from
+          # a fresh checkout of main, so force-pushing here both refreshes the
+          # open pull request and rebases it, instead of leaving last week's
+          # behind and opening another one.
+          branch="chore/pnpm-update"
           git switch -c "$branch"
           git add -A
           git commit -m "chore: update dependencies"
 
           # Authenticate the push inline so the PAT is never written to git config.
-          git push --force-with-lease \
-            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
+          remote_url="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+
+          # `--force-with-lease` with no value compares against the
+          # remote-tracking ref, and `actions/checkout` configures a fetch
+          # refspec for the default branch alone — so this branch has none, and
+          # the push is rejected with "stale info" every run after the one that
+          # creates it. Naming the expected value restores the protection: an
+          # empty value means "expect it not to exist", which is what the first
+          # run wants.
+          # Two steps rather than a pipeline, so that a failed `ls-remote` stops
+          # the job instead of yielding an empty lease and force-pushing anyway
+          # — a pipeline would report `cut`'s exit status, which is always 0.
+          remote_ref="$(git ls-remote "$remote_url" "refs/heads/${branch}")"
+          expected="$(printf '%s' "$remote_ref" | cut -f1)"
+
+          git push --force-with-lease="refs/heads/${branch}:${expected}" \
+            "$remote_url" \
             "HEAD:refs/heads/${branch}"
 
-          if ! gh pr view "$branch" >/dev/null 2>&1; then
+          # By branch name alone `gh pr view` also finds a merged pull request,
+          # and the branch is recreated every run — so once the first one
+          # merges, this would skip creating the next and then fail trying to
+          # auto-merge a closed pull request. Ask for an open one.
+          if [ "$(gh pr view "$branch" --json state --jq .state 2>/dev/null)" != 'OPEN' ]; then
             gh pr create \
               --base main \
               --head "$branch" \
               --title "chore: update dependencies" \
-              --body "Automated weekly dependency update via \`pnpm update --latest -r\` + \`pnpm run update-actions\` + \`pnpm self-update\`. Action pins move within \`^current\` only, so a major waits for a human. Auto-merges once CI passes."
+              --body "Automated weekly dependency update via \`pnpm update --latest -r\` + \`pnpm run update-actions\` + \`pnpm self-update\`. Action pins move within \`^current\` only, so a major waits for a human. Rebuilt from main on every run, so force-pushes to this branch are expected. Auto-merges once CI passes."
           fi
           gh pr merge --auto --squash "$branch"
