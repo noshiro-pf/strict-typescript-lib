@@ -23,7 +23,7 @@ TypeScript 標準 lib (`lib.es5.d.ts` など) を厳格化した置き換え用�
 
 ## 2. リポジトリ構成
 
-現在の typescript-template scaffold (`src/`, `samples/`, `configs/rollup.config.ts`, `vite.doc.config.mts`, `vitest.config.mts` 等) は撤去し、pnpm モノレポに置き換える。`AGENTS.md` / `.github` / `.oxfmtrc.json` / `eslint.config.mts` / `LICENSE` 等の共通設定は流用する。
+現在の typescript-template scaffold (`src/`, `samples/`, `configs/rollup.config.ts`, `vite.doc.config.mts`, `vitest.config.mts` 等) は撤去し、pnpm モノレポに置き換える。`CLAUDE.md` / `.github` / `.oxfmtrc.json` / `eslint.config.mts` / `LICENSE` 等の共通設定は流用する。
 
 ```text
 strict-typescript-lib/
@@ -34,7 +34,7 @@ strict-typescript-lib/
 ├── eslint.config.mts                    # リポジトリ唯一の ESLint flat config
 ├── .oxfmtrc.json / .oxfmtignore / .gitignore / ...
 ├── .changeset/                          # 公開時の changesets ファイル
-├── AGENTS.md                            # submodule
+├── CLAUDE.md                            # エージェント向け指示 (手書き)
 ├── README.md
 ├── docs/
 │   └── design.md                        # 本ドキュメント

@@ -23,7 +23,7 @@ branch back to `BEHIND`. A batch rebase therefore runs a full CI matrix per
 branch and throws all but the first away. Never rebase a second PR while one is
 still in flight.
 
-Invoking this skill is the explicit instruction `AGENTS.md` asks for before
+Invoking this skill is the explicit instruction `CLAUDE.md` asks for before
 pushing: for one PR at a time, you may push to that PR's branch, force-pushing
 with `--force-with-lease`. Nothing on `main`, and no merges.
 
@@ -178,7 +178,7 @@ a `build` step before it runs. What does need care:
   failure.
 - **`type-check (ws:gen:with-codemod-fixed)` failing that way means the checked-in
   generated output no longer matches the generator.** Never patch
-  `packages/v*/output*/**` to make it pass — that is what `AGENTS.md` forbids,
+  `packages/v*/output*/**` to make it pass — that is what `CLAUDE.md` forbids,
   and the next generate run would undo it. Either the generator change is
   incomplete, or the output simply needs regenerating: run `pnpm ws:gen` (or
   `pnpm ws:gen:with-codemod-fixed`) and commit the diff.
@@ -191,7 +191,7 @@ a `build` step before it runs. What does need care:
   configs against the stock lib.
 
 Reproduce locally before pushing — a speculative fix costs another full matrix,
-which is the cost this whole loop exists to avoid. Fix the cause: `AGENTS.md`
+which is the cost this whole loop exists to avoid. Fix the cause: `CLAUDE.md`
 rules hold, so no file-level `eslint-disable`, no loosening `eslint.config.mts`,
 no `as any`. Then `pnpm run fmt`, commit with a Conventional Commits message,
 push to the branch, and go back to watching. Auto-merge survives the push, so a
