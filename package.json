@@ -43,6 +43,7 @@
     "repo-settings:apply": "repo-settings apply",
     "repo-settings:backup": "repo-settings backup",
     "update-actions": "pnpm update --recursive --include-github-actions \"*/*\"",
+    "update-packages": "pnpm update --latest --recursive",
     "ws:gen": "tsx ./scripts/cmd/ws-gen-stages.mts",
     "ws:gen:full": "tsx ./scripts/cmd/ws-gen-full-stages.mts",
     "ws:gen:packages": "tsx ./scripts/cmd/ws-gen-packages-stages.mts",
