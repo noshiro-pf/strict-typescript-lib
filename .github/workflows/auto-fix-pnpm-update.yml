@@ -375,7 +375,7 @@ jobs:
             branch are earlier attempts that did not turn CI green — read them
             first, and do not retry an approach that has already been tried.
 
-            Follow `AGENTS.md` — it is the instructions for this repository.
+            Follow `CLAUDE.md` — it is the instructions for this repository.
             It is hand-written and has no generator: edit it directly.
 
             What matters here:
@@ -510,7 +510,7 @@ jobs:
             explaining what each step is for and which failures it already
             accounts for; read it before changing anything there.
 
-            Follow `AGENTS.md` — it is the instructions for this repository.
+            Follow `CLAUDE.md` — it is the instructions for this repository.
             It is hand-written and has no generator: edit it directly.
 
             What matters here:

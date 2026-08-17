@@ -1,6 +1,506 @@
 # CLAUDE.md
 
-All agent instructions for this repository live in `AGENTS.md` — a
-hand-written file; edit it directly.
+This file is the single, hand-written source of agent instructions for this
+repository — edit it directly. The general rules below started as a copy of a
+shared ruleset; that link is gone, so they are maintained here now.
+Repository-specific rules follow under "Repository Guidelines".
 
-@AGENTS.md
+## Commit & Pull Request Guidelines
+
+### Commit Messages
+
+- Use Conventional Commits, for example:
+    - `feat: add parser for .mts`
+    - `fix: handle Windows path resolution`
+    - `chore(deps): bump rollup to 4.50.1`
+
+| prefix   | description                                                                                 |
+| :------- | :------------------------------------------------------------------------------------------ |
+| feat     | A new feature                                                                               |
+| fix      | A bug fix                                                                                   |
+| docs     | Documentation-only changes                                                                  |
+| style    | Changes that do not affect code behavior (whitespace, formatting, missing semicolons, etc.) |
+| refactor | A code change that neither fixes a bug nor adds a feature                                   |
+| perf     | A code change that improves performance                                                     |
+| test     | Adding missing tests or correcting existing tests                                           |
+| chore    | Changes to build process, auxiliary tools, or libraries (e.g., documentation generation)    |
+
+Releases are cut by Changesets from the files under `.changeset/`, not from the
+commit messages — see `pnpm changeset:all` below. `lint-pull-request.yml`
+enforces the same prefixes on pull request titles.
+
+### Pull Requests
+
+- Include a clear description, link related issues, and add screenshots or logs when helpful.
+- Note any breaking changes using `BREAKING CHANGE: ...`.
+- Make sure CI passes and `pnpm run check-all` completes without errors.
+
+## Important Instructions
+
+- After making code changes, run `pnpm run fmt`, then check for type errors with `pnpm run check:root` and lint errors with `pnpm run lint:fix` if you changed TypeScript/JavaScript code. Fix any errors found. Generated lib output is checked separately, per version — see "Essential Development Commands" below.
+    - Do not use file-level `/* eslint-disable */` or turn off rules in `eslint.config.mts` to fix lint errors.
+    - Avoid using `// eslint-disable-next-line` whenever possible.
+- **RESTRICTIONS**: Do not perform these actions without explicit user instructions:
+    - Push to GitHub or remote repositories
+    - Access `~/.ssh` or other sensitive directories
+
+## Testing Guidelines
+
+> **This repository has no test suite.** There is no `test` script, no Vitest
+> dependency, and no `*.test.mts` files; correctness is checked by running the
+> generated lib through `tsc` per version (see "Essential Development
+> Commands"). The conventions below are the house style to follow if tests are
+> added — they do not describe anything that runs here today.
+
+### Framework and Setup
+
+- Framework: Vitest with globals enabled.
+- Place unit tests near source files or under `test/` using `*.test.mts`.
+- Maintain meaningful coverage; exclude simple re-export files.
+- Run tests locally with the package's own `test` script during development, once one exists.
+- `vitest/globals` are enabled. Do not import `test`, `expect`, `assert`, or `describe` explicitly.
+
+### Test-Driven Development (TDD)
+
+When implementing new features, follow this TDD workflow:
+
+1. **Write tests first**: Create tests based on expected inputs and outputs.
+2. **Verify test failure**: Run tests to confirm they fail as expected.
+3. **Implement code**: Write the minimal code needed to make tests pass.
+4. **Refactor**: Improve code while keeping tests green.
+5. **Repeat**: Continue the cycle for additional functionality.
+
+**Important**: During implementation, avoid modifying tests unless requirements change.
+
+### Testing Approach
+
+This project uses **Vitest** with a dual testing strategy:
+
+1. **Compile-time type testing** via the `expectType` utility.
+2. **Runtime behavioral testing** with standard assertions.
+
+Example pattern:
+
+```typescript
+import { expectType } from '../expect-type.mjs';
+
+// Type-level assertion
+expectType<typeof result, readonly [0, 0, 0]>('=');
+// Runtime assertion
+assert.deepStrictEqual(result, [0, 0, 0]);
+```
+
+The `expectType` utility provides a DSL for type assertions:
+
+- `"="`: Exact type equality
+- `"~="`: Mutual extension (A extends B and B extends A)
+- `"<="`: A extends B
+- `">="`: B extends A
+- `"!="`, `"!<="`, `"!>="`: Negated versions
+
+Use `expectType<A, B>('=')` whenever possible. Avoid using `expectType<A, B>('<=')` or `expectType<A, B>('!=')` except when intended.
+
+### Test Code Conventions
+
+- Unify `test` names, `describe` nesting, and `expect` placement with Vitest/Jest/Playwright/Cypress rules.
+- Use `assert.deepStrictEqual(A, B)` instead of `assert.deepEqual(A, B)`, `expect(A).toEqual(B)`, or `expect(A).toStrictEqual(B)` in Vitest tests (enforced by `vitest-coding-style/no-expect-to-strict-equal`).
+- Use `test()` instead of `it()` in Vitest tests.
+- Avoid overusing `await` for synchronous events and avoid `force`/`pause`; prefer screen API and user interaction simulation.
+
+## Coding Style & Naming Conventions
+
+### Important Patterns
+
+- **Immutability**: Functions return immutable data structures
+- **Type Safety**: Leverage `ts-type-forge` for advanced TypeScript patterns
+- **Type Guards**: Prefer type guard functions over type assertions
+- **Import Strategy**:
+    - Import `.mts` with extensions `.mjs`.
+    - Use relative paths within `src/`; avoid importing from generated `dist/` and `index.mjs` directly.
+- **Export Strategy**:
+    - All exports go through generated `index.mts` files
+    - Modules should use named exports, default exports are only allowed for configuration.
+- **Documentation**: Auto-generated from TSDoc comments using TypeDoc
+- **File Naming**:
+    - `camelCase` for variables/functions, `PascalCase` for types/classes, `kebab-case` for file names.
+    - Language: TypeScript ESM; prefer `.mts` for modules and `.d.mts` for types. Compiled output is `.mjs`.
+- **Formatting**:
+    - Formatting is done by `oxfmt` (`pnpm run fmt`), configured by `.oxfmtrc.json` and `.oxfmtignore`—avoid manual formatting. There is no Prettier here.
+        - Indentation: 2 spaces; LF endings. Markdown uses 4-space indents (see `.editorconfig`).
+
+#### Why enforce readonly?
+
+```ts
+// ❌
+const t: [string, number] = ['a', 1];
+
+function f(x: number) {
+    if (typeof x !== 'number') throw new Error('Error!!');
+}
+
+t.reverse(); // [1, 'a']
+
+f(t[1]); // "Error!!" (but no type errors)
+```
+
+In this example, we reverse a mutable tuple `t` and pass it to `f`. `reverse` is a destructive method, and after applying it, the content of `t` becomes `[1, 'a']`, but TypeScript's type system keeps `t`'s type as `[string, number]`. This creates an inconsistency where `t[1]` is type `number` in TypeScript but `string` at runtime, causing a runtime error when calling `f`.
+
+If we annotate it as readonly as shown below, the destructive method `reverse` cannot be called on the readonly tuple `t`. Instead, we must call the non-destructive method `toReversed`, which is inferred as type `(string | number)[]`, causing a type error: "`string | number` is not assignable to parameter of type `number`".
+
+```ts
+// ✅
+const t: readonly [string, number] = ['a', 1];
+
+function f(x: number) {
+    if (typeof x !== 'number') throw new Error('Error!!');
+}
+
+const r = t.toReversed(); // (string | number)[]
+
+f(r[1]);
+// Argument of type 'string | number' is not assignable to parameter of type 'number'.
+```
+
+Beyond this, treating most variables as immutable improves code readability and prevents various issues, such as mutating objects without changing their references in React rendering (which can cause UI not to update), enhancing overall robustness.
+
+See also: [TypeScript Issue #52375](https://github.com/microsoft/TypeScript/issues/52375)
+
+### Script Organization Rules
+
+Within a file, organize code in the following order:
+
+1. **main function** - entry point at the top
+2. **exported functions and definitions** - public API surface
+3. **type definitions** - types used by the above functions
+4. **constants and settings** - configuration values
+5. **helper functions** - organized by call hierarchy level (ascending order: lower-level helpers before higher-level ones)
+6. **utility functions** - lowest-level utilities
+
+This organization makes the script easier to read and understand the execution flow.
+
+### Syntax rules (and corresponding ESLint rules)
+
+- Type safety first
+    - **NEVER** use `as any`, `as never`, or `@ts-ignore` (use `@ts-expect-error` when absolutely necessary)
+    - Explicitly specify function return types (checked by `@typescript-eslint/explicit-function-return-type` rule)
+        - Explicit return types do make it visually more clear what type is returned by a function. They can also speed up TypeScript type checking performance in large codebases with many large functions.
+    - Avoid dangerous type assertions with `any` or `never`.
+    - Avoid any casting as possible.
+    - Use readonly properties and parameters by default. Follow lint configuration for type definition notation.
+    - Avoid implicit type coercion
+        - Do not use non-boolean values in conditions of if/while statements or as operands of logical operators (checked by `@typescript-eslint/strict-boolean-expressions` rule).
+        - Do not embed variables of types other than number, string, or boolean in template literals (checked by `@typescript-eslint/restrict-template-expressions` rule).
+    - Always provide a comparison function when sorting arrays. Exception: may be omitted only for string arrays (`string[]`) (checked by `require-array-sort-compare` rule).
+    - Prohibit operations that easily produce exceptions such as partial `reduce` or division
+- Operator usage restrictions
+    - Prohibit `+foo` (coercion to number) or `"" + foo` (coercion to string) (checked by `no-implicit-coercion` rule).
+    - Prohibit addition of different types like `"1" + 2` (checked by `@typescript-eslint/restrict-plus-operands` rule).
+    - Do not use `+` for string concatenation (checked by `prefer-template` rule). Instead, follow these patterns:
+        - For a few strings: use template literals (e.g., `${a}_${b}`)
+        - For many strings or dynamic lists: use array `.join()` or `.concat()` (e.g., `["aaa", "bbb", "ccc", ..., "zzz"].join("\n")`)
+        - For source code generation: consider using `dedent` for cleaner formatting
+- Immutable data orientation
+    - Use `const` instead of `let` (`functional/no-let`).
+        - If you absolutely must use it, add the `mut_` prefix to the variable name.
+    - Enforce readonly types.
+        - Always use `readonly T[]` instead of `T[]` for arrays.
+        - When nesting is deep and writing `Readonly<*>` becomes verbose, consider using `DeepReadonly` type utility like `DeepReadonly<{ a: { b: { c: number[] }}}>`.
+    - Define object and array constants with `as const`.
+    - Prohibit direct mutation of objects and avoid making arguments or return values mutable (checked by `functional/immutable-data` rule).
+    - Eliminate mutable/partial structures like class inheritance and enums in principle.
+- Enforce modern syntax
+    - Do not use legacy syntax such as `var`, `new Array()`, `in` operator, or `React.useImperativeHandle`.
+    - Prefer template literals, object spread, and `Object.hasOwn`
+    - Use arrow functions in all cases
+- Module and dependency management
+    - Use ES modules (import/export) syntax over CommonJS (require)
+    - Use named exports unless restricted by libraries or frameworks
+    - Destructuring imports when possible (e.g., `import { foo } from 'bar'`)
+        - Exceptions: Node utilities such as fs, path, url etc.
+    - Avoid circular imports (`import-x/no-cycle`).
+    - Use explicit type-imports and do not add extensions except for `.mjs`/`.json`.
+    - Do not use internal path imports like `./a/b`. Place index.mts files in each directory and export items to be referenced by other directories. This repository has no `gi` script; the index files under `packages/v*/output**` are produced by the generator, so change the generator and run `pnpm ws:gen`.
+    - Write code that is tree-shakeable
+    - Use standard modules with `node:` prefix
+- Robust async handling
+    - Always use `await` or `.catch()` with Promises, eliminating nesting and multiple resolutions (checked by `no-floating-promises` rule).
+- React/JSX rules
+    - Define components with arrow functions + `.tsx` extension.
+    - Avoid props spread and inline functions/objects.
+    - Strictly manage Hooks dependency arrays and call order, preventing unnecessary re-renders and improper exports with React Refresh/Perf rules.
+    - In JSX conditionals, do not use short-circuit evaluation like `cond && <Something />`, instead use ternary operators for strict branching: `cond ? <Something /> : undefined` (checked by `react/jsx-no-leaked-render`).
+    - Do not concatenate strings by placing multiple expressions adjacently in JSX (e.g., `<div>{x}{y}</div>`). Instead, use template literals: `<div>{`${x}${y}`}</div>`.
+- Accessibility enforcement
+    - Provide roles and labels for all interactive elements. Follow JSX a11y rules for consistent `alt` and `aria-*` attributes, focus management, and tabindex control.
+- Security and quality
+    - Prohibit `eval`, `Function`, dynamic `require`, `import`, and dangerous regular expressions.
+    - Enforce file naming, array operations, and modern DOM/Node API adoption with `unicorn/*`, improve readability and reduce bugs with `import-x/no-useless-path-segments` and `no-restricted-globals`.
+
+## Troubleshooting
+
+### Type Errors
+
+#### `noUncheckedIndexedAccess` Related Issues
+
+This project uses TypeScript with the strict setting noUncheckedIndexedAccess: true , so the following code will result in a type error:
+
+```ts
+// ❌
+const xs: readonly number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+if (xs.length > 0) {
+    console.log(xs[0] * 2);
+    //          ~~~~~
+    //          Object is possibly 'undefined'.
+}
+```
+
+This error can be resolved as follows:
+
+```ts
+// ✅
+import { Arr } from 'ts-data-forge';
+
+const xs: readonly number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+if (Arr.isNonEmpty(xs)) {
+    console.log(xs[0] * 2);
+}
+```
+
+`isNonEmpty` is defined as follows:
+
+```ts
+type NonEmptyArray<A> = readonly [A, ...(readonly A[])];
+
+const isNonEmpty = <E>(array: readonly E[]): array is NonEmptyArray<E> =>
+    array.length > 0;
+```
+
+##### Early Return
+
+```ts
+// ❌
+const fn = (xs: readonly number[]): void => {
+    if (xs.length === 0) {
+        return;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const first: number = xs[0]!;
+
+    // ...
+};
+```
+
+```ts
+// ✅
+const fn = (xs: readonly number[]): void => {
+    if (!Arr.isNonEmpty(xs)) {
+        return;
+    }
+
+    const first: number = xs[0];
+
+    // ...
+};
+```
+
+### Lint Errors
+
+#### total-functions/no-partial-division
+
+To avoid division by zero errors, always use `Num.div` from `ts-data-forge` and explicitly check for zero before dividing:
+
+```ts
+// ❌ Don't do this:
+const result = a / b; // Error: Division is partial
+
+// ❌ Don't create your own utility like this:
+const safeDivide = (a: number, b: number): number =>
+    // eslint-disable-next-line total-functions/no-partial-division
+    b === 0 ? 0 : a / b;
+```
+
+```ts
+// ✅ Do this:
+import { Num } from 'ts-data-forge';
+
+const calculateValue = (a: number, b: number): number => {
+    if (!Num.isNonZero(b)) return 0;
+    return Num.div(a, b);
+};
+```
+
+Note: `Num.div` requires the denominator to be of type `NonZeroNumber | 1 | 2 | ... | 39 | -1 | -2 | ... | -40` for compile-time safety, so you must check for zero before calling it.
+
+#### functional/immutable-data / functional/no-let
+
+This disables mutation and encourages functional programming, but if you absolutely need to use mutable variables, you can avoid errors by adding the `mut_` prefix to the variable name.
+
+```ts
+// ❌
+
+// eslint-disable-next-line functional/no-let
+let temp = 0;
+
+temp = 2;
+
+const xs: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+// eslint-disable-next-line functional/immutable-data
+xs[0] = 100;
+```
+
+```ts
+// ✅
+
+let mut_temp = 0;
+
+mut_temp = 2;
+
+const mut_xs: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+mut_xs[0] = 100;
+```
+
+#### vitest/no-conditional-expect
+
+```ts
+expect(Result.isErr(result)).toBe(true);
+
+if (Result.isErr(result)) {
+    // error  Avoid calling `expect` inside conditional statements  vitest/no-conditional-expect
+    assert.deepStrictEqual(result.value, { data: [] });
+}
+```
+
+You can write it like this using the `assert` function, which narrows down the types:
+
+```ts
+assert.isTrue(Result.isErr(result));
+
+assert.deepStrictEqual(result.value, { data: [] });
+```
+
+#### functional/immutable-data
+
+NG:
+
+```ts
+// error  Modifying an existing object/array is not allowed  functional/immutable-data
+temp.value = 'new value';
+```
+
+OK:
+
+```ts
+mut_temp.value = 'new value';
+```
+
+## About Libraries
+
+### ts-type-forge
+
+Types such as `DeepReadonly`, `StrictOmit`, `ReadonlyRecord` etc. are installed globally via `global.d.mts` provided by `ts-type-forge`. There is no need to explicitly import types from `ts-type-forge`.
+
+### ts-data-forge
+
+- Use `Arr.isArray` instead of `Array.isArray` (enforced by `ts-data-forge/prefer-arr-is-array` rule from <https://github.com/noshiro-pf/eslint-config-typed.git>)
+- Use `isRecord` and `hasKey` for type narrowing instead of `Object.hasOwn` or `in` operator (enforced by `ts-data-forge/prefer-is-record-and-has-key` rule)
+- Arguments for functions like `Arr.seq` must be of type `Int` (cast using `asUint32` utility)
+- Use `memoizeFunction` for function memoization
+- Use `fastDeepEqual` for deep equality comparison
+- Unit test
+    - Write `assert.isTrue(Result.isErr(result))` instead of `expect(Result.isErr(result)).toBe(true)`
+
+### immer
+
+- When assigning readonly values to immer's draft causes type errors, use `castDraft` to resolve them
+
+---
+
+## Repository Guidelines
+
+In addition to the general instructions above, project-specific rules are shown below.
+
+### Project overview
+
+`strict-typescript-lib` generates a **strict** rewrite of TypeScript's built-in
+`lib.*.d.ts` declarations for every supported TypeScript minor (v5.0–v7.0), in
+both a plain and a **branded-number** flavor, and distributes them as **GitHub
+Release tarball assets** (fine-grained `strict-ts-lib-vX.Y-*` packages, one per
+lib file, plus a per-version umbrella). Consumers alias them onto
+`@typescript/lib-*` (see the root `README.md`).
+
+### Layout
+
+- `packages/scripts-common/` — the generator (private). `src/convert-dts/**`
+  holds the per-lib-file transforms, `src/functions/**` the pipeline (codemod →
+  lib files → packages), `src/commands/**` the entry points.
+- `packages/vX.Y/` — one private harness project per TypeScript version.
+    - `scripts/version-config.mts` — that version's config (TypeScript version,
+      version ranges, lib name, and optionally `libSource` — where the upstream
+      `lib.*.d.ts` are fetched from; v7.0 reads them from `microsoft/typescript-go`
+      since `microsoft/TypeScript` carries no 7.x tag), imported by
+      `scripts/_options.mts`. **Edit this** (not a JSON file) to change a version's
+      settings.
+    - `output/`, `output-branded/` — **generated** lib files and packages.
+- `configs/` — shared tooling config. `docs/design.md` — the design doc.
+
+### Essential Development Commands
+
+This repo has no bundler build; the "build" is the generator. Key commands:
+
+- `pnpm ws:gen` / `pnpm ws:gen:with-codemod-fixed` — regenerate every version's
+  strict lib files and packages under `output/` and `output-branded/`.
+- `pnpm changeset:all <major|minor|patch> [--version=<range>]` — create a
+  release changeset (targets the per-version `-source` packages).
+- `pnpm run check:root:tooling` — type-check the generator, scripts, and configs
+  (stock lib).
+- `pnpm --filter strict-ts-lib-vX.Y-source run type-check` — per-version
+  lib-check: run `tsc@X.Y` over the generated lib with `skipLibCheck: false`.
+- `pnpm run lint` / `lint:fix`, `pnpm run fmt`, `pnpm run cspell`,
+  `pnpm run md`, `pnpm run check-all` — validation and formatting.
+
+### Dependency updates
+
+`pnpm-update.yml` runs `pnpm update --latest -r` weekly; what it holds back
+lives in `pnpm-workspace.yaml` (`update.ignoreDeps`, `minimumReleaseAge`).
+
+**GitHub Action pins are updated by `pnpm run update-actions`, not by that
+command.** `update.githubActions` is `false` so the `--latest` run leaves the
+workflow files alone; `update-actions` turns the check back on with
+`--include-github-actions` and deliberately omits `--latest`, so an action only
+moves within `^current` and a major waits for a human. Do not set
+`update.githubActions` back to `true`, and do not add `--latest` to
+`update-actions`: `changesets/action` v2 requires Changesets CLI v3 and renamed
+every input, so taking that major unattended broke `release.yml` on main.
+
+Neither `minimumReleaseAge` nor `update.ignoreDeps` applies to actions. pnpm
+resolves action versions from `git ls-remote` refs, which carry a tag name and a
+SHA but no publication date, so there is nothing for the age check to read — a
+tag hours old is taken regardless. Hold an action back by leaving the major
+alone, not by listing it in `ignoreDeps`.
+`pnpm outdated --include-github-actions --latest` lists the majors that are
+waiting.
+
+### Generated / auto-managed files — do NOT edit directly
+
+Hand-editing generated output is always wrong: the next generate run overwrites
+it. Change the **source** and regenerate instead.
+
+- **`packages/v*/output/**` and `packages/v*/output-branded/**`** (the strict
+  lib `.d.ts` plus each package's `index.d.ts` / `package.json`) — edit the
+  generator under `packages/scripts-common/src/` instead: `convert-dts/**` for
+  the per-lib transforms, `functions/gen-packages.mts` for the `package.json`
+  shape, the codemod, and `functions/codemod/rewrite-ts-type-forge-refs.mts`.
+  Regenerate with `pnpm ws:gen` (or `ws:gen:with-codemod-fixed`).
+
+When generated output needs to change, edit the generator, then validate a
+representative version with its lib-check before regenerating everything:
+`pnpm --filter strict-ts-lib-vX.Y-source run type-check` runs `tsc@X.Y` over the
+generated lib with `skipLibCheck: false`.
+
+`README.md`, `docs/**`, and `CLAUDE.md` (this file) are hand-written — edit them
+directly.

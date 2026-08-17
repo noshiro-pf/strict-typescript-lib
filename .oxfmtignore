@@ -8,5 +8,4 @@
 #      the usual build artifacts plus the tracked paths below.
 node_modules/
 pnpm-lock.yaml
-agents/
 docs/
