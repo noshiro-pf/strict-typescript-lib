@@ -45,11 +45,9 @@ That filter is the scope rule, and it does most of the exclusion by itself:
 force-pushes on every push to `main` — carries no auto-merge, and a draft PR
 cannot have one. Still drop any PR whose `baseRefName` is not `main`.
 
-`chore/pnpm-update-<date>` does have auto-merge, enabled by the bot, so it is in
-scope. `pnpm-update.yml` opens a fresh branch under the current date each week
-rather than reusing one, so more than one may be open at a time; take the newest
-and leave the stale ones for a human. If the branch moves under you, do not
-fight it: re-survey and take its new state.
+`chore/pnpm-update` does have auto-merge, enabled by the bot, so it is in scope —
+but `pnpm-update.yml` force-pushes that branch daily. If it moves under you, do
+not fight it: re-survey and take its new state.
 
 `mergeStateStatus` says what is blocking each one:
 
@@ -113,7 +111,7 @@ guessing. `git rebase --abort` puts everything back.
 
 Two conflicts have a mechanical resolution here rather than a judgement call:
 
-- `pnpm-lock.yaml` on `chore/pnpm-update-*` — take one side, then run
+- `pnpm-lock.yaml` on `chore/pnpm-update` — take one side, then run
   `pnpm install --no-frozen-lockfile` and commit what it writes.
 - Anything under `packages/v*/output/**` or `packages/v*/output-branded/**` —
   that is generated. Never resolve it by hand. Take either side, finish the

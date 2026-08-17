@@ -465,14 +465,19 @@ This repo has no bundler build; the "build" is the generator. Key commands:
 
 ### Dependency updates
 
-`pnpm-update.yml` runs `pnpm update --latest -r` weekly; what it holds back
-lives in `pnpm-workspace.yaml` (`update.ignoreDeps`, `minimumReleaseAge`).
+`pnpm-update.yml` runs daily and opens a single bundled pull request that
+auto-merges once CI passes. It rebuilds `chore/pnpm-update` from main on every
+run, so there is only ever one open and it is always rebased onto main. What it
+holds back lives in `pnpm-workspace.yaml` (`update.ignoreDeps`,
+`minimumReleaseAge`) — that is the single source of truth for it; do not add
+exclusion arguments to the `update-packages` script.
 
-**GitHub Action pins are updated by `pnpm run update-actions`, not by that
-command.** `update.githubActions` is `false` so the `--latest` run leaves the
-workflow files alone; `update-actions` turns the check back on with
-`--include-github-actions` and deliberately omits `--latest`, so an action only
-moves within `^current` and a major waits for a human. Do not set
+**GitHub Action pins are updated by `pnpm run update-actions`, not by
+`update-packages`.** `update.githubActions` is `false` so that
+`update-packages`, which carries `--latest`, leaves the workflow files alone;
+`update-actions` turns the check back on with `--include-github-actions` and
+deliberately omits `--latest`, so an action only moves within `^current` and a
+major waits for a human. Do not set
 `update.githubActions` back to `true`, and do not add `--latest` to
 `update-actions`: `changesets/action` v2 requires Changesets CLI v3 and renamed
 every input, so taking that major unattended broke `release.yml` on main.
