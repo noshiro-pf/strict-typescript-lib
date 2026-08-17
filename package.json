@@ -18,6 +18,9 @@
   "scripts": {
     "changeset:all": "tsx ./scripts/cmd/create-changeset.mts",
     "changeset:version-packages": "pnpm changeset version && pnpm run ws:gen:packages && pnpm install --no-frozen-lockfile",
+    "changeset:publish": "run-s ws:gen:packages publish:packages",
+    "publish:packages": "tsx ./scripts/cmd/publish-packages.mts",
+    "gen:publish-commands": "tsx ./scripts/cmd/gen-publish-commands.mts",
     "check-all": "tsx ./scripts/cmd/check-all.mts",
     "check:root": "pnpm run '/check:root:.*/'",
     "check:root:tooling": "tsc -p ./tsconfig.tooling.json --noEmit",
