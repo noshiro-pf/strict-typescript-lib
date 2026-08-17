@@ -5,6 +5,7 @@ caseSensitive: false
 ignoreRandomStrings: true
 words:
   - amannn
+  - anthropics
   - branded
   - corepack
   - cspell
