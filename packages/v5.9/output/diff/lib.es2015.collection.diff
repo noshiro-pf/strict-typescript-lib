@@ -42,10 +42,11 @@
  
  interface MapConstructor {
 -  new (): Map<any, any>;
-+  new (): Map<never, never>;
-   new <K, V>(entries?: readonly (readonly [K, V])[] | null): Map<K, V>;
+-  new <K, V>(entries?: readonly (readonly [K, V])[] | null): Map<K, V>;
 -  readonly prototype: Map<any, any>;
-+  readonly prototype: Map<never, never>;
++  new <K = never, V = never>(): Map<K, V>;
++  new <K, V>(entries: readonly (readonly [K, V])[]): Map<K, V>;
++  readonly prototype: ReadonlyMap<unknown, unknown>;
  }
 -declare var Map: MapConstructor;
 +declare const Map: MapConstructor;
@@ -71,13 +72,15 @@
    /**
     * Adds a new element with a specified key and value.
     * @param key Must be an object or symbol.
-@@ -86,12 +71,12 @@ interface WeakMap<K extends WeakKey, V> {
+@@ -86,12 +71,13 @@ interface WeakMap<K extends WeakKey, V> {
  }
  
  interface WeakMapConstructor {
 -  new <K extends WeakKey = WeakKey, V = any>(
-+  new <K extends WeakKey = WeakKey, V = unknown>(
-     entries?: readonly (readonly [K, V])[] | null,
+-    entries?: readonly (readonly [K, V])[] | null,
++  new <K extends WeakKey = never, V = never>(): WeakMap<K, V>;
++  new <K extends WeakKey, V>(
++    entries: readonly (readonly [K, V])[],
    ): WeakMap<K, V>;
 -  readonly prototype: WeakMap<WeakKey, any>;
 +  readonly prototype: WeakMap<WeakKey, unknown>;
@@ -87,7 +90,7 @@
  
  interface Set<T> {
    /**
-@@ -109,13 +94,13 @@ interface Set<T> {
+@@ -109,13 +95,13 @@ interface Set<T> {
     * Executes a provided function once per each value in the Set object, in insertion order.
     */
    forEach(
@@ -104,14 +107,15 @@
    /**
     * @returns the number of (unique) elements in Set.
     */
-@@ -123,17 +108,17 @@ interface Set<T> {
+@@ -123,17 +109,18 @@ interface Set<T> {
  }
  
  interface SetConstructor {
 -  new <T = any>(values?: readonly T[] | null): Set<T>;
 -  readonly prototype: Set<any>;
-+  new <T = never>(values?: readonly T[] | null): Set<T>;
-+  readonly prototype: Set<never>;
++  new <T = never>(): Set<T>;
++  new <T>(values: readonly T[]): Set<T>;
++  readonly prototype: ReadonlySet<unknown>;
  }
 -declare var Set: SetConstructor;
 +declare const Set: SetConstructor;
@@ -127,7 +131,7 @@
    readonly size: number;
  }
  
-@@ -150,11 +135,11 @@ interface WeakSet<T extends WeakKey> {
+@@ -150,11 +137,12 @@ interface WeakSet<T extends WeakKey> {
    /**
     * @returns a boolean indicating whether a value exists in the WeakSet or not.
     */
@@ -136,7 +140,9 @@
  }
  
  interface WeakSetConstructor {
-   new <T extends WeakKey = WeakKey>(values?: readonly T[] | null): WeakSet<T>;
+-  new <T extends WeakKey = WeakKey>(values?: readonly T[] | null): WeakSet<T>;
++  new <T extends WeakKey = never>(): WeakSet<T>;
++  new <T extends WeakKey>(values: readonly T[]): WeakSet<T>;
    readonly prototype: WeakSet<WeakKey>;
  }
 -declare var WeakSet: WeakSetConstructor;
