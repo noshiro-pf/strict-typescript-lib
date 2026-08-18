@@ -1,4 +1,4 @@
-@@ -1,32 +1,161 @@
+@@ -1,32 +1,142 @@
 -/*! *****************************************************************************
 -Copyright (c) Microsoft Corporation. All rights reserved.
 -Licensed under the Apache License, Version 2.0 (the "License"); you may not use
@@ -90,25 +90,9 @@
 +          import('ts-type-forge').Decrement<RemainingNumRecursions>
 +        >;
 +
-+  /**
-+   * `Object.entries` adds a `string & {}` arm to the key union so that
-+   * excess properties are representable. That arm is not a key the caller
-+   * declared, so it is dropped before deciding whether `Partial` is needed.
-+   *
-+   * @internal
-+   */
-+  export type StripOpenStringKey<K> = K extends unknown
-+    ? import('ts-type-forge').TypeEq<K, string & {}> extends true
-+      ? never
-+      : K
-+    : never;
-+
 +  /** @internal */
-+  export type PartialIfKeyIsUnion<K, T> = import('ts-type-forge').IsUnion<
-+    StripOpenStringKey<K>
-+  > extends true
-+    ? Partial<T>
-+    : T;
++  export type PartialIfKeyIsUnion<K, T> =
++    import('ts-type-forge').IsUnion<K> extends true ? Partial<T> : T;
 +}
  
  interface ObjectConstructor {
@@ -128,11 +112,8 @@
 +   * そうでない場合、 `K` が union 型の場合、`entries` がそのすべてを網羅しているとは限らないため、
 +   * `fromEntries` の返り値型がその union 要素すべてを含む型になってしまわないように `Partial` を付けている。
 +   *
-+   * ただし `K` が index signature（`string` など無限のキー集合）の場合は `Partial` を付けない。
-+   * 網羅すべき具体的なキーが存在せず、`noUncheckedIndexedAccess` により添字アクセスの時点で
-+   * `undefined` が付くため、`Partial` は情報を増やさずに `Record<string, V>` への代入を妨げるだけになる。
-+   * 判定の際は `Object.entries` が超過プロパティ表現のために加える `string & {}` の arm を除外する
-+   * （これを残すと `Record<string, V>` すら union 扱いになり `Partial` が付いてしまう）。
++   * index signature の record では `Object.entries` の key が `string` そのものになり
++   * union ではなくなるため、`Partial` は付かない（`WithOpenString` 参照）。
 +   */
 +  fromEntries<
 +    const Entries extends readonly (readonly [PropertyKey, unknown])[],

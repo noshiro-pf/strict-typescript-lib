@@ -13,28 +13,32 @@
 'strict-ts-lib-v7.0-source': minor
 ---
 
-`Object.fromEntries` no longer returns `Partial` for index-signature records.
+Stop `string & {}` from leaking into key types that are already `string`.
 
-`Object.entries` adds a `string & {}` arm to the key union so that excess
-properties stay representable. That arm made `IsUnion` true for every record,
-so `PartialIfKeyIsUnion` wrapped even `Record<string, V>` in `Partial` — and
-`Object.fromEntries(Object.entries(rec).map(...))` could not be assigned back
-to the record type it came from.
+`Object.keys` and `Object.entries` open their key union with a `string & {}` arm
+so that the declared keys still autocomplete while the excess keys a wider
+object may carry are accepted. That arm only means something for a union of
+string literals. Added to a key type that already contains `string` it produced
+`string | (string & {})` — which _is_ `string`, just spelled in a way that then
+showed up in everything computed from it.
 
-The arm is now stripped before the union check, which leaves `Partial` in place
-exactly where entries may fail to cover a declared key:
+The arm is now added only where it widens something (`WithOpenString`):
 
-| entries built from    | before         | after          |
-| --------------------- | -------------- | -------------- |
-| `Record<string, V>`   | `Partial<...>` | total          |
-| `Record<number, V>`   | `Partial<...>` | total          |
-| `{ a: 1; b: 2 }`      | `Partial<...>` | `Partial<...>` |
-| `Record<'a'\|'b', V>` | `Partial<...>` | `Partial<...>` |
-| `{ a: 1 }`            | `Partial<...>` | total          |
+| expression                               | before                                                  | after                      |
+| ---------------------------------------- | ------------------------------------------------------- | -------------------------- |
+| `Object.keys(rec: Record<string, V>)`    | `(string \| (string & {}))[]`                           | `string[]`                 |
+| `Object.entries(rec: Record<string, V>)` | `(readonly [string, V] \| readonly [string & {}, V])[]` | `(readonly [string, V])[]` |
+| `Object.keys(obj: { a: 1; b: 2 })`       | `('a' \| 'b' \| (string & {}))[]`                       | unchanged                  |
+| `Object.entries(obj: { a: 1; b: 2 })`    | keeps the open arm                                      | unchanged                  |
 
-An index signature names no specific key that could go missing, and
-`noUncheckedIndexedAccess` already adds `| undefined` on access, so `Partial`
-added nothing there. The single-literal-key case drops `Partial` because
-`Object.entries` on such an object always yields that key.
+This also fixes `Object.fromEntries(Object.entries(rec).map(...))` on a record
+keyed by an index signature. `PartialIfKeyIsUnion` wraps the result in `Partial`
+when the key is a union, and the redundant arm made every key type a union — so
+`Record<string, V>` came back as `Partial<Record<string | (string & {}), V>>`
+and could not be assigned back to the record type it came from. With the arm
+gone the key is plain `string`, which is not a union, so the result stays total.
+Records with literal keys still get `Partial`, since entries genuinely may not
+cover every declared key.
 
-Hand-written entries arrays and the fixed-length-tuple path are unaffected.
+`PartialIfKeyIsUnion` itself is unchanged, as are hand-written entries arrays
+and the fixed-length-tuple path.

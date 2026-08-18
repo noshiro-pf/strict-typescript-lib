@@ -19,8 +19,21 @@ export const convertLibEs2017Object =
           'interface ObjectConstructor {',
           dedent`
             declare namespace StrictLibInternals {
+              /**
+               * Opens a union of string literals so that it still accepts — and
+               * completes to — the literals, without rejecting the excess keys a
+               * wider object may carry.
+               *
+               * Adds nothing when \`K\` already contains \`string\`: \`string | (string & {})\`
+               * *is* \`string\`, so the arm would only leave a confusing artifact in
+               * every type computed from it.
+               *
+               * @internal
+               */
+              type WithOpenString<K> = string extends K ? K : K | (string & {});
+
               /** @internal */
-              type ToObjectKeys<R extends UnknownRecord> = ToStr<keyof R> | (string & {});
+              type ToObjectKeys<R extends UnknownRecord> = WithOpenString<ToStr<keyof R>>;
 
             /** @internal */
               type ToStr<A> = A extends string ? A : A extends number ? \`\${A}\` : never;
@@ -36,7 +49,9 @@ export const convertLibEs2017Object =
               /** @internal */
               type ToObjectEntries<R extends UnknownRecord> = R extends R
                 ? ${readonlyModifier}(
-                    | readonly [string & {}, WidenLiteral<ValueOf<R>>]
+                    | (string extends ToStr<keyof R>
+                        ? never
+                        : readonly [string & {}, WidenLiteral<ValueOf<R>>])
                     | {
                         ${readonlyModifier}[K in keyof R]: readonly [
                           ToStr<keyof PickByValue<R, R[K]>>,
