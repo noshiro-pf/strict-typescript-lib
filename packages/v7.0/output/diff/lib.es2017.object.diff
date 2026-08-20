@@ -1,25 +1,34 @@
-@@ -1,42 +1,91 @@
+@@ -1,42 +1,105 @@
 -/*! *****************************************************************************
 -Copyright (c) Microsoft Corporation. All rights reserved.
 -Licensed under the Apache License, Version 2.0 (the "License"); you may not use
 -this file except in compliance with the License. You may obtain a copy of the
 -License at http://www.apache.org/licenses/LICENSE-2.0
 +declare namespace StrictLibInternals {
++  /**
++   * Opens a union of string literals so that it still accepts — and
++   * completes to — the literals, without rejecting the excess keys a
++   * wider object may carry.
++   *
++   * Adds nothing when `K` already contains `string`: `string | (string & {})`
++   * *is* `string`, so the arm would only leave a confusing artifact in
++   * every type computed from it.
++   *
++   * @internal
++   */
++  type WithOpenString<K> = string extends K ? K : K | (string & {});
++
 +  /** @internal */
 +  type ToObjectKeys<R extends import('ts-type-forge').UnknownRecord> =
-+    | ToStr<keyof R>
-+    | (string & {});
++    WithOpenString<ToStr<keyof R>>;
++
++  /** @internal */
++  type ToStr<A> = A extends string ? A : A extends number ? `${A}` : never;
  
 -THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 -KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
 -WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
 -MERCHANTABILITY OR NON-INFRINGEMENT.
-+  /** @internal */
-+  type ToStr<A> = A extends string ? A : A extends number ? `${A}` : never;
- 
--See the Apache Version 2.0 License for specific language governing permissions
--and limitations under the License.
--***************************************************************************** */
 +  /** @internal */
 +  type PickByValue<R, V> = Pick<
 +    R,
@@ -27,17 +36,22 @@
 +      [K in keyof R]: R[K] extends V ? K : never;
 +    }[keyof R]
 +  >;
-+
+ 
+-See the Apache Version 2.0 License for specific language governing permissions
+-and limitations under the License.
+-***************************************************************************** */
 +  /** @internal */
 +  type ToObjectEntries<R extends import('ts-type-forge').UnknownRecord> =
 +    R extends R
 +      ? (
-+          | readonly [
-+              string & {},
-+              import('ts-type-forge').WidenLiteral<
-+                import('ts-type-forge').ValueOf<R>
-+              >,
-+            ]
++          | (string extends ToStr<keyof R>
++              ? never
++              : readonly [
++                  string & {},
++                  import('ts-type-forge').WidenLiteral<
++                    import('ts-type-forge').ValueOf<R>
++                  >,
++                ])
 +          | {
 +              [K in keyof R]: readonly [
 +                ToStr<keyof PickByValue<R, R[K]>>,

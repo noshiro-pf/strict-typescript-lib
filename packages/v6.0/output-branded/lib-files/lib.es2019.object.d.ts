@@ -95,6 +95,9 @@ interface ObjectConstructor {
    * @note `entries` がタプル型の場合には key-value の組み合わせも反映した型にする。
    * そうでない場合、 `K` が union 型の場合、`entries` がそのすべてを網羅しているとは限らないため、
    * `fromEntries` の返り値型がその union 要素すべてを含む型になってしまわないように `Partial` を付けている。
+   *
+   * index signature の record では `Object.entries` の key が `string` そのものになり
+   * union ではなくなるため、`Partial` は付かない（`WithOpenString` 参照）。
    */
   fromEntries<
     const Entries extends readonly (readonly [PropertyKey, unknown])[],

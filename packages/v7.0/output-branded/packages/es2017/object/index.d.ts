@@ -1,8 +1,20 @@
 declare namespace StrictLibInternals {
+  /**
+   * Opens a union of string literals so that it still accepts — and
+   * completes to — the literals, without rejecting the excess keys a
+   * wider object may carry.
+   *
+   * Adds nothing when `K` already contains `string`: `string | (string & {})`
+   * *is* `string`, so the arm would only leave a confusing artifact in
+   * every type computed from it.
+   *
+   * @internal
+   */
+  type WithOpenString<K> = string extends K ? K : K | (string & {});
+
   /** @internal */
   type ToObjectKeys<R extends import('ts-type-forge').UnknownRecord> =
-    | ToStr<keyof R>
-    | (string & {});
+    WithOpenString<ToStr<keyof R>>;
 
   /** @internal */
   type ToStr<A> = A extends string ? A : A extends number ? `${A}` : never;
@@ -19,12 +31,14 @@ declare namespace StrictLibInternals {
   type ToObjectEntries<R extends import('ts-type-forge').UnknownRecord> =
     R extends R
       ? readonly (
-          | readonly [
-              string & {},
-              import('ts-type-forge').WidenLiteral<
-                import('ts-type-forge').ValueOf<R>
-              >,
-            ]
+          | (string extends ToStr<keyof R>
+              ? never
+              : readonly [
+                  string & {},
+                  import('ts-type-forge').WidenLiteral<
+                    import('ts-type-forge').ValueOf<R>
+                  >,
+                ])
           | {
               readonly [K in keyof R]: readonly [
                 ToStr<keyof PickByValue<R, R[K]>>,
