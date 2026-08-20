@@ -78,17 +78,17 @@ importers:
         specifier: 10.8.1
         version: 10.8.1(jiti@2.7.0)(supports-color@7.2.0)
       eslint-config-typed:
-        specifier: 5.9.2
-        version: 5.9.2(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(ts-declaration-location@1.0.7(typescript@6.0.3))(typescript@6.0.3)(vitest@4.1.5)
+        specifier: 5.9.3
+        version: 5.9.3(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(ts-declaration-location@1.0.7(typescript@6.0.3))(typescript@6.0.3)(vitest@4.1.5)
       eslint-plugin-ts-data-forge:
-        specifier: 0.4.7
-        version: 0.4.7(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3)
+        specifier: 0.4.8
+        version: 0.4.8(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3)
       eslint-plugin-ts-fortress:
-        specifier: 1.0.3
-        version: 1.0.3(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3)
+        specifier: 1.0.4
+        version: 1.0.4(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3)
       eslint-plugin-ts-type-forge:
-        specifier: 0.6.5
-        version: 0.6.5(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3)
+        specifier: 0.6.6
+        version: 0.6.6(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3)
       github-settings-as-code:
         specifier: 3.0.0
         version: 3.0.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@6.0.3)
@@ -111,14 +111,14 @@ importers:
         specifier: 1.0.1
         version: 1.0.1(prettier@3.9.5)(supports-color@7.2.0)(typescript@6.0.3)
       ts-data-forge:
-        specifier: 14.3.0
-        version: 14.3.0(typescript@6.0.3)
+        specifier: 14.4.0
+        version: 14.4.0(typescript@6.0.3)
       ts-fortress:
-        specifier: 12.0.2
-        version: 12.0.2(typescript@6.0.3)
+        specifier: 12.0.3
+        version: 12.0.3(typescript@6.0.3)
       ts-repo-utils:
-        specifier: 10.2.0
-        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@6.0.3)
+        specifier: 10.3.0
+        version: 10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@6.0.3)
       ts-type-forge:
         specifier: 9.2.1
         version: 9.2.1
@@ -135,11 +135,11 @@ importers:
   packages/scripts-common:
     dependencies:
       ts-data-forge:
-        specifier: ^14.3.0
-        version: 14.3.0(typescript@6.0.3)
+        specifier: ^14.4.0
+        version: 14.4.0(typescript@6.0.3)
       ts-repo-utils:
-        specifier: 10.2.0
-        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@6.0.3)
+        specifier: 10.3.0
+        version: 10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@6.0.3)
       ts-type-forge:
         specifier: 9.2.1
         version: 9.2.1
@@ -148,8 +148,8 @@ importers:
         version: 6.0.3
     devDependencies:
       ts-fortress:
-        specifier: 12.0.2
-        version: 12.0.2(typescript@6.0.3)
+        specifier: 12.0.3
+        version: 12.0.3(typescript@6.0.3)
 
   packages/v5.0:
     dependencies:
@@ -206,11 +206,11 @@ importers:
         specifier: file:output/packages/webworker
         version: strict-ts-lib-v5.0-webworker@file:packages/v5.0/output/packages/webworker(typescript@5.0.4)
       ts-data-forge:
-        specifier: ^14.3.0
-        version: 14.3.0(typescript@5.0.4)
+        specifier: ^14.4.0
+        version: 14.4.0(typescript@5.0.4)
       ts-repo-utils:
-        specifier: 10.2.0
-        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.0.4)
+        specifier: 10.3.0
+        version: 10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.0.4)
       ts-type-forge:
         specifier: 9.2.1
         version: 9.2.1
@@ -291,11 +291,11 @@ importers:
         specifier: file:output/packages/webworker
         version: strict-ts-lib-v5.1-webworker@file:packages/v5.1/output/packages/webworker(typescript@5.1.6)
       ts-data-forge:
-        specifier: ^14.3.0
-        version: 14.3.0(typescript@5.1.6)
+        specifier: ^14.4.0
+        version: 14.4.0(typescript@5.1.6)
       ts-repo-utils:
-        specifier: 10.2.0
-        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.1.6)
+        specifier: 10.3.0
+        version: 10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.1.6)
       ts-type-forge:
         specifier: 9.2.1
         version: 9.2.1
@@ -376,11 +376,11 @@ importers:
         specifier: file:output/packages/webworker
         version: strict-ts-lib-v5.2-webworker@file:packages/v5.2/output/packages/webworker(typescript@5.2.2)
       ts-data-forge:
-        specifier: ^14.3.0
-        version: 14.3.0(typescript@5.2.2)
+        specifier: ^14.4.0
+        version: 14.4.0(typescript@5.2.2)
       ts-repo-utils:
-        specifier: 10.2.0
-        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.2.2)
+        specifier: 10.3.0
+        version: 10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.2.2)
       ts-type-forge:
         specifier: 9.2.1
         version: 9.2.1
@@ -461,11 +461,11 @@ importers:
         specifier: file:output/packages/webworker
         version: strict-ts-lib-v5.3-webworker@file:packages/v5.3/output/packages/webworker(typescript@5.3.3)
       ts-data-forge:
-        specifier: ^14.3.0
-        version: 14.3.0(typescript@5.3.3)
+        specifier: ^14.4.0
+        version: 14.4.0(typescript@5.3.3)
       ts-repo-utils:
-        specifier: 10.2.0
-        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.3.3)
+        specifier: 10.3.0
+        version: 10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.3.3)
       ts-type-forge:
         specifier: 9.2.1
         version: 9.2.1
@@ -546,11 +546,11 @@ importers:
         specifier: file:output/packages/webworker
         version: strict-ts-lib-v5.4-webworker@file:packages/v5.4/output/packages/webworker(typescript@5.4.5)
       ts-data-forge:
-        specifier: ^14.3.0
-        version: 14.3.0(typescript@5.4.5)
+        specifier: ^14.4.0
+        version: 14.4.0(typescript@5.4.5)
       ts-repo-utils:
-        specifier: 10.2.0
-        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.4.5)
+        specifier: 10.3.0
+        version: 10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.4.5)
       ts-type-forge:
         specifier: 9.2.1
         version: 9.2.1
@@ -631,11 +631,11 @@ importers:
         specifier: file:output/packages/webworker
         version: strict-ts-lib-v5.5-webworker@file:packages/v5.5/output/packages/webworker(typescript@5.5.4)
       ts-data-forge:
-        specifier: ^14.3.0
-        version: 14.3.0(typescript@5.5.4)
+        specifier: ^14.4.0
+        version: 14.4.0(typescript@5.5.4)
       ts-repo-utils:
-        specifier: 10.2.0
-        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.5.4)
+        specifier: 10.3.0
+        version: 10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.5.4)
       ts-type-forge:
         specifier: 9.2.1
         version: 9.2.1
@@ -716,11 +716,11 @@ importers:
         specifier: file:output/packages/webworker
         version: strict-ts-lib-v5.6-webworker@file:packages/v5.6/output/packages/webworker(typescript@5.6.3)
       ts-data-forge:
-        specifier: ^14.3.0
-        version: 14.3.0(typescript@5.6.3)
+        specifier: ^14.4.0
+        version: 14.4.0(typescript@5.6.3)
       ts-repo-utils:
-        specifier: 10.2.0
-        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.6.3)
+        specifier: 10.3.0
+        version: 10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.6.3)
       ts-type-forge:
         specifier: 9.2.1
         version: 9.2.1
@@ -798,11 +798,11 @@ importers:
         specifier: file:output/packages/webworker
         version: strict-ts-lib-v5.7-webworker@file:packages/v5.7/output/packages/webworker(typescript@5.7.2)
       ts-data-forge:
-        specifier: ^14.3.0
-        version: 14.3.0(typescript@5.7.2)
+        specifier: ^14.4.0
+        version: 14.4.0(typescript@5.7.2)
       ts-repo-utils:
-        specifier: 10.2.0
-        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.7.2)
+        specifier: 10.3.0
+        version: 10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.7.2)
       ts-type-forge:
         specifier: 9.2.1
         version: 9.2.1
@@ -880,11 +880,11 @@ importers:
         specifier: file:output/packages/webworker
         version: strict-ts-lib-v5.8-webworker@file:packages/v5.8/output/packages/webworker(typescript@5.8.3)
       ts-data-forge:
-        specifier: ^14.3.0
-        version: 14.3.0(typescript@5.8.3)
+        specifier: ^14.4.0
+        version: 14.4.0(typescript@5.8.3)
       ts-repo-utils:
-        specifier: 10.2.0
-        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.8.3)
+        specifier: 10.3.0
+        version: 10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.8.3)
       ts-type-forge:
         specifier: 9.2.1
         version: 9.2.1
@@ -962,11 +962,11 @@ importers:
         specifier: file:output/packages/webworker
         version: strict-ts-lib-v5.9-webworker@file:packages/v5.9/output/packages/webworker(typescript@5.9.3)
       ts-data-forge:
-        specifier: ^14.3.0
-        version: 14.3.0(typescript@5.9.3)
+        specifier: ^14.4.0
+        version: 14.4.0(typescript@5.9.3)
       ts-repo-utils:
-        specifier: 10.2.0
-        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.9.3)
+        specifier: 10.3.0
+        version: 10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.9.3)
       ts-type-forge:
         specifier: 9.2.1
         version: 9.2.1
@@ -1047,11 +1047,11 @@ importers:
         specifier: file:output/packages/webworker
         version: strict-ts-lib-v6.0-webworker@file:packages/v6.0/output/packages/webworker(typescript@6.0.3)
       ts-data-forge:
-        specifier: ^14.3.0
-        version: 14.3.0(typescript@6.0.3)
+        specifier: ^14.4.0
+        version: 14.4.0(typescript@6.0.3)
       ts-repo-utils:
-        specifier: 10.2.0
-        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@6.0.3)
+        specifier: 10.3.0
+        version: 10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@6.0.3)
       ts-type-forge:
         specifier: 9.2.1
         version: 9.2.1
@@ -1120,11 +1120,11 @@ importers:
         specifier: file:output/packages/webworker
         version: strict-ts-lib-v7.0-webworker@file:packages/v7.0/output/packages/webworker(typescript@7.0.2)
       ts-data-forge:
-        specifier: ^14.3.0
-        version: 14.3.0(typescript@7.0.2)
+        specifier: ^14.4.0
+        version: 14.4.0(typescript@7.0.2)
       ts-repo-utils:
-        specifier: 10.2.0
-        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@7.0.2)
+        specifier: 10.3.0
+        version: 10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@7.0.2)
       ts-type-forge:
         specifier: 9.2.1
         version: 9.2.1
@@ -1233,8 +1233,8 @@ packages:
     resolution: {integrity: sha512-ElN/mEzn6zmETgjwf5MclCMa9ef59sAR0lfO8VSYIsiRvbC2FbLB/92EoYw10Sl0kGixxHFiJZUSv7dA+YpR8g==}
     engines: {node: ^22.11 || ^24 || >=26}
 
-  '@changesets/format@0.1.1':
-    resolution: {integrity: sha512-OBN/xfe+lcNWCv8P4Ogop9EOTi5QRKd1c2JJfZRBT9AT3AybzDYDfHeX4Y7j20Q4e16BPu3XvcdOe9sPZmTEig==}
+  '@changesets/format@0.1.2':
+    resolution: {integrity: sha512-Caez5XtNXCFS/G5bwyav3wuXL0tMxVd2ZGbaumWbzN08tyzO21asCw7JZhNtVsAZDCvDRUzZN+Iit9SyRITSYA==}
     engines: {node: ^22.11 || ^24 || >=26}
 
   '@changesets/get-dependents-graph@3.0.0':
@@ -2123,31 +2123,15 @@ packages:
       eslint: ^8.57.0 || ^9.0.0 || ^10.0.0
       typescript: '>=4.8.4 <6.1.0'
 
-  '@typescript-eslint/project-service@8.66.0':
-    resolution: {integrity: sha512-7MthGPTt4BP69lSryqpqq8HQqxuzynssckL/jyDyk3+TNMQ3y2jFWkptCrktWvBrP+EH787Nl5N5Qpw7WZg+5g==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    peerDependencies:
-      typescript: '>=4.8.4 <6.1.0'
-
   '@typescript-eslint/project-service@8.67.0':
     resolution: {integrity: sha512-cvE8c7ulYeXN9fYuszhCeCsbzyVEXuhrRCybnBre7TUmqb5nRmBfQAwCj0O3WJFDeyAZt4VYv51vMCC9LHSdYw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       typescript: '>=4.8.4 <6.1.0'
 
-  '@typescript-eslint/scope-manager@8.66.0':
-    resolution: {integrity: sha512-8TGcH25j9zqJ/IULB/ppyhRvxA8QYfFEZ7nfbg6/BN9spDgb8fPWQXlE5l8TWBL50EtUx007uZ1o9VOwrq2/9g==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
   '@typescript-eslint/scope-manager@8.67.0':
     resolution: {integrity: sha512-EgvsleTwS4E+WzzSvem8fAUubLwatMNF1B5hHSLQxcvs7q2dtRhGyujHwLJSYlG41niJ7GP24Aha2+0mb1b2kg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
-  '@typescript-eslint/tsconfig-utils@8.66.0':
-    resolution: {integrity: sha512-9D5gLYZG4rOjcoag8MQ/fWI8WqA9wcPDyOGyWtWFhvM1lHRbliqUSPIY5J3zqCU1tvSwzXxnnjhQhz5Ne7mJ4g==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    peerDependencies:
-      typescript: '>=4.8.4 <6.1.0'
 
   '@typescript-eslint/tsconfig-utils@8.67.0':
     resolution: {integrity: sha512-vV+LUSv5njUWsknE71fqKTlXUva+R76SaeORd6Zojcunk/6DvKFXONU3BrAs2H49mbygUXt6gbYunzwqNwlhdg==}
@@ -2162,31 +2146,14 @@ packages:
       eslint: ^8.57.0 || ^9.0.0 || ^10.0.0
       typescript: '>=4.8.4 <6.1.0'
 
-  '@typescript-eslint/types@8.66.0':
-    resolution: {integrity: sha512-H6gcYaSDOyvL3AD/jHUtUFo2jqGgn/F6nuyuZSu0QTesxL+cP4dQoIMrODRofuJC09g64+WgZ6tE19Y1N2YIFQ==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
   '@typescript-eslint/types@8.67.0':
     resolution: {integrity: sha512-sBtgslww8nsMYUjhdPBiSyUqSzT8uR6g93A2QXnQC8+cGdjz0CyaOdqHDRJb1AtORbZCNUJBBeFA/tNR2uQmww==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
-  '@typescript-eslint/typescript-estree@8.66.0':
-    resolution: {integrity: sha512-8/x4INiiQb10jGgXYD7116/zQ+OL84ZIFn0za68wwFHCanT/VLbBEroWht8RV8fn0/ZCAoazHLQgwUC0UQcDfg==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    peerDependencies:
-      typescript: '>=4.8.4 <6.1.0'
 
   '@typescript-eslint/typescript-estree@8.67.0':
     resolution: {integrity: sha512-EKQBCE9yNlRJYm7jdTW5AhDacDUmSwQb0FAJAmK2EKYrNXIsa2vxcSZx6PvJ/dEdI6lS+Y9W+EXckLj0iPFGcw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
-      typescript: '>=4.8.4 <6.1.0'
-
-  '@typescript-eslint/utils@8.66.0':
-    resolution: {integrity: sha512-jasearZPolBw5NJNYGMwxzHMF83niVWmMU1VdHzG1CyfI2VS7f7nZltnKtHcg20hW+7Uo5GfK4MeDPoU3qI8EA==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    peerDependencies:
-      eslint: ^8.57.0 || ^9.0.0 || ^10.0.0
       typescript: '>=4.8.4 <6.1.0'
 
   '@typescript-eslint/utils@8.67.0':
@@ -2195,10 +2162,6 @@ packages:
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0 || ^10.0.0
       typescript: '>=4.8.4 <6.1.0'
-
-  '@typescript-eslint/visitor-keys@8.66.0':
-    resolution: {integrity: sha512-dkKR8q+lKciskj1Y3vthHktl+3cMLWGyVUP23bRiPZ5O9BRT++4EqDDV+TVeIKBL1VXVEqrJlz8MYbcnvJcAlg==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@typescript-eslint/visitor-keys@8.67.0':
     resolution: {integrity: sha512-fkv8dHRDqfGtTHuJeebdrQ7cX6Ad4WAS00rgHh9UGvMycF1mjBfsxry1XsLIFhWZ6Judlh6UdzK+TYlbpCXgnA==}
@@ -2606,8 +2569,8 @@ packages:
     resolution: {integrity: sha512-BLrgEcRTwX2o6gGxGOCNyMvGSp35YofuYzw9h1IMTRmKqttAZZVU67bdb9Pr2vUHA8+j3i2tJfjO6C6+4myGTA==}
     engines: {node: 18 || 20 || >=22}
 
-  baseline-browser-mapping@2.11.13:
-    resolution: {integrity: sha512-k9HNuUVMlqVjQ9UHzfPjIqiDbWw7WqT1AoT7GL8VwvF3r0ZfArtgiSPAlmupyNquNgOJHTuH4CKYf8ttMTWBTQ==}
+  baseline-browser-mapping@2.11.14:
+    resolution: {integrity: sha512-JyJ954WzuIR8/FFzX0o5krdSTrBAkcCSRfWSleRsIHSWV+cZe2FI1PKggVkFke1hBldRs+LRxUczzE9iPmgZww==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -2706,8 +2669,8 @@ packages:
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
-  content-type@2.0.0:
-    resolution: {integrity: sha512-j/O/d7GcZCyNl7/hwZAb606rzqkyvaDctLmckbxLzHvFBzTJHuGEdodATcP3yIRoDrLHkIATJuvzbFlp/ki2cQ==}
+  content-type@2.1.0:
+    resolution: {integrity: sha512-mj7UPXE0jaqaOsukNZRUEfEi2AcL7C/vwmwcHV0O97eO1E1pxBZuyjlZrx5seTaNBg1U6+o35wpa35Qfcc+7ag==}
     engines: {node: '>=18'}
 
   convert-hrtime@5.0.0:
@@ -2926,8 +2889,8 @@ packages:
     peerDependencies:
       eslint: '>=6.0.0'
 
-  eslint-config-typed@5.9.2:
-    resolution: {integrity: sha512-4FRuKvoouePUhM32ZZrumJBengiW2U4HokhzRDP9NAHg75Sg/UPa+hpTS/Foq3R3qRdUXBO7Onmca732NNo+Kw==}
+  eslint-config-typed@5.9.3:
+    resolution: {integrity: sha512-mS5kga0nucB5O2grBbPxcgCPR0MuRSALp71a6R30d13nRpFeK9jNBM3YINZtzI3xmo777C3T/ilRxt9WJTddyg==}
     engines: {node: '>=22.22.2', pnpm: '>=9.0.0'}
     peerDependencies:
       eslint: '>=9.0.0'
@@ -3103,22 +3066,22 @@ packages:
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0 || ^10.0.0
 
-  eslint-plugin-ts-data-forge@0.4.7:
-    resolution: {integrity: sha512-z3k397r/ikjaMWk710D/K5jnL4iMYbdvJY0gHdbuzSkb1n5DZPgaGQalqo3ukSBy++Eklt1NMTM9SyICv4bhxw==}
+  eslint-plugin-ts-data-forge@0.4.8:
+    resolution: {integrity: sha512-oN+UQrA5vm0P7KgQXZBr1JLMb+kfH0giPeIiZeAezyyi7JrfY7fOszUXaEBNPh86isYIARW9bGFjDDFFsHOsSA==}
     engines: {node: '>=22.22.2', pnpm: '>=9.0.0'}
     peerDependencies:
       eslint: '>=9.0.0'
       typescript: '>=5.0.0 <7.0.0'
 
-  eslint-plugin-ts-fortress@1.0.3:
-    resolution: {integrity: sha512-jvKyJT4xI3bXSqX+exr1riwUqB2ouY8PDoakPNIw/gyHsz7lJPRu9xKaiBu7j2PSsN6i4IEgDhpHqSjlsIdymw==}
+  eslint-plugin-ts-fortress@1.0.4:
+    resolution: {integrity: sha512-1vM5U9O6DUPRF9HCKpVHmf1KxaaHgKlMi8hazyQNR8wgTApx1XUgJXd3ZoU4oD6N0HOba75D5DLK1ld1+jpAqw==}
     engines: {node: '>=22.22.2', pnpm: '>=9.0.0'}
     peerDependencies:
       eslint: '>=9.0.0'
       typescript: '>=5.0.0'
 
-  eslint-plugin-ts-type-forge@0.6.5:
-    resolution: {integrity: sha512-b6+MY4ieoXRaM+pNJKw3kCBnPGOUD2QyKtUZ1k1tnDjra2tjqHAUkAFoOvTjI3opnhyr5C27PqURUgVRo9ZZOQ==}
+  eslint-plugin-ts-type-forge@0.6.6:
+    resolution: {integrity: sha512-Qx7CiLGIm4p+TfozUzleOSl6eL2YnVi/nE6tRWlK2m56ciUOh+5KJSjMMUCX9b8aejwbdr/uAei3GlNG/6VsbA==}
     engines: {node: '>=22.22.2', pnpm: '>=9.0.0'}
     peerDependencies:
       eslint: '>=9.0.0'
@@ -5356,8 +5319,8 @@ packages:
     resolution: {integrity: sha512-Kjgs994WC69f9utLnU+D533esuKjhesnCZqzgIIdkBPY4bl7UPsgecr8jOff2Lw5OVMUlNyKS/K6z2pryTp7UQ==}
     engines: {node: '>=22.22.2', pnpm: '>=9.0.0'}
 
-  ts-data-forge@14.3.0:
-    resolution: {integrity: sha512-bhGKZYBe+iK/pTlQLBS/AilFZyRvUc8ds+7yS9ZoWCUY4UaUelQZTaTJip5lOZ2h5b3Ze7Bet96f3ma/0ikzDA==}
+  ts-data-forge@14.4.0:
+    resolution: {integrity: sha512-TY9NlzsaIrz/hsXsvsYMYYv1QSvsVB9N1bK+RQhj2kMq7TRCim/QX747vtjjmyK8ekwlXc1WQoM3Yu0sdHVI1w==}
     engines: {node: '>=22.22.2', pnpm: '>=9.0.0'}
     peerDependencies:
       typescript: '>=4.8'
@@ -5367,15 +5330,15 @@ packages:
     peerDependencies:
       typescript: '>=4.0.0'
 
-  ts-fortress@12.0.2:
-    resolution: {integrity: sha512-W3MFpVhGV0x1MH8hHn3+0v57xCGybJaxbnbYg4avSO0vHFOjXotNtmIhFh9maV4tFO7qVm3n3lNrEFPS046eyw==}
+  ts-fortress@12.0.3:
+    resolution: {integrity: sha512-YQptBfog/+joFUVeBsaASeh9zBmb+8/yYCIlVNpjaHCYoRZfKlbadTo7H1GYPNgfBvGz6OHAaxXW0H1eJcImxg==}
     engines: {node: '>=22.22.2', pnpm: '>=9.0.0'}
 
   ts-morph@28.0.0:
     resolution: {integrity: sha512-Wp3tnZ2bzwxyTZMtgWVzXDfm7lB1Drz+y9DmmYH/L702PQhPyVrp3pkou3yIz4qjS14GY9kcpmLiOOMvl8oG1g==}
 
-  ts-repo-utils@10.2.0:
-    resolution: {integrity: sha512-RZzwlSlGo68gx52IdxOwi1FONL5CLwF3KmZGTSu+S1RVSRgJSRHn0SuDDuNJdKXbb40MfEkldClZBZfH4XxFiQ==}
+  ts-repo-utils@10.3.0:
+    resolution: {integrity: sha512-I/6i4zBYvFXnkNnfSZKfUrkZJBecqI8iCc8doxz+miU2CoH020JjcszNJPpifGkDEvpakmvyXDpMO3KhqZQMlQ==}
     engines: {node: '>=22.22.2', pnpm: '>=8.0.0'}
     hasBin: true
     peerDependencies:
@@ -5791,7 +5754,7 @@ snapshots:
   '@changesets/apply-release-plan@8.0.0':
     dependencies:
       '@changesets/config': 4.0.0
-      '@changesets/format': 0.1.1
+      '@changesets/format': 0.1.2
       '@changesets/git': 4.0.0
       '@changesets/should-skip-package': 1.0.0
       '@changesets/types': 7.0.0
@@ -5845,7 +5808,7 @@ snapshots:
 
   '@changesets/errors@1.0.0': {}
 
-  '@changesets/format@0.1.1':
+  '@changesets/format@0.1.2':
     dependencies:
       package-manager-detector: 1.8.0
       tinyexec: 1.3.0
@@ -5888,7 +5851,7 @@ snapshots:
 
   '@changesets/write@1.0.0':
     dependencies:
-      '@changesets/format': 0.1.1
+      '@changesets/format': 0.1.2
       '@changesets/types': 7.0.0
       human-id: 4.2.0
 
@@ -6370,7 +6333,7 @@ snapshots:
       '@octokit/endpoint': 11.0.4
       '@octokit/request-error': 7.1.1
       '@octokit/types': 17.0.0
-      content-type: 2.0.0
+      content-type: 2.1.0
       json-with-bigint: 3.5.10
       universal-user-agent: 7.0.3
 
@@ -6586,15 +6549,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/project-service@8.66.0(supports-color@7.2.0)(typescript@6.0.3)':
-    dependencies:
-      '@typescript-eslint/tsconfig-utils': 8.67.0(typescript@6.0.3)
-      '@typescript-eslint/types': 8.67.0
-      debug: 4.4.3(supports-color@7.2.0)
-      typescript: 6.0.3
-    transitivePeerDependencies:
-      - supports-color
-
   '@typescript-eslint/project-service@8.67.0(supports-color@7.2.0)(typescript@6.0.3)':
     dependencies:
       '@typescript-eslint/tsconfig-utils': 8.67.0(typescript@6.0.3)
@@ -6604,19 +6558,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/scope-manager@8.66.0':
-    dependencies:
-      '@typescript-eslint/types': 8.66.0
-      '@typescript-eslint/visitor-keys': 8.66.0
-
   '@typescript-eslint/scope-manager@8.67.0':
     dependencies:
       '@typescript-eslint/types': 8.67.0
       '@typescript-eslint/visitor-keys': 8.67.0
-
-  '@typescript-eslint/tsconfig-utils@8.66.0(typescript@6.0.3)':
-    dependencies:
-      typescript: 6.0.3
 
   '@typescript-eslint/tsconfig-utils@8.67.0(typescript@6.0.3)':
     dependencies:
@@ -6634,24 +6579,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/types@8.66.0': {}
-
   '@typescript-eslint/types@8.67.0': {}
-
-  '@typescript-eslint/typescript-estree@8.66.0(supports-color@7.2.0)(typescript@6.0.3)':
-    dependencies:
-      '@typescript-eslint/project-service': 8.66.0(supports-color@7.2.0)(typescript@6.0.3)
-      '@typescript-eslint/tsconfig-utils': 8.66.0(typescript@6.0.3)
-      '@typescript-eslint/types': 8.66.0
-      '@typescript-eslint/visitor-keys': 8.66.0
-      debug: 4.4.3(supports-color@7.2.0)
-      minimatch: 10.2.6
-      semver: 7.8.5
-      tinyglobby: 0.2.17
-      ts-api-utils: 2.5.0(typescript@6.0.3)
-      typescript: 6.0.3
-    transitivePeerDependencies:
-      - supports-color
 
   '@typescript-eslint/typescript-estree@8.67.0(supports-color@7.2.0)(typescript@6.0.3)':
     dependencies:
@@ -6668,17 +6596,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/utils@8.66.0(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3)':
-    dependencies:
-      '@eslint-community/eslint-utils': 4.10.1(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))
-      '@typescript-eslint/scope-manager': 8.66.0
-      '@typescript-eslint/types': 8.66.0
-      '@typescript-eslint/typescript-estree': 8.66.0(supports-color@7.2.0)(typescript@6.0.3)
-      eslint: 10.8.1(jiti@2.7.0)(supports-color@7.2.0)
-      typescript: 6.0.3
-    transitivePeerDependencies:
-      - supports-color
-
   '@typescript-eslint/utils@8.67.0(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3)':
     dependencies:
       '@eslint-community/eslint-utils': 4.10.1(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))
@@ -6689,11 +6606,6 @@ snapshots:
       typescript: 6.0.3
     transitivePeerDependencies:
       - supports-color
-
-  '@typescript-eslint/visitor-keys@8.66.0':
-    dependencies:
-      '@typescript-eslint/types': 8.66.0
-      eslint-visitor-keys: 5.0.1
 
   '@typescript-eslint/visitor-keys@8.67.0':
     dependencies:
@@ -7057,7 +6969,7 @@ snapshots:
 
   balanced-match@4.0.4: {}
 
-  baseline-browser-mapping@2.11.13: {}
+  baseline-browser-mapping@2.11.14: {}
 
   before-after-hook@4.0.0: {}
 
@@ -7076,7 +6988,7 @@ snapshots:
 
   browserslist@4.28.8:
     dependencies:
-      baseline-browser-mapping: 2.11.13
+      baseline-browser-mapping: 2.11.14
       caniuse-lite: 1.0.30001809
       electron-to-chromium: 1.5.405
       node-releases: 2.0.53
@@ -7148,7 +7060,7 @@ snapshots:
 
   concat-map@0.0.1: {}
 
-  content-type@2.0.0: {}
+  content-type@2.1.0: {}
 
   convert-hrtime@5.0.0: {}
 
@@ -7496,7 +7408,7 @@ snapshots:
       eslint: 10.8.1(jiti@2.7.0)(supports-color@7.2.0)
       semver: 7.8.5
 
-  eslint-config-typed@5.9.2(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(ts-declaration-location@1.0.7(typescript@6.0.3))(typescript@6.0.3)(vitest@4.1.5):
+  eslint-config-typed@5.9.3(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(ts-declaration-location@1.0.7(typescript@6.0.3))(typescript@6.0.3)(vitest@4.1.5):
     dependencies:
       '@eslint/core': 1.2.1
       '@sindresorhus/is': 8.1.0
@@ -7533,7 +7445,7 @@ snapshots:
       is-glob: 4.0.3
       is-immutable-type: 5.0.4(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3)
       micromatch: 4.0.8
-      ts-data-forge: 14.3.0(typescript@6.0.3)
+      ts-data-forge: 14.4.0(typescript@6.0.3)
       ts-type-forge: 9.2.1
       tsutils: 3.21.0(typescript@6.0.3)
       typescript: 6.0.3
@@ -7750,31 +7662,31 @@ snapshots:
       - supports-color
       - typescript
 
-  eslint-plugin-ts-data-forge@0.4.7(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3):
+  eslint-plugin-ts-data-forge@0.4.8(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3):
     dependencies:
       '@typescript-eslint/utils': 8.67.0(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3)
       eslint: 10.8.1(jiti@2.7.0)(supports-color@7.2.0)
-      ts-data-forge: 14.3.0(typescript@6.0.3)
+      ts-data-forge: 14.4.0(typescript@6.0.3)
       ts-type-forge: 9.2.1
       typescript: 6.0.3
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-ts-fortress@1.0.3(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3):
+  eslint-plugin-ts-fortress@1.0.4(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3):
     dependencies:
-      '@typescript-eslint/utils': 8.66.0(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3)
+      '@typescript-eslint/utils': 8.67.0(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3)
       eslint: 10.8.1(jiti@2.7.0)(supports-color@7.2.0)
-      ts-data-forge: 14.3.0(typescript@6.0.3)
+      ts-data-forge: 14.4.0(typescript@6.0.3)
       ts-type-forge: 9.2.1
       typescript: 6.0.3
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-ts-type-forge@0.6.5(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3):
+  eslint-plugin-ts-type-forge@0.6.6(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3):
     dependencies:
-      '@typescript-eslint/utils': 8.66.0(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3)
+      '@typescript-eslint/utils': 8.67.0(eslint@10.8.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3)
       eslint: 10.8.1(jiti@2.7.0)(supports-color@7.2.0)
-      ts-data-forge: 14.3.0(typescript@6.0.3)
+      ts-data-forge: 14.4.0(typescript@6.0.3)
       ts-type-forge: 9.2.1
       typescript: 6.0.3
     transitivePeerDependencies:
@@ -8021,9 +7933,9 @@ snapshots:
       '@octokit/core': 7.0.7
       dotenv: 17.4.2
       octokit-safe-types: 1.2.26(typescript@6.0.3)
-      ts-data-forge: 14.3.0(typescript@6.0.3)
-      ts-fortress: 12.0.2(typescript@6.0.3)
-      ts-repo-utils: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@6.0.3)
+      ts-data-forge: 14.4.0(typescript@6.0.3)
+      ts-fortress: 12.0.3(typescript@6.0.3)
+      ts-repo-utils: 10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@6.0.3)
       ts-type-forge: 9.2.1
     transitivePeerDependencies:
       - prettier
@@ -8771,8 +8683,8 @@ snapshots:
     dependencies:
       '@octokit/openapi-types': 28.0.0
       '@octokit/types': 17.0.0
-      ts-data-forge: 14.3.0(typescript@6.0.3)
-      ts-fortress: 12.0.2(typescript@6.0.3)
+      ts-data-forge: 14.4.0(typescript@6.0.3)
+      ts-fortress: 12.0.3(typescript@6.0.3)
       ts-type-forge: 9.2.1
     transitivePeerDependencies:
       - typescript
@@ -10290,8 +10202,8 @@ snapshots:
       cmd-ts: 0.15.0(supports-color@7.2.0)
       dedent: 1.7.2
       ts-codemod-lib: 3.0.1(typescript@6.0.3)
-      ts-data-forge: 14.3.0(typescript@6.0.3)
-      ts-repo-utils: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@6.0.3)
+      ts-data-forge: 14.4.0(typescript@6.0.3)
+      ts-repo-utils: 10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@6.0.3)
     transitivePeerDependencies:
       - babel-plugin-macros
       - prettier
@@ -10300,79 +10212,79 @@ snapshots:
 
   ts-codemod-lib@3.0.1(typescript@6.0.3):
     dependencies:
-      ts-data-forge: 14.3.0(typescript@6.0.3)
+      ts-data-forge: 14.4.0(typescript@6.0.3)
       ts-morph: 28.0.0
       ts-type-forge: 9.2.1
     transitivePeerDependencies:
       - typescript
 
-  ts-data-forge@14.3.0(typescript@5.0.4):
+  ts-data-forge@14.4.0(typescript@5.0.4):
     dependencies:
       '@sindresorhus/is': 8.1.0
       ts-type-forge: 9.2.1
       typescript: 5.0.4
 
-  ts-data-forge@14.3.0(typescript@5.1.6):
+  ts-data-forge@14.4.0(typescript@5.1.6):
     dependencies:
       '@sindresorhus/is': 8.1.0
       ts-type-forge: 9.2.1
       typescript: 5.1.6
 
-  ts-data-forge@14.3.0(typescript@5.2.2):
+  ts-data-forge@14.4.0(typescript@5.2.2):
     dependencies:
       '@sindresorhus/is': 8.1.0
       ts-type-forge: 9.2.1
       typescript: 5.2.2
 
-  ts-data-forge@14.3.0(typescript@5.3.3):
+  ts-data-forge@14.4.0(typescript@5.3.3):
     dependencies:
       '@sindresorhus/is': 8.1.0
       ts-type-forge: 9.2.1
       typescript: 5.3.3
 
-  ts-data-forge@14.3.0(typescript@5.4.5):
+  ts-data-forge@14.4.0(typescript@5.4.5):
     dependencies:
       '@sindresorhus/is': 8.1.0
       ts-type-forge: 9.2.1
       typescript: 5.4.5
 
-  ts-data-forge@14.3.0(typescript@5.5.4):
+  ts-data-forge@14.4.0(typescript@5.5.4):
     dependencies:
       '@sindresorhus/is': 8.1.0
       ts-type-forge: 9.2.1
       typescript: 5.5.4
 
-  ts-data-forge@14.3.0(typescript@5.6.3):
+  ts-data-forge@14.4.0(typescript@5.6.3):
     dependencies:
       '@sindresorhus/is': 8.1.0
       ts-type-forge: 9.2.1
       typescript: 5.6.3
 
-  ts-data-forge@14.3.0(typescript@5.7.2):
+  ts-data-forge@14.4.0(typescript@5.7.2):
     dependencies:
       '@sindresorhus/is': 8.1.0
       ts-type-forge: 9.2.1
       typescript: 5.7.2
 
-  ts-data-forge@14.3.0(typescript@5.8.3):
+  ts-data-forge@14.4.0(typescript@5.8.3):
     dependencies:
       '@sindresorhus/is': 8.1.0
       ts-type-forge: 9.2.1
       typescript: 5.8.3
 
-  ts-data-forge@14.3.0(typescript@5.9.3):
+  ts-data-forge@14.4.0(typescript@5.9.3):
     dependencies:
       '@sindresorhus/is': 8.1.0
       ts-type-forge: 9.2.1
       typescript: 5.9.3
 
-  ts-data-forge@14.3.0(typescript@6.0.3):
+  ts-data-forge@14.4.0(typescript@6.0.3):
     dependencies:
       '@sindresorhus/is': 8.1.0
       ts-type-forge: 9.2.1
       typescript: 6.0.3
 
-  ts-data-forge@14.3.0(typescript@7.0.2):
+  ts-data-forge@14.4.0(typescript@7.0.2):
     dependencies:
       '@sindresorhus/is': 8.1.0
       ts-type-forge: 9.2.1
@@ -10383,10 +10295,10 @@ snapshots:
       picomatch: 4.0.5
       typescript: 6.0.3
 
-  ts-fortress@12.0.2(typescript@6.0.3):
+  ts-fortress@12.0.3(typescript@6.0.3):
     dependencies:
       '@sindresorhus/is': 8.1.0
-      ts-data-forge: 14.3.0(typescript@6.0.3)
+      ts-data-forge: 14.4.0(typescript@6.0.3)
       ts-type-forge: 9.2.1
     transitivePeerDependencies:
       - typescript
@@ -10396,7 +10308,7 @@ snapshots:
       '@ts-morph/common': 0.29.0
       code-block-writer: 13.0.3
 
-  ts-repo-utils@10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.0.4):
+  ts-repo-utils@10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.0.4):
     dependencies:
       '@nodelib/fs.walk': 3.0.1
       '@sindresorhus/is': 8.1.0
@@ -10405,13 +10317,13 @@ snapshots:
       fast-glob: 3.3.3
       micromatch: 4.0.8
       prettier: 3.9.5
-      ts-data-forge: 14.3.0(typescript@5.0.4)
+      ts-data-forge: 14.4.0(typescript@5.0.4)
       ts-type-forge: 9.2.1
     transitivePeerDependencies:
       - supports-color
       - typescript
 
-  ts-repo-utils@10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.1.6):
+  ts-repo-utils@10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.1.6):
     dependencies:
       '@nodelib/fs.walk': 3.0.1
       '@sindresorhus/is': 8.1.0
@@ -10420,13 +10332,13 @@ snapshots:
       fast-glob: 3.3.3
       micromatch: 4.0.8
       prettier: 3.9.5
-      ts-data-forge: 14.3.0(typescript@5.1.6)
+      ts-data-forge: 14.4.0(typescript@5.1.6)
       ts-type-forge: 9.2.1
     transitivePeerDependencies:
       - supports-color
       - typescript
 
-  ts-repo-utils@10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.2.2):
+  ts-repo-utils@10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.2.2):
     dependencies:
       '@nodelib/fs.walk': 3.0.1
       '@sindresorhus/is': 8.1.0
@@ -10435,13 +10347,13 @@ snapshots:
       fast-glob: 3.3.3
       micromatch: 4.0.8
       prettier: 3.9.5
-      ts-data-forge: 14.3.0(typescript@5.2.2)
+      ts-data-forge: 14.4.0(typescript@5.2.2)
       ts-type-forge: 9.2.1
     transitivePeerDependencies:
       - supports-color
       - typescript
 
-  ts-repo-utils@10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.3.3):
+  ts-repo-utils@10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.3.3):
     dependencies:
       '@nodelib/fs.walk': 3.0.1
       '@sindresorhus/is': 8.1.0
@@ -10450,13 +10362,13 @@ snapshots:
       fast-glob: 3.3.3
       micromatch: 4.0.8
       prettier: 3.9.5
-      ts-data-forge: 14.3.0(typescript@5.3.3)
+      ts-data-forge: 14.4.0(typescript@5.3.3)
       ts-type-forge: 9.2.1
     transitivePeerDependencies:
       - supports-color
       - typescript
 
-  ts-repo-utils@10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.4.5):
+  ts-repo-utils@10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.4.5):
     dependencies:
       '@nodelib/fs.walk': 3.0.1
       '@sindresorhus/is': 8.1.0
@@ -10465,13 +10377,13 @@ snapshots:
       fast-glob: 3.3.3
       micromatch: 4.0.8
       prettier: 3.9.5
-      ts-data-forge: 14.3.0(typescript@5.4.5)
+      ts-data-forge: 14.4.0(typescript@5.4.5)
       ts-type-forge: 9.2.1
     transitivePeerDependencies:
       - supports-color
       - typescript
 
-  ts-repo-utils@10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.5.4):
+  ts-repo-utils@10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.5.4):
     dependencies:
       '@nodelib/fs.walk': 3.0.1
       '@sindresorhus/is': 8.1.0
@@ -10480,13 +10392,13 @@ snapshots:
       fast-glob: 3.3.3
       micromatch: 4.0.8
       prettier: 3.9.5
-      ts-data-forge: 14.3.0(typescript@5.5.4)
+      ts-data-forge: 14.4.0(typescript@5.5.4)
       ts-type-forge: 9.2.1
     transitivePeerDependencies:
       - supports-color
       - typescript
 
-  ts-repo-utils@10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.6.3):
+  ts-repo-utils@10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.6.3):
     dependencies:
       '@nodelib/fs.walk': 3.0.1
       '@sindresorhus/is': 8.1.0
@@ -10495,13 +10407,13 @@ snapshots:
       fast-glob: 3.3.3
       micromatch: 4.0.8
       prettier: 3.9.5
-      ts-data-forge: 14.3.0(typescript@5.6.3)
+      ts-data-forge: 14.4.0(typescript@5.6.3)
       ts-type-forge: 9.2.1
     transitivePeerDependencies:
       - supports-color
       - typescript
 
-  ts-repo-utils@10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.7.2):
+  ts-repo-utils@10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.7.2):
     dependencies:
       '@nodelib/fs.walk': 3.0.1
       '@sindresorhus/is': 8.1.0
@@ -10510,13 +10422,13 @@ snapshots:
       fast-glob: 3.3.3
       micromatch: 4.0.8
       prettier: 3.9.5
-      ts-data-forge: 14.3.0(typescript@5.7.2)
+      ts-data-forge: 14.4.0(typescript@5.7.2)
       ts-type-forge: 9.2.1
     transitivePeerDependencies:
       - supports-color
       - typescript
 
-  ts-repo-utils@10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.8.3):
+  ts-repo-utils@10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.8.3):
     dependencies:
       '@nodelib/fs.walk': 3.0.1
       '@sindresorhus/is': 8.1.0
@@ -10525,13 +10437,13 @@ snapshots:
       fast-glob: 3.3.3
       micromatch: 4.0.8
       prettier: 3.9.5
-      ts-data-forge: 14.3.0(typescript@5.8.3)
+      ts-data-forge: 14.4.0(typescript@5.8.3)
       ts-type-forge: 9.2.1
     transitivePeerDependencies:
       - supports-color
       - typescript
 
-  ts-repo-utils@10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.9.3):
+  ts-repo-utils@10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.9.3):
     dependencies:
       '@nodelib/fs.walk': 3.0.1
       '@sindresorhus/is': 8.1.0
@@ -10540,13 +10452,13 @@ snapshots:
       fast-glob: 3.3.3
       micromatch: 4.0.8
       prettier: 3.9.5
-      ts-data-forge: 14.3.0(typescript@5.9.3)
+      ts-data-forge: 14.4.0(typescript@5.9.3)
       ts-type-forge: 9.2.1
     transitivePeerDependencies:
       - supports-color
       - typescript
 
-  ts-repo-utils@10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@6.0.3):
+  ts-repo-utils@10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@6.0.3):
     dependencies:
       '@nodelib/fs.walk': 3.0.1
       '@sindresorhus/is': 8.1.0
@@ -10555,13 +10467,13 @@ snapshots:
       fast-glob: 3.3.3
       micromatch: 4.0.8
       prettier: 3.9.5
-      ts-data-forge: 14.3.0(typescript@6.0.3)
+      ts-data-forge: 14.4.0(typescript@6.0.3)
       ts-type-forge: 9.2.1
     transitivePeerDependencies:
       - supports-color
       - typescript
 
-  ts-repo-utils@10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@7.0.2):
+  ts-repo-utils@10.3.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@7.0.2):
     dependencies:
       '@nodelib/fs.walk': 3.0.1
       '@sindresorhus/is': 8.1.0
@@ -10570,7 +10482,7 @@ snapshots:
       fast-glob: 3.3.3
       micromatch: 4.0.8
       prettier: 3.9.5
-      ts-data-forge: 14.3.0(typescript@7.0.2)
+      ts-data-forge: 14.4.0(typescript@7.0.2)
       ts-type-forge: 9.2.1
     transitivePeerDependencies:
       - supports-color
