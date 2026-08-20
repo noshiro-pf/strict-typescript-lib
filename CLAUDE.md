@@ -510,7 +510,9 @@ deliberately omits `--latest`, so an action only moves within `^current` and a
 major waits for a human. Do not set
 `update.githubActions` back to `true`, and do not add `--latest` to
 `update-actions`: `changesets/action` v2 requires Changesets CLI v3 and renamed
-every input, so taking that major unattended broke `release.yml` on main.
+every input, so taking that major unattended broke `release.yml` on main. That
+one has since been migrated deliberately — `release.yml` is on v2.1.1 with the
+renamed inputs — but it is the example of why a major waits for a human.
 
 Neither `minimumReleaseAge` nor `update.ignoreDeps` applies to actions. pnpm
 resolves action versions from `git ls-remote` refs, which carry a tag name and a
@@ -519,6 +521,48 @@ tag hours old is taken regardless. Hold an action back by leaving the major
 alone, not by listing it in `ignoreDeps`.
 `pnpm outdated --include-github-actions --latest` lists the majors that are
 waiting.
+
+### Releasing: why `privatePackages` is set explicitly
+
+Every `strict-ts-lib-vX.Y-source` package is `private: true` — they are
+generator harnesses, and what ships is the tarballs their `output/` produces,
+not the harness. They still have to be **versioned**, because that version is
+what `gen-packages` stamps onto every generated `package.json`, onto the
+umbrella's tarball URLs, and onto the release tag.
+
+`.changeset/config.json` therefore sets `"privatePackages": { "version": true,
+"tag": false }`, and it has to stay there. Changesets 2.x defaulted to exactly
+that, so omitting it used to be correct; the `@changesets/cli` 3.0.0 major
+(`@changesets/config@4`) flipped the default to
+`{ version: false, tag: false }`. Under that default a changeset naming only
+private packages resolves to **zero** releases, and `changeset version` exits
+successfully having changed nothing — it does not even consume the changeset
+files. Nothing warns, so a release simply stops happening. `#118` took that
+major in an unattended `pnpm update --latest` run.
+
+`pnpm changeset status` is the cheap check: it must list the packages under
+`Packages to be bumped:`. An empty list there, with changesets present in
+`.changeset/`, means they are being filtered out — check `privatePackages` and
+`ignore` first. Note also that `.changeset/config.json` is parsed with
+`JSON.parse`, so it cannot carry comments.
+
+`changesets/action` is on v2, which changed three things worth knowing when
+touching `release.yml`:
+
+- The App token goes in the **`github-token` input**. v2 refuses to run if a
+  `GITHUB_TOKEN` env var is set to anything other than that input, so only
+  `GH_TOKEN` is left in `env` (for the `gh` calls in `dist:github-release`;
+  `gh` prefers `GH_TOKEN` anyway).
+- Every input was renamed (`publish` → `publish-script`, `version` →
+  `version-script`, `title` → `pr-title`, `commit` → `commit-message`). v2
+  throws on the old names rather than ignoring them, and it also refuses to run
+  against Changesets CLI v2.
+- v2 no longer parses the publish script's stdout; it expects the script to
+  write NDJSON to `$CHANGESETS_OUTPUT`. `dist:github-release` does not, so the
+  publish run logs a warning that GitHub releases and git tags cannot be
+  created without that output. That is intended: this repo's releases are the
+  tarball GitHub Releases that `dist:github-release` creates itself, which is
+  why `create-github-releases` and `push-git-tags` are both `false`.
 
 ### Generated / auto-managed files — do NOT edit directly
 
