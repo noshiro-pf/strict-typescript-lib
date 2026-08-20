@@ -5,7 +5,7 @@ standard library declarations, distributed as GitHub Release tarballs
 (no npm registry, no auth).
 
 ```sh
-npm install -D https://github.com/noshiro-pf/strict-typescript-lib/releases/download/dist-v5.9-0.2.0/strict-ts-lib-v5.9-0.2.0.tgz
+npm install -D https://github.com/noshiro-pf/strict-typescript-lib/releases/download/dist-v5.9-0.3.0/strict-ts-lib-v5.9-0.3.0.tgz
 ```
 
 Installing this package pulls in the strict `@typescript/lib-*` replacements
