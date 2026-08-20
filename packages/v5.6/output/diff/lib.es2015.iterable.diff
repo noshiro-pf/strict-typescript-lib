@@ -146,15 +146,17 @@
  
    /**
     * Returns an iterable of keys in the map
-@@ -200,7 +185,7 @@ interface ReadonlyMap<K, V> {
+@@ -200,8 +185,8 @@ interface ReadonlyMap<K, V> {
  }
  
  interface MapConstructor {
 -  new (): Map<any, any>;
+-  new <K, V>(iterable?: Iterable<readonly [K, V]> | null): Map<K, V>;
 +  new (): Map<never, never>;
-   new <K, V>(iterable?: Iterable<readonly [K, V]> | null): Map<K, V>;
++  new <K, V>(iterable?: Iterable<readonly [K, V]>): Map<K, V>;
  }
  
+ interface WeakMap<K extends WeakKey, V> {}
 @@ -226,7 +211,7 @@ interface Set<T> {
    /**
     * Returns an iterable of [v,v] pairs for every value `v` in the set.
@@ -173,14 +175,16 @@
  
    /**
     * Despite its name, returns an iterable of the values in the set.
-@@ -259,6 +244,7 @@ interface ReadonlySet<T> {
+@@ -259,7 +244,8 @@ interface ReadonlySet<T> {
  }
  
  interface SetConstructor {
+-  new <T>(iterable?: Iterable<T> | null): Set<T>;
 +  new (): Set<never>;
-   new <T>(iterable?: Iterable<T> | null): Set<T>;
++  new <T>(iterable?: Iterable<T>): Set<T>;
  }
  
+ interface WeakSet<T extends WeakKey> {}
 @@ -302,11 +288,11 @@ interface String {
  }
  

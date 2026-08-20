@@ -93,18 +93,40 @@ export const convertLibEs2015Iterable = ({
           `new (): Map<never, never>;`,
         ),
 
-        // remove readonly
+        // remove readonly, and drop `| null` — see the `| null` note in
+        // `lib.es2015.collection.mts`. Both files have to drop it: these
+        // overloads are merged into the same interface, so as long as one of
+        // them still advertises `| null`, `new Map(null)` keeps compiling and
+        // the tightening in the other file is inert.
         replaceWithNoMatchCheck(
           `new <K, V>(iterable?: Iterable<readonly [K, V]> | null): ReadonlyMap<K, V>`,
-          `new <K, V>(iterable?: Iterable<readonly [K, V]> | null): Map<K, V>`,
+          `new <K, V>(iterable?: Iterable<readonly [K, V]>): Map<K, V>`,
         ),
 
-        // remove readonly
+        // remove readonly, and drop `| null` (as above)
         replaceWithNoMatchCheck(
           `new <T>(iterable?: Iterable<T> | null): ReadonlySet<T>;`,
-          `new <T>(iterable?: Iterable<T> | null): Set<T>;`,
+          `new <T>(iterable?: Iterable<T>): Set<T>;`,
         ),
 
+        // TS 6.0 loosened this overload from `(iterable: Iterable<…>)` to
+        // `<K extends WeakKey = WeakKey, V = unknown>(iterable?: … | null)`.
+        // Because this file's overloads merge ahead of
+        // `lib.es2015.collection.d.ts`'s, that form captures `new WeakMap()`
+        // and hands back `WeakMap<WeakKey, unknown>` — which accepts every
+        // object — instead of falling through to the `never` no-argument
+        // overload. Normalize it back to the pre-6.0 shape; a no-op on <= 5.9,
+        // where the file already reads that way.
+        replaceWithNoMatchCheck(
+          `new <K extends WeakKey = WeakKey, V = unknown>(iterable?: Iterable<readonly [K, V]> | null): WeakMap<K, V>;`,
+          `new <K extends WeakKey, V>(iterable: Iterable<readonly [K, V]>): WeakMap<K, V>;`,
+          { onNotFound: 'off' },
+        ),
+
+        // `SetConstructor` has no no-argument overload here, and this file's
+        // overloads are merged ahead of `lib.es2015.collection.d.ts`'s, so
+        // without this one `new Set()` would bind to the `iterable?` overload
+        // and infer `Set<unknown>` instead of `Set<never>`.
         replaceWithNoMatchCheck(
           `interface SetConstructor {`,
           dedent`

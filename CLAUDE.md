@@ -463,6 +463,36 @@ This repo has no bundler build; the "build" is the generator. Key commands:
 - `pnpm run lint` / `lint:fix`, `pnpm run fmt`, `pnpm run cspell`,
   `pnpm run md`, `pnpm run check-all` — validation and formatting.
 
+### Keeping the lib-check honest
+
+The per-version lib-check is the only thing that validates generated output, and
+it fails **open**: when the strict lib is not substituted, it happily checks the
+stock lib and reports success. Three invariants keep it real — all three were
+broken at once at some point, and nothing failed.
+
+- **`packages/vX.Y/package.json` must pin `typescript` to that exact minor.**
+  A blanket bump makes every harness check its lib with the wrong compiler
+  (`tsc@6.0` over a v5.0 lib set reports hundreds of phantom errors, e.g.
+  `lib.es2022.sharedmemory` no longer existing). `pnpm-workspace.yaml` lists
+  `typescript` under `update.ignoreDeps` for this reason — leave it there.
+- **Harnesses whose tsc is >= 5.8 must set `"libReplacement": true`** in both
+  `tsconfig.lib-check.json` and `tsconfig.lib-check.webworker.json`. TypeScript
+  5.8 introduced the option and 6.0 flipped its default to `false`. Harnesses on
+  tsc < 5.8 must NOT set it (TS5023: unknown compiler option); there the
+  behavior is always on.
+- **Run the lib-check from the version's own directory** (`pnpm --filter …`
+  does this). tsc before 5.8 resolves `@typescript/lib-*` from the current
+  working directory, so running it from the repo root silently picks up the
+  root's dogfood aliases — a _different_ version's lib.
+
+Generated sub-package paths must also mirror TypeScript's own
+`getLibraryNameFromLibFileName`: only the first component after the lib group
+becomes a path segment, further components join with `-`
+(`lib.es2015.symbol.wellknown.d.ts` -> `es2015/symbol-wellknown`, never
+`es2015/symbol/wellknown`). A wrong path is not an error anywhere — the file is
+published, `libReplacement` never looks it up, and consumers keep the stock
+declarations for it.
+
 ### Dependency updates
 
 `pnpm-update.yml` runs daily and opens a single bundled pull request that

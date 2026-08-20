@@ -319,12 +319,29 @@ const getPackageDirListFromLibFiles = async (
     }));
 };
 
-/** "lib.es2018.asynciterable.d.ts" -> "es2018/asynciterable" */
-const libFilenameToPath = (libFilename: string): string =>
-  libFilename
-    .replaceAll('lib.', '')
-    .replaceAll('.d.ts', '')
-    .replaceAll('.', '/');
+/**
+ * "lib.es2018.asynciterable.d.ts" -> "es2018/asynciterable"
+ * "lib.es2015.symbol.wellknown.d.ts" -> "es2015/symbol-wellknown"
+ *
+ * Mirrors TypeScript's own `getLibraryNameFromLibFileName`: only the FIRST
+ * component after the lib group becomes a path segment, and any further
+ * components are joined with `-`. Replacing every dot with `/` instead nests the
+ * three-component lib files one level too deep (`es2015/symbol/wellknown`),
+ * which is a subpath `libReplacement` never looks up — so those lib files are
+ * published but silently ignored, and consumers keep getting the stock
+ * declarations for them.
+ */
+const libFilenameToPath = (libFilename: string): string => {
+  const stem = libFilename.replaceAll('lib.', '').replaceAll('.d.ts', '');
+
+  const firstDot = stem.indexOf('.');
+
+  return firstDot === -1
+    ? stem
+    : `${stem.slice(0, firstDot)}/${stem
+        .slice(firstDot + 1)
+        .replaceAll('.', '-')}`;
+};
 
 const getSubPackageVersion = async (
   ctx: Context,

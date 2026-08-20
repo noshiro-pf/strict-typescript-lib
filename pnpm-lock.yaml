@@ -159,64 +159,64 @@ importers:
     devDependencies:
       '@typescript/lib-decorators':
         specifier: file:output/packages/decorators
-        version: strict-ts-lib-v5.0-decorators@file:packages/v5.0/output/packages/decorators(typescript@6.0.3)
+        version: strict-ts-lib-v5.0-decorators@file:packages/v5.0/output/packages/decorators(typescript@5.0.4)
       '@typescript/lib-dom':
         specifier: file:output/packages/dom
-        version: strict-ts-lib-v5.0-dom@file:packages/v5.0/output/packages/dom(typescript@6.0.3)
+        version: strict-ts-lib-v5.0-dom@file:packages/v5.0/output/packages/dom(typescript@5.0.4)
       '@typescript/lib-es2015':
         specifier: file:output/packages/es2015
-        version: strict-ts-lib-v5.0-es2015@file:packages/v5.0/output/packages/es2015(typescript@6.0.3)
+        version: strict-ts-lib-v5.0-es2015@file:packages/v5.0/output/packages/es2015(typescript@5.0.4)
       '@typescript/lib-es2016':
         specifier: file:output/packages/es2016
-        version: strict-ts-lib-v5.0-es2016@file:packages/v5.0/output/packages/es2016(typescript@6.0.3)
+        version: strict-ts-lib-v5.0-es2016@file:packages/v5.0/output/packages/es2016(typescript@5.0.4)
       '@typescript/lib-es2017':
         specifier: file:output/packages/es2017
-        version: strict-ts-lib-v5.0-es2017@file:packages/v5.0/output/packages/es2017(typescript@6.0.3)
+        version: strict-ts-lib-v5.0-es2017@file:packages/v5.0/output/packages/es2017(typescript@5.0.4)
       '@typescript/lib-es2018':
         specifier: file:output/packages/es2018
-        version: strict-ts-lib-v5.0-es2018@file:packages/v5.0/output/packages/es2018(typescript@6.0.3)
+        version: strict-ts-lib-v5.0-es2018@file:packages/v5.0/output/packages/es2018(typescript@5.0.4)
       '@typescript/lib-es2019':
         specifier: file:output/packages/es2019
-        version: strict-ts-lib-v5.0-es2019@file:packages/v5.0/output/packages/es2019(typescript@6.0.3)
+        version: strict-ts-lib-v5.0-es2019@file:packages/v5.0/output/packages/es2019(typescript@5.0.4)
       '@typescript/lib-es2020':
         specifier: file:output/packages/es2020
-        version: strict-ts-lib-v5.0-es2020@file:packages/v5.0/output/packages/es2020(typescript@6.0.3)
+        version: strict-ts-lib-v5.0-es2020@file:packages/v5.0/output/packages/es2020(typescript@5.0.4)
       '@typescript/lib-es2021':
         specifier: file:output/packages/es2021
-        version: strict-ts-lib-v5.0-es2021@file:packages/v5.0/output/packages/es2021(typescript@6.0.3)
+        version: strict-ts-lib-v5.0-es2021@file:packages/v5.0/output/packages/es2021(typescript@5.0.4)
       '@typescript/lib-es2022':
         specifier: file:output/packages/es2022
-        version: strict-ts-lib-v5.0-es2022@file:packages/v5.0/output/packages/es2022(typescript@6.0.3)
+        version: strict-ts-lib-v5.0-es2022@file:packages/v5.0/output/packages/es2022(typescript@5.0.4)
       '@typescript/lib-es2023':
         specifier: file:output/packages/es2023
-        version: strict-ts-lib-v5.0-es2023@file:packages/v5.0/output/packages/es2023(typescript@6.0.3)
+        version: strict-ts-lib-v5.0-es2023@file:packages/v5.0/output/packages/es2023(typescript@5.0.4)
       '@typescript/lib-es5':
         specifier: file:output/packages/es5
-        version: strict-ts-lib-v5.0-es5@file:packages/v5.0/output/packages/es5(typescript@6.0.3)
+        version: strict-ts-lib-v5.0-es5@file:packages/v5.0/output/packages/es5(typescript@5.0.4)
       '@typescript/lib-es6':
         specifier: file:output/packages/es6
-        version: strict-ts-lib-v5.0-es6@file:packages/v5.0/output/packages/es6(typescript@6.0.3)
+        version: strict-ts-lib-v5.0-es6@file:packages/v5.0/output/packages/es6(typescript@5.0.4)
       '@typescript/lib-esnext':
         specifier: file:output/packages/esnext
-        version: strict-ts-lib-v5.0-esnext@file:packages/v5.0/output/packages/esnext(typescript@6.0.3)
+        version: strict-ts-lib-v5.0-esnext@file:packages/v5.0/output/packages/esnext(typescript@5.0.4)
       '@typescript/lib-scripthost':
         specifier: file:output/packages/scripthost
-        version: strict-ts-lib-v5.0-scripthost@file:packages/v5.0/output/packages/scripthost(typescript@6.0.3)
+        version: strict-ts-lib-v5.0-scripthost@file:packages/v5.0/output/packages/scripthost(typescript@5.0.4)
       '@typescript/lib-webworker':
         specifier: file:output/packages/webworker
-        version: strict-ts-lib-v5.0-webworker@file:packages/v5.0/output/packages/webworker(typescript@6.0.3)
+        version: strict-ts-lib-v5.0-webworker@file:packages/v5.0/output/packages/webworker(typescript@5.0.4)
       ts-data-forge:
         specifier: ^14.3.0
-        version: 14.3.0(typescript@6.0.3)
+        version: 14.3.0(typescript@5.0.4)
       ts-repo-utils:
         specifier: 10.2.0
-        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@6.0.3)
+        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.0.4)
       ts-type-forge:
         specifier: 9.2.1
         version: 9.2.1
       typescript:
-        specifier: 6.0.3
-        version: 6.0.3
+        specifier: 5.0.4
+        version: 5.0.4
 
   packages/v5.0/output:
     dependencies:
@@ -224,8 +224,8 @@ importers:
         specifier: 9.2.1
         version: 9.2.1
       typescript:
-        specifier: 6.0.3
-        version: 6.0.3
+        specifier: 5.0.4
+        version: 5.0.4
 
   packages/v5.0/output-branded:
     dependencies:
@@ -233,8 +233,8 @@ importers:
         specifier: 9.2.1
         version: 9.2.1
       typescript:
-        specifier: 6.0.3
-        version: 6.0.3
+        specifier: 5.0.4
+        version: 5.0.4
 
   packages/v5.1:
     dependencies:
@@ -244,64 +244,64 @@ importers:
     devDependencies:
       '@typescript/lib-decorators':
         specifier: file:output/packages/decorators
-        version: strict-ts-lib-v5.1-decorators@file:packages/v5.1/output/packages/decorators(typescript@6.0.3)
+        version: strict-ts-lib-v5.1-decorators@file:packages/v5.1/output/packages/decorators(typescript@5.1.6)
       '@typescript/lib-dom':
         specifier: file:output/packages/dom
-        version: strict-ts-lib-v5.1-dom@file:packages/v5.1/output/packages/dom(typescript@6.0.3)
+        version: strict-ts-lib-v5.1-dom@file:packages/v5.1/output/packages/dom(typescript@5.1.6)
       '@typescript/lib-es2015':
         specifier: file:output/packages/es2015
-        version: strict-ts-lib-v5.1-es2015@file:packages/v5.1/output/packages/es2015(typescript@6.0.3)
+        version: strict-ts-lib-v5.1-es2015@file:packages/v5.1/output/packages/es2015(typescript@5.1.6)
       '@typescript/lib-es2016':
         specifier: file:output/packages/es2016
-        version: strict-ts-lib-v5.1-es2016@file:packages/v5.1/output/packages/es2016(typescript@6.0.3)
+        version: strict-ts-lib-v5.1-es2016@file:packages/v5.1/output/packages/es2016(typescript@5.1.6)
       '@typescript/lib-es2017':
         specifier: file:output/packages/es2017
-        version: strict-ts-lib-v5.1-es2017@file:packages/v5.1/output/packages/es2017(typescript@6.0.3)
+        version: strict-ts-lib-v5.1-es2017@file:packages/v5.1/output/packages/es2017(typescript@5.1.6)
       '@typescript/lib-es2018':
         specifier: file:output/packages/es2018
-        version: strict-ts-lib-v5.1-es2018@file:packages/v5.1/output/packages/es2018(typescript@6.0.3)
+        version: strict-ts-lib-v5.1-es2018@file:packages/v5.1/output/packages/es2018(typescript@5.1.6)
       '@typescript/lib-es2019':
         specifier: file:output/packages/es2019
-        version: strict-ts-lib-v5.1-es2019@file:packages/v5.1/output/packages/es2019(typescript@6.0.3)
+        version: strict-ts-lib-v5.1-es2019@file:packages/v5.1/output/packages/es2019(typescript@5.1.6)
       '@typescript/lib-es2020':
         specifier: file:output/packages/es2020
-        version: strict-ts-lib-v5.1-es2020@file:packages/v5.1/output/packages/es2020(typescript@6.0.3)
+        version: strict-ts-lib-v5.1-es2020@file:packages/v5.1/output/packages/es2020(typescript@5.1.6)
       '@typescript/lib-es2021':
         specifier: file:output/packages/es2021
-        version: strict-ts-lib-v5.1-es2021@file:packages/v5.1/output/packages/es2021(typescript@6.0.3)
+        version: strict-ts-lib-v5.1-es2021@file:packages/v5.1/output/packages/es2021(typescript@5.1.6)
       '@typescript/lib-es2022':
         specifier: file:output/packages/es2022
-        version: strict-ts-lib-v5.1-es2022@file:packages/v5.1/output/packages/es2022(typescript@6.0.3)
+        version: strict-ts-lib-v5.1-es2022@file:packages/v5.1/output/packages/es2022(typescript@5.1.6)
       '@typescript/lib-es2023':
         specifier: file:output/packages/es2023
-        version: strict-ts-lib-v5.1-es2023@file:packages/v5.1/output/packages/es2023(typescript@6.0.3)
+        version: strict-ts-lib-v5.1-es2023@file:packages/v5.1/output/packages/es2023(typescript@5.1.6)
       '@typescript/lib-es5':
         specifier: file:output/packages/es5
-        version: strict-ts-lib-v5.1-es5@file:packages/v5.1/output/packages/es5(typescript@6.0.3)
+        version: strict-ts-lib-v5.1-es5@file:packages/v5.1/output/packages/es5(typescript@5.1.6)
       '@typescript/lib-es6':
         specifier: file:output/packages/es6
-        version: strict-ts-lib-v5.1-es6@file:packages/v5.1/output/packages/es6(typescript@6.0.3)
+        version: strict-ts-lib-v5.1-es6@file:packages/v5.1/output/packages/es6(typescript@5.1.6)
       '@typescript/lib-esnext':
         specifier: file:output/packages/esnext
-        version: strict-ts-lib-v5.1-esnext@file:packages/v5.1/output/packages/esnext(typescript@6.0.3)
+        version: strict-ts-lib-v5.1-esnext@file:packages/v5.1/output/packages/esnext(typescript@5.1.6)
       '@typescript/lib-scripthost':
         specifier: file:output/packages/scripthost
-        version: strict-ts-lib-v5.1-scripthost@file:packages/v5.1/output/packages/scripthost(typescript@6.0.3)
+        version: strict-ts-lib-v5.1-scripthost@file:packages/v5.1/output/packages/scripthost(typescript@5.1.6)
       '@typescript/lib-webworker':
         specifier: file:output/packages/webworker
-        version: strict-ts-lib-v5.1-webworker@file:packages/v5.1/output/packages/webworker(typescript@6.0.3)
+        version: strict-ts-lib-v5.1-webworker@file:packages/v5.1/output/packages/webworker(typescript@5.1.6)
       ts-data-forge:
         specifier: ^14.3.0
-        version: 14.3.0(typescript@6.0.3)
+        version: 14.3.0(typescript@5.1.6)
       ts-repo-utils:
         specifier: 10.2.0
-        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@6.0.3)
+        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.1.6)
       ts-type-forge:
         specifier: 9.2.1
         version: 9.2.1
       typescript:
-        specifier: 6.0.3
-        version: 6.0.3
+        specifier: 5.1.6
+        version: 5.1.6
 
   packages/v5.1/output:
     dependencies:
@@ -309,8 +309,8 @@ importers:
         specifier: 9.2.1
         version: 9.2.1
       typescript:
-        specifier: 6.0.3
-        version: 6.0.3
+        specifier: 5.1.6
+        version: 5.1.6
 
   packages/v5.1/output-branded:
     dependencies:
@@ -318,8 +318,8 @@ importers:
         specifier: 9.2.1
         version: 9.2.1
       typescript:
-        specifier: 6.0.3
-        version: 6.0.3
+        specifier: 5.1.6
+        version: 5.1.6
 
   packages/v5.2:
     dependencies:
@@ -329,64 +329,64 @@ importers:
     devDependencies:
       '@typescript/lib-decorators':
         specifier: file:output/packages/decorators
-        version: strict-ts-lib-v5.2-decorators@file:packages/v5.2/output/packages/decorators(typescript@6.0.3)
+        version: strict-ts-lib-v5.2-decorators@file:packages/v5.2/output/packages/decorators(typescript@5.2.2)
       '@typescript/lib-dom':
         specifier: file:output/packages/dom
-        version: strict-ts-lib-v5.2-dom@file:packages/v5.2/output/packages/dom(typescript@6.0.3)
+        version: strict-ts-lib-v5.2-dom@file:packages/v5.2/output/packages/dom(typescript@5.2.2)
       '@typescript/lib-es2015':
         specifier: file:output/packages/es2015
-        version: strict-ts-lib-v5.2-es2015@file:packages/v5.2/output/packages/es2015(typescript@6.0.3)
+        version: strict-ts-lib-v5.2-es2015@file:packages/v5.2/output/packages/es2015(typescript@5.2.2)
       '@typescript/lib-es2016':
         specifier: file:output/packages/es2016
-        version: strict-ts-lib-v5.2-es2016@file:packages/v5.2/output/packages/es2016(typescript@6.0.3)
+        version: strict-ts-lib-v5.2-es2016@file:packages/v5.2/output/packages/es2016(typescript@5.2.2)
       '@typescript/lib-es2017':
         specifier: file:output/packages/es2017
-        version: strict-ts-lib-v5.2-es2017@file:packages/v5.2/output/packages/es2017(typescript@6.0.3)
+        version: strict-ts-lib-v5.2-es2017@file:packages/v5.2/output/packages/es2017(typescript@5.2.2)
       '@typescript/lib-es2018':
         specifier: file:output/packages/es2018
-        version: strict-ts-lib-v5.2-es2018@file:packages/v5.2/output/packages/es2018(typescript@6.0.3)
+        version: strict-ts-lib-v5.2-es2018@file:packages/v5.2/output/packages/es2018(typescript@5.2.2)
       '@typescript/lib-es2019':
         specifier: file:output/packages/es2019
-        version: strict-ts-lib-v5.2-es2019@file:packages/v5.2/output/packages/es2019(typescript@6.0.3)
+        version: strict-ts-lib-v5.2-es2019@file:packages/v5.2/output/packages/es2019(typescript@5.2.2)
       '@typescript/lib-es2020':
         specifier: file:output/packages/es2020
-        version: strict-ts-lib-v5.2-es2020@file:packages/v5.2/output/packages/es2020(typescript@6.0.3)
+        version: strict-ts-lib-v5.2-es2020@file:packages/v5.2/output/packages/es2020(typescript@5.2.2)
       '@typescript/lib-es2021':
         specifier: file:output/packages/es2021
-        version: strict-ts-lib-v5.2-es2021@file:packages/v5.2/output/packages/es2021(typescript@6.0.3)
+        version: strict-ts-lib-v5.2-es2021@file:packages/v5.2/output/packages/es2021(typescript@5.2.2)
       '@typescript/lib-es2022':
         specifier: file:output/packages/es2022
-        version: strict-ts-lib-v5.2-es2022@file:packages/v5.2/output/packages/es2022(typescript@6.0.3)
+        version: strict-ts-lib-v5.2-es2022@file:packages/v5.2/output/packages/es2022(typescript@5.2.2)
       '@typescript/lib-es2023':
         specifier: file:output/packages/es2023
-        version: strict-ts-lib-v5.2-es2023@file:packages/v5.2/output/packages/es2023(typescript@6.0.3)
+        version: strict-ts-lib-v5.2-es2023@file:packages/v5.2/output/packages/es2023(typescript@5.2.2)
       '@typescript/lib-es5':
         specifier: file:output/packages/es5
-        version: strict-ts-lib-v5.2-es5@file:packages/v5.2/output/packages/es5(typescript@6.0.3)
+        version: strict-ts-lib-v5.2-es5@file:packages/v5.2/output/packages/es5(typescript@5.2.2)
       '@typescript/lib-es6':
         specifier: file:output/packages/es6
-        version: strict-ts-lib-v5.2-es6@file:packages/v5.2/output/packages/es6(typescript@6.0.3)
+        version: strict-ts-lib-v5.2-es6@file:packages/v5.2/output/packages/es6(typescript@5.2.2)
       '@typescript/lib-esnext':
         specifier: file:output/packages/esnext
-        version: strict-ts-lib-v5.2-esnext@file:packages/v5.2/output/packages/esnext(typescript@6.0.3)
+        version: strict-ts-lib-v5.2-esnext@file:packages/v5.2/output/packages/esnext(typescript@5.2.2)
       '@typescript/lib-scripthost':
         specifier: file:output/packages/scripthost
-        version: strict-ts-lib-v5.2-scripthost@file:packages/v5.2/output/packages/scripthost(typescript@6.0.3)
+        version: strict-ts-lib-v5.2-scripthost@file:packages/v5.2/output/packages/scripthost(typescript@5.2.2)
       '@typescript/lib-webworker':
         specifier: file:output/packages/webworker
-        version: strict-ts-lib-v5.2-webworker@file:packages/v5.2/output/packages/webworker(typescript@6.0.3)
+        version: strict-ts-lib-v5.2-webworker@file:packages/v5.2/output/packages/webworker(typescript@5.2.2)
       ts-data-forge:
         specifier: ^14.3.0
-        version: 14.3.0(typescript@6.0.3)
+        version: 14.3.0(typescript@5.2.2)
       ts-repo-utils:
         specifier: 10.2.0
-        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@6.0.3)
+        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.2.2)
       ts-type-forge:
         specifier: 9.2.1
         version: 9.2.1
       typescript:
-        specifier: 6.0.3
-        version: 6.0.3
+        specifier: 5.2.2
+        version: 5.2.2
 
   packages/v5.2/output:
     dependencies:
@@ -394,8 +394,8 @@ importers:
         specifier: 9.2.1
         version: 9.2.1
       typescript:
-        specifier: 6.0.3
-        version: 6.0.3
+        specifier: 5.2.2
+        version: 5.2.2
 
   packages/v5.2/output-branded:
     dependencies:
@@ -403,8 +403,8 @@ importers:
         specifier: 9.2.1
         version: 9.2.1
       typescript:
-        specifier: 6.0.3
-        version: 6.0.3
+        specifier: 5.2.2
+        version: 5.2.2
 
   packages/v5.3:
     dependencies:
@@ -414,64 +414,64 @@ importers:
     devDependencies:
       '@typescript/lib-decorators':
         specifier: file:output/packages/decorators
-        version: strict-ts-lib-v5.3-decorators@file:packages/v5.3/output/packages/decorators(typescript@6.0.3)
+        version: strict-ts-lib-v5.3-decorators@file:packages/v5.3/output/packages/decorators(typescript@5.3.3)
       '@typescript/lib-dom':
         specifier: file:output/packages/dom
-        version: strict-ts-lib-v5.3-dom@file:packages/v5.3/output/packages/dom(typescript@6.0.3)
+        version: strict-ts-lib-v5.3-dom@file:packages/v5.3/output/packages/dom(typescript@5.3.3)
       '@typescript/lib-es2015':
         specifier: file:output/packages/es2015
-        version: strict-ts-lib-v5.3-es2015@file:packages/v5.3/output/packages/es2015(typescript@6.0.3)
+        version: strict-ts-lib-v5.3-es2015@file:packages/v5.3/output/packages/es2015(typescript@5.3.3)
       '@typescript/lib-es2016':
         specifier: file:output/packages/es2016
-        version: strict-ts-lib-v5.3-es2016@file:packages/v5.3/output/packages/es2016(typescript@6.0.3)
+        version: strict-ts-lib-v5.3-es2016@file:packages/v5.3/output/packages/es2016(typescript@5.3.3)
       '@typescript/lib-es2017':
         specifier: file:output/packages/es2017
-        version: strict-ts-lib-v5.3-es2017@file:packages/v5.3/output/packages/es2017(typescript@6.0.3)
+        version: strict-ts-lib-v5.3-es2017@file:packages/v5.3/output/packages/es2017(typescript@5.3.3)
       '@typescript/lib-es2018':
         specifier: file:output/packages/es2018
-        version: strict-ts-lib-v5.3-es2018@file:packages/v5.3/output/packages/es2018(typescript@6.0.3)
+        version: strict-ts-lib-v5.3-es2018@file:packages/v5.3/output/packages/es2018(typescript@5.3.3)
       '@typescript/lib-es2019':
         specifier: file:output/packages/es2019
-        version: strict-ts-lib-v5.3-es2019@file:packages/v5.3/output/packages/es2019(typescript@6.0.3)
+        version: strict-ts-lib-v5.3-es2019@file:packages/v5.3/output/packages/es2019(typescript@5.3.3)
       '@typescript/lib-es2020':
         specifier: file:output/packages/es2020
-        version: strict-ts-lib-v5.3-es2020@file:packages/v5.3/output/packages/es2020(typescript@6.0.3)
+        version: strict-ts-lib-v5.3-es2020@file:packages/v5.3/output/packages/es2020(typescript@5.3.3)
       '@typescript/lib-es2021':
         specifier: file:output/packages/es2021
-        version: strict-ts-lib-v5.3-es2021@file:packages/v5.3/output/packages/es2021(typescript@6.0.3)
+        version: strict-ts-lib-v5.3-es2021@file:packages/v5.3/output/packages/es2021(typescript@5.3.3)
       '@typescript/lib-es2022':
         specifier: file:output/packages/es2022
-        version: strict-ts-lib-v5.3-es2022@file:packages/v5.3/output/packages/es2022(typescript@6.0.3)
+        version: strict-ts-lib-v5.3-es2022@file:packages/v5.3/output/packages/es2022(typescript@5.3.3)
       '@typescript/lib-es2023':
         specifier: file:output/packages/es2023
-        version: strict-ts-lib-v5.3-es2023@file:packages/v5.3/output/packages/es2023(typescript@6.0.3)
+        version: strict-ts-lib-v5.3-es2023@file:packages/v5.3/output/packages/es2023(typescript@5.3.3)
       '@typescript/lib-es5':
         specifier: file:output/packages/es5
-        version: strict-ts-lib-v5.3-es5@file:packages/v5.3/output/packages/es5(typescript@6.0.3)
+        version: strict-ts-lib-v5.3-es5@file:packages/v5.3/output/packages/es5(typescript@5.3.3)
       '@typescript/lib-es6':
         specifier: file:output/packages/es6
-        version: strict-ts-lib-v5.3-es6@file:packages/v5.3/output/packages/es6(typescript@6.0.3)
+        version: strict-ts-lib-v5.3-es6@file:packages/v5.3/output/packages/es6(typescript@5.3.3)
       '@typescript/lib-esnext':
         specifier: file:output/packages/esnext
-        version: strict-ts-lib-v5.3-esnext@file:packages/v5.3/output/packages/esnext(typescript@6.0.3)
+        version: strict-ts-lib-v5.3-esnext@file:packages/v5.3/output/packages/esnext(typescript@5.3.3)
       '@typescript/lib-scripthost':
         specifier: file:output/packages/scripthost
-        version: strict-ts-lib-v5.3-scripthost@file:packages/v5.3/output/packages/scripthost(typescript@6.0.3)
+        version: strict-ts-lib-v5.3-scripthost@file:packages/v5.3/output/packages/scripthost(typescript@5.3.3)
       '@typescript/lib-webworker':
         specifier: file:output/packages/webworker
-        version: strict-ts-lib-v5.3-webworker@file:packages/v5.3/output/packages/webworker(typescript@6.0.3)
+        version: strict-ts-lib-v5.3-webworker@file:packages/v5.3/output/packages/webworker(typescript@5.3.3)
       ts-data-forge:
         specifier: ^14.3.0
-        version: 14.3.0(typescript@6.0.3)
+        version: 14.3.0(typescript@5.3.3)
       ts-repo-utils:
         specifier: 10.2.0
-        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@6.0.3)
+        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.3.3)
       ts-type-forge:
         specifier: 9.2.1
         version: 9.2.1
       typescript:
-        specifier: 6.0.3
-        version: 6.0.3
+        specifier: 5.3.3
+        version: 5.3.3
 
   packages/v5.3/output:
     dependencies:
@@ -479,8 +479,8 @@ importers:
         specifier: 9.2.1
         version: 9.2.1
       typescript:
-        specifier: 6.0.3
-        version: 6.0.3
+        specifier: 5.3.3
+        version: 5.3.3
 
   packages/v5.3/output-branded:
     dependencies:
@@ -488,8 +488,8 @@ importers:
         specifier: 9.2.1
         version: 9.2.1
       typescript:
-        specifier: 6.0.3
-        version: 6.0.3
+        specifier: 5.3.3
+        version: 5.3.3
 
   packages/v5.4:
     dependencies:
@@ -499,64 +499,64 @@ importers:
     devDependencies:
       '@typescript/lib-decorators':
         specifier: file:output/packages/decorators
-        version: strict-ts-lib-v5.4-decorators@file:packages/v5.4/output/packages/decorators(typescript@6.0.3)
+        version: strict-ts-lib-v5.4-decorators@file:packages/v5.4/output/packages/decorators(typescript@5.4.5)
       '@typescript/lib-dom':
         specifier: file:output/packages/dom
-        version: strict-ts-lib-v5.4-dom@file:packages/v5.4/output/packages/dom(typescript@6.0.3)
+        version: strict-ts-lib-v5.4-dom@file:packages/v5.4/output/packages/dom(typescript@5.4.5)
       '@typescript/lib-es2015':
         specifier: file:output/packages/es2015
-        version: strict-ts-lib-v5.4-es2015@file:packages/v5.4/output/packages/es2015(typescript@6.0.3)
+        version: strict-ts-lib-v5.4-es2015@file:packages/v5.4/output/packages/es2015(typescript@5.4.5)
       '@typescript/lib-es2016':
         specifier: file:output/packages/es2016
-        version: strict-ts-lib-v5.4-es2016@file:packages/v5.4/output/packages/es2016(typescript@6.0.3)
+        version: strict-ts-lib-v5.4-es2016@file:packages/v5.4/output/packages/es2016(typescript@5.4.5)
       '@typescript/lib-es2017':
         specifier: file:output/packages/es2017
-        version: strict-ts-lib-v5.4-es2017@file:packages/v5.4/output/packages/es2017(typescript@6.0.3)
+        version: strict-ts-lib-v5.4-es2017@file:packages/v5.4/output/packages/es2017(typescript@5.4.5)
       '@typescript/lib-es2018':
         specifier: file:output/packages/es2018
-        version: strict-ts-lib-v5.4-es2018@file:packages/v5.4/output/packages/es2018(typescript@6.0.3)
+        version: strict-ts-lib-v5.4-es2018@file:packages/v5.4/output/packages/es2018(typescript@5.4.5)
       '@typescript/lib-es2019':
         specifier: file:output/packages/es2019
-        version: strict-ts-lib-v5.4-es2019@file:packages/v5.4/output/packages/es2019(typescript@6.0.3)
+        version: strict-ts-lib-v5.4-es2019@file:packages/v5.4/output/packages/es2019(typescript@5.4.5)
       '@typescript/lib-es2020':
         specifier: file:output/packages/es2020
-        version: strict-ts-lib-v5.4-es2020@file:packages/v5.4/output/packages/es2020(typescript@6.0.3)
+        version: strict-ts-lib-v5.4-es2020@file:packages/v5.4/output/packages/es2020(typescript@5.4.5)
       '@typescript/lib-es2021':
         specifier: file:output/packages/es2021
-        version: strict-ts-lib-v5.4-es2021@file:packages/v5.4/output/packages/es2021(typescript@6.0.3)
+        version: strict-ts-lib-v5.4-es2021@file:packages/v5.4/output/packages/es2021(typescript@5.4.5)
       '@typescript/lib-es2022':
         specifier: file:output/packages/es2022
-        version: strict-ts-lib-v5.4-es2022@file:packages/v5.4/output/packages/es2022(typescript@6.0.3)
+        version: strict-ts-lib-v5.4-es2022@file:packages/v5.4/output/packages/es2022(typescript@5.4.5)
       '@typescript/lib-es2023':
         specifier: file:output/packages/es2023
-        version: strict-ts-lib-v5.4-es2023@file:packages/v5.4/output/packages/es2023(typescript@6.0.3)
+        version: strict-ts-lib-v5.4-es2023@file:packages/v5.4/output/packages/es2023(typescript@5.4.5)
       '@typescript/lib-es5':
         specifier: file:output/packages/es5
-        version: strict-ts-lib-v5.4-es5@file:packages/v5.4/output/packages/es5(typescript@6.0.3)
+        version: strict-ts-lib-v5.4-es5@file:packages/v5.4/output/packages/es5(typescript@5.4.5)
       '@typescript/lib-es6':
         specifier: file:output/packages/es6
-        version: strict-ts-lib-v5.4-es6@file:packages/v5.4/output/packages/es6(typescript@6.0.3)
+        version: strict-ts-lib-v5.4-es6@file:packages/v5.4/output/packages/es6(typescript@5.4.5)
       '@typescript/lib-esnext':
         specifier: file:output/packages/esnext
-        version: strict-ts-lib-v5.4-esnext@file:packages/v5.4/output/packages/esnext(typescript@6.0.3)
+        version: strict-ts-lib-v5.4-esnext@file:packages/v5.4/output/packages/esnext(typescript@5.4.5)
       '@typescript/lib-scripthost':
         specifier: file:output/packages/scripthost
-        version: strict-ts-lib-v5.4-scripthost@file:packages/v5.4/output/packages/scripthost(typescript@6.0.3)
+        version: strict-ts-lib-v5.4-scripthost@file:packages/v5.4/output/packages/scripthost(typescript@5.4.5)
       '@typescript/lib-webworker':
         specifier: file:output/packages/webworker
-        version: strict-ts-lib-v5.4-webworker@file:packages/v5.4/output/packages/webworker(typescript@6.0.3)
+        version: strict-ts-lib-v5.4-webworker@file:packages/v5.4/output/packages/webworker(typescript@5.4.5)
       ts-data-forge:
         specifier: ^14.3.0
-        version: 14.3.0(typescript@6.0.3)
+        version: 14.3.0(typescript@5.4.5)
       ts-repo-utils:
         specifier: 10.2.0
-        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@6.0.3)
+        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.4.5)
       ts-type-forge:
         specifier: 9.2.1
         version: 9.2.1
       typescript:
-        specifier: 6.0.3
-        version: 6.0.3
+        specifier: 5.4.5
+        version: 5.4.5
 
   packages/v5.4/output:
     dependencies:
@@ -564,8 +564,8 @@ importers:
         specifier: 9.2.1
         version: 9.2.1
       typescript:
-        specifier: 6.0.3
-        version: 6.0.3
+        specifier: 5.4.5
+        version: 5.4.5
 
   packages/v5.4/output-branded:
     dependencies:
@@ -573,8 +573,8 @@ importers:
         specifier: 9.2.1
         version: 9.2.1
       typescript:
-        specifier: 6.0.3
-        version: 6.0.3
+        specifier: 5.4.5
+        version: 5.4.5
 
   packages/v5.5:
     dependencies:
@@ -584,64 +584,64 @@ importers:
     devDependencies:
       '@typescript/lib-decorators':
         specifier: file:output/packages/decorators
-        version: strict-ts-lib-v5.5-decorators@file:packages/v5.5/output/packages/decorators(typescript@6.0.3)
+        version: strict-ts-lib-v5.5-decorators@file:packages/v5.5/output/packages/decorators(typescript@5.5.4)
       '@typescript/lib-dom':
         specifier: file:output/packages/dom
-        version: strict-ts-lib-v5.5-dom@file:packages/v5.5/output/packages/dom(typescript@6.0.3)
+        version: strict-ts-lib-v5.5-dom@file:packages/v5.5/output/packages/dom(typescript@5.5.4)
       '@typescript/lib-es2015':
         specifier: file:output/packages/es2015
-        version: strict-ts-lib-v5.5-es2015@file:packages/v5.5/output/packages/es2015(typescript@6.0.3)
+        version: strict-ts-lib-v5.5-es2015@file:packages/v5.5/output/packages/es2015(typescript@5.5.4)
       '@typescript/lib-es2016':
         specifier: file:output/packages/es2016
-        version: strict-ts-lib-v5.5-es2016@file:packages/v5.5/output/packages/es2016(typescript@6.0.3)
+        version: strict-ts-lib-v5.5-es2016@file:packages/v5.5/output/packages/es2016(typescript@5.5.4)
       '@typescript/lib-es2017':
         specifier: file:output/packages/es2017
-        version: strict-ts-lib-v5.5-es2017@file:packages/v5.5/output/packages/es2017(typescript@6.0.3)
+        version: strict-ts-lib-v5.5-es2017@file:packages/v5.5/output/packages/es2017(typescript@5.5.4)
       '@typescript/lib-es2018':
         specifier: file:output/packages/es2018
-        version: strict-ts-lib-v5.5-es2018@file:packages/v5.5/output/packages/es2018(typescript@6.0.3)
+        version: strict-ts-lib-v5.5-es2018@file:packages/v5.5/output/packages/es2018(typescript@5.5.4)
       '@typescript/lib-es2019':
         specifier: file:output/packages/es2019
-        version: strict-ts-lib-v5.5-es2019@file:packages/v5.5/output/packages/es2019(typescript@6.0.3)
+        version: strict-ts-lib-v5.5-es2019@file:packages/v5.5/output/packages/es2019(typescript@5.5.4)
       '@typescript/lib-es2020':
         specifier: file:output/packages/es2020
-        version: strict-ts-lib-v5.5-es2020@file:packages/v5.5/output/packages/es2020(typescript@6.0.3)
+        version: strict-ts-lib-v5.5-es2020@file:packages/v5.5/output/packages/es2020(typescript@5.5.4)
       '@typescript/lib-es2021':
         specifier: file:output/packages/es2021
-        version: strict-ts-lib-v5.5-es2021@file:packages/v5.5/output/packages/es2021(typescript@6.0.3)
+        version: strict-ts-lib-v5.5-es2021@file:packages/v5.5/output/packages/es2021(typescript@5.5.4)
       '@typescript/lib-es2022':
         specifier: file:output/packages/es2022
-        version: strict-ts-lib-v5.5-es2022@file:packages/v5.5/output/packages/es2022(typescript@6.0.3)
+        version: strict-ts-lib-v5.5-es2022@file:packages/v5.5/output/packages/es2022(typescript@5.5.4)
       '@typescript/lib-es2023':
         specifier: file:output/packages/es2023
-        version: strict-ts-lib-v5.5-es2023@file:packages/v5.5/output/packages/es2023(typescript@6.0.3)
+        version: strict-ts-lib-v5.5-es2023@file:packages/v5.5/output/packages/es2023(typescript@5.5.4)
       '@typescript/lib-es5':
         specifier: file:output/packages/es5
-        version: strict-ts-lib-v5.5-es5@file:packages/v5.5/output/packages/es5(typescript@6.0.3)
+        version: strict-ts-lib-v5.5-es5@file:packages/v5.5/output/packages/es5(typescript@5.5.4)
       '@typescript/lib-es6':
         specifier: file:output/packages/es6
-        version: strict-ts-lib-v5.5-es6@file:packages/v5.5/output/packages/es6(typescript@6.0.3)
+        version: strict-ts-lib-v5.5-es6@file:packages/v5.5/output/packages/es6(typescript@5.5.4)
       '@typescript/lib-esnext':
         specifier: file:output/packages/esnext
-        version: strict-ts-lib-v5.5-esnext@file:packages/v5.5/output/packages/esnext(typescript@6.0.3)
+        version: strict-ts-lib-v5.5-esnext@file:packages/v5.5/output/packages/esnext(typescript@5.5.4)
       '@typescript/lib-scripthost':
         specifier: file:output/packages/scripthost
-        version: strict-ts-lib-v5.5-scripthost@file:packages/v5.5/output/packages/scripthost(typescript@6.0.3)
+        version: strict-ts-lib-v5.5-scripthost@file:packages/v5.5/output/packages/scripthost(typescript@5.5.4)
       '@typescript/lib-webworker':
         specifier: file:output/packages/webworker
-        version: strict-ts-lib-v5.5-webworker@file:packages/v5.5/output/packages/webworker(typescript@6.0.3)
+        version: strict-ts-lib-v5.5-webworker@file:packages/v5.5/output/packages/webworker(typescript@5.5.4)
       ts-data-forge:
         specifier: ^14.3.0
-        version: 14.3.0(typescript@6.0.3)
+        version: 14.3.0(typescript@5.5.4)
       ts-repo-utils:
         specifier: 10.2.0
-        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@6.0.3)
+        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.5.4)
       ts-type-forge:
         specifier: 9.2.1
         version: 9.2.1
       typescript:
-        specifier: 6.0.3
-        version: 6.0.3
+        specifier: 5.5.4
+        version: 5.5.4
 
   packages/v5.5/output:
     dependencies:
@@ -649,8 +649,8 @@ importers:
         specifier: 9.2.1
         version: 9.2.1
       typescript:
-        specifier: 6.0.3
-        version: 6.0.3
+        specifier: 5.5.4
+        version: 5.5.4
 
   packages/v5.5/output-branded:
     dependencies:
@@ -658,8 +658,8 @@ importers:
         specifier: 9.2.1
         version: 9.2.1
       typescript:
-        specifier: 6.0.3
-        version: 6.0.3
+        specifier: 5.5.4
+        version: 5.5.4
 
   packages/v5.6:
     dependencies:
@@ -669,64 +669,64 @@ importers:
     devDependencies:
       '@typescript/lib-decorators':
         specifier: file:output/packages/decorators
-        version: strict-ts-lib-v5.6-decorators@file:packages/v5.6/output/packages/decorators(typescript@6.0.3)
+        version: strict-ts-lib-v5.6-decorators@file:packages/v5.6/output/packages/decorators(typescript@5.6.3)
       '@typescript/lib-dom':
         specifier: file:output/packages/dom
-        version: strict-ts-lib-v5.6-dom@file:packages/v5.6/output/packages/dom(typescript@6.0.3)
+        version: strict-ts-lib-v5.6-dom@file:packages/v5.6/output/packages/dom(typescript@5.6.3)
       '@typescript/lib-es2015':
         specifier: file:output/packages/es2015
-        version: strict-ts-lib-v5.6-es2015@file:packages/v5.6/output/packages/es2015(typescript@6.0.3)
+        version: strict-ts-lib-v5.6-es2015@file:packages/v5.6/output/packages/es2015(typescript@5.6.3)
       '@typescript/lib-es2016':
         specifier: file:output/packages/es2016
-        version: strict-ts-lib-v5.6-es2016@file:packages/v5.6/output/packages/es2016(typescript@6.0.3)
+        version: strict-ts-lib-v5.6-es2016@file:packages/v5.6/output/packages/es2016(typescript@5.6.3)
       '@typescript/lib-es2017':
         specifier: file:output/packages/es2017
-        version: strict-ts-lib-v5.6-es2017@file:packages/v5.6/output/packages/es2017(typescript@6.0.3)
+        version: strict-ts-lib-v5.6-es2017@file:packages/v5.6/output/packages/es2017(typescript@5.6.3)
       '@typescript/lib-es2018':
         specifier: file:output/packages/es2018
-        version: strict-ts-lib-v5.6-es2018@file:packages/v5.6/output/packages/es2018(typescript@6.0.3)
+        version: strict-ts-lib-v5.6-es2018@file:packages/v5.6/output/packages/es2018(typescript@5.6.3)
       '@typescript/lib-es2019':
         specifier: file:output/packages/es2019
-        version: strict-ts-lib-v5.6-es2019@file:packages/v5.6/output/packages/es2019(typescript@6.0.3)
+        version: strict-ts-lib-v5.6-es2019@file:packages/v5.6/output/packages/es2019(typescript@5.6.3)
       '@typescript/lib-es2020':
         specifier: file:output/packages/es2020
-        version: strict-ts-lib-v5.6-es2020@file:packages/v5.6/output/packages/es2020(typescript@6.0.3)
+        version: strict-ts-lib-v5.6-es2020@file:packages/v5.6/output/packages/es2020(typescript@5.6.3)
       '@typescript/lib-es2021':
         specifier: file:output/packages/es2021
-        version: strict-ts-lib-v5.6-es2021@file:packages/v5.6/output/packages/es2021(typescript@6.0.3)
+        version: strict-ts-lib-v5.6-es2021@file:packages/v5.6/output/packages/es2021(typescript@5.6.3)
       '@typescript/lib-es2022':
         specifier: file:output/packages/es2022
-        version: strict-ts-lib-v5.6-es2022@file:packages/v5.6/output/packages/es2022(typescript@6.0.3)
+        version: strict-ts-lib-v5.6-es2022@file:packages/v5.6/output/packages/es2022(typescript@5.6.3)
       '@typescript/lib-es2023':
         specifier: file:output/packages/es2023
-        version: strict-ts-lib-v5.6-es2023@file:packages/v5.6/output/packages/es2023(typescript@6.0.3)
+        version: strict-ts-lib-v5.6-es2023@file:packages/v5.6/output/packages/es2023(typescript@5.6.3)
       '@typescript/lib-es5':
         specifier: file:output/packages/es5
-        version: strict-ts-lib-v5.6-es5@file:packages/v5.6/output/packages/es5(typescript@6.0.3)
+        version: strict-ts-lib-v5.6-es5@file:packages/v5.6/output/packages/es5(typescript@5.6.3)
       '@typescript/lib-es6':
         specifier: file:output/packages/es6
-        version: strict-ts-lib-v5.6-es6@file:packages/v5.6/output/packages/es6(typescript@6.0.3)
+        version: strict-ts-lib-v5.6-es6@file:packages/v5.6/output/packages/es6(typescript@5.6.3)
       '@typescript/lib-esnext':
         specifier: file:output/packages/esnext
-        version: strict-ts-lib-v5.6-esnext@file:packages/v5.6/output/packages/esnext(typescript@6.0.3)
+        version: strict-ts-lib-v5.6-esnext@file:packages/v5.6/output/packages/esnext(typescript@5.6.3)
       '@typescript/lib-scripthost':
         specifier: file:output/packages/scripthost
-        version: strict-ts-lib-v5.6-scripthost@file:packages/v5.6/output/packages/scripthost(typescript@6.0.3)
+        version: strict-ts-lib-v5.6-scripthost@file:packages/v5.6/output/packages/scripthost(typescript@5.6.3)
       '@typescript/lib-webworker':
         specifier: file:output/packages/webworker
-        version: strict-ts-lib-v5.6-webworker@file:packages/v5.6/output/packages/webworker(typescript@6.0.3)
+        version: strict-ts-lib-v5.6-webworker@file:packages/v5.6/output/packages/webworker(typescript@5.6.3)
       ts-data-forge:
         specifier: ^14.3.0
-        version: 14.3.0(typescript@6.0.3)
+        version: 14.3.0(typescript@5.6.3)
       ts-repo-utils:
         specifier: 10.2.0
-        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@6.0.3)
+        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.6.3)
       ts-type-forge:
         specifier: 9.2.1
         version: 9.2.1
       typescript:
-        specifier: 6.0.3
-        version: 6.0.3
+        specifier: 5.6.3
+        version: 5.6.3
 
   packages/v5.6/output:
     dependencies:
@@ -748,67 +748,67 @@ importers:
     devDependencies:
       '@typescript/lib-decorators':
         specifier: file:output/packages/decorators
-        version: strict-ts-lib-v5.7-decorators@file:packages/v5.7/output/packages/decorators(typescript@6.0.3)
+        version: strict-ts-lib-v5.7-decorators@file:packages/v5.7/output/packages/decorators(typescript@5.7.2)
       '@typescript/lib-dom':
         specifier: file:output/packages/dom
-        version: strict-ts-lib-v5.7-dom@file:packages/v5.7/output/packages/dom(typescript@6.0.3)
+        version: strict-ts-lib-v5.7-dom@file:packages/v5.7/output/packages/dom(typescript@5.7.2)
       '@typescript/lib-es2015':
         specifier: file:output/packages/es2015
-        version: strict-ts-lib-v5.7-es2015@file:packages/v5.7/output/packages/es2015(typescript@6.0.3)
+        version: strict-ts-lib-v5.7-es2015@file:packages/v5.7/output/packages/es2015(typescript@5.7.2)
       '@typescript/lib-es2016':
         specifier: file:output/packages/es2016
-        version: strict-ts-lib-v5.7-es2016@file:packages/v5.7/output/packages/es2016(typescript@6.0.3)
+        version: strict-ts-lib-v5.7-es2016@file:packages/v5.7/output/packages/es2016(typescript@5.7.2)
       '@typescript/lib-es2017':
         specifier: file:output/packages/es2017
-        version: strict-ts-lib-v5.7-es2017@file:packages/v5.7/output/packages/es2017(typescript@6.0.3)
+        version: strict-ts-lib-v5.7-es2017@file:packages/v5.7/output/packages/es2017(typescript@5.7.2)
       '@typescript/lib-es2018':
         specifier: file:output/packages/es2018
-        version: strict-ts-lib-v5.7-es2018@file:packages/v5.7/output/packages/es2018(typescript@6.0.3)
+        version: strict-ts-lib-v5.7-es2018@file:packages/v5.7/output/packages/es2018(typescript@5.7.2)
       '@typescript/lib-es2019':
         specifier: file:output/packages/es2019
-        version: strict-ts-lib-v5.7-es2019@file:packages/v5.7/output/packages/es2019(typescript@6.0.3)
+        version: strict-ts-lib-v5.7-es2019@file:packages/v5.7/output/packages/es2019(typescript@5.7.2)
       '@typescript/lib-es2020':
         specifier: file:output/packages/es2020
-        version: strict-ts-lib-v5.7-es2020@file:packages/v5.7/output/packages/es2020(typescript@6.0.3)
+        version: strict-ts-lib-v5.7-es2020@file:packages/v5.7/output/packages/es2020(typescript@5.7.2)
       '@typescript/lib-es2021':
         specifier: file:output/packages/es2021
-        version: strict-ts-lib-v5.7-es2021@file:packages/v5.7/output/packages/es2021(typescript@6.0.3)
+        version: strict-ts-lib-v5.7-es2021@file:packages/v5.7/output/packages/es2021(typescript@5.7.2)
       '@typescript/lib-es2022':
         specifier: file:output/packages/es2022
-        version: strict-ts-lib-v5.7-es2022@file:packages/v5.7/output/packages/es2022(typescript@6.0.3)
+        version: strict-ts-lib-v5.7-es2022@file:packages/v5.7/output/packages/es2022(typescript@5.7.2)
       '@typescript/lib-es2023':
         specifier: file:output/packages/es2023
-        version: strict-ts-lib-v5.7-es2023@file:packages/v5.7/output/packages/es2023(typescript@6.0.3)
+        version: strict-ts-lib-v5.7-es2023@file:packages/v5.7/output/packages/es2023(typescript@5.7.2)
       '@typescript/lib-es2024':
         specifier: file:output/packages/es2024
-        version: strict-ts-lib-v5.7-es2024@file:packages/v5.7/output/packages/es2024(typescript@6.0.3)
+        version: strict-ts-lib-v5.7-es2024@file:packages/v5.7/output/packages/es2024(typescript@5.7.2)
       '@typescript/lib-es5':
         specifier: file:output/packages/es5
-        version: strict-ts-lib-v5.7-es5@file:packages/v5.7/output/packages/es5(typescript@6.0.3)
+        version: strict-ts-lib-v5.7-es5@file:packages/v5.7/output/packages/es5(typescript@5.7.2)
       '@typescript/lib-es6':
         specifier: file:output/packages/es6
-        version: strict-ts-lib-v5.7-es6@file:packages/v5.7/output/packages/es6(typescript@6.0.3)
+        version: strict-ts-lib-v5.7-es6@file:packages/v5.7/output/packages/es6(typescript@5.7.2)
       '@typescript/lib-esnext':
         specifier: file:output/packages/esnext
-        version: strict-ts-lib-v5.7-esnext@file:packages/v5.7/output/packages/esnext(typescript@6.0.3)
+        version: strict-ts-lib-v5.7-esnext@file:packages/v5.7/output/packages/esnext(typescript@5.7.2)
       '@typescript/lib-scripthost':
         specifier: file:output/packages/scripthost
-        version: strict-ts-lib-v5.7-scripthost@file:packages/v5.7/output/packages/scripthost(typescript@6.0.3)
+        version: strict-ts-lib-v5.7-scripthost@file:packages/v5.7/output/packages/scripthost(typescript@5.7.2)
       '@typescript/lib-webworker':
         specifier: file:output/packages/webworker
-        version: strict-ts-lib-v5.7-webworker@file:packages/v5.7/output/packages/webworker(typescript@6.0.3)
+        version: strict-ts-lib-v5.7-webworker@file:packages/v5.7/output/packages/webworker(typescript@5.7.2)
       ts-data-forge:
         specifier: ^14.3.0
-        version: 14.3.0(typescript@6.0.3)
+        version: 14.3.0(typescript@5.7.2)
       ts-repo-utils:
         specifier: 10.2.0
-        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@6.0.3)
+        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.7.2)
       ts-type-forge:
         specifier: 9.2.1
         version: 9.2.1
       typescript:
-        specifier: 6.0.3
-        version: 6.0.3
+        specifier: 5.7.2
+        version: 5.7.2
 
   packages/v5.7/output:
     dependencies:
@@ -830,67 +830,67 @@ importers:
     devDependencies:
       '@typescript/lib-decorators':
         specifier: file:output/packages/decorators
-        version: strict-ts-lib-v5.8-decorators@file:packages/v5.8/output/packages/decorators(typescript@6.0.3)
+        version: strict-ts-lib-v5.8-decorators@file:packages/v5.8/output/packages/decorators(typescript@5.8.3)
       '@typescript/lib-dom':
         specifier: file:output/packages/dom
-        version: strict-ts-lib-v5.8-dom@file:packages/v5.8/output/packages/dom(typescript@6.0.3)
+        version: strict-ts-lib-v5.8-dom@file:packages/v5.8/output/packages/dom(typescript@5.8.3)
       '@typescript/lib-es2015':
         specifier: file:output/packages/es2015
-        version: strict-ts-lib-v5.8-es2015@file:packages/v5.8/output/packages/es2015(typescript@6.0.3)
+        version: strict-ts-lib-v5.8-es2015@file:packages/v5.8/output/packages/es2015(typescript@5.8.3)
       '@typescript/lib-es2016':
         specifier: file:output/packages/es2016
-        version: strict-ts-lib-v5.8-es2016@file:packages/v5.8/output/packages/es2016(typescript@6.0.3)
+        version: strict-ts-lib-v5.8-es2016@file:packages/v5.8/output/packages/es2016(typescript@5.8.3)
       '@typescript/lib-es2017':
         specifier: file:output/packages/es2017
-        version: strict-ts-lib-v5.8-es2017@file:packages/v5.8/output/packages/es2017(typescript@6.0.3)
+        version: strict-ts-lib-v5.8-es2017@file:packages/v5.8/output/packages/es2017(typescript@5.8.3)
       '@typescript/lib-es2018':
         specifier: file:output/packages/es2018
-        version: strict-ts-lib-v5.8-es2018@file:packages/v5.8/output/packages/es2018(typescript@6.0.3)
+        version: strict-ts-lib-v5.8-es2018@file:packages/v5.8/output/packages/es2018(typescript@5.8.3)
       '@typescript/lib-es2019':
         specifier: file:output/packages/es2019
-        version: strict-ts-lib-v5.8-es2019@file:packages/v5.8/output/packages/es2019(typescript@6.0.3)
+        version: strict-ts-lib-v5.8-es2019@file:packages/v5.8/output/packages/es2019(typescript@5.8.3)
       '@typescript/lib-es2020':
         specifier: file:output/packages/es2020
-        version: strict-ts-lib-v5.8-es2020@file:packages/v5.8/output/packages/es2020(typescript@6.0.3)
+        version: strict-ts-lib-v5.8-es2020@file:packages/v5.8/output/packages/es2020(typescript@5.8.3)
       '@typescript/lib-es2021':
         specifier: file:output/packages/es2021
-        version: strict-ts-lib-v5.8-es2021@file:packages/v5.8/output/packages/es2021(typescript@6.0.3)
+        version: strict-ts-lib-v5.8-es2021@file:packages/v5.8/output/packages/es2021(typescript@5.8.3)
       '@typescript/lib-es2022':
         specifier: file:output/packages/es2022
-        version: strict-ts-lib-v5.8-es2022@file:packages/v5.8/output/packages/es2022(typescript@6.0.3)
+        version: strict-ts-lib-v5.8-es2022@file:packages/v5.8/output/packages/es2022(typescript@5.8.3)
       '@typescript/lib-es2023':
         specifier: file:output/packages/es2023
-        version: strict-ts-lib-v5.8-es2023@file:packages/v5.8/output/packages/es2023(typescript@6.0.3)
+        version: strict-ts-lib-v5.8-es2023@file:packages/v5.8/output/packages/es2023(typescript@5.8.3)
       '@typescript/lib-es2024':
         specifier: file:output/packages/es2024
-        version: strict-ts-lib-v5.8-es2024@file:packages/v5.8/output/packages/es2024(typescript@6.0.3)
+        version: strict-ts-lib-v5.8-es2024@file:packages/v5.8/output/packages/es2024(typescript@5.8.3)
       '@typescript/lib-es5':
         specifier: file:output/packages/es5
-        version: strict-ts-lib-v5.8-es5@file:packages/v5.8/output/packages/es5(typescript@6.0.3)
+        version: strict-ts-lib-v5.8-es5@file:packages/v5.8/output/packages/es5(typescript@5.8.3)
       '@typescript/lib-es6':
         specifier: file:output/packages/es6
-        version: strict-ts-lib-v5.8-es6@file:packages/v5.8/output/packages/es6(typescript@6.0.3)
+        version: strict-ts-lib-v5.8-es6@file:packages/v5.8/output/packages/es6(typescript@5.8.3)
       '@typescript/lib-esnext':
         specifier: file:output/packages/esnext
-        version: strict-ts-lib-v5.8-esnext@file:packages/v5.8/output/packages/esnext(typescript@6.0.3)
+        version: strict-ts-lib-v5.8-esnext@file:packages/v5.8/output/packages/esnext(typescript@5.8.3)
       '@typescript/lib-scripthost':
         specifier: file:output/packages/scripthost
-        version: strict-ts-lib-v5.8-scripthost@file:packages/v5.8/output/packages/scripthost(typescript@6.0.3)
+        version: strict-ts-lib-v5.8-scripthost@file:packages/v5.8/output/packages/scripthost(typescript@5.8.3)
       '@typescript/lib-webworker':
         specifier: file:output/packages/webworker
-        version: strict-ts-lib-v5.8-webworker@file:packages/v5.8/output/packages/webworker(typescript@6.0.3)
+        version: strict-ts-lib-v5.8-webworker@file:packages/v5.8/output/packages/webworker(typescript@5.8.3)
       ts-data-forge:
         specifier: ^14.3.0
-        version: 14.3.0(typescript@6.0.3)
+        version: 14.3.0(typescript@5.8.3)
       ts-repo-utils:
         specifier: 10.2.0
-        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@6.0.3)
+        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.8.3)
       ts-type-forge:
         specifier: 9.2.1
         version: 9.2.1
       typescript:
-        specifier: 6.0.3
-        version: 6.0.3
+        specifier: 5.8.3
+        version: 5.8.3
 
   packages/v5.8/output:
     dependencies:
@@ -912,67 +912,67 @@ importers:
     devDependencies:
       '@typescript/lib-decorators':
         specifier: file:output/packages/decorators
-        version: strict-ts-lib-v5.9-decorators@file:packages/v5.9/output/packages/decorators(typescript@6.0.3)
+        version: strict-ts-lib-v5.9-decorators@file:packages/v5.9/output/packages/decorators(typescript@5.9.3)
       '@typescript/lib-dom':
         specifier: file:output/packages/dom
-        version: strict-ts-lib-v5.9-dom@file:packages/v5.9/output/packages/dom(typescript@6.0.3)
+        version: strict-ts-lib-v5.9-dom@file:packages/v5.9/output/packages/dom(typescript@5.9.3)
       '@typescript/lib-es2015':
         specifier: file:output/packages/es2015
-        version: strict-ts-lib-v5.9-es2015@file:packages/v5.9/output/packages/es2015(typescript@6.0.3)
+        version: strict-ts-lib-v5.9-es2015@file:packages/v5.9/output/packages/es2015(typescript@5.9.3)
       '@typescript/lib-es2016':
         specifier: file:output/packages/es2016
-        version: strict-ts-lib-v5.9-es2016@file:packages/v5.9/output/packages/es2016(typescript@6.0.3)
+        version: strict-ts-lib-v5.9-es2016@file:packages/v5.9/output/packages/es2016(typescript@5.9.3)
       '@typescript/lib-es2017':
         specifier: file:output/packages/es2017
-        version: strict-ts-lib-v5.9-es2017@file:packages/v5.9/output/packages/es2017(typescript@6.0.3)
+        version: strict-ts-lib-v5.9-es2017@file:packages/v5.9/output/packages/es2017(typescript@5.9.3)
       '@typescript/lib-es2018':
         specifier: file:output/packages/es2018
-        version: strict-ts-lib-v5.9-es2018@file:packages/v5.9/output/packages/es2018(typescript@6.0.3)
+        version: strict-ts-lib-v5.9-es2018@file:packages/v5.9/output/packages/es2018(typescript@5.9.3)
       '@typescript/lib-es2019':
         specifier: file:output/packages/es2019
-        version: strict-ts-lib-v5.9-es2019@file:packages/v5.9/output/packages/es2019(typescript@6.0.3)
+        version: strict-ts-lib-v5.9-es2019@file:packages/v5.9/output/packages/es2019(typescript@5.9.3)
       '@typescript/lib-es2020':
         specifier: file:output/packages/es2020
-        version: strict-ts-lib-v5.9-es2020@file:packages/v5.9/output/packages/es2020(typescript@6.0.3)
+        version: strict-ts-lib-v5.9-es2020@file:packages/v5.9/output/packages/es2020(typescript@5.9.3)
       '@typescript/lib-es2021':
         specifier: file:output/packages/es2021
-        version: strict-ts-lib-v5.9-es2021@file:packages/v5.9/output/packages/es2021(typescript@6.0.3)
+        version: strict-ts-lib-v5.9-es2021@file:packages/v5.9/output/packages/es2021(typescript@5.9.3)
       '@typescript/lib-es2022':
         specifier: file:output/packages/es2022
-        version: strict-ts-lib-v5.9-es2022@file:packages/v5.9/output/packages/es2022(typescript@6.0.3)
+        version: strict-ts-lib-v5.9-es2022@file:packages/v5.9/output/packages/es2022(typescript@5.9.3)
       '@typescript/lib-es2023':
         specifier: file:output/packages/es2023
-        version: strict-ts-lib-v5.9-es2023@file:packages/v5.9/output/packages/es2023(typescript@6.0.3)
+        version: strict-ts-lib-v5.9-es2023@file:packages/v5.9/output/packages/es2023(typescript@5.9.3)
       '@typescript/lib-es2024':
         specifier: file:output/packages/es2024
-        version: strict-ts-lib-v5.9-es2024@file:packages/v5.9/output/packages/es2024(typescript@6.0.3)
+        version: strict-ts-lib-v5.9-es2024@file:packages/v5.9/output/packages/es2024(typescript@5.9.3)
       '@typescript/lib-es5':
         specifier: file:output/packages/es5
-        version: strict-ts-lib-v5.9-es5@file:packages/v5.9/output/packages/es5(typescript@6.0.3)
+        version: strict-ts-lib-v5.9-es5@file:packages/v5.9/output/packages/es5(typescript@5.9.3)
       '@typescript/lib-es6':
         specifier: file:output/packages/es6
-        version: strict-ts-lib-v5.9-es6@file:packages/v5.9/output/packages/es6(typescript@6.0.3)
+        version: strict-ts-lib-v5.9-es6@file:packages/v5.9/output/packages/es6(typescript@5.9.3)
       '@typescript/lib-esnext':
         specifier: file:output/packages/esnext
-        version: strict-ts-lib-v5.9-esnext@file:packages/v5.9/output/packages/esnext(typescript@6.0.3)
+        version: strict-ts-lib-v5.9-esnext@file:packages/v5.9/output/packages/esnext(typescript@5.9.3)
       '@typescript/lib-scripthost':
         specifier: file:output/packages/scripthost
-        version: strict-ts-lib-v5.9-scripthost@file:packages/v5.9/output/packages/scripthost(typescript@6.0.3)
+        version: strict-ts-lib-v5.9-scripthost@file:packages/v5.9/output/packages/scripthost(typescript@5.9.3)
       '@typescript/lib-webworker':
         specifier: file:output/packages/webworker
-        version: strict-ts-lib-v5.9-webworker@file:packages/v5.9/output/packages/webworker(typescript@6.0.3)
+        version: strict-ts-lib-v5.9-webworker@file:packages/v5.9/output/packages/webworker(typescript@5.9.3)
       ts-data-forge:
         specifier: ^14.3.0
-        version: 14.3.0(typescript@6.0.3)
+        version: 14.3.0(typescript@5.9.3)
       ts-repo-utils:
         specifier: 10.2.0
-        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@6.0.3)
+        version: 10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.9.3)
       ts-type-forge:
         specifier: 9.2.1
         version: 9.2.1
       typescript:
-        specifier: 6.0.3
-        version: 6.0.3
+        specifier: 5.9.3
+        version: 5.9.3
 
   packages/v5.9/output:
     dependencies:
@@ -5426,6 +5426,56 @@ packages:
     resolution: {integrity: sha512-phPGCwqr2+Qo0fwniCE8e4pKnGu/yFb5nD5Y8bf0EEeiI5GklnACYA9GFy/DrAeRrKHXvHn+1SUsOWgJp6RO+g==}
     engines: {node: '>= 0.4'}
 
+  typescript@5.0.4:
+    resolution: {integrity: sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw==}
+    engines: {node: '>=12.20'}
+    hasBin: true
+
+  typescript@5.1.6:
+    resolution: {integrity: sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+  typescript@5.2.2:
+    resolution: {integrity: sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+  typescript@5.3.3:
+    resolution: {integrity: sha512-pXWcraxM0uxAS+tN0AG/BF2TyqmHO014Z070UsJ+pFvYuRSq8KH8DmWpnbXe0pEPDHXZV3FcAbJkijJ5oNEnWw==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+  typescript@5.4.5:
+    resolution: {integrity: sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+  typescript@5.5.4:
+    resolution: {integrity: sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+  typescript@5.6.3:
+    resolution: {integrity: sha512-hjcS1mhfuyi4WW8IWtjP7brDrG2cuDZukyrYrSauoXGNgx0S7zceP07adYkJycEr56BOUTNPzbInooiN3fn1qw==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+  typescript@5.7.2:
+    resolution: {integrity: sha512-i5t66RHxDvVN40HfDd1PsEThGNnlMCMT3jMUuoh9/0TaqWevNontacunWyN02LA9/fIbEWlcHZcgTKb9QoaLfg==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+  typescript@5.8.3:
+    resolution: {integrity: sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+  typescript@5.9.3:
+    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
   typescript@6.0.3:
     resolution: {integrity: sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==}
     engines: {node: '>=14.17'}
@@ -9048,815 +9098,900 @@ snapshots:
       es-errors: 1.3.0
       internal-slot: 1.1.0
 
-  strict-ts-lib-v5.0-decorators@file:packages/v5.0/output/packages/decorators(typescript@6.0.3):
+  strict-ts-lib-v5.0-decorators@file:packages/v5.0/output/packages/decorators(typescript@5.0.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.0.4
 
-  strict-ts-lib-v5.0-dom@file:packages/v5.0/output/packages/dom(typescript@6.0.3):
+  strict-ts-lib-v5.0-dom@file:packages/v5.0/output/packages/dom(typescript@5.0.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.0.4
 
-  strict-ts-lib-v5.0-es2015@file:packages/v5.0/output/packages/es2015(typescript@6.0.3):
+  strict-ts-lib-v5.0-es2015@file:packages/v5.0/output/packages/es2015(typescript@5.0.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.0.4
 
-  strict-ts-lib-v5.0-es2016@file:packages/v5.0/output/packages/es2016(typescript@6.0.3):
+  strict-ts-lib-v5.0-es2016@file:packages/v5.0/output/packages/es2016(typescript@5.0.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.0.4
 
-  strict-ts-lib-v5.0-es2017@file:packages/v5.0/output/packages/es2017(typescript@6.0.3):
+  strict-ts-lib-v5.0-es2017@file:packages/v5.0/output/packages/es2017(typescript@5.0.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.0.4
 
-  strict-ts-lib-v5.0-es2018@file:packages/v5.0/output/packages/es2018(typescript@6.0.3):
+  strict-ts-lib-v5.0-es2018@file:packages/v5.0/output/packages/es2018(typescript@5.0.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.0.4
 
-  strict-ts-lib-v5.0-es2019@file:packages/v5.0/output/packages/es2019(typescript@6.0.3):
+  strict-ts-lib-v5.0-es2019@file:packages/v5.0/output/packages/es2019(typescript@5.0.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.0.4
 
-  strict-ts-lib-v5.0-es2020@file:packages/v5.0/output/packages/es2020(typescript@6.0.3):
+  strict-ts-lib-v5.0-es2020@file:packages/v5.0/output/packages/es2020(typescript@5.0.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.0.4
 
-  strict-ts-lib-v5.0-es2021@file:packages/v5.0/output/packages/es2021(typescript@6.0.3):
+  strict-ts-lib-v5.0-es2021@file:packages/v5.0/output/packages/es2021(typescript@5.0.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.0.4
 
-  strict-ts-lib-v5.0-es2022@file:packages/v5.0/output/packages/es2022(typescript@6.0.3):
+  strict-ts-lib-v5.0-es2022@file:packages/v5.0/output/packages/es2022(typescript@5.0.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.0.4
 
-  strict-ts-lib-v5.0-es2023@file:packages/v5.0/output/packages/es2023(typescript@6.0.3):
+  strict-ts-lib-v5.0-es2023@file:packages/v5.0/output/packages/es2023(typescript@5.0.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.0.4
 
-  strict-ts-lib-v5.0-es5@file:packages/v5.0/output/packages/es5(typescript@6.0.3):
+  strict-ts-lib-v5.0-es5@file:packages/v5.0/output/packages/es5(typescript@5.0.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.0.4
 
-  strict-ts-lib-v5.0-es6@file:packages/v5.0/output/packages/es6(typescript@6.0.3):
+  strict-ts-lib-v5.0-es6@file:packages/v5.0/output/packages/es6(typescript@5.0.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.0.4
 
-  strict-ts-lib-v5.0-esnext@file:packages/v5.0/output/packages/esnext(typescript@6.0.3):
+  strict-ts-lib-v5.0-esnext@file:packages/v5.0/output/packages/esnext(typescript@5.0.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.0.4
 
-  strict-ts-lib-v5.0-scripthost@file:packages/v5.0/output/packages/scripthost(typescript@6.0.3):
+  strict-ts-lib-v5.0-scripthost@file:packages/v5.0/output/packages/scripthost(typescript@5.0.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.0.4
 
-  strict-ts-lib-v5.0-webworker@file:packages/v5.0/output/packages/webworker(typescript@6.0.3):
+  strict-ts-lib-v5.0-webworker@file:packages/v5.0/output/packages/webworker(typescript@5.0.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.0.4
 
-  strict-ts-lib-v5.1-decorators@file:packages/v5.1/output/packages/decorators(typescript@6.0.3):
+  strict-ts-lib-v5.1-decorators@file:packages/v5.1/output/packages/decorators(typescript@5.1.6):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.1.6
 
-  strict-ts-lib-v5.1-dom@file:packages/v5.1/output/packages/dom(typescript@6.0.3):
+  strict-ts-lib-v5.1-dom@file:packages/v5.1/output/packages/dom(typescript@5.1.6):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.1.6
 
-  strict-ts-lib-v5.1-es2015@file:packages/v5.1/output/packages/es2015(typescript@6.0.3):
+  strict-ts-lib-v5.1-es2015@file:packages/v5.1/output/packages/es2015(typescript@5.1.6):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.1.6
 
-  strict-ts-lib-v5.1-es2016@file:packages/v5.1/output/packages/es2016(typescript@6.0.3):
+  strict-ts-lib-v5.1-es2016@file:packages/v5.1/output/packages/es2016(typescript@5.1.6):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.1.6
 
-  strict-ts-lib-v5.1-es2017@file:packages/v5.1/output/packages/es2017(typescript@6.0.3):
+  strict-ts-lib-v5.1-es2017@file:packages/v5.1/output/packages/es2017(typescript@5.1.6):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.1.6
 
-  strict-ts-lib-v5.1-es2018@file:packages/v5.1/output/packages/es2018(typescript@6.0.3):
+  strict-ts-lib-v5.1-es2018@file:packages/v5.1/output/packages/es2018(typescript@5.1.6):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.1.6
 
-  strict-ts-lib-v5.1-es2019@file:packages/v5.1/output/packages/es2019(typescript@6.0.3):
+  strict-ts-lib-v5.1-es2019@file:packages/v5.1/output/packages/es2019(typescript@5.1.6):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.1.6
 
-  strict-ts-lib-v5.1-es2020@file:packages/v5.1/output/packages/es2020(typescript@6.0.3):
+  strict-ts-lib-v5.1-es2020@file:packages/v5.1/output/packages/es2020(typescript@5.1.6):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.1.6
 
-  strict-ts-lib-v5.1-es2021@file:packages/v5.1/output/packages/es2021(typescript@6.0.3):
+  strict-ts-lib-v5.1-es2021@file:packages/v5.1/output/packages/es2021(typescript@5.1.6):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.1.6
 
-  strict-ts-lib-v5.1-es2022@file:packages/v5.1/output/packages/es2022(typescript@6.0.3):
+  strict-ts-lib-v5.1-es2022@file:packages/v5.1/output/packages/es2022(typescript@5.1.6):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.1.6
 
-  strict-ts-lib-v5.1-es2023@file:packages/v5.1/output/packages/es2023(typescript@6.0.3):
+  strict-ts-lib-v5.1-es2023@file:packages/v5.1/output/packages/es2023(typescript@5.1.6):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.1.6
 
-  strict-ts-lib-v5.1-es5@file:packages/v5.1/output/packages/es5(typescript@6.0.3):
+  strict-ts-lib-v5.1-es5@file:packages/v5.1/output/packages/es5(typescript@5.1.6):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.1.6
 
-  strict-ts-lib-v5.1-es6@file:packages/v5.1/output/packages/es6(typescript@6.0.3):
+  strict-ts-lib-v5.1-es6@file:packages/v5.1/output/packages/es6(typescript@5.1.6):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.1.6
 
-  strict-ts-lib-v5.1-esnext@file:packages/v5.1/output/packages/esnext(typescript@6.0.3):
+  strict-ts-lib-v5.1-esnext@file:packages/v5.1/output/packages/esnext(typescript@5.1.6):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.1.6
 
-  strict-ts-lib-v5.1-scripthost@file:packages/v5.1/output/packages/scripthost(typescript@6.0.3):
+  strict-ts-lib-v5.1-scripthost@file:packages/v5.1/output/packages/scripthost(typescript@5.1.6):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.1.6
 
-  strict-ts-lib-v5.1-webworker@file:packages/v5.1/output/packages/webworker(typescript@6.0.3):
+  strict-ts-lib-v5.1-webworker@file:packages/v5.1/output/packages/webworker(typescript@5.1.6):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.1.6
 
-  strict-ts-lib-v5.2-decorators@file:packages/v5.2/output/packages/decorators(typescript@6.0.3):
+  strict-ts-lib-v5.2-decorators@file:packages/v5.2/output/packages/decorators(typescript@5.2.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.2.2
 
-  strict-ts-lib-v5.2-dom@file:packages/v5.2/output/packages/dom(typescript@6.0.3):
+  strict-ts-lib-v5.2-dom@file:packages/v5.2/output/packages/dom(typescript@5.2.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.2.2
 
-  strict-ts-lib-v5.2-es2015@file:packages/v5.2/output/packages/es2015(typescript@6.0.3):
+  strict-ts-lib-v5.2-es2015@file:packages/v5.2/output/packages/es2015(typescript@5.2.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.2.2
 
-  strict-ts-lib-v5.2-es2016@file:packages/v5.2/output/packages/es2016(typescript@6.0.3):
+  strict-ts-lib-v5.2-es2016@file:packages/v5.2/output/packages/es2016(typescript@5.2.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.2.2
 
-  strict-ts-lib-v5.2-es2017@file:packages/v5.2/output/packages/es2017(typescript@6.0.3):
+  strict-ts-lib-v5.2-es2017@file:packages/v5.2/output/packages/es2017(typescript@5.2.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.2.2
 
-  strict-ts-lib-v5.2-es2018@file:packages/v5.2/output/packages/es2018(typescript@6.0.3):
+  strict-ts-lib-v5.2-es2018@file:packages/v5.2/output/packages/es2018(typescript@5.2.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.2.2
 
-  strict-ts-lib-v5.2-es2019@file:packages/v5.2/output/packages/es2019(typescript@6.0.3):
+  strict-ts-lib-v5.2-es2019@file:packages/v5.2/output/packages/es2019(typescript@5.2.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.2.2
 
-  strict-ts-lib-v5.2-es2020@file:packages/v5.2/output/packages/es2020(typescript@6.0.3):
+  strict-ts-lib-v5.2-es2020@file:packages/v5.2/output/packages/es2020(typescript@5.2.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.2.2
 
-  strict-ts-lib-v5.2-es2021@file:packages/v5.2/output/packages/es2021(typescript@6.0.3):
+  strict-ts-lib-v5.2-es2021@file:packages/v5.2/output/packages/es2021(typescript@5.2.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.2.2
 
-  strict-ts-lib-v5.2-es2022@file:packages/v5.2/output/packages/es2022(typescript@6.0.3):
+  strict-ts-lib-v5.2-es2022@file:packages/v5.2/output/packages/es2022(typescript@5.2.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.2.2
 
-  strict-ts-lib-v5.2-es2023@file:packages/v5.2/output/packages/es2023(typescript@6.0.3):
+  strict-ts-lib-v5.2-es2023@file:packages/v5.2/output/packages/es2023(typescript@5.2.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.2.2
 
-  strict-ts-lib-v5.2-es5@file:packages/v5.2/output/packages/es5(typescript@6.0.3):
+  strict-ts-lib-v5.2-es5@file:packages/v5.2/output/packages/es5(typescript@5.2.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.2.2
 
-  strict-ts-lib-v5.2-es6@file:packages/v5.2/output/packages/es6(typescript@6.0.3):
+  strict-ts-lib-v5.2-es6@file:packages/v5.2/output/packages/es6(typescript@5.2.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.2.2
 
-  strict-ts-lib-v5.2-esnext@file:packages/v5.2/output/packages/esnext(typescript@6.0.3):
+  strict-ts-lib-v5.2-esnext@file:packages/v5.2/output/packages/esnext(typescript@5.2.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.2.2
 
-  strict-ts-lib-v5.2-scripthost@file:packages/v5.2/output/packages/scripthost(typescript@6.0.3):
+  strict-ts-lib-v5.2-scripthost@file:packages/v5.2/output/packages/scripthost(typescript@5.2.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.2.2
 
-  strict-ts-lib-v5.2-webworker@file:packages/v5.2/output/packages/webworker(typescript@6.0.3):
+  strict-ts-lib-v5.2-webworker@file:packages/v5.2/output/packages/webworker(typescript@5.2.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.2.2
 
-  strict-ts-lib-v5.3-decorators@file:packages/v5.3/output/packages/decorators(typescript@6.0.3):
+  strict-ts-lib-v5.3-decorators@file:packages/v5.3/output/packages/decorators(typescript@5.3.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.3.3
 
-  strict-ts-lib-v5.3-dom@file:packages/v5.3/output/packages/dom(typescript@6.0.3):
+  strict-ts-lib-v5.3-dom@file:packages/v5.3/output/packages/dom(typescript@5.3.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.3.3
 
-  strict-ts-lib-v5.3-es2015@file:packages/v5.3/output/packages/es2015(typescript@6.0.3):
+  strict-ts-lib-v5.3-es2015@file:packages/v5.3/output/packages/es2015(typescript@5.3.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.3.3
 
-  strict-ts-lib-v5.3-es2016@file:packages/v5.3/output/packages/es2016(typescript@6.0.3):
+  strict-ts-lib-v5.3-es2016@file:packages/v5.3/output/packages/es2016(typescript@5.3.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.3.3
 
-  strict-ts-lib-v5.3-es2017@file:packages/v5.3/output/packages/es2017(typescript@6.0.3):
+  strict-ts-lib-v5.3-es2017@file:packages/v5.3/output/packages/es2017(typescript@5.3.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.3.3
 
-  strict-ts-lib-v5.3-es2018@file:packages/v5.3/output/packages/es2018(typescript@6.0.3):
+  strict-ts-lib-v5.3-es2018@file:packages/v5.3/output/packages/es2018(typescript@5.3.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.3.3
 
-  strict-ts-lib-v5.3-es2019@file:packages/v5.3/output/packages/es2019(typescript@6.0.3):
+  strict-ts-lib-v5.3-es2019@file:packages/v5.3/output/packages/es2019(typescript@5.3.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.3.3
 
-  strict-ts-lib-v5.3-es2020@file:packages/v5.3/output/packages/es2020(typescript@6.0.3):
+  strict-ts-lib-v5.3-es2020@file:packages/v5.3/output/packages/es2020(typescript@5.3.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.3.3
 
-  strict-ts-lib-v5.3-es2021@file:packages/v5.3/output/packages/es2021(typescript@6.0.3):
+  strict-ts-lib-v5.3-es2021@file:packages/v5.3/output/packages/es2021(typescript@5.3.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.3.3
 
-  strict-ts-lib-v5.3-es2022@file:packages/v5.3/output/packages/es2022(typescript@6.0.3):
+  strict-ts-lib-v5.3-es2022@file:packages/v5.3/output/packages/es2022(typescript@5.3.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.3.3
 
-  strict-ts-lib-v5.3-es2023@file:packages/v5.3/output/packages/es2023(typescript@6.0.3):
+  strict-ts-lib-v5.3-es2023@file:packages/v5.3/output/packages/es2023(typescript@5.3.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.3.3
 
-  strict-ts-lib-v5.3-es5@file:packages/v5.3/output/packages/es5(typescript@6.0.3):
+  strict-ts-lib-v5.3-es5@file:packages/v5.3/output/packages/es5(typescript@5.3.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.3.3
 
-  strict-ts-lib-v5.3-es6@file:packages/v5.3/output/packages/es6(typescript@6.0.3):
+  strict-ts-lib-v5.3-es6@file:packages/v5.3/output/packages/es6(typescript@5.3.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.3.3
 
-  strict-ts-lib-v5.3-esnext@file:packages/v5.3/output/packages/esnext(typescript@6.0.3):
+  strict-ts-lib-v5.3-esnext@file:packages/v5.3/output/packages/esnext(typescript@5.3.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.3.3
 
-  strict-ts-lib-v5.3-scripthost@file:packages/v5.3/output/packages/scripthost(typescript@6.0.3):
+  strict-ts-lib-v5.3-scripthost@file:packages/v5.3/output/packages/scripthost(typescript@5.3.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.3.3
 
-  strict-ts-lib-v5.3-webworker@file:packages/v5.3/output/packages/webworker(typescript@6.0.3):
+  strict-ts-lib-v5.3-webworker@file:packages/v5.3/output/packages/webworker(typescript@5.3.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.3.3
 
-  strict-ts-lib-v5.4-decorators@file:packages/v5.4/output/packages/decorators(typescript@6.0.3):
+  strict-ts-lib-v5.4-decorators@file:packages/v5.4/output/packages/decorators(typescript@5.4.5):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.4.5
 
-  strict-ts-lib-v5.4-dom@file:packages/v5.4/output/packages/dom(typescript@6.0.3):
+  strict-ts-lib-v5.4-dom@file:packages/v5.4/output/packages/dom(typescript@5.4.5):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.4.5
 
-  strict-ts-lib-v5.4-es2015@file:packages/v5.4/output/packages/es2015(typescript@6.0.3):
+  strict-ts-lib-v5.4-es2015@file:packages/v5.4/output/packages/es2015(typescript@5.4.5):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.4.5
 
-  strict-ts-lib-v5.4-es2016@file:packages/v5.4/output/packages/es2016(typescript@6.0.3):
+  strict-ts-lib-v5.4-es2016@file:packages/v5.4/output/packages/es2016(typescript@5.4.5):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.4.5
 
-  strict-ts-lib-v5.4-es2017@file:packages/v5.4/output/packages/es2017(typescript@6.0.3):
+  strict-ts-lib-v5.4-es2017@file:packages/v5.4/output/packages/es2017(typescript@5.4.5):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.4.5
 
-  strict-ts-lib-v5.4-es2018@file:packages/v5.4/output/packages/es2018(typescript@6.0.3):
+  strict-ts-lib-v5.4-es2018@file:packages/v5.4/output/packages/es2018(typescript@5.4.5):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.4.5
 
-  strict-ts-lib-v5.4-es2019@file:packages/v5.4/output/packages/es2019(typescript@6.0.3):
+  strict-ts-lib-v5.4-es2019@file:packages/v5.4/output/packages/es2019(typescript@5.4.5):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.4.5
 
-  strict-ts-lib-v5.4-es2020@file:packages/v5.4/output/packages/es2020(typescript@6.0.3):
+  strict-ts-lib-v5.4-es2020@file:packages/v5.4/output/packages/es2020(typescript@5.4.5):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.4.5
 
-  strict-ts-lib-v5.4-es2021@file:packages/v5.4/output/packages/es2021(typescript@6.0.3):
+  strict-ts-lib-v5.4-es2021@file:packages/v5.4/output/packages/es2021(typescript@5.4.5):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.4.5
 
-  strict-ts-lib-v5.4-es2022@file:packages/v5.4/output/packages/es2022(typescript@6.0.3):
+  strict-ts-lib-v5.4-es2022@file:packages/v5.4/output/packages/es2022(typescript@5.4.5):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.4.5
 
-  strict-ts-lib-v5.4-es2023@file:packages/v5.4/output/packages/es2023(typescript@6.0.3):
+  strict-ts-lib-v5.4-es2023@file:packages/v5.4/output/packages/es2023(typescript@5.4.5):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.4.5
 
-  strict-ts-lib-v5.4-es5@file:packages/v5.4/output/packages/es5(typescript@6.0.3):
+  strict-ts-lib-v5.4-es5@file:packages/v5.4/output/packages/es5(typescript@5.4.5):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.4.5
 
-  strict-ts-lib-v5.4-es6@file:packages/v5.4/output/packages/es6(typescript@6.0.3):
+  strict-ts-lib-v5.4-es6@file:packages/v5.4/output/packages/es6(typescript@5.4.5):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.4.5
 
-  strict-ts-lib-v5.4-esnext@file:packages/v5.4/output/packages/esnext(typescript@6.0.3):
+  strict-ts-lib-v5.4-esnext@file:packages/v5.4/output/packages/esnext(typescript@5.4.5):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.4.5
 
-  strict-ts-lib-v5.4-scripthost@file:packages/v5.4/output/packages/scripthost(typescript@6.0.3):
+  strict-ts-lib-v5.4-scripthost@file:packages/v5.4/output/packages/scripthost(typescript@5.4.5):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.4.5
 
-  strict-ts-lib-v5.4-webworker@file:packages/v5.4/output/packages/webworker(typescript@6.0.3):
+  strict-ts-lib-v5.4-webworker@file:packages/v5.4/output/packages/webworker(typescript@5.4.5):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.4.5
 
-  strict-ts-lib-v5.5-decorators@file:packages/v5.5/output/packages/decorators(typescript@6.0.3):
+  strict-ts-lib-v5.5-decorators@file:packages/v5.5/output/packages/decorators(typescript@5.5.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.5.4
 
-  strict-ts-lib-v5.5-dom@file:packages/v5.5/output/packages/dom(typescript@6.0.3):
+  strict-ts-lib-v5.5-dom@file:packages/v5.5/output/packages/dom(typescript@5.5.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.5.4
 
-  strict-ts-lib-v5.5-es2015@file:packages/v5.5/output/packages/es2015(typescript@6.0.3):
+  strict-ts-lib-v5.5-es2015@file:packages/v5.5/output/packages/es2015(typescript@5.5.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.5.4
 
-  strict-ts-lib-v5.5-es2016@file:packages/v5.5/output/packages/es2016(typescript@6.0.3):
+  strict-ts-lib-v5.5-es2016@file:packages/v5.5/output/packages/es2016(typescript@5.5.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.5.4
 
-  strict-ts-lib-v5.5-es2017@file:packages/v5.5/output/packages/es2017(typescript@6.0.3):
+  strict-ts-lib-v5.5-es2017@file:packages/v5.5/output/packages/es2017(typescript@5.5.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.5.4
 
-  strict-ts-lib-v5.5-es2018@file:packages/v5.5/output/packages/es2018(typescript@6.0.3):
+  strict-ts-lib-v5.5-es2018@file:packages/v5.5/output/packages/es2018(typescript@5.5.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.5.4
 
-  strict-ts-lib-v5.5-es2019@file:packages/v5.5/output/packages/es2019(typescript@6.0.3):
+  strict-ts-lib-v5.5-es2019@file:packages/v5.5/output/packages/es2019(typescript@5.5.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.5.4
 
-  strict-ts-lib-v5.5-es2020@file:packages/v5.5/output/packages/es2020(typescript@6.0.3):
+  strict-ts-lib-v5.5-es2020@file:packages/v5.5/output/packages/es2020(typescript@5.5.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.5.4
 
-  strict-ts-lib-v5.5-es2021@file:packages/v5.5/output/packages/es2021(typescript@6.0.3):
+  strict-ts-lib-v5.5-es2021@file:packages/v5.5/output/packages/es2021(typescript@5.5.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.5.4
 
-  strict-ts-lib-v5.5-es2022@file:packages/v5.5/output/packages/es2022(typescript@6.0.3):
+  strict-ts-lib-v5.5-es2022@file:packages/v5.5/output/packages/es2022(typescript@5.5.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.5.4
 
-  strict-ts-lib-v5.5-es2023@file:packages/v5.5/output/packages/es2023(typescript@6.0.3):
+  strict-ts-lib-v5.5-es2023@file:packages/v5.5/output/packages/es2023(typescript@5.5.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.5.4
 
-  strict-ts-lib-v5.5-es5@file:packages/v5.5/output/packages/es5(typescript@6.0.3):
+  strict-ts-lib-v5.5-es5@file:packages/v5.5/output/packages/es5(typescript@5.5.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.5.4
 
-  strict-ts-lib-v5.5-es6@file:packages/v5.5/output/packages/es6(typescript@6.0.3):
+  strict-ts-lib-v5.5-es6@file:packages/v5.5/output/packages/es6(typescript@5.5.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.5.4
 
-  strict-ts-lib-v5.5-esnext@file:packages/v5.5/output/packages/esnext(typescript@6.0.3):
+  strict-ts-lib-v5.5-esnext@file:packages/v5.5/output/packages/esnext(typescript@5.5.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.5.4
 
-  strict-ts-lib-v5.5-scripthost@file:packages/v5.5/output/packages/scripthost(typescript@6.0.3):
+  strict-ts-lib-v5.5-scripthost@file:packages/v5.5/output/packages/scripthost(typescript@5.5.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.5.4
 
-  strict-ts-lib-v5.5-webworker@file:packages/v5.5/output/packages/webworker(typescript@6.0.3):
+  strict-ts-lib-v5.5-webworker@file:packages/v5.5/output/packages/webworker(typescript@5.5.4):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.5.4
 
-  strict-ts-lib-v5.6-decorators@file:packages/v5.6/output/packages/decorators(typescript@6.0.3):
+  strict-ts-lib-v5.6-decorators@file:packages/v5.6/output/packages/decorators(typescript@5.6.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.6.3
 
-  strict-ts-lib-v5.6-dom@file:packages/v5.6/output/packages/dom(typescript@6.0.3):
+  strict-ts-lib-v5.6-dom@file:packages/v5.6/output/packages/dom(typescript@5.6.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.6.3
 
-  strict-ts-lib-v5.6-es2015@file:packages/v5.6/output/packages/es2015(typescript@6.0.3):
+  strict-ts-lib-v5.6-es2015@file:packages/v5.6/output/packages/es2015(typescript@5.6.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.6.3
 
-  strict-ts-lib-v5.6-es2016@file:packages/v5.6/output/packages/es2016(typescript@6.0.3):
+  strict-ts-lib-v5.6-es2016@file:packages/v5.6/output/packages/es2016(typescript@5.6.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.6.3
 
-  strict-ts-lib-v5.6-es2017@file:packages/v5.6/output/packages/es2017(typescript@6.0.3):
+  strict-ts-lib-v5.6-es2017@file:packages/v5.6/output/packages/es2017(typescript@5.6.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.6.3
 
-  strict-ts-lib-v5.6-es2018@file:packages/v5.6/output/packages/es2018(typescript@6.0.3):
+  strict-ts-lib-v5.6-es2018@file:packages/v5.6/output/packages/es2018(typescript@5.6.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.6.3
 
-  strict-ts-lib-v5.6-es2019@file:packages/v5.6/output/packages/es2019(typescript@6.0.3):
+  strict-ts-lib-v5.6-es2019@file:packages/v5.6/output/packages/es2019(typescript@5.6.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.6.3
 
-  strict-ts-lib-v5.6-es2020@file:packages/v5.6/output/packages/es2020(typescript@6.0.3):
+  strict-ts-lib-v5.6-es2020@file:packages/v5.6/output/packages/es2020(typescript@5.6.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.6.3
 
-  strict-ts-lib-v5.6-es2021@file:packages/v5.6/output/packages/es2021(typescript@6.0.3):
+  strict-ts-lib-v5.6-es2021@file:packages/v5.6/output/packages/es2021(typescript@5.6.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.6.3
 
-  strict-ts-lib-v5.6-es2022@file:packages/v5.6/output/packages/es2022(typescript@6.0.3):
+  strict-ts-lib-v5.6-es2022@file:packages/v5.6/output/packages/es2022(typescript@5.6.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.6.3
 
-  strict-ts-lib-v5.6-es2023@file:packages/v5.6/output/packages/es2023(typescript@6.0.3):
+  strict-ts-lib-v5.6-es2023@file:packages/v5.6/output/packages/es2023(typescript@5.6.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.6.3
 
-  strict-ts-lib-v5.6-es5@file:packages/v5.6/output/packages/es5(typescript@6.0.3):
+  strict-ts-lib-v5.6-es5@file:packages/v5.6/output/packages/es5(typescript@5.6.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.6.3
 
-  strict-ts-lib-v5.6-es6@file:packages/v5.6/output/packages/es6(typescript@6.0.3):
+  strict-ts-lib-v5.6-es6@file:packages/v5.6/output/packages/es6(typescript@5.6.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.6.3
 
-  strict-ts-lib-v5.6-esnext@file:packages/v5.6/output/packages/esnext(typescript@6.0.3):
+  strict-ts-lib-v5.6-esnext@file:packages/v5.6/output/packages/esnext(typescript@5.6.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.6.3
 
-  strict-ts-lib-v5.6-scripthost@file:packages/v5.6/output/packages/scripthost(typescript@6.0.3):
+  strict-ts-lib-v5.6-scripthost@file:packages/v5.6/output/packages/scripthost(typescript@5.6.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.6.3
 
-  strict-ts-lib-v5.6-webworker@file:packages/v5.6/output/packages/webworker(typescript@6.0.3):
+  strict-ts-lib-v5.6-webworker@file:packages/v5.6/output/packages/webworker(typescript@5.6.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.6.3
 
-  strict-ts-lib-v5.7-decorators@file:packages/v5.7/output/packages/decorators(typescript@6.0.3):
+  strict-ts-lib-v5.7-decorators@file:packages/v5.7/output/packages/decorators(typescript@5.7.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.7.2
 
-  strict-ts-lib-v5.7-dom@file:packages/v5.7/output/packages/dom(typescript@6.0.3):
+  strict-ts-lib-v5.7-dom@file:packages/v5.7/output/packages/dom(typescript@5.7.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.7.2
 
-  strict-ts-lib-v5.7-es2015@file:packages/v5.7/output/packages/es2015(typescript@6.0.3):
+  strict-ts-lib-v5.7-es2015@file:packages/v5.7/output/packages/es2015(typescript@5.7.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.7.2
 
-  strict-ts-lib-v5.7-es2016@file:packages/v5.7/output/packages/es2016(typescript@6.0.3):
+  strict-ts-lib-v5.7-es2016@file:packages/v5.7/output/packages/es2016(typescript@5.7.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.7.2
 
-  strict-ts-lib-v5.7-es2017@file:packages/v5.7/output/packages/es2017(typescript@6.0.3):
+  strict-ts-lib-v5.7-es2017@file:packages/v5.7/output/packages/es2017(typescript@5.7.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.7.2
 
-  strict-ts-lib-v5.7-es2018@file:packages/v5.7/output/packages/es2018(typescript@6.0.3):
+  strict-ts-lib-v5.7-es2018@file:packages/v5.7/output/packages/es2018(typescript@5.7.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.7.2
 
-  strict-ts-lib-v5.7-es2019@file:packages/v5.7/output/packages/es2019(typescript@6.0.3):
+  strict-ts-lib-v5.7-es2019@file:packages/v5.7/output/packages/es2019(typescript@5.7.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.7.2
 
-  strict-ts-lib-v5.7-es2020@file:packages/v5.7/output/packages/es2020(typescript@6.0.3):
+  strict-ts-lib-v5.7-es2020@file:packages/v5.7/output/packages/es2020(typescript@5.7.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.7.2
 
-  strict-ts-lib-v5.7-es2021@file:packages/v5.7/output/packages/es2021(typescript@6.0.3):
+  strict-ts-lib-v5.7-es2021@file:packages/v5.7/output/packages/es2021(typescript@5.7.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.7.2
 
-  strict-ts-lib-v5.7-es2022@file:packages/v5.7/output/packages/es2022(typescript@6.0.3):
+  strict-ts-lib-v5.7-es2022@file:packages/v5.7/output/packages/es2022(typescript@5.7.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.7.2
 
-  strict-ts-lib-v5.7-es2023@file:packages/v5.7/output/packages/es2023(typescript@6.0.3):
+  strict-ts-lib-v5.7-es2023@file:packages/v5.7/output/packages/es2023(typescript@5.7.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.7.2
 
-  strict-ts-lib-v5.7-es2024@file:packages/v5.7/output/packages/es2024(typescript@6.0.3):
+  strict-ts-lib-v5.7-es2024@file:packages/v5.7/output/packages/es2024(typescript@5.7.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.7.2
 
-  strict-ts-lib-v5.7-es5@file:packages/v5.7/output/packages/es5(typescript@6.0.3):
+  strict-ts-lib-v5.7-es5@file:packages/v5.7/output/packages/es5(typescript@5.7.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.7.2
 
-  strict-ts-lib-v5.7-es6@file:packages/v5.7/output/packages/es6(typescript@6.0.3):
+  strict-ts-lib-v5.7-es6@file:packages/v5.7/output/packages/es6(typescript@5.7.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.7.2
 
-  strict-ts-lib-v5.7-esnext@file:packages/v5.7/output/packages/esnext(typescript@6.0.3):
+  strict-ts-lib-v5.7-esnext@file:packages/v5.7/output/packages/esnext(typescript@5.7.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.7.2
 
-  strict-ts-lib-v5.7-scripthost@file:packages/v5.7/output/packages/scripthost(typescript@6.0.3):
+  strict-ts-lib-v5.7-scripthost@file:packages/v5.7/output/packages/scripthost(typescript@5.7.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.7.2
 
-  strict-ts-lib-v5.7-webworker@file:packages/v5.7/output/packages/webworker(typescript@6.0.3):
+  strict-ts-lib-v5.7-webworker@file:packages/v5.7/output/packages/webworker(typescript@5.7.2):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.7.2
 
-  strict-ts-lib-v5.8-decorators@file:packages/v5.8/output/packages/decorators(typescript@6.0.3):
+  strict-ts-lib-v5.8-decorators@file:packages/v5.8/output/packages/decorators(typescript@5.8.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.8.3
 
-  strict-ts-lib-v5.8-dom@file:packages/v5.8/output/packages/dom(typescript@6.0.3):
+  strict-ts-lib-v5.8-dom@file:packages/v5.8/output/packages/dom(typescript@5.8.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.8.3
 
-  strict-ts-lib-v5.8-es2015@file:packages/v5.8/output/packages/es2015(typescript@6.0.3):
+  strict-ts-lib-v5.8-es2015@file:packages/v5.8/output/packages/es2015(typescript@5.8.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.8.3
 
-  strict-ts-lib-v5.8-es2016@file:packages/v5.8/output/packages/es2016(typescript@6.0.3):
+  strict-ts-lib-v5.8-es2016@file:packages/v5.8/output/packages/es2016(typescript@5.8.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.8.3
 
-  strict-ts-lib-v5.8-es2017@file:packages/v5.8/output/packages/es2017(typescript@6.0.3):
+  strict-ts-lib-v5.8-es2017@file:packages/v5.8/output/packages/es2017(typescript@5.8.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.8.3
 
-  strict-ts-lib-v5.8-es2018@file:packages/v5.8/output/packages/es2018(typescript@6.0.3):
+  strict-ts-lib-v5.8-es2018@file:packages/v5.8/output/packages/es2018(typescript@5.8.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.8.3
 
-  strict-ts-lib-v5.8-es2019@file:packages/v5.8/output/packages/es2019(typescript@6.0.3):
+  strict-ts-lib-v5.8-es2019@file:packages/v5.8/output/packages/es2019(typescript@5.8.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.8.3
 
-  strict-ts-lib-v5.8-es2020@file:packages/v5.8/output/packages/es2020(typescript@6.0.3):
+  strict-ts-lib-v5.8-es2020@file:packages/v5.8/output/packages/es2020(typescript@5.8.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.8.3
 
-  strict-ts-lib-v5.8-es2021@file:packages/v5.8/output/packages/es2021(typescript@6.0.3):
+  strict-ts-lib-v5.8-es2021@file:packages/v5.8/output/packages/es2021(typescript@5.8.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.8.3
 
-  strict-ts-lib-v5.8-es2022@file:packages/v5.8/output/packages/es2022(typescript@6.0.3):
+  strict-ts-lib-v5.8-es2022@file:packages/v5.8/output/packages/es2022(typescript@5.8.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.8.3
 
-  strict-ts-lib-v5.8-es2023@file:packages/v5.8/output/packages/es2023(typescript@6.0.3):
+  strict-ts-lib-v5.8-es2023@file:packages/v5.8/output/packages/es2023(typescript@5.8.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.8.3
 
-  strict-ts-lib-v5.8-es2024@file:packages/v5.8/output/packages/es2024(typescript@6.0.3):
+  strict-ts-lib-v5.8-es2024@file:packages/v5.8/output/packages/es2024(typescript@5.8.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.8.3
 
-  strict-ts-lib-v5.8-es5@file:packages/v5.8/output/packages/es5(typescript@6.0.3):
+  strict-ts-lib-v5.8-es5@file:packages/v5.8/output/packages/es5(typescript@5.8.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.8.3
 
-  strict-ts-lib-v5.8-es6@file:packages/v5.8/output/packages/es6(typescript@6.0.3):
+  strict-ts-lib-v5.8-es6@file:packages/v5.8/output/packages/es6(typescript@5.8.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.8.3
 
-  strict-ts-lib-v5.8-esnext@file:packages/v5.8/output/packages/esnext(typescript@6.0.3):
+  strict-ts-lib-v5.8-esnext@file:packages/v5.8/output/packages/esnext(typescript@5.8.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.8.3
 
-  strict-ts-lib-v5.8-scripthost@file:packages/v5.8/output/packages/scripthost(typescript@6.0.3):
+  strict-ts-lib-v5.8-scripthost@file:packages/v5.8/output/packages/scripthost(typescript@5.8.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.8.3
 
-  strict-ts-lib-v5.8-webworker@file:packages/v5.8/output/packages/webworker(typescript@6.0.3):
+  strict-ts-lib-v5.8-webworker@file:packages/v5.8/output/packages/webworker(typescript@5.8.3):
     dependencies:
       ts-type-forge: 9.2.1
-      typescript: 6.0.3
+      typescript: 5.8.3
+
+  strict-ts-lib-v5.9-decorators@file:packages/v5.9/output/packages/decorators(typescript@5.9.3):
+    dependencies:
+      ts-type-forge: 9.2.1
+      typescript: 5.9.3
 
   strict-ts-lib-v5.9-decorators@file:packages/v5.9/output/packages/decorators(typescript@6.0.3):
     dependencies:
       ts-type-forge: 9.2.1
       typescript: 6.0.3
 
+  strict-ts-lib-v5.9-dom@file:packages/v5.9/output/packages/dom(typescript@5.9.3):
+    dependencies:
+      ts-type-forge: 9.2.1
+      typescript: 5.9.3
+
   strict-ts-lib-v5.9-dom@file:packages/v5.9/output/packages/dom(typescript@6.0.3):
     dependencies:
       ts-type-forge: 9.2.1
       typescript: 6.0.3
+
+  strict-ts-lib-v5.9-es2015@file:packages/v5.9/output/packages/es2015(typescript@5.9.3):
+    dependencies:
+      ts-type-forge: 9.2.1
+      typescript: 5.9.3
 
   strict-ts-lib-v5.9-es2015@file:packages/v5.9/output/packages/es2015(typescript@6.0.3):
     dependencies:
       ts-type-forge: 9.2.1
       typescript: 6.0.3
 
+  strict-ts-lib-v5.9-es2016@file:packages/v5.9/output/packages/es2016(typescript@5.9.3):
+    dependencies:
+      ts-type-forge: 9.2.1
+      typescript: 5.9.3
+
   strict-ts-lib-v5.9-es2016@file:packages/v5.9/output/packages/es2016(typescript@6.0.3):
     dependencies:
       ts-type-forge: 9.2.1
       typescript: 6.0.3
+
+  strict-ts-lib-v5.9-es2017@file:packages/v5.9/output/packages/es2017(typescript@5.9.3):
+    dependencies:
+      ts-type-forge: 9.2.1
+      typescript: 5.9.3
 
   strict-ts-lib-v5.9-es2017@file:packages/v5.9/output/packages/es2017(typescript@6.0.3):
     dependencies:
       ts-type-forge: 9.2.1
       typescript: 6.0.3
 
+  strict-ts-lib-v5.9-es2018@file:packages/v5.9/output/packages/es2018(typescript@5.9.3):
+    dependencies:
+      ts-type-forge: 9.2.1
+      typescript: 5.9.3
+
   strict-ts-lib-v5.9-es2018@file:packages/v5.9/output/packages/es2018(typescript@6.0.3):
     dependencies:
       ts-type-forge: 9.2.1
       typescript: 6.0.3
+
+  strict-ts-lib-v5.9-es2019@file:packages/v5.9/output/packages/es2019(typescript@5.9.3):
+    dependencies:
+      ts-type-forge: 9.2.1
+      typescript: 5.9.3
 
   strict-ts-lib-v5.9-es2019@file:packages/v5.9/output/packages/es2019(typescript@6.0.3):
     dependencies:
       ts-type-forge: 9.2.1
       typescript: 6.0.3
 
+  strict-ts-lib-v5.9-es2020@file:packages/v5.9/output/packages/es2020(typescript@5.9.3):
+    dependencies:
+      ts-type-forge: 9.2.1
+      typescript: 5.9.3
+
   strict-ts-lib-v5.9-es2020@file:packages/v5.9/output/packages/es2020(typescript@6.0.3):
     dependencies:
       ts-type-forge: 9.2.1
       typescript: 6.0.3
+
+  strict-ts-lib-v5.9-es2021@file:packages/v5.9/output/packages/es2021(typescript@5.9.3):
+    dependencies:
+      ts-type-forge: 9.2.1
+      typescript: 5.9.3
 
   strict-ts-lib-v5.9-es2021@file:packages/v5.9/output/packages/es2021(typescript@6.0.3):
     dependencies:
       ts-type-forge: 9.2.1
       typescript: 6.0.3
 
+  strict-ts-lib-v5.9-es2022@file:packages/v5.9/output/packages/es2022(typescript@5.9.3):
+    dependencies:
+      ts-type-forge: 9.2.1
+      typescript: 5.9.3
+
   strict-ts-lib-v5.9-es2022@file:packages/v5.9/output/packages/es2022(typescript@6.0.3):
     dependencies:
       ts-type-forge: 9.2.1
       typescript: 6.0.3
+
+  strict-ts-lib-v5.9-es2023@file:packages/v5.9/output/packages/es2023(typescript@5.9.3):
+    dependencies:
+      ts-type-forge: 9.2.1
+      typescript: 5.9.3
 
   strict-ts-lib-v5.9-es2023@file:packages/v5.9/output/packages/es2023(typescript@6.0.3):
     dependencies:
       ts-type-forge: 9.2.1
       typescript: 6.0.3
 
+  strict-ts-lib-v5.9-es2024@file:packages/v5.9/output/packages/es2024(typescript@5.9.3):
+    dependencies:
+      ts-type-forge: 9.2.1
+      typescript: 5.9.3
+
   strict-ts-lib-v5.9-es2024@file:packages/v5.9/output/packages/es2024(typescript@6.0.3):
     dependencies:
       ts-type-forge: 9.2.1
       typescript: 6.0.3
+
+  strict-ts-lib-v5.9-es5@file:packages/v5.9/output/packages/es5(typescript@5.9.3):
+    dependencies:
+      ts-type-forge: 9.2.1
+      typescript: 5.9.3
 
   strict-ts-lib-v5.9-es5@file:packages/v5.9/output/packages/es5(typescript@6.0.3):
     dependencies:
       ts-type-forge: 9.2.1
       typescript: 6.0.3
 
+  strict-ts-lib-v5.9-es6@file:packages/v5.9/output/packages/es6(typescript@5.9.3):
+    dependencies:
+      ts-type-forge: 9.2.1
+      typescript: 5.9.3
+
   strict-ts-lib-v5.9-es6@file:packages/v5.9/output/packages/es6(typescript@6.0.3):
     dependencies:
       ts-type-forge: 9.2.1
       typescript: 6.0.3
+
+  strict-ts-lib-v5.9-esnext@file:packages/v5.9/output/packages/esnext(typescript@5.9.3):
+    dependencies:
+      ts-type-forge: 9.2.1
+      typescript: 5.9.3
 
   strict-ts-lib-v5.9-esnext@file:packages/v5.9/output/packages/esnext(typescript@6.0.3):
     dependencies:
       ts-type-forge: 9.2.1
       typescript: 6.0.3
 
+  strict-ts-lib-v5.9-scripthost@file:packages/v5.9/output/packages/scripthost(typescript@5.9.3):
+    dependencies:
+      ts-type-forge: 9.2.1
+      typescript: 5.9.3
+
   strict-ts-lib-v5.9-scripthost@file:packages/v5.9/output/packages/scripthost(typescript@6.0.3):
     dependencies:
       ts-type-forge: 9.2.1
       typescript: 6.0.3
+
+  strict-ts-lib-v5.9-webworker@file:packages/v5.9/output/packages/webworker(typescript@5.9.3):
+    dependencies:
+      ts-type-forge: 9.2.1
+      typescript: 5.9.3
 
   strict-ts-lib-v5.9-webworker@file:packages/v5.9/output/packages/webworker(typescript@6.0.3):
     dependencies:
@@ -10171,6 +10306,66 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
+  ts-data-forge@14.3.0(typescript@5.0.4):
+    dependencies:
+      '@sindresorhus/is': 8.1.0
+      ts-type-forge: 9.2.1
+      typescript: 5.0.4
+
+  ts-data-forge@14.3.0(typescript@5.1.6):
+    dependencies:
+      '@sindresorhus/is': 8.1.0
+      ts-type-forge: 9.2.1
+      typescript: 5.1.6
+
+  ts-data-forge@14.3.0(typescript@5.2.2):
+    dependencies:
+      '@sindresorhus/is': 8.1.0
+      ts-type-forge: 9.2.1
+      typescript: 5.2.2
+
+  ts-data-forge@14.3.0(typescript@5.3.3):
+    dependencies:
+      '@sindresorhus/is': 8.1.0
+      ts-type-forge: 9.2.1
+      typescript: 5.3.3
+
+  ts-data-forge@14.3.0(typescript@5.4.5):
+    dependencies:
+      '@sindresorhus/is': 8.1.0
+      ts-type-forge: 9.2.1
+      typescript: 5.4.5
+
+  ts-data-forge@14.3.0(typescript@5.5.4):
+    dependencies:
+      '@sindresorhus/is': 8.1.0
+      ts-type-forge: 9.2.1
+      typescript: 5.5.4
+
+  ts-data-forge@14.3.0(typescript@5.6.3):
+    dependencies:
+      '@sindresorhus/is': 8.1.0
+      ts-type-forge: 9.2.1
+      typescript: 5.6.3
+
+  ts-data-forge@14.3.0(typescript@5.7.2):
+    dependencies:
+      '@sindresorhus/is': 8.1.0
+      ts-type-forge: 9.2.1
+      typescript: 5.7.2
+
+  ts-data-forge@14.3.0(typescript@5.8.3):
+    dependencies:
+      '@sindresorhus/is': 8.1.0
+      ts-type-forge: 9.2.1
+      typescript: 5.8.3
+
+  ts-data-forge@14.3.0(typescript@5.9.3):
+    dependencies:
+      '@sindresorhus/is': 8.1.0
+      ts-type-forge: 9.2.1
+      typescript: 5.9.3
+
   ts-data-forge@14.3.0(typescript@6.0.3):
     dependencies:
       '@sindresorhus/is': 8.1.0
@@ -10200,6 +10395,156 @@ snapshots:
     dependencies:
       '@ts-morph/common': 0.29.0
       code-block-writer: 13.0.3
+
+  ts-repo-utils@10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.0.4):
+    dependencies:
+      '@nodelib/fs.walk': 3.0.1
+      '@sindresorhus/is': 8.1.0
+      '@types/micromatch': 4.0.10
+      cmd-ts: 0.15.0(supports-color@7.2.0)
+      fast-glob: 3.3.3
+      micromatch: 4.0.8
+      prettier: 3.9.5
+      ts-data-forge: 14.3.0(typescript@5.0.4)
+      ts-type-forge: 9.2.1
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+
+  ts-repo-utils@10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.1.6):
+    dependencies:
+      '@nodelib/fs.walk': 3.0.1
+      '@sindresorhus/is': 8.1.0
+      '@types/micromatch': 4.0.10
+      cmd-ts: 0.15.0(supports-color@7.2.0)
+      fast-glob: 3.3.3
+      micromatch: 4.0.8
+      prettier: 3.9.5
+      ts-data-forge: 14.3.0(typescript@5.1.6)
+      ts-type-forge: 9.2.1
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+
+  ts-repo-utils@10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.2.2):
+    dependencies:
+      '@nodelib/fs.walk': 3.0.1
+      '@sindresorhus/is': 8.1.0
+      '@types/micromatch': 4.0.10
+      cmd-ts: 0.15.0(supports-color@7.2.0)
+      fast-glob: 3.3.3
+      micromatch: 4.0.8
+      prettier: 3.9.5
+      ts-data-forge: 14.3.0(typescript@5.2.2)
+      ts-type-forge: 9.2.1
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+
+  ts-repo-utils@10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.3.3):
+    dependencies:
+      '@nodelib/fs.walk': 3.0.1
+      '@sindresorhus/is': 8.1.0
+      '@types/micromatch': 4.0.10
+      cmd-ts: 0.15.0(supports-color@7.2.0)
+      fast-glob: 3.3.3
+      micromatch: 4.0.8
+      prettier: 3.9.5
+      ts-data-forge: 14.3.0(typescript@5.3.3)
+      ts-type-forge: 9.2.1
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+
+  ts-repo-utils@10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.4.5):
+    dependencies:
+      '@nodelib/fs.walk': 3.0.1
+      '@sindresorhus/is': 8.1.0
+      '@types/micromatch': 4.0.10
+      cmd-ts: 0.15.0(supports-color@7.2.0)
+      fast-glob: 3.3.3
+      micromatch: 4.0.8
+      prettier: 3.9.5
+      ts-data-forge: 14.3.0(typescript@5.4.5)
+      ts-type-forge: 9.2.1
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+
+  ts-repo-utils@10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.5.4):
+    dependencies:
+      '@nodelib/fs.walk': 3.0.1
+      '@sindresorhus/is': 8.1.0
+      '@types/micromatch': 4.0.10
+      cmd-ts: 0.15.0(supports-color@7.2.0)
+      fast-glob: 3.3.3
+      micromatch: 4.0.8
+      prettier: 3.9.5
+      ts-data-forge: 14.3.0(typescript@5.5.4)
+      ts-type-forge: 9.2.1
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+
+  ts-repo-utils@10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.6.3):
+    dependencies:
+      '@nodelib/fs.walk': 3.0.1
+      '@sindresorhus/is': 8.1.0
+      '@types/micromatch': 4.0.10
+      cmd-ts: 0.15.0(supports-color@7.2.0)
+      fast-glob: 3.3.3
+      micromatch: 4.0.8
+      prettier: 3.9.5
+      ts-data-forge: 14.3.0(typescript@5.6.3)
+      ts-type-forge: 9.2.1
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+
+  ts-repo-utils@10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.7.2):
+    dependencies:
+      '@nodelib/fs.walk': 3.0.1
+      '@sindresorhus/is': 8.1.0
+      '@types/micromatch': 4.0.10
+      cmd-ts: 0.15.0(supports-color@7.2.0)
+      fast-glob: 3.3.3
+      micromatch: 4.0.8
+      prettier: 3.9.5
+      ts-data-forge: 14.3.0(typescript@5.7.2)
+      ts-type-forge: 9.2.1
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+
+  ts-repo-utils@10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.8.3):
+    dependencies:
+      '@nodelib/fs.walk': 3.0.1
+      '@sindresorhus/is': 8.1.0
+      '@types/micromatch': 4.0.10
+      cmd-ts: 0.15.0(supports-color@7.2.0)
+      fast-glob: 3.3.3
+      micromatch: 4.0.8
+      prettier: 3.9.5
+      ts-data-forge: 14.3.0(typescript@5.8.3)
+      ts-type-forge: 9.2.1
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+
+  ts-repo-utils@10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@5.9.3):
+    dependencies:
+      '@nodelib/fs.walk': 3.0.1
+      '@sindresorhus/is': 8.1.0
+      '@types/micromatch': 4.0.10
+      cmd-ts: 0.15.0(supports-color@7.2.0)
+      fast-glob: 3.3.3
+      micromatch: 4.0.8
+      prettier: 3.9.5
+      ts-data-forge: 14.3.0(typescript@5.9.3)
+      ts-type-forge: 9.2.1
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
 
   ts-repo-utils@10.2.0(prettier@3.9.5)(supports-color@7.2.0)(typescript@6.0.3):
     dependencies:
@@ -10286,6 +10631,26 @@ snapshots:
       is-typed-array: 1.1.15
       possible-typed-array-names: 1.1.0
       reflect.getprototypeof: 1.0.10
+
+  typescript@5.0.4: {}
+
+  typescript@5.1.6: {}
+
+  typescript@5.2.2: {}
+
+  typescript@5.3.3: {}
+
+  typescript@5.4.5: {}
+
+  typescript@5.5.4: {}
+
+  typescript@5.6.3: {}
+
+  typescript@5.7.2: {}
+
+  typescript@5.8.3: {}
+
+  typescript@5.9.3: {}
 
   typescript@6.0.3: {}
 
