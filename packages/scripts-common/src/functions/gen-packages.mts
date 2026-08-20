@@ -2,10 +2,11 @@ import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
 import { Json, Result, pipe } from 'ts-data-forge';
 import * as t from 'ts-fortress';
-import { $, makeEmptyDir, pathExists } from 'ts-repo-utils';
+import { makeEmptyDir, pathExists } from 'ts-repo-utils';
 import { type Context } from '../context.mjs';
 import { type ConverterConfig } from '../convert-dts/common.mjs';
 import { typeUtilsName } from '../convert-dts/constants.mjs';
+import { formatDir } from './utils/format.mjs';
 import { replaceWithNoMatchCheck } from './utils/node-utils.mjs';
 
 /** The subset of `package.json` fields this generator reads. */
@@ -171,9 +172,7 @@ const createPackages = async (
     }
   }
 
-  await genUmbrellaPackage(ctx, config, packageDirList, subPackageVersion);
-
-  return Result.ok(undefined);
+  return genUmbrellaPackage(ctx, config, packageDirList, subPackageVersion);
 };
 
 /**
@@ -192,7 +191,7 @@ const genUmbrellaPackage = async (
     packageRelativePath: string;
   }>[],
   version: string,
-): Promise<void> => {
+): Promise<Result<undefined, unknown>> => {
   const { paths, versionConfig } = ctx;
 
   const umbrellaDir = path.resolve(
@@ -272,9 +271,24 @@ const genUmbrellaPackage = async (
     ].join('\n'),
   );
 
-  await $(`pnpm -w run fmt`);
+  // Format only what was just written. The umbrella lives at `output*/lib`,
+  // one level above `output*/packages`, so the pipeline's `format
+  // output*/packages` steps do not reach it — which is why this used to shell
+  // out to `pnpm -w run fmt`. That formats the whole repository (~7900 files),
+  // and `ws:gen:packages` runs versions concurrently, so those repo-wide
+  // passes read and rewrote *other* versions' `output*/packages/**`
+  // `package.json` while those versions were still writing them. Two writers
+  // on one path leaves a torn file — a minified body followed by the tail of
+  // the previous formatted one — and the next oxfmt pass dies parsing it
+  // (`Expected ',' or ')' but found 'Identifier'`, exit 2), taking the release
+  // down with it.
+  const formatRes = await formatDir(umbrellaDir);
+
+  if (Result.isErr(formatRes)) return formatRes;
 
   console.info(`${umbrellaDir} (umbrella package) generated.`);
+
+  return Result.ok(undefined);
 };
 
 /**
