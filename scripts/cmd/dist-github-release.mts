@@ -299,7 +299,7 @@ const buildReleaseNotes = async (
     `npm install -D ${umbrellaUrl}`,
     '```',
     '',
-    '**pnpm** — pnpm blocks URL sub-dependencies by default (`blockExoticSubdeps`), so the umbrella one-liner fails. Either add `block-exotic-subdeps=false` to `.npmrc`, or paste the per-lib entries below directly (top-level URL deps are allowed):',
+    '**pnpm** — two options. Either install the umbrella above after adding a `publicHoistPattern` entry for `@typescript/lib-*` to `pnpm-workspace.yaml` (plus `blockExoticSubdeps: false` on pnpm 11 and later, which blocks URL sub-dependencies by default), or paste the per-lib entries below directly, which needs no configuration. The README explains what each setting is for; note that pnpm 11 ignores both in `.npmrc`.',
     '',
     `<details><summary>devDependencies — non-branded (${nonBranded?.name ?? ''})</summary>`,
     '',
