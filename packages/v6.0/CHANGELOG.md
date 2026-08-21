@@ -1,5 +1,11 @@
 # strict-ts-lib-v6.0-source
 
+## 0.2.0
+
+### Minor Changes
+
+- 931dc7c: Ship every built-in library inside one package instead of ~107 per flavor: install one tarball and map @typescript/lib-* to its libs/ directory with tsconfig paths
+
 ## 0.1.0
 
 ### Minor Changes
