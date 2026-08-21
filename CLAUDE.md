@@ -429,9 +429,10 @@ In addition to the general instructions above, project-specific rules are shown 
 `strict-typescript-lib` generates a **strict** rewrite of TypeScript's built-in
 `lib.*.d.ts` declarations for every supported TypeScript minor (v5.0–v7.0), in
 both a plain and a **branded-number** flavor, and distributes them as **GitHub
-Release tarball assets** (fine-grained `strict-ts-lib-vX.Y-*` packages, one per
-lib file, plus a per-version umbrella). Consumers alias them onto
-`@typescript/lib-*` (see the root `README.md`).
+Release tarball assets** — one bundle per version and flavor
+(`strict-ts-lib-vX.Y` / `-branded`), each carrying every built-in library under
+`libs/`. Consumers install one tarball and map `@typescript/lib-*` onto it with
+tsconfig `paths` (see the root `README.md` and `docs/distribution.md`).
 
 ### Layout
 
@@ -528,7 +529,7 @@ Every `strict-ts-lib-vX.Y-source` package is `private: true` — they are
 generator harnesses, and what ships is the tarballs their `output/` produces,
 not the harness. They still have to be **versioned**, because that version is
 what `gen-packages` stamps onto every generated `package.json`, onto the
-umbrella's tarball URLs, and onto the release tag.
+bundle's install URL, and onto the release tag.
 
 `.changeset/config.json` therefore sets `"privatePackages": { "version": true,
 "tag": false }`, and it has to stay there. Changesets 2.x defaulted to exactly

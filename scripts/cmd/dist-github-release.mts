@@ -35,18 +35,17 @@ import * as os from 'node:os';
 import * as path from 'node:path';
 import { Arr, hasKey, isRecord, Json, Result } from 'ts-data-forge';
 import * as t from 'ts-fortress';
-import { $, glob } from 'ts-repo-utils';
-import { type ReadonlyRecord } from 'ts-type-forge';
+import { $ } from 'ts-repo-utils';
+import { type Bundle, collectBundles, packBundle } from '../pack-bundle.mjs';
 import { projectRootPath } from '../project-root-path.mjs';
 import { parseVersionExpr, versionFromPath } from '../version-filter.mjs';
 
 const packagesDir = path.join(projectRootPath, 'packages');
 
-const PACK_CONCURRENCY = 8;
-
 /**
  * Tarballs per `gh release upload` call. Small batches keep a retry (and the
- * argument list) small; a version has up to ~220 assets.
+ * argument list) small. A version now has two assets — one bundle per flavor —
+ * so this only ever matters if a future flavor multiplies them again.
  */
 const UPLOAD_BATCH_SIZE = 20;
 
@@ -58,13 +57,6 @@ const GH_RETRY_BASE_SEC = 10;
 
 /** Max characters kept from a failed command's output. */
 const ERROR_TEXT_MAX_LENGTH = 500;
-
-const packageJsonType = t.record({
-  name: t.optional(t.string()),
-  version: t.optional(t.string()),
-  private: t.optional(t.boolean()),
-  dependencies: t.optional(t.keyValueRecord(t.string(), t.string())),
-});
 
 /**
  * The subset of `gh release view --json body,assets` this script reads. `null`
@@ -85,8 +77,6 @@ const releaseViewType = t.record({
     ]),
   ),
 });
-
-type Pkg = Readonly<{ name: string; version: string; dir: string }>;
 
 /** An existing GitHub Release, as read in a single `gh release view` call. */
 type ExistingRelease = Readonly<{
@@ -165,10 +155,6 @@ const main = async (): Promise<void> => {
   console.info(dryRun ? '\n[dry-run] done.' : '\nAll releases uploaded. ✅');
 };
 
-/** Renders a `devDependencies` JSON block for pasting into package.json. */
-const depsBlock = (deps: ReadonlyRecord<string, string> = {}): string =>
-  JSON.stringify({ devDependencies: deps }, null, 2);
-
 /** Reads a `--name=value` flag from the argument list. */
 const getFlagValue = (
   args: readonly string[],
@@ -176,19 +162,7 @@ const getFlagValue = (
 ): string | undefined =>
   args.find((a) => a.startsWith(`--${name}=`))?.slice(name.length + 3);
 
-const parsePackageJson = (
-  text: string,
-): t.TypeOf<typeof packageJsonType> | undefined => {
-  const parsed = Json.parse(text);
-
-  if (Result.isErr(parsed)) return undefined;
-
-  const result = packageJsonType.validate(parsed.value);
-
-  return Result.isOk(result) ? result.value : undefined;
-};
-
-/** Releases one version's packages; returns an error message on failure. */
+/** Releases one version's bundles; returns an error message on failure. */
 const releaseVersion = async (
   versionName: string,
   dryRun: boolean,
@@ -196,25 +170,21 @@ const releaseVersion = async (
 ): Promise<string | undefined> => {
   const versionRoot = path.join(packagesDir, versionName);
 
-  const tag = await readReleaseTag(versionRoot);
+  const bundles = await collectBundles(versionRoot);
 
-  if (tag === undefined) {
-    return `${versionName}: could not determine release tag (is output/lib generated?)`;
-  }
-
-  const packages = await collectPublishablePackages(versionRoot);
-
-  if (!Arr.isNonEmpty(packages)) {
-    console.info(`${versionName}: no publishable packages, skipping.`);
+  if (!Arr.isNonEmpty(bundles)) {
+    console.info(`${versionName}: no bundle packages, skipping.`);
 
     return undefined;
   }
 
-  console.info(`${versionName}: ${packages.length} packages -> release ${tag}`);
+  const tag = releaseTag(versionName, bundles[0].version);
+
+  console.info(`${versionName}: ${bundles.length} bundles -> release ${tag}`);
 
   if (dryRun) {
-    for (const pkg of Arr.take(packages, 3)) {
-      console.info(`  would pack+upload ${pkg.name}@${pkg.version}`);
+    for (const bundle of bundles) {
+      console.info(`  would pack+upload ${bundle.name}@${bundle.version}`);
     }
 
     return undefined;
@@ -225,10 +195,8 @@ const releaseVersion = async (
   );
 
   try {
-    const tarballs = await mapWithConcurrency(
-      packages,
-      (pkg) => packOne(pkg, tmpDir),
-      PACK_CONCURRENCY,
+    const tarballs = await Promise.all(
+      bundles.map((bundle) => packBundle(bundle, tmpDir)),
     );
 
     const packErr = tarballs.find(Result.isErr);
@@ -243,7 +211,7 @@ const releaseVersion = async (
 
     await fs.writeFile(
       notesFile,
-      await buildReleaseNotes(versionRoot, versionName),
+      buildReleaseNotes(versionName, tag, bundles),
       'utf8',
     );
 
@@ -254,152 +222,76 @@ const releaseVersion = async (
 };
 
 /**
- * Builds the GitHub Release notes: the umbrella install line (npm/yarn) plus
- * ready-to-paste per-lib `devDependencies` blocks (for pnpm, which blocks the
- * umbrella's URL sub-dependencies). The blocks are exactly each umbrella's
- * dependencies, so consumers can paste them and `install`.
+ * Builds the GitHub Release notes: one install line per flavor, plus the
+ * `tsconfig.json` snippet that points TypeScript at the bundled libs.
+ *
+ * The notes used to carry a ready-to-paste block of ~107 `devDependencies`
+ * entries, because pnpm refuses the URL sub-dependencies an umbrella package
+ * declares and pasting every lib was the only way in. A bundle has no
+ * sub-dependencies, so one direct URL dependency — which every package manager
+ * accepts — is the whole install.
  */
-const buildReleaseNotes = async (
-  versionRoot: string,
+const buildReleaseNotes = (
   versionName: string,
-): Promise<string> => {
-  const readUmbrella = async (
-    flavorDir: string,
-  ): Promise<t.TypeOf<typeof packageJsonType> | undefined> =>
-    parsePackageJson(
-      await fs
-        .readFile(
-          path.join(versionRoot, flavorDir, 'lib', 'package.json'),
-          'utf8',
-        )
-        .catch(() => ''),
-    );
+  tag: string,
+  bundles: readonly Bundle[],
+): string => {
+  const installLines = bundles.flatMap((bundle) => [
+    `**${bundle.name}**${bundle.name.endsWith('-branded') ? ' (branded numbers)' : ''}:`,
+    '',
+    '```sh',
+    `npm install -D ${tarballUrl(bundle, tag)}`,
+    '```',
+    '',
+  ]);
 
-  const nonBranded = await readUmbrella('output');
-
-  const branded = await readUmbrella('output-branded');
-
-  const firstDepUrl = Object.values(nonBranded?.dependencies ?? {})[0] ?? '';
-
-  // Umbrella tarball URL = the release-download base of any dep URL + the
-  // umbrella's own filename.
-  const umbrellaUrl =
-    firstDepUrl === ''
-      ? ''
-      : (`${firstDepUrl.slice(0, firstDepUrl.lastIndexOf('/') + 1)}${nonBranded?.name ?? ''}-${nonBranded?.version ?? ''}.tgz` as const);
+  const configName = bundles[0]?.name ?? '<package>';
 
   return [
     `Strict TypeScript ${versionName} standard library, distributed as GitHub Release tarball assets.`,
     '',
+    'Every built-in library ships inside one package, so a single dependency is',
+    'all a consumer declares — no per-lib entries, and no package-manager',
+    'configuration (a direct URL dependency is accepted everywhere; only URL',
+    '*sub*-dependencies are not).',
+    '',
     '## Install',
     '',
-    '**npm / yarn** — install the umbrella package:',
-    '',
-    '```sh',
-    `npm install -D ${umbrellaUrl}`,
-    '```',
-    '',
-    '**pnpm** — two options. Either install the umbrella above after adding a `publicHoistPattern` entry for `@typescript/lib-*` to `pnpm-workspace.yaml` (plus `blockExoticSubdeps: false` on pnpm 11 and later, which blocks URL sub-dependencies by default), or paste the per-lib entries below directly, which needs no configuration. The README explains what each setting is for; note that pnpm 11 ignores both in `.npmrc`.',
-    '',
-    `<details><summary>devDependencies — non-branded (${nonBranded?.name ?? ''})</summary>`,
+    ...installLines,
+    '## Point TypeScript at the libs',
     '',
     '```jsonc',
-    depsBlock(nonBranded?.dependencies),
+    '{',
+    '    "compilerOptions": {',
+    '        "libReplacement": true, // TypeScript 6.0 and later',
+    '        "paths": {',
+    `            "@typescript/lib-*": ["./node_modules/${configName}/libs/*"],`,
+    '        },',
+    '    },',
+    '}',
     '```',
     '',
-    '</details>',
-    '',
-    `<details><summary>devDependencies — branded (${branded?.name ?? ''})</summary>`,
-    '',
-    '```jsonc',
-    depsBlock(branded?.dependencies),
-    '```',
-    '',
-    '</details>',
+    '`paths` is replaced, not merged, by a config that `extends` another, so it',
+    'has to be written in whichever config TypeScript actually loads. A missing',
+    'entry disables the replacement silently.',
     '',
     'See the repository README for usage and version support.',
     '',
   ].join('\n');
 };
 
-/** Extracts the release tag from an umbrella package's tarball-URL deps. */
-const readReleaseTag = async (
-  versionRoot: string,
-): Promise<string | undefined> => {
-  const umbrella = parsePackageJson(
-    await fs
-      .readFile(path.join(versionRoot, 'output', 'lib', 'package.json'), 'utf8')
-      .catch(() => ''),
-  );
+/**
+ * The release tag of one TypeScript version, e.g. `dist-v7.0-0.2.0`.
+ *
+ * Flavor-independent: branded and non-branded share one release, which is what
+ * `uploadRelease` assumes when it puts both bundles on the same tag.
+ */
+const releaseTag = (versionName: string, version: string): string =>
+  `dist-${versionName}-${version}` as const;
 
-  const firstUrl = Object.values(umbrella?.dependencies ?? {})[0];
-
-  return firstUrl === undefined
-    ? undefined
-    : /\/releases\/download\/([^/]+)\//u.exec(firstUrl)?.[1];
-};
-
-const collectPublishablePackages = async (
-  versionRoot: string,
-): Promise<readonly Pkg[]> => {
-  const globbed = await glob(
-    [
-      path.join(versionRoot, 'output', '**', 'package.json'),
-      path.join(versionRoot, 'output-branded', '**', 'package.json'),
-    ],
-    { ignore: ['**/node_modules/**'] },
-  );
-
-  if (Result.isErr(globbed)) {
-    console.error(globbed.value);
-
-    process.exit(1);
-  }
-
-  const packages = await Promise.all(
-    globbed.value.map(async (packageJsonPath): Promise<Pkg | undefined> => {
-      const parsed = parsePackageJson(
-        await fs.readFile(packageJsonPath, 'utf8'),
-      );
-
-      if (
-        parsed === undefined ||
-        parsed.private === true ||
-        parsed.name === undefined ||
-        parsed.version === undefined
-      ) {
-        return undefined;
-      }
-
-      return {
-        name: parsed.name,
-        version: parsed.version,
-        dir: path.dirname(packageJsonPath),
-      };
-    }),
-  );
-
-  return packages
-    .filter((p): p is Pkg => p !== undefined)
-    .toSorted((a, b) => a.name.localeCompare(b.name));
-};
-
-/** Packs one package; Ok = the .tgz path, Err = an error message. */
-const packOne = async (
-  pkg: Pkg,
-  destDir: string,
-): Promise<Result<string, string>> => {
-  const result = await $(`npm pack ${pkg.dir} --pack-destination ${destDir}`, {
-    silent: true,
-  });
-
-  if (Result.isErr(result)) {
-    return Result.err(`${pkg.name}: ${errorText(result.value)}`);
-  }
-
-  // `npm pack` of an unscoped package emits `<name>-<version>.tgz`.
-  return Result.ok(path.join(destDir, `${pkg.name}-${pkg.version}.tgz`));
-};
+/** Where a bundle's tarball lands once uploaded to its release. */
+const tarballUrl = (bundle: Bundle, tag: string): string =>
+  `https://github.com/${bundle.repoPath}/releases/download/${tag}/${bundle.name}-${bundle.version}.tgz` as const;
 
 /**
  * Creates or updates the GitHub Release. Returns an error message on failure.
@@ -630,36 +522,6 @@ const describeOutcome = (
   }
 
   return `updated release ${tag} (${uploadedCount}/${fileCount} assets uploaded)`;
-};
-
-/**
- * Runs `fn` over `items` with at most `concurrency` in flight, preserving input
- * order. Recursive workers (no loops) to match the repo's style.
- */
-const mapWithConcurrency = async <A, B>(
-  items: readonly A[],
-  fn: (item: A) => Promise<B>,
-  concurrency: number,
-): Promise<readonly B[]> => {
-  const mut_results: B[] = [];
-
-  const mut_queue = items.map((item, index) => ({ item, index }));
-
-  const worker = async (): Promise<void> => {
-    const next = mut_queue.shift();
-
-    if (next === undefined) return;
-
-    mut_results[next.index] = await fn(next.item);
-
-    await worker();
-  };
-
-  await Promise.all(
-    Array.from({ length: Math.min(concurrency, items.length) }, () => worker()),
-  );
-
-  return mut_results;
 };
 
 /** GitHub stores release bodies with CRLF line endings. */
