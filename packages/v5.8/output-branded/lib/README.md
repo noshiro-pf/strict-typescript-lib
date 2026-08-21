@@ -1,15 +1,30 @@
 # strict-ts-lib-v5.8-branded
 
 Strict rewrite of TypeScript 5.8.3's built-in
-standard library declarations, distributed as GitHub Release tarballs
+standard library declarations, distributed as a GitHub Release tarball
 (no npm registry, no auth).
 
 ```sh
 npm install -D https://github.com/noshiro-pf/strict-typescript-lib/releases/download/dist-v5.8-0.3.0/strict-ts-lib-v5.8-branded-0.3.0.tgz
 ```
 
-Installing this package pulls in the strict `@typescript/lib-*` replacements
-for every built-in library, so TypeScript picks them up automatically
-(library replacement is on by default since TypeScript 4.5).
+Every built-in library ships inside this one package, under `libs/`. Point
+TypeScript at them from your `tsconfig.json`:
+
+```jsonc
+{
+    "compilerOptions": {
+        "libReplacement": true, // TypeScript 6.0 and later
+        "paths": {
+            "@typescript/lib-*": [
+                "./node_modules/strict-ts-lib-v5.8-branded/libs/*",
+            ],
+        },
+    },
+}
+```
+
+`paths` is replaced, not merged, by a config that `extends` another, so it
+has to be written in whichever config TypeScript actually loads.
 
 See <https://github.com/noshiro-pf/strict-typescript-lib> for usage and version support.

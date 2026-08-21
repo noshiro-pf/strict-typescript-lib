@@ -172,75 +172,75 @@ const createPackages = async (
     }
   }
 
-  return genUmbrellaPackage(ctx, config, packageDirList, subPackageVersion);
+  return genBundlePackage(ctx, config, subPackageVersion, tsTypeUtilsRange);
 };
 
 /**
- * Generates the umbrella meta-package (`output/lib` / `output-branded/lib`).
+ * Generates the bundle package (`output/lib` and `output-branded/lib`).
  *
- * Installing it alone (`npm install -D strict-ts-lib-vX.Y`) pulls in every
- * per-lib package as a `@typescript/lib-*` alias dependency, so TypeScript's
- * library-replacement picks up the strict declarations without the consumer
- * wiring each alias by hand. It carries no `.d.ts` of its own.
+ * This is the only package a consumer installs. It carries no `.d.ts` of its
+ * own in the working tree: `libs/<name>/index.d.ts` is assembled from
+ * `output(-branded)/packages` when the tarball is packed, so the generated tree is not
+ * duplicated here.
+ *
+ * It used to be an umbrella whose dependencies were the ~107 per-lib packages,
+ * one URL each, so that a package manager would resolve them transitively and
+ * the consumer needed no configuration. That worked while the per-lib packages
+ * came from a registry. It stopped working when distribution moved to GitHub
+ * Release assets, because pnpm refuses URL *sub*dependencies
+ * (`ERR_PNPM_EXOTIC_SUBDEP`) — and lifting that requires `blockExoticSubdeps:
+ * false` *and* `publicHoistPattern`, since a transitive dependency never
+ * reaches the root `node_modules` where `libReplacement` looks. Shipping the
+ * libs inside this package removes both: the only dependency a consumer
+ * declares is direct, which pnpm always allows, and `paths` points TypeScript
+ * at `libs/*`.
  */
-const genUmbrellaPackage = async (
+const genBundlePackage = async (
   ctx: Context,
   config: ConverterConfig,
-  packageDirList: readonly Readonly<{
-    filename: string;
-    packageRelativePath: string;
-  }>[],
   version: string,
+  tsTypeForgeRange: string,
 ): Promise<Result<undefined, unknown>> => {
   const { paths, versionConfig } = ctx;
 
-  const umbrellaDir = path.resolve(
+  const bundleDir = path.resolve(
     paths.strictTsLib[config.useBrandedNumber ? 'outputBranded' : 'output']
       .packages.$,
     '..',
     'lib',
   );
 
-  const libPrefix =
+  const libName =
     `${versionConfig.libName}${config.useBrandedNumber ? '-branded' : ''}` as const;
 
-  // Packages are distributed as GitHub Release tarball assets (not npm), so
-  // each `@typescript/lib-<name>` (dots -> dashes) points at a tarball URL. The
-  // release tag is per TypeScript version (flavor-independent), matching what
-  // `dist-github-release.mts` uploads.
   const releaseBase = githubReleaseBaseUrl(versionConfig, version);
 
-  const dependencies = Object.fromEntries(
-    packageDirList
-      .map(({ packageRelativePath }) =>
-        packageRelativePath.replaceAll('/', '-'),
-      )
-      .toSorted((a, b) => a.localeCompare(b))
-      .map((suffix) => {
-        const subPackageName = `${libPrefix}-${suffix}` as const;
+  const tarballUrl = `${releaseBase}/${libName}-${version}.tgz` as const;
 
-        return [
-          `@typescript/lib-${suffix}`,
-          `${releaseBase}/${subPackageName}-${version}.tgz`,
-        ] as const;
-      }),
-  );
-
-  await makeEmptyDir(umbrellaDir);
+  await makeEmptyDir(bundleDir);
 
   await fs.writeFile(
-    path.resolve(umbrellaDir, 'package.json'),
+    path.resolve(bundleDir, 'package.json'),
     JSON.stringify({
-      name: libPrefix,
+      name: libName,
       version,
       private: false,
-      description: `Strict TypeScript ${versionConfig.typescriptVersion} standard library (all libs, single install)`,
+      description: `Strict TypeScript ${versionConfig.typescriptVersion} standard library (all libs in one package)`,
       repository: { type: 'git', url: versionConfig.repo },
       license: versionConfig.license,
       author: 'noshiro-pf <noshiro.pf@gmail.com>',
       sideEffects: false,
       type: 'module',
-      dependencies,
+      // Assembled at pack time from `output*/packages`; see `pack-bundle.mts`.
+      files: ['libs'],
+      // ts-type-forge is a real runtime-resolvable dependency: the generated
+      // lib references its types via `import('ts-type-forge')`, so consumers
+      // must have it installed (not merely provide it). Declaring it here
+      // covers every `libs/*` at once — they resolve it by walking up out of
+      // this package's own directory.
+      dependencies: {
+        [typeUtilsName]: tsTypeForgeRange,
+      },
       peerDependencies: {
         typescript: versionConfig.typescriptVersionRange,
       },
@@ -250,43 +250,55 @@ const genUmbrellaPackage = async (
   const repoUrl = versionConfig.repo.replace(/\.git$/u, '');
 
   await fs.writeFile(
-    path.resolve(umbrellaDir, 'README.md'),
+    path.resolve(bundleDir, 'README.md'),
     [
-      `# ${libPrefix}`,
+      `# ${libName}`,
       '',
       `Strict rewrite of TypeScript ${versionConfig.typescriptVersion}'s built-in`,
-      'standard library declarations, distributed as GitHub Release tarballs',
+      'standard library declarations, distributed as a GitHub Release tarball',
       '(no npm registry, no auth).',
       '',
       '```sh',
-      `npm install -D ${releaseBase}/${libPrefix}-${version}.tgz`,
+      `npm install -D ${tarballUrl}`,
       '```',
       '',
-      'Installing this package pulls in the strict `@typescript/lib-*` replacements',
-      'for every built-in library, so TypeScript picks them up automatically',
-      '(library replacement is on by default since TypeScript 4.5).',
+      'Every built-in library ships inside this one package, under `libs/`. Point',
+      'TypeScript at them from your `tsconfig.json`:',
+      '',
+      '```jsonc',
+      '{',
+      '    "compilerOptions": {',
+      '        "libReplacement": true, // TypeScript 6.0 and later',
+      '        "paths": {',
+      `            "@typescript/lib-*": ["./node_modules/${libName}/libs/*"],`,
+      '        },',
+      '    },',
+      '}',
+      '```',
+      '',
+      '`paths` is replaced, not merged, by a config that `extends` another, so it',
+      'has to be written in whichever config TypeScript actually loads.',
       '',
       `See <${repoUrl}> for usage and version support.`,
       '',
     ].join('\n'),
   );
 
-  // Format only what was just written. The umbrella lives at `output*/lib`,
-  // one level above `output*/packages`, so the pipeline's `format
-  // output*/packages` steps do not reach it — which is why this used to shell
-  // out to `pnpm -w run fmt`. That formats the whole repository (~7900 files),
-  // and `ws:gen:packages` runs versions concurrently, so those repo-wide
-  // passes read and rewrote *other* versions' `output*/packages/**`
-  // `package.json` while those versions were still writing them. Two writers
-  // on one path leaves a torn file — a minified body followed by the tail of
-  // the previous formatted one — and the next oxfmt pass dies parsing it
-  // (`Expected ',' or ')' but found 'Identifier'`, exit 2), taking the release
-  // down with it.
-  const formatRes = await formatDir(umbrellaDir);
+  // Format only what was just written. The bundle lives at `output*/lib`, one
+  // level above `output*/packages`, so the pipeline's `format output*/packages`
+  // steps do not reach it — which is why this used to shell out to
+  // `pnpm -w run fmt`. That formats the whole repository (~7900 files), and
+  // `ws:gen:packages` runs versions concurrently, so those repo-wide passes
+  // read and rewrote *other* versions' `output*/packages/**` `package.json`
+  // while those versions were still writing them. Two writers on one path
+  // leaves a torn file — a minified body followed by the tail of the previous
+  // formatted one — and the next oxfmt pass dies parsing it (`Expected ',' or
+  // ')' but found 'Identifier'`, exit 2), taking the release down with it.
+  const formatRes = await formatDir(bundleDir);
 
   if (Result.isErr(formatRes)) return formatRes;
 
-  console.info(`${umbrellaDir} (umbrella package) generated.`);
+  console.info(`${bundleDir} (bundle package) generated.`);
 
   return Result.ok(undefined);
 };

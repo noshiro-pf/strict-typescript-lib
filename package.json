@@ -34,6 +34,7 @@
     "codemod:uncommitted:readonly": "convert-to-readonly --uncommitted '**/*.mts'",
     "cspell": "cspell \"{**,.changeset/**/*,.github/**/*}\" --gitignore --gitignore-root ./ --no-progress",
     "dist:github-release": "tsx ./scripts/cmd/dist-github-release.mts",
+    "dist:npm-publish": "tsx ./scripts/cmd/dist-npm-publish.mts",
     "fmt": "oxfmt --ignore-path=.gitignore --ignore-path=.oxfmtignore .",
     "gen:version-diff": "tsx ./scripts/cmd/gen-version-diff.mts",
     "lint": "pnpm run z:eslint .",
