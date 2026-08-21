@@ -43,6 +43,13 @@
  *   `npm publish` line to run yourself in a real terminal, where npm can prompt
  *   (or open the browser) as usual. This is also the way to inspect a tarball
  *   before it goes out.
+ *
+ * **Re-runs are safe.** A version already on the registry is skipped rather
+ * than re-published, because npm refuses to overwrite one
+ * (`EPUBLISHCONFLICT`). `release.yml` runs this on every push to `main` — the
+ * Changesets action runs its publish step whenever no changesets are pending —
+ * so without the skip, every push after a release would fail on the 24 versions
+ * that are already out.
  */
 
 import * as fs from 'node:fs/promises';
@@ -156,7 +163,7 @@ const main = async (): Promise<void> => {
 
   console.info(
     publish
-      ? '\nAll bundles published. ✅'
+      ? '\nThe registry has every bundle this checkout produces. ✅'
       : '\n[dry-run] done (pass --publish to publish).',
   );
 };
@@ -203,6 +210,20 @@ const publishVersion = async (
 
   try {
     for (const bundle of bundles) {
+      // Ask the registry before staging: `release.yml` runs this on every push
+      // to `main`, and staging copies ~107 declarations per bundle.
+      if (
+        publish &&
+        !packOnly &&
+        (await isAlreadyPublished(bundle.name, bundle.version))
+      ) {
+        console.info(
+          `  skipped ${bundle.name}@${bundle.version} (already on the registry)`,
+        );
+
+        continue;
+      }
+
       const packed = await packBundle(bundle, destDir);
 
       if (Result.isErr(packed)) {
@@ -245,6 +266,25 @@ const publishVersion = async (
       await fs.rm(destDir, { recursive: true, force: true });
     }
   }
+};
+
+/**
+ * Whether this exact version is on the registry already.
+ *
+ * `npm view <name>@<version> version` exits non-zero for a package that does
+ * not exist and prints nothing for a version that does not, so both cases read
+ * as "not published" — which is the safe direction: at worst the publish runs
+ * and npm rejects it.
+ */
+const isAlreadyPublished = async (
+  name: string,
+  version: string,
+): Promise<boolean> => {
+  const result = await $(`npm view ${name}@${version} version`, {
+    silent: true,
+  });
+
+  return Result.isOk(result) && result.value.stdout.trim() !== '';
 };
 
 await main();

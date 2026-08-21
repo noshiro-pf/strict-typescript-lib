@@ -1,9 +1,9 @@
 # Distribution (one bundle per version and flavor)
 
-This repository distributes its generated declarations as **GitHub Release
-tarball assets**, not via the npm registry, and each release carries **one
-package per TypeScript version and flavor** — every built-in library lives
-inside it, under `libs/`.
+This repository distributes its generated declarations as **one package per
+TypeScript version and flavor** — every built-in library lives inside it, under
+`libs/` — through two channels: the **npm registry** and **GitHub Release
+tarball assets**. Both carry the same tarball, packed by the same code.
 
 ## Why one package
 
@@ -16,10 +16,12 @@ packages came from a registry.
 
 Two things ended it.
 
-- **npm is not available to us.** Publishing this many brand-new package names
-  trips npm's anti-abuse / rate limits (HTTP 429), and a change in the shared
-  generator fans out to every series — ~12 series x 2 flavors x ~107 packages ≈
-  2,400 publishes. Even one series' 214 was too many.
+- **npm could not take the split.** Publishing this many brand-new package
+  names trips npm's anti-abuse / rate limits (HTTP 429), and a change in the
+  shared generator fans out to every series — ~12 series x 2 flavors x ~107
+  packages ≈ 2,400 publishes. Even one series' 214 was too many. Bundled, the
+  same regeneration is 24 publishes, which the registry accepts: every series
+  is now published (v5.0 … v7.0, both flavors).
 - **URL sub-dependencies are refused.** Once the packages moved to release
   assets, the umbrella's dependencies became URLs, and pnpm blocks a URL that
   appears as a _sub_-dependency (`ERR_PNPM_EXOTIC_SUBDEP`). Lifting that needs
@@ -124,27 +126,30 @@ Transient failures (rate limits, 5xx, dropped connections) are retried with
 exponential backoff. Use `--force` to re-upload every asset and rewrite the
 notes regardless (e.g. if a published asset is known to be corrupt).
 
-## Publishing to npm (not enabled yet)
+## Publishing to npm
 
-Bundling changes the npm arithmetic: 24 packages instead of ~2,400 publishes
-for a repository-wide regeneration, which is ordinary release traffic.
-`pnpm dist:npm-publish [--version=7.0] [--publish] [--tag=<dist-tag>]` exists
-to test that — it is a dry run unless `--publish` is passed, and it packs
-exactly what `dist:github-release` uploads.
+`release.yml` publishes the bundles with `dist:npm-publish --publish`, in a step
+of its own **after** the GitHub Release is created — the release is the channel
+existing consumers install from, so nothing npm does can hold it back.
 
-**A first publish is a manual step**, and stays one for every new TypeScript
-series, because each series is a new package name on npm. It also runs into
-two-factor authentication: this script has no TTY, so npm cannot prompt for a
-one-time password and fails with `EOTP`. `--otp=<code>`, or `--pack-only` and
-publishing the tarballs by hand, gets through it. The whole procedure — and
-what it would take to stop needing it — is in
-[first-release.md](./first-release.md).
+Authentication is **trusted publishing**: OIDC against the trusted publisher
+configured per package on npm, so the workflow carries no npm token and asks for
+`id-token: write` instead. The npm bundled with Node 22 predates the trust
+tooling (`npm trust` documents `npm@11.15.0` as its floor), so the step installs
+a current npm first.
 
-Nothing depends on the outcome. If npm accepts the bundles, consumers can
-depend on a registry range instead of a URL and `pnpm update` moves it for
-them; if it does not, the release assets stay the only channel and the
-consumer-side difference is one line in `package.json`. Publishing an older
-series needs `--tag=vX.Y`, or npm will move `latest` to it.
+The step is a **no-op unless something new was released**: a version already on
+the registry is skipped rather than re-published, because npm refuses to
+overwrite one (`EPUBLISHCONFLICT`). That matters because the Changesets action
+runs its publish step on every push to `main` where no changesets are pending.
+
+Run by hand with
+`pnpm dist:npm-publish [--version=7.0] [--publish] [--tag=<dist-tag>] [--otp=<code>] [--pack-only]`.
+It is a dry run unless `--publish` is passed, and it packs exactly what
+`dist:github-release` uploads. A **new** TypeScript series still needs one
+manual publish and its own trusted-publisher configuration before CI can take
+over — see [first-release.md](./first-release.md), which also records what would
+remove that step for good.
 
 ## Consuming
 
@@ -169,7 +174,9 @@ declaration only the strict library rejects (`parseInt('10', 1)`), or with
 
 ## Notes
 
-- **Versioning has no semver ranges** — tarball URLs pin an exact release. Bump
-  by pointing at a newer tag. (An npm channel would remove this, see above.)
-- **`ts-type-forge`** is still resolved from the public npm registry; only this
-  project's own packages are distributed via GitHub Releases.
+- **A registry dependency takes semver ranges; a URL does not.** Consumers on
+  npm can write `^0.2.0` and let their package manager move it; consumers on a
+  release URL pin an exact release and bump by pointing at a newer tag.
+- **`ts-type-forge`** is resolved from the public npm registry, as it always
+  was, and is declared once by each bundle on behalf of every declaration
+  inside it.

@@ -18,6 +18,7 @@ jobs:
       contents: write # to create release
       issues: write # to post issue comments
       pull-requests: write # to create pull request
+      id-token: write # OIDC, for npm trusted publishing (see the last step)
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -73,3 +74,22 @@ jobs:
           # Used by the `gh` CLI in `dist:github-release` to create/upload the
           # tarball GitHub Release.
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
+
+      # Deliberately after the step above, not inside `release:publish`. The
+      # GitHub Release is the channel every existing consumer installs from, so
+      # it is created first and cannot be held back by anything npm does.
+      #
+      # No token: publishing is authenticated by OIDC against the trusted
+      # publisher configured per package on npm, which is why the job asks for
+      # `id-token: write`. The npm that ships with Node 22 predates the trust
+      # tooling (`npm trust` documents `npm@11.15.0` as its floor), so a current
+      # npm is installed for this step.
+      #
+      # `dist:npm-publish` skips versions already on the registry, so this is a
+      # cheap no-op on the pushes where nothing was released — which is most of
+      # them, since the Changesets action runs its publish step whenever no
+      # changesets are pending.
+      - name: Publish the bundles to npm
+        run: |
+          npm install -g npm@^11.15.0
+          pnpm run dist:npm-publish --publish
