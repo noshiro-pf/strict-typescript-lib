@@ -10,27 +10,30 @@
 
 This project ships a **strict** rewrite of TypeScript's built-in library
 declarations (`lib.es5.d.ts`, `lib.dom.d.ts`, …), one set per TypeScript minor
-version, distributed as **GitHub Release tarballs** — not the npm registry, so
-there is no registry account or authentication involved.
+version. Every built-in library lives inside **one package**, so one dependency
+and one `paths` entry is the whole setup, on any package manager.
 
-Pick the release matching **the exact TypeScript version you use** from the
-[Releases](https://github.com/noshiro-pf/strict-typescript-lib/releases) page
-(tags look like `dist-v5.9-1.0.0`). Every built-in library ships inside **one
-package**, so one dependency and one `paths` entry is the whole setup, on any
-package manager. A **branded-number** flavor is published alongside as
-`strict-ts-lib-vX.Y-branded`.
+Each TypeScript minor has its own package — `strict-ts-lib-v7.0` for TypeScript
+7.0, `strict-ts-lib-v5.9` for 5.9, and so on — and a **branded-number** flavor
+is published alongside as `strict-ts-lib-vX.Y-branded`.
 
 ### 1. Install the package
 
 ```sh
-npm install -D https://github.com/noshiro-pf/strict-typescript-lib/releases/download/dist-v5.9-<version>/strict-ts-lib-v5.9-<version>.tgz
+npm install -D strict-ts-lib-v7.0     # pnpm add -D / yarn add -D work the same
 ```
 
-`pnpm add -D <url>` and `yarn add -D <url>` work the same way, and need no
-package-manager configuration: this is a **direct** URL dependency, which every
-package manager accepts. (pnpm rejects URL dependencies only when a _dependency
-of a dependency_ uses one — which is what an earlier layout, one package per
-lib behind an umbrella, ran into.)
+Every published minor is also attached to a **GitHub Release**, for anyone who
+would rather not go through the registry:
+
+```sh
+npm install -D https://github.com/noshiro-pf/strict-typescript-lib/releases/download/dist-v7.0-<version>/strict-ts-lib-v7.0-<version>.tgz
+```
+
+Both are a single **direct** dependency, which every package manager accepts
+without configuration. (pnpm rejects URL dependencies only when a _dependency of
+a dependency_ uses one — which is what an earlier layout, one package per lib
+behind an umbrella, ran into.)
 
 ### 2. Point TypeScript at the libs
 
@@ -43,7 +46,7 @@ asks for them, so one wildcard covers all of them:
     "compilerOptions": {
         "libReplacement": true, // TypeScript 6.0 and later; see below
         "paths": {
-            "@typescript/lib-*": ["./node_modules/strict-ts-lib-v5.9/libs/*"],
+            "@typescript/lib-*": ["./node_modules/strict-ts-lib-v7.0/libs/*"],
         },
     },
 }
@@ -57,7 +60,7 @@ does not happen, with no error and no warning:
   entry repeated there; putting it only in the shared base config is not
   enough.
 - **The path is relative to the config that contains it.** From a package in a
-  monorepo that is usually `../../node_modules/strict-ts-lib-v5.9/libs/*`.
+  monorepo that is usually `../../node_modules/strict-ts-lib-v7.0/libs/*`.
 
 To confirm it took effect, compile something that only the strict library
 rejects:
@@ -72,11 +75,12 @@ it prints should end in `was successfully resolved`.
 
 ### TypeScript version support
 
-- **`>=5.0 <=7.0`** — Supported (v5.0–v7.0 published). Use the
-  `strict-ts-lib-vX.Y` matching your minor; the package's `peerDependencies`
-  pins the range it was generated for. On TypeScript 6.0 and later, set
-  `"libReplacement": true` in your `tsconfig.json` `compilerOptions` — it no
-  longer defaults to on, and the `paths` entry above does nothing without it.
+- **`>=5.0 <=7.0`** — Supported (v5.0–v7.0 published, on npm and as GitHub
+  Release assets). Use the `strict-ts-lib-vX.Y` matching your minor; the
+  package's `peerDependencies` pins the range it was generated for. On
+  TypeScript 6.0 and later, set `"libReplacement": true` in your
+  `tsconfig.json` `compilerOptions` — it no longer defaults to on, and the
+  `paths` entry above does nothing without it.
 - **`<5.0`** — Not supported.
 - **`>7.0`** — No matching version yet; use the closest published minor.
 

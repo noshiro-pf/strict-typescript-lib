@@ -97,7 +97,7 @@ npm view strict-ts-lib-v7.1 version
 npm view strict-ts-lib-v7.1 dist.tarball
 ```
 
-### 5. （CI から publish する場合のみ）trusted publisher を設定する
+### 5. trusted publisher を設定する
 
 <https://www.npmjs.com/package/strict-ts-lib-v7.1> → Settings → Trusted publisher
 で GitHub Actions を選ぶ。
@@ -111,10 +111,13 @@ npm view strict-ts-lib-v7.1 dist.tarball
 
 branded 版も別パッケージなので、同じ設定をもう一度行う。
 
-> **現状 `release.yml` は npm publish を行わない。** `release:publish` は
-> `ws:gen:packages && dist:github-release` だけで、npm への publish は
-> `dist:npm-publish` を手で叩いたときにしか起こらない。CI に組み込むかどうかは、
-> 手動 publish がレート制限に当たらないと確認できてから判断する。
+**この設定を済ませると、その系統は以降 CI が publish する。** `release.yml` は
+GitHub Release を作ったあとに `dist:npm-publish --publish` を実行し、OIDC で
+認証する（トークンは持たない）。既にレジストリにあるバージョンは skip されるので、
+リリースが無い push では何もしない。
+
+> **v5.0 〜 v7.0 は設定済みで、手動 publish も完了している**（2026-08-21）。
+> 以降この文書が要るのは、**新しい TypeScript 系統を足したとき**だけ。
 
 ## 複数系統をまとめて publish する場合
 
@@ -127,6 +130,12 @@ pnpm dist:npm-publish --version=7.0 --publish --otp=<code>
 pnpm dist:npm-publish --version=6.0 --publish --otp=<新しい code> --tag=v6.0
 # …以下同様
 ```
+
+## この手順が残る範囲
+
+既存の系統については、もう手作業は要らない。CI が publish し、`pnpm update` が
+利用者側のバージョンを動かす。**残るのは新しい系統を足したときの初回だけ**で、
+それも次の節の設計変更で消せる。
 
 ## この手順を将来なくすには
 
