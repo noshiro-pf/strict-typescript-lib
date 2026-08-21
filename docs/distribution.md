@@ -132,6 +132,14 @@ for a repository-wide regeneration, which is ordinary release traffic.
 to test that — it is a dry run unless `--publish` is passed, and it packs
 exactly what `dist:github-release` uploads.
 
+**A first publish is a manual step**, and stays one for every new TypeScript
+series, because each series is a new package name on npm. It also runs into
+two-factor authentication: this script has no TTY, so npm cannot prompt for a
+one-time password and fails with `EOTP`. `--otp=<code>`, or `--pack-only` and
+publishing the tarballs by hand, gets through it. The whole procedure — and
+what it would take to stop needing it — is in
+[first-release.md](./first-release.md).
+
 Nothing depends on the outcome. If npm accepts the bundles, consumers can
 depend on a registry range instead of a URL and `pnpm update` moves it for
 them; if it does not, the release assets stay the only channel and the
