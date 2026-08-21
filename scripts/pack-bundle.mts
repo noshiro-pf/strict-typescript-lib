@@ -101,6 +101,11 @@ export const packBundle = async (
     silent: true,
   });
 
+  // The staging tree is scaffolding: leaving it next to the tarball would put
+  // a copy of every declaration into whatever directory the caller chose, and
+  // `--pack-only` points that at the repository.
+  await fs.rm(stageDir, { recursive: true, force: true });
+
   if (Result.isErr(packed)) {
     return Result.err(`${bundle.name}: npm pack failed`);
   }

@@ -1,5 +1,7 @@
 #!/usr/bin/env tsx
 
+// cspell:ignore EOTP
+
 /**
  * Publishes the bundle packages to the **npm registry**.
  *
@@ -19,13 +21,28 @@
  * Requires an authenticated `npm` (`npm whoami`).
  *
  * Usage:
- *   tsx scripts/cmd/dist-npm-publish.mts [--version=<range>] [--publish] [--tag=<dist-tag>]
+ *   tsx scripts/cmd/dist-npm-publish.mts [--version=<range>] [--publish]
+ *     [--tag=<dist-tag>] [--otp=<code>] [--pack-only [--out-dir=<dir>]]
  *
  * Dry-run unless `--publish` is passed. `--version` limits which versions are
  * published (same syntax as `dist-github-release.mts`: `5`, `5.9`,
  * `">=5.3&<=5.5"`). `--tag` sets the dist-tag; without it npm moves `latest`,
  * which is only right for the newest TypeScript series — publish an older
  * series as e.g. `--tag=v5.9`.
+ *
+ * **Two-factor authentication.** Commands here run through `child_process.exec`,
+ * which gives them no TTY, so npm cannot fall back to its interactive
+ * one-time-password flow: with 2FA on writes the publish fails outright with
+ * `EOTP`. Two ways through, both documented in `docs/first-release.md`:
+ *
+ * - `--otp=<code>` — a code from the authenticator app. npm treats the presence
+ *   of `otp` as `auth-type=legacy`, so it never tries the browser flow. A code
+ *   lasts ~30 seconds, which covers one series (two packages) comfortably; for
+ *   a wider `--version` range, publish series by series with a fresh code.
+ * - `--pack-only` — stage and pack the tarballs, then stop, printing the
+ *   `npm publish` line to run yourself in a real terminal, where npm can prompt
+ *   (or open the browser) as usual. This is also the way to inspect a tarball
+ *   before it goes out.
  */
 
 import * as fs from 'node:fs/promises';
@@ -44,7 +61,15 @@ const main = async (): Promise<void> => {
 
   const publish = args.includes('--publish');
 
+  const packOnly = args.includes('--pack-only');
+
   const distTag = getFlagValue(args, 'tag');
+
+  const otp = getFlagValue(args, 'otp');
+
+  const outDir = path.resolve(
+    getFlagValue(args, 'out-dir') ?? path.join(projectRootPath, 'npm-tarballs'),
+  );
 
   const versionExpr = getFlagValue(args, 'version');
 
@@ -90,7 +115,13 @@ const main = async (): Promise<void> => {
     async (prev, name) => {
       const acc = await prev;
 
-      const err = await publishVersion(name, publish, distTag);
+      const err = await publishVersion(name, {
+        publish,
+        packOnly,
+        distTag,
+        otp,
+        outDir,
+      });
 
       return err === undefined ? acc : Arr.toPushed(acc, err);
     },
@@ -107,12 +138,37 @@ const main = async (): Promise<void> => {
     process.exit(1);
   }
 
+  if (packOnly) {
+    console.info(
+      [
+        '',
+        `Tarballs written to ${outDir}.`,
+        '',
+        'Publish them from a terminal npm can prompt in:',
+        '',
+        `  npm publish ${path.join(outDir, '<package>-<version>.tgz')} --access public${distTag === undefined ? '' : ` --tag ${distTag}`}`,
+        '',
+      ].join('\n'),
+    );
+
+    return;
+  }
+
   console.info(
     publish
       ? '\nAll bundles published. ✅'
       : '\n[dry-run] done (pass --publish to publish).',
   );
 };
+
+/** What one run does with each bundle it stages. */
+type PublishOptions = Readonly<{
+  publish: boolean;
+  packOnly: boolean;
+  distTag: string | undefined;
+  otp: string | undefined;
+  outDir: string;
+}>;
 
 /** Reads a `--name=value` flag from the argument list. */
 const getFlagValue = (
@@ -124,9 +180,10 @@ const getFlagValue = (
 /** Publishes one version's bundles; returns an error message on failure. */
 const publishVersion = async (
   versionName: string,
-  publish: boolean,
-  distTag: string | undefined,
+  options: PublishOptions,
 ): Promise<string | undefined> => {
+  const { publish, packOnly, distTag, otp, outDir } = options;
+
   const bundles = await collectBundles(path.join(packagesDir, versionName));
 
   if (!Arr.isNonEmpty(bundles)) {
@@ -135,21 +192,33 @@ const publishVersion = async (
     return undefined;
   }
 
-  const tmpDir = await fs.mkdtemp(
-    path.join(os.tmpdir(), `npm-${versionName}-`),
-  );
+  // `--pack-only` hands the tarballs to a human, so they outlive the run.
+  const destDir = packOnly
+    ? outDir
+    : await fs.mkdtemp(path.join(os.tmpdir(), `npm-${versionName}-`));
+
+  if (packOnly) {
+    await fs.mkdir(destDir, { recursive: true });
+  }
 
   try {
     for (const bundle of bundles) {
-      const packed = await packBundle(bundle, tmpDir);
+      const packed = await packBundle(bundle, destDir);
 
       if (Result.isErr(packed)) {
         return `${versionName}: pack failed: ${packed.value}`;
       }
 
+      if (packOnly) {
+        console.info(`  packed ${packed.value}`);
+
+        continue;
+      }
+
       const flags = [
         '--access public',
         distTag === undefined ? '' : `--tag ${distTag}`,
+        otp === undefined ? '' : `--otp ${otp}`,
         publish ? '' : '--dry-run',
       ]
         .filter((flag) => flag !== '')
@@ -158,7 +227,11 @@ const publishVersion = async (
       const result = await $(`npm publish ${packed.value} ${flags}`);
 
       if (Result.isErr(result)) {
-        return `${versionName}: npm publish failed for ${bundle.name}`;
+        return `${versionName}: npm publish failed for ${bundle.name}${
+          otp === undefined
+            ? ' (an EOTP here means 2FA: pass --otp=<code>, or --pack-only and publish by hand)'
+            : ' (an EOTP here means the code expired: re-run with a fresh --otp=<code>)'
+        }`;
       }
 
       console.info(
@@ -168,7 +241,9 @@ const publishVersion = async (
 
     return undefined;
   } finally {
-    await fs.rm(tmpDir, { recursive: true, force: true });
+    if (!packOnly) {
+      await fs.rm(destDir, { recursive: true, force: true });
+    }
   }
 };
 
