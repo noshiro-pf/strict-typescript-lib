@@ -1,5 +1,11 @@
 # strict-ts-lib-v5.8-source
 
+## 0.4.0
+
+### Minor Changes
+
+- 931dc7c: Ship every built-in library inside one package instead of ~107 per flavor: install one tarball and map @typescript/lib-* to its libs/ directory with tsconfig paths
+
 ## 0.3.0
 
 ### Minor Changes
