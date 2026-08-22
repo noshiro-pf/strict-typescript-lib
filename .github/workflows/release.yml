@@ -57,10 +57,8 @@ jobs:
           version-script: pnpm run changeset:version-packages
           pr-title: 'chore: version packages'
           commit-message: 'chore: version packages'
-          # このリポジトリの成果物は npm ではなく、`dist:github-release` が
-          # `gh release create dist-vX.Y-<version>` で作る tarball の
-          # GitHub Release。タグと Release はそちらが唯一の作成者なので、
-          # action 側には作らせない。
+          # npm が唯一の配布経路。GitHub Release の tarball 配布は
+          # やめたので、action 側には Release もタグも作らせない。
           #
           # なお changesets/action v2 は publish script の stdout を読むのをやめ、script が
           # `$CHANGESETS_OUTPUT` に NDJSON を書くことを期待する。こちらは
@@ -70,25 +68,17 @@ jobs:
           # いない。
           create-github-releases: false
           push-git-tags: false
-        env:
-          # Used by the `gh` CLI in `dist:github-release` to create/upload the
-          # tarball GitHub Release.
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
 
-      # Deliberately after the step above, not inside `release:publish`. The
-      # GitHub Release is the channel every existing consumer installs from, so
-      # it is created first and cannot be held back by anything npm does.
-      #
       # No token: publishing is authenticated by OIDC against the trusted
       # publisher configured per package on npm, which is why the job asks for
       # `id-token: write`. The npm that ships with Node 22 predates the trust
       # tooling (`npm trust` documents `npm@11.15.0` as its floor), so a current
       # npm is installed for this step.
       #
-      # `dist:npm-publish` skips versions already on the registry, so this is a
-      # cheap no-op on the pushes where nothing was released — which is most of
-      # them, since the Changesets action runs its publish step whenever no
-      # changesets are pending.
+      # `release:publish` above already runs this; the step is kept as the
+      # backstop for a run where the Changesets action skipped its publish
+      # script. `dist:npm-publish` skips versions already on the registry, so
+      # it is a cheap no-op whenever nothing was released.
       - name: Publish the bundles to npm
         run: |
           npm install -g npm@^11.15.0

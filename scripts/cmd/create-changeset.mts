@@ -4,11 +4,10 @@
  * Creates a single changeset that bumps the per-version source packages
  * (optionally restricted to a subset of TypeScript versions) at once.
  *
- * This repo publishes two bundles per TypeScript version (plain and branded),
- * assembled at pack time from the declarations generated under
- * `packages/vX.Y/output/packages/**` and `packages/vX.Y/output-branded/packages/**`.
- * Neither those declarations nor the bundle manifests are pnpm workspace
- * members, so `changeset version` cannot bump them directly. Instead, each version's single source
+ * This repo publishes one package per TypeScript version, generated at
+ * `packages/vX.Y/output/lib` with both flavors inside it. Neither the
+ * declarations nor the manifest are pnpm workspace members, so
+ * `changeset version` cannot bump them directly. Instead, each version's single source
  * harness package `strict-ts-lib-vX.Y-source` (`packages/vX.Y/package.json`, a
  * private workspace member) is the version carrier: `ws:gen` stamps its version
  * onto every generated sub-package of that version. So the changeset targets

@@ -1,15 +1,18 @@
 # strict-ts-lib-v5.0
 
 Strict rewrite of TypeScript 5.0.4's built-in
-standard library declarations, distributed as a GitHub Release tarball
-(no npm registry, no auth).
+standard library declarations.
 
 ```sh
-npm install -D https://github.com/noshiro-pf/strict-typescript-lib/releases/download/dist-v5.0-0.4.0/strict-ts-lib-v5.0-0.4.0.tgz
+npm install -D strict-ts-lib-v5.0
 ```
 
-Every built-in library ships inside this one package, under `libs/`. Point
-TypeScript at them from your `tsconfig.json`:
+Every built-in library ships inside this one package, in two flavors:
+
+- `libs/` — plain `number`
+- `libs-branded/` — branded number types (`Uint8`, `SafeUint`, …)
+
+Pick one with `paths` in your `tsconfig.json`:
 
 ```jsonc
 {
@@ -22,7 +25,12 @@ TypeScript at them from your `tsconfig.json`:
 }
 ```
 
-`paths` is replaced, not merged, by a config that `extends` another, so it
-has to be written in whichever config TypeScript actually loads.
+Two things to watch, because both fail silently — the replacement simply
+does not happen, with no error:
+
+- **`paths` is replaced, not merged, by a config that `extends` another**,
+  so it has to be written in whichever config TypeScript actually loads.
+- **The path is relative to the config that contains it**, which in a
+  monorepo package is usually `../../node_modules/…`.
 
 See <https://github.com/noshiro-pf/strict-typescript-lib> for usage and version support.
