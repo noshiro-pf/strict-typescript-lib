@@ -123,12 +123,32 @@ const createPackages = async (
         console.info(`${outputFile} generated.`);
       }
 
-      // package.json
-      {
+      // package.json — only where something actually resolves it.
+      //
+      // Every generated lib directory used to get one, naming it as its own
+      // publishable package. That was the point of the per-lib layout, and the
+      // bundle replaced it: `pack-bundle.mts` copies `index.d.ts` alone, and
+      // the workspace globs stop at `packages/v*/output`.
+      //
+      // What still needs a manifest is the harness's own `lib-check`. It sets
+      // `libReplacement: true` and lets tsc resolve `@typescript/lib-<group>`
+      // by name out of `node_modules`, which works because each harness
+      // devDepends on `file:output/packages/<group>`. `paths` would not do:
+      // TypeScript resolves lib replacements with a fixed Node10 lookup that
+      // ignores `paths` (measured on 6.0.3), and these harnesses span tsc 5.0
+      // to 7.0.
+      //
+      // So: top-level group directories of the non-branded flavor, which is
+      // exactly the set those devDependencies name. Sub-libs
+      // (`es2020/bigint`) and everything branded are reachable through the
+      // group's own `<reference lib>` graph and are never resolved by name.
+      if (!config.useBrandedNumber && !packageRelativePath.includes('/')) {
         const outputFile = path.resolve(outputDir, 'package.json');
 
+        // Non-branded and top-level by the guard above, so neither the
+        // `-branded` suffix nor flattening a nested path applies here.
         const subPackageName =
-          `${versionConfig.libName}${config.useBrandedNumber ? '-branded' : ''}-${packageRelativePath.replaceAll('/', '-')}` as const;
+          `${versionConfig.libName}-${packageRelativePath}` as const;
 
         await fs.writeFile(
           outputFile,
@@ -160,9 +180,9 @@ const createPackages = async (
         );
 
         console.info(`${outputFile} generated.`);
-
-        return Result.ok(undefined);
       }
+
+      return Result.ok(undefined);
     }),
   );
 
