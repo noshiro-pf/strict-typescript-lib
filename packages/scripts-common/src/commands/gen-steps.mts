@@ -53,12 +53,12 @@ export const buildGenSteps = (ctx: Context): readonly GenStep[] =>
       fn: () => genPackages(ctx),
     },
     {
-      name: 'format output/packages',
-      fn: () => formatDir(ctx.paths.strictTsLib.output.packages.$),
+      name: 'format output/lib/libs',
+      fn: () => formatDir(ctx.paths.strictTsLib.output.lib.libs.$),
     },
     {
-      name: 'format output-branded/packages',
-      fn: () => formatDir(ctx.paths.strictTsLib.outputBranded.packages.$),
+      name: 'format output/lib/libs-branded',
+      fn: () => formatDir(ctx.paths.strictTsLib.output.lib.libsBranded.$),
     },
     {
       name: `${ctx.packageManagerName} install`,

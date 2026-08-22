@@ -14,8 +14,9 @@ version. Every built-in library lives inside **one package**, so one dependency
 and one `paths` entry is the whole setup, on any package manager.
 
 Each TypeScript minor has its own package — `strict-ts-lib-v7.0` for TypeScript
-7.0, `strict-ts-lib-v5.9` for 5.9, and so on — and a **branded-number** flavor
-is published alongside as `strict-ts-lib-vX.Y-branded`.
+7.0, `strict-ts-lib-v5.9` for 5.9, and so on. **All minors share one version
+number**, so `strict-ts-lib-v7.1@0.5.0` and `strict-ts-lib-v7.0@0.5.0` are the
+same generation of the library.
 
 ### 1. Install the package
 
@@ -23,22 +24,21 @@ is published alongside as `strict-ts-lib-vX.Y-branded`.
 npm install -D strict-ts-lib-v7.0     # pnpm add -D / yarn add -D work the same
 ```
 
-Every published minor is also attached to a **GitHub Release**, for anyone who
-would rather not go through the registry:
-
-```sh
-npm install -D https://github.com/noshiro-pf/strict-typescript-lib/releases/download/dist-v7.0-<version>/strict-ts-lib-v7.0-<version>.tgz
-```
-
-Both are a single **direct** dependency, which every package manager accepts
-without configuration. (pnpm rejects URL dependencies only when a _dependency of
-a dependency_ uses one — which is what an earlier layout, one package per lib
-behind an umbrella, ran into.)
+npm is the only channel. It is a single **direct** dependency, which every
+package manager accepts without configuration. (pnpm rejects URL dependencies
+only when a _dependency of a dependency_ uses one — which is what an earlier
+layout, one package per lib behind an umbrella, ran into.)
 
 ### 2. Point TypeScript at the libs
 
-The libraries live under `libs/` inside that package, named the way TypeScript
-asks for them, so one wildcard covers all of them:
+The package carries **both flavors**, named the way TypeScript asks for them,
+so one wildcard covers all of them — and choosing a flavor is choosing which
+directory that wildcard points at:
+
+| Directory       | Numbers                                                |
+| :-------------- | :----------------------------------------------------- |
+| `libs/`         | plain `number`                                         |
+| `libs-branded/` | branded (`Uint8`, `SafeUint`, …), from `ts-type-forge` |
 
 ```jsonc
 // tsconfig.json
@@ -47,6 +47,7 @@ asks for them, so one wildcard covers all of them:
         "libReplacement": true, // TypeScript 6.0 and later; see below
         "paths": {
             "@typescript/lib-*": ["./node_modules/strict-ts-lib-v7.0/libs/*"],
+            // …or "libs-branded/*" for the branded flavor
         },
     },
 }

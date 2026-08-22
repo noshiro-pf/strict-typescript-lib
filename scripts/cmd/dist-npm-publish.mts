@@ -57,7 +57,7 @@ import * as os from 'node:os';
 import * as path from 'node:path';
 import { Arr, Result } from 'ts-data-forge';
 import { $ } from 'ts-repo-utils';
-import { collectBundles, packBundle } from '../pack-bundle.mjs';
+import { collectBundle, packBundle } from '../pack-bundle.mjs';
 import { projectRootPath } from '../project-root-path.mjs';
 import { parseVersionExpr, versionFromPath } from '../version-filter.mjs';
 
@@ -191,10 +191,10 @@ const publishVersion = async (
 ): Promise<string | undefined> => {
   const { publish, packOnly, distTag, otp, outDir } = options;
 
-  const bundles = await collectBundles(path.join(packagesDir, versionName));
+  const bundle = await collectBundle(path.join(packagesDir, versionName));
 
-  if (!Arr.isNonEmpty(bundles)) {
-    console.info(`${versionName}: no bundle packages, skipping.`);
+  if (bundle === undefined) {
+    console.info(`${versionName}: no bundle package, skipping.`);
 
     return undefined;
   }
@@ -209,9 +209,9 @@ const publishVersion = async (
   }
 
   try {
-    for (const bundle of bundles) {
-      // Ask the registry before staging: `release.yml` runs this on every push
-      // to `main`, and staging copies ~107 declarations per bundle.
+    {
+      // Ask the registry before packing: `release.yml` runs this on every push
+      // to `main`.
       if (
         publish &&
         !packOnly &&
@@ -221,7 +221,7 @@ const publishVersion = async (
           `  skipped ${bundle.name}@${bundle.version} (already on the registry)`,
         );
 
-        continue;
+        return undefined;
       }
 
       const packed = await packBundle(bundle, destDir);
@@ -233,7 +233,7 @@ const publishVersion = async (
       if (packOnly) {
         console.info(`  packed ${packed.value}`);
 
-        continue;
+        return undefined;
       }
 
       const flags = [

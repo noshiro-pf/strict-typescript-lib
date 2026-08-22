@@ -59,31 +59,44 @@ const buildPaths = (packageRoot: string) =>
         diff: {
           $: `${output}/diff` as const,
         },
-        lib: {
-          $: `${output}/lib` as const,
-        },
+        /**
+         * The published package, laid out on disk exactly as it ships.
+         *
+         * Both flavors live here — `libs/` and `libs-branded/` — because one
+         * TypeScript minor is one package now. Nothing is rearranged at pack
+         * time: `paths` in a consuming repository points at
+         * `node_modules/<pkg>/libs/*`, and when this repository is a workspace
+         * that is a symlink to this very directory, so the layout here has to
+         * be the layout that ships.
+         */
+        lib: pipe(`${output}/lib` as const).map((lib) => ({
+          $: lib,
+
+          libs: {
+            $: `${lib}/libs` as const,
+          },
+          libsBranded: {
+            $: `${lib}/libs-branded` as const,
+          },
+        })).value,
         libFiles: {
           $: `${output}/lib-files` as const,
         },
-        packages: {
-          $: `${output}/packages` as const,
-        },
       })).value,
 
+      /**
+       * Branded intermediates. The declarations end up in
+       * `output/lib/libs-branded`, so there is no `lib` or `packages` here —
+       * only what feeds them, and the diffs.
+       */
       outputBranded: pipe(`${root}/output-branded` as const).map((output) => ({
         $: output,
 
         diff: {
           $: `${output}/diff` as const,
         },
-        lib: {
-          $: `${output}/lib` as const,
-        },
         libFiles: {
           $: `${output}/lib-files` as const,
-        },
-        packages: {
-          $: `${output}/packages` as const,
         },
       })).value,
 

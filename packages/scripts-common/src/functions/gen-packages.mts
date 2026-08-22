@@ -29,12 +29,35 @@ const parsePackageJson = (jsonStr: string): PackageJson | undefined => {
   return Result.isOk(result) ? result.value : undefined;
 };
 
-/** Generate files to `output/packages` and `output-branded/packages` */
+/**
+ * Generate the published package: `output/lib`, with `libs/` and
+ * `libs-branded/` inside it.
+ */
 export const genPackages = async (
   ctx: Context,
 ): Promise<Result<undefined, unknown>> => {
+  const { paths } = ctx;
+
+  const version = await getSubPackageVersion(ctx);
+
+  if (version === undefined) {
+    return Result.err(
+      `version field is missing in ${paths.strictTsLib.source.packageJson}`,
+    );
+  }
+
+  const tsTypeForgeRange = await getTsTypeForgeRange(ctx);
+
+  if (tsTypeForgeRange === undefined) {
+    return Result.err(
+      `${typeUtilsName} is missing from devDependencies in source/package.json`,
+    );
+  }
+
   const results = await Promise.all(
-    ctx.configs.map((config) => createPackages(ctx, config)),
+    ctx.configs.map((config) =>
+      createPackages(ctx, config, version, tsTypeForgeRange),
+    ),
   );
 
   for (const res of results) {
@@ -43,32 +66,37 @@ export const genPackages = async (
     }
   }
 
+  // After both flavors, not inside either: they run concurrently and share
+  // `output/lib`, and this writes and formats a file that sits directly in it.
+  // Doing it from one of the passes is how the torn-manifest bug happened
+  // before — two writers on one path, and the next oxfmt pass dies parsing the
+  // result.
+  const bundleResult = await genBundlePackage(ctx, version, tsTypeForgeRange);
+
+  if (Result.isErr(bundleResult)) {
+    return bundleResult;
+  }
+
   return Result.ok(undefined);
 };
 
-// Generate files in `output*\/packages` for one config
+// Generate declarations into the published package, one flavor per call
 const createPackages = async (
   ctx: Context,
   config: ConverterConfig,
+  subPackageVersion: string,
+  tsTypeForgeRange: string,
 ): Promise<Result<undefined, unknown>> => {
   const { paths, versionConfig } = ctx;
 
-  await makeEmptyDir(
-    paths.strictTsLib[config.useBrandedNumber ? 'outputBranded' : 'output']
-      .packages.$,
-  );
-
-  const subPackageVersion = await getSubPackageVersion(ctx);
-
-  if (subPackageVersion === undefined) {
-    return Result.err(
-      `version field is missing in ${paths.strictTsLib.source.packageJson}`,
-    );
-  }
-
+  // Each flavor owns one subdirectory of the published package, so emptying
+  // it cannot disturb the other flavor or the manifest beside them both.
   const outDir =
-    paths.strictTsLib[config.useBrandedNumber ? 'outputBranded' : 'output']
-      .packages.$;
+    paths.strictTsLib.output.lib[
+      config.useBrandedNumber ? 'libsBranded' : 'libs'
+    ].$;
+
+  await makeEmptyDir(outDir);
 
   const packageDirList = await getPackageDirListFromLibFiles(ctx, config);
 
@@ -76,14 +104,6 @@ const createPackages = async (
     'target directories:',
     packageDirList.map((a) => path.resolve(outDir, a.packageRelativePath)),
   );
-
-  const tsTypeUtilsRange = await getTsTypeForgeRange(ctx);
-
-  if (tsTypeUtilsRange === undefined) {
-    return Result.err(
-      `${typeUtilsName} is missing from devDependencies in source/package.json`,
-    );
-  }
 
   const results = await Promise.all(
     packageDirList.map(async ({ filename, packageRelativePath }) => {
@@ -127,13 +147,13 @@ const createPackages = async (
       //
       // Every generated lib directory used to get one, naming it as its own
       // publishable package. That was the point of the per-lib layout, and the
-      // bundle replaced it: `pack-bundle.mts` copies `index.d.ts` alone, and
-      // the workspace globs stop at `packages/v*/output`.
+      // bundle replaced it: the published package ships the declarations and
+      // nothing else, and the workspace globs never reached in here.
       //
       // What still needs a manifest is the harness's own `lib-check`. It sets
       // `libReplacement: true` and lets tsc resolve `@typescript/lib-<group>`
       // by name out of `node_modules`, which works because each harness
-      // devDepends on `file:output/packages/<group>`. `paths` would not do:
+      // devDepends on `file:output/lib/libs/<group>`. `paths` would not do:
       // TypeScript resolves lib replacements with a fixed Node10 lookup that
       // ignores `paths` (measured on 6.0.3), and these harnesses span tsc 5.0
       // to 7.0.
@@ -171,7 +191,7 @@ const createPackages = async (
             // generated lib references its types via `import('ts-type-forge')`,
             // so consumers must have it installed (not merely provide it).
             dependencies: {
-              [typeUtilsName]: tsTypeUtilsRange,
+              [typeUtilsName]: tsTypeForgeRange,
             },
             peerDependencies: {
               typescript: versionConfig.typescriptVersionRange,
@@ -192,16 +212,16 @@ const createPackages = async (
     }
   }
 
-  return genBundlePackage(ctx, config, subPackageVersion, tsTypeUtilsRange);
+  return Result.ok(undefined);
 };
 
 /**
- * Generates the bundle package (`output/lib` and `output-branded/lib`).
+ * Generates the published package's manifest and README at `output/lib`.
  *
- * This is the only package a consumer installs. It carries no `.d.ts` of its
- * own in the working tree: `libs/<name>/index.d.ts` is assembled from
- * `output(-branded)/packages` when the tarball is packed, so the generated tree is not
- * duplicated here.
+ * This is the only package a consumer installs, and it sits beside the
+ * declarations rather than above them: `libs/` and `libs-branded/` are written
+ * into this same directory by the two flavor passes, so what is on disk is
+ * what ships.
  *
  * It used to be an umbrella whose dependencies were the ~107 per-lib packages,
  * one URL each, so that a package manager would resolve them transitively and
@@ -213,31 +233,22 @@ const createPackages = async (
  * reaches the root `node_modules` where `libReplacement` looks. Shipping the
  * libs inside this package removes both: the only dependency a consumer
  * declares is direct, which pnpm always allows, and `paths` points TypeScript
- * at `libs/*`.
+ * at `libs/*` or `libs-branded/*`.
  */
 const genBundlePackage = async (
   ctx: Context,
-  config: ConverterConfig,
   version: string,
   tsTypeForgeRange: string,
 ): Promise<Result<undefined, unknown>> => {
   const { paths, versionConfig } = ctx;
 
-  const bundleDir = path.resolve(
-    paths.strictTsLib[config.useBrandedNumber ? 'outputBranded' : 'output']
-      .packages.$,
-    '..',
-    'lib',
-  );
+  const bundleDir = paths.strictTsLib.output.lib.$;
 
-  const libName =
-    `${versionConfig.libName}${config.useBrandedNumber ? '-branded' : ''}` as const;
+  const libName = versionConfig.libName;
 
-  const releaseBase = githubReleaseBaseUrl(versionConfig, version);
-
-  const tarballUrl = `${releaseBase}/${libName}-${version}.tgz` as const;
-
-  await makeEmptyDir(bundleDir);
+  // Not `makeEmptyDir`: `libs/` and `libs-branded/` live in here and are
+  // written by the passes around this one.
+  await fs.mkdir(bundleDir, { recursive: true });
 
   await fs.writeFile(
     path.resolve(bundleDir, 'package.json'),
@@ -252,7 +263,14 @@ const genBundlePackage = async (
       sideEffects: false,
       type: 'module',
       // Assembled at pack time from `output*/packages`; see `pack-bundle.mts`.
-      files: ['libs'],
+      // The per-group `package.json` files under `libs/` are excluded: they
+      // exist so that this repository's own harnesses — and a workspace that
+      // vendors this directory — can resolve `@typescript/lib-<group>` by
+      // name, which is the only way TypeScript 6 and earlier find a
+      // replacement (their lib resolution is a fixed Node10 lookup that
+      // ignores `paths`). A consumer installing the tarball cannot use them:
+      // they would have to point a `file:` dependency inside `node_modules`.
+      files: ['libs', 'libs-branded', '!libs/**/package.json'],
       // ts-type-forge is a real runtime-resolvable dependency: the generated
       // lib references its types via `import('ts-type-forge')`, so consumers
       // must have it installed (not merely provide it). Declaring it here
@@ -275,15 +293,18 @@ const genBundlePackage = async (
       `# ${libName}`,
       '',
       `Strict rewrite of TypeScript ${versionConfig.typescriptVersion}'s built-in`,
-      'standard library declarations, distributed as a GitHub Release tarball',
-      '(no npm registry, no auth).',
+      'standard library declarations.',
       '',
       '```sh',
-      `npm install -D ${tarballUrl}`,
+      `npm install -D ${libName}`,
       '```',
       '',
-      'Every built-in library ships inside this one package, under `libs/`. Point',
-      'TypeScript at them from your `tsconfig.json`:',
+      'Every built-in library ships inside this one package, in two flavors:',
+      '',
+      '- `libs/` — plain `number`',
+      '- `libs-branded/` — branded number types (`Uint8`, `SafeUint`, …)',
+      '',
+      'Pick one with `paths` in your `tsconfig.json`:',
       '',
       '```jsonc',
       '{',
@@ -296,8 +317,13 @@ const genBundlePackage = async (
       '}',
       '```',
       '',
-      '`paths` is replaced, not merged, by a config that `extends` another, so it',
-      'has to be written in whichever config TypeScript actually loads.',
+      'Two things to watch, because both fail silently — the replacement simply',
+      'does not happen, with no error:',
+      '',
+      '- **`paths` is replaced, not merged, by a config that `extends` another**,',
+      '  so it has to be written in whichever config TypeScript actually loads.',
+      '- **The path is relative to the config that contains it**, which in a',
+      '  monorepo package is usually `../../node_modules/…`.',
       '',
       `See <${repoUrl}> for usage and version support.`,
       '',
@@ -321,27 +347,6 @@ const genBundlePackage = async (
   console.info(`${bundleDir} (bundle package) generated.`);
 
   return Result.ok(undefined);
-};
-
-/**
- * Base URL of the GitHub Release that hosts a version's tarball assets, e.g.
- * `https://github.com/<owner>/<repo>/releases/download/dist-v5.9-<version>`.
- * The tag is per TypeScript version (flavor-independent) so branded and
- * non-branded share one release; `dist-github-release.mts` uploads to it.
- */
-const githubReleaseBaseUrl = (
-  versionConfig: Context['versionConfig'],
-  version: string,
-): string => {
-  const repoPath =
-    /github\.com[/:]([^/]+\/[^/]+?)(?:\.git)?$/u.exec(
-      versionConfig.repo,
-    )?.[1] ?? '';
-
-  const versionName =
-    /v\d+\.\d+/u.exec(versionConfig.libName)?.[0] ?? versionConfig.libName;
-
-  return `https://github.com/${repoPath}/releases/download/dist-${versionName}-${version}`;
 };
 
 const getPackageDirListFromLibFiles = async (

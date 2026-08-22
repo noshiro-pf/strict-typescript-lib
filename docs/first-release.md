@@ -3,8 +3,8 @@
 新しいパッケージ名を npm に**初めて**公開するときの手順。TypeScript のマイナーが
 増えるたび（v7.1、v7.2 …）に、その系統の 2 パッケージ分だけ必要になる。
 
-GitHub Release のアセットとしての配布はこの手順と無関係で、`release:publish` が
-自動で行う（[distribution.md](./distribution.md)）。ここは npm 側だけの話。
+配布経路は npm だけになった（GitHub Release の tarball 配布は廃止。
+[distribution.md](./distribution.md)）。
 
 ## なぜ手作業が要るのか
 
@@ -35,8 +35,8 @@ CI から publish できない、という循環になる。最初の 1 回を�
 
 ## 手順
 
-例として TypeScript 7.1 系（`strict-ts-lib-v7.1` と `strict-ts-lib-v7.1-branded`）
-を初めて公開する場合を示す。
+例として TypeScript 7.1 系（`strict-ts-lib-v7.1`）を初めて公開する場合を示す。
+**branded 版は別パッケージではなくなった**ので、1 系統につきパッケージは 1 つである。
 
 ### 1. 公開するバージョンを確定させる
 
@@ -54,8 +54,9 @@ pnpm install --frozen-lockfile
 pnpm dist:npm-publish --version=7.1                # dry-run（何も publish しない）
 ```
 
-`npm notice` の `total files` と `unpacked size` を見る。107 前後の
-`libs/**/index.d.ts` に `package.json` と `README.md` が加わった数になるはず。
+`npm notice` の `total files` と `unpacked size` を見る。`libs/**/index.d.ts` と
+`libs-branded/**/index.d.ts` が 107 前後ずつ、それに `package.json` と `README.md`
+が加わった数になるはず（v7.0 なら 216 ファイル）。
 
 ### 3. publish する
 
@@ -109,8 +110,6 @@ npm view strict-ts-lib-v7.1 dist.tarball
 | Workflow filename   | `release.yml`           |
 | Environment         | 空欄                    |
 
-branded 版も別パッケージなので、同じ設定をもう一度行う。
-
 **この設定を済ませると、その系統は以降 CI が publish する。** `release.yml` は
 GitHub Release を作ったあとに `dist:npm-publish --publish` を実行し、OIDC で
 認証する（トークンは持たない）。既にレジストリにあるバージョンは skip されるので、
@@ -121,7 +120,7 @@ GitHub Release を作ったあとに `dist:npm-publish --publish` を実行し�
 
 ## 複数系統をまとめて publish する場合
 
-`--otp` のコードは約 30 秒で失効するので、12 系統 24 パッケージを一度に流すと
+`--otp` のコードは約 30 秒で失効するので、12 系統を一度に流すと
 途中で `EOTP` になる。`dist:npm-publish` は系統ごとに逐次実行し、失敗した系統を
 最後にまとめて報告するので、**系統を絞って新しいコードで繰り返す**のが確実。
 

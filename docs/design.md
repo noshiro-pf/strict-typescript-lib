@@ -1,5 +1,11 @@
 # strict-typescript-lib 設計ドキュメント
 
+> **この文書は per-lib 分割時代（〜2026-08）の設計記録である。**
+> 現在は TypeScript マイナーごとに 1 パッケージで、両 flavor を
+> `libs/` と `libs-branded/` として同梱する。現行の配布については
+> [distribution.md](./distribution.md) を参照。
+
+
 TypeScript 標準 lib (`lib.es5.d.ts` など) を厳格化した置き換え用型定義を、TypeScript の各バージョンごとに npm パッケージとして生成・配布するためのリポジトリ。
 
 参考実装: 既存の private な参照実装をベースにしている。
